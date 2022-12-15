@@ -35,10 +35,11 @@
 	.switch {
 		display: inline-flex;
 		cursor: pointer;
-		border-radius: 16px;
-		width: 10ch;
+		border-radius: 100px;
+		width: 20ch;
 		border: 1px solid gray;
 		padding: 0;
+		background: white;
 	}
 </style>
 
@@ -58,17 +59,19 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		color: white;
-		height: 30px;
-		width: 30px;
+		height: clamp(48px, var(--s3), var(--s4));
+		width: clamp(48px, var(--s3), var(--s3));
 		border-radius: 50%;
-		background-color: #005f7f;
-		transition: transform 0.33s cubic-bezier(0.68, -0.3, 0.32, 1.03);
+		transition: all 0.33s cubic-bezier(0.68, -0.3, 0.32, 1.03);
 	}
+
 	.switch.true > span {
+		background-color: #2ebfa2;
 		transform: translateX(0);
 	}
 	.switch.false > span {
-		transform: translateX(6.2ch);
+		transform: translateX(14.1ch);
+		color: #fff;
+		background: #c02e4c;
 	}
 </style>

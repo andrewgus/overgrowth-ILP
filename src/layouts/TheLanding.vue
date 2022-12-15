@@ -1,42 +1,44 @@
 <template>
-	<h1>{{ title }}</h1>
-	<div class="toggleGroup">
-		<ToggleFeature
-			@click="featureSettings.reflectionToggle"
-			:setting="useStore(featureSettings.isReflectionOn).value"
-			name="Reflection"
-		/>
-		<ToggleFeature
-			@click="featureSettings.practiceToggle"
-			:setting="useStore(featureSettings.isPracticeOn).value"
-			name="Practice"
-		/>
-		<ToggleFeature
-			@click="featureSettings.choiceToggle"
-			:setting="useStore(featureSettings.isChoiceOn).value"
-			name="Choice"
-		/>
+	<div class="flex">
+		<h1>{{ title }}</h1>
+		<div class="toggleGroup">
+			<ToggleFeature
+				@click="featureSettings.reflectionToggle"
+				:setting="useStore(featureSettings.isReflectionOn).value"
+				name="Reflection"
+			/>
+			<ToggleFeature
+				@click="featureSettings.practiceToggle"
+				:setting="useStore(featureSettings.isPracticeOn).value"
+				name="Practice"
+			/>
+			<ToggleFeature
+				@click="featureSettings.choiceToggle"
+				:setting="useStore(featureSettings.isChoiceOn).value"
+				name="Choice"
+			/>
+		</div>
+		<!-- /.toggleGroup -->
+		<p>
+			{{
+				useStore(featureSettings.isReflectionOn).value
+					? 'Reflection On'
+					: ' Reflection Off'
+			}}
+		</p>
+		<p>
+			{{
+				useStore(featureSettings.isPracticeOn).value
+					? 'Practice On'
+					: ' Practice Off'
+			}}
+		</p>
+		<p>
+			{{
+				useStore(featureSettings.isChoiceOn).value ? 'Choice On' : ' Choice Off'
+			}}
+		</p>
 	</div>
-	<!-- /.toggleGroup -->
-	<p>
-		{{
-			useStore(featureSettings.isReflectionOn).value
-				? 'Reflection On'
-				: ' Reflection Off'
-		}}
-	</p>
-	<p>
-		{{
-			useStore(featureSettings.isPracticeOn).value
-				? 'Practice On'
-				: ' Practice Off'
-		}}
-	</p>
-	<p>
-		{{
-			useStore(featureSettings.isChoiceOn).value ? 'Choice On' : ' Choice Off'
-		}}
-	</p>
 </template>
 
 <script setup lang="ts">
@@ -58,9 +60,20 @@
 </script>
 
 <style scoped>
+	.flex {
+		display: flex;
+		flex-flow: column nowrap;
+	}
+	h1 {
+		text-align: center;
+	}
 	.toggleGroup {
 		display: flex;
-		flex-flow: row nowrap;
-		gap: 2rem;
+		flex-wrap: wrap;
+		gap: var(--s-1);
+	}
+	.toggleGroup > * {
+		flex-grow: 1;
+		flex-basis: calc((60ch - 100%) * 999);
 	}
 </style>

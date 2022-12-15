@@ -1,23 +1,11 @@
 ---
-import Layout from '../layouts/Layout.astro'
+import BaseLayout from '../layouts/BaseLayout.astro'
 import TheLanding from '../layouts/TheLanding.vue'
 ---
 
-<Layout title='Overgrowth 1.0'>
-	<main>
-		<TheLanding client:load title='Introduction to Astronomy' />
-	</main>
-</Layout>
+<BaseLayout title='Overgrowth 1.0'>
+	<TheLanding client:load title='Introduction to Astronomy' />
+</BaseLayout>
 
 <style>
-	main {
-		margin: auto;
-		padding: 1.5rem;
-		max-width: 60ch;
-	}
-	h1 {
-		font-size: var(--s5);
-		font-weight: 800;
-		margin: 0;
-	}
 </style>
