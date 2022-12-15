@@ -13,7 +13,9 @@
   "dependencies": {
     "@astrojs/vue": "^1.2.2",
     "@headlessui/vue": "^1.7.5",
+    "@nanostores/vue": "^0.6.1",
     "astro": "^1.6.15",
+    "nanostores": "^0.7.1",
     "vue": "^3.2.45"
   }
 }
