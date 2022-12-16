@@ -1,53 +1,13 @@
 <template>
-	<div class="flex">
-		<h1>{{ title }}</h1>
-		<div class="toggleGroup">
-			<ToggleFeature
-				@click="featureSettings.reflectionToggle"
-				:setting="useStore(featureSettings.isReflectionOn).value"
-				name="Reflection"
-			/>
-			<ToggleFeature
-				@click="featureSettings.practiceToggle"
-				:setting="useStore(featureSettings.isPracticeOn).value"
-				name="Practice"
-			/>
-			<ToggleFeature
-				@click="featureSettings.choiceToggle"
-				:setting="useStore(featureSettings.isChoiceOn).value"
-				name="Choice"
-			/>
-		</div>
-		<!-- /.toggleGroup -->
-		<p>
-			{{
-				useStore(featureSettings.isReflectionOn).value
-					? 'Reflection On'
-					: ' Reflection Off'
-			}}
-		</p>
-		<p>
-			{{
-				useStore(featureSettings.isPracticeOn).value
-					? 'Practice On'
-					: ' Practice Off'
-			}}
-		</p>
-		<p>
-			{{
-				useStore(featureSettings.isChoiceOn).value ? 'Choice On' : ' Choice Off'
-			}}
-		</p>
+	<div class="background">
+		<TheScene />
+		<TitleCard :title="title" />
 	</div>
 </template>
 
 <script setup lang="ts">
-	import { computed } from 'vue'
-
-	import { useStore } from '@nanostores/vue'
-	import featureSettings from '../store/index.js'
-
-	import ToggleFeature from '../components/Landing/ToggleSwitch.vue'
+	import TheScene from '../components/Landing/TheScene.vue'
+	import TitleCard from '../components/Landing/TitleCard.vue'
 
 	defineProps({
 		title: {
@@ -55,25 +15,24 @@
 			required: true,
 		},
 	})
-
-	const setSetting = () => []
 </script>
 
 <style scoped>
-	.flex {
-		display: flex;
-		flex-flow: column nowrap;
-	}
-	h1 {
-		text-align: center;
-	}
-	.toggleGroup {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--s-1);
-	}
-	.toggleGroup > * {
-		flex-grow: 1;
-		flex-basis: calc((60ch - 100%) * 999);
+	.background {
+		background: linear-gradient(
+			180deg,
+			rgba(255, 255, 255, 1) 0%,
+			rgba(222, 242, 238, 1) 12%,
+			rgba(171, 222, 213, 1) 25%,
+			rgba(120, 201, 187, 1) 33%,
+			rgba(88, 184, 151, 1) 77%,
+			rgba(175, 221, 205, 1) 88%,
+			rgba(255, 255, 255, 1) 100%
+		);
+		height: 100vh;
+		width: 100vw;
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr;
 	}
 </style>

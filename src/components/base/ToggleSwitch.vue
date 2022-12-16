@@ -1,7 +1,7 @@
 <template>
 	<SwitchGroup>
 		<div>
-			<SwitchLabel @click.stop>{{ name }}</SwitchLabel>
+			<SwitchLabel @click.stop>{{ type }}</SwitchLabel>
 			<Switch
 				v-model="enabled"
 				:class="enabled ? 'true' : 'false'"
@@ -18,7 +18,7 @@
 	import { SwitchGroup, Switch, SwitchLabel } from '@headlessui/vue'
 
 	const props = defineProps({
-		name: {
+		type: {
 			type: String,
 			required: true,
 		},
@@ -36,7 +36,7 @@
 		display: inline-flex;
 		cursor: pointer;
 		border-radius: 100px;
-		width: 20ch;
+		width: 12ch;
 		border: 1px solid gray;
 		padding: 0;
 		background: white;
@@ -59,8 +59,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		height: clamp(48px, var(--s3), var(--s4));
-		width: clamp(48px, var(--s3), var(--s3));
+		height: 32px;
+		width: 32px;
 		border-radius: 50%;
 		transition: all 0.33s cubic-bezier(0.68, -0.3, 0.32, 1.03);
 	}
@@ -70,7 +70,7 @@
 		transform: translateX(0);
 	}
 	.switch.false > span {
-		transform: translateX(14.1ch);
+		transform: translateX(8ch);
 		color: #fff;
 		background: #c02e4c;
 	}
