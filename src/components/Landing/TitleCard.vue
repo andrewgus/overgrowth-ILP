@@ -1,7 +1,7 @@
 <template>
-	<div class="info">
+	<div class="titleCard">
 		<h1>{{ title }}</h1>
-		<div class="toggleGroup">
+		<div class="options">
 			<ToggleFeature
 				@click="featureSettings.reflectionToggle"
 				:setting="useStore(featureSettings.isReflectionOn).value"
@@ -18,7 +18,7 @@
 				type="Choice"
 			/>
 		</div>
-		<!-- /.toggleGroup -->
+		<!-- /.options -->
 	</div>
 	<!-- /.info -->
 </template>
@@ -26,6 +26,7 @@
 <script setup lang="ts">
 	import { useStore } from '@nanostores/vue'
 	import featureSettings from '../../store/index.js'
+
 	import ToggleFeature from '../base/ToggleSwitch.vue'
 
 	defineProps({
@@ -37,7 +38,7 @@
 </script>
 
 <style scoped>
-	.info {
+	.titleCard {
 		grid-area: 1/1/-1/-1;
 		justify-self: center;
 		align-self: start;
@@ -51,19 +52,19 @@
 		padding: var(--s2);
 		margin-top: var(--s3);
 	}
-	.info h1 {
+	.titleCard h1 {
 		margin-top: 0;
 		text-align: center;
 	}
-	.toggleGroup {
+	.options {
 		max-width: 60ch;
 		display: flex;
 		justify-content: center;
 		flex-wrap: wrap;
 		gap: var(--s1);
 	}
-	.toggleGroup > * {
+	.options > * {
 		flex-grow: 1;
-		flex-basis: calc((30ch - 100%) * 999);
+		flex-basis: calc((25ch - 100%) * 999);
 	}
 </style>

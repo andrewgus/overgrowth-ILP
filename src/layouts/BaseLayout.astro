@@ -24,13 +24,14 @@ const { title } = Astro.props
 <style is:global>
 	@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap');
 	:root {
+		--black: #2d3031;
 		--ratio: 1.25;
 		--s-5: calc(var(--s-4) / var(--ratio));
 		--s-4: calc(var(--s-3) / var(--ratio));
 		--s-3: calc(var(--s-2) / var(--ratio));
 		--s-2: calc(var(--s-1) / var(--ratio));
 		--s-1: calc(var(--s0) / var(--ratio));
-		--s0: 20px + 0.333vmax;
+		--s0: calc(16px + 0.25vmax);
 		--s1: calc(var(--s0) * var(--ratio));
 		--s2: calc(var(--s1) * var(--ratio));
 		--s3: calc(var(--s2) * var(--ratio));
@@ -40,7 +41,8 @@ const { title } = Astro.props
 	html {
 		font-family: 'Atkinson Hyperlegible', sans-serif;
 		background-color: #f6f6f6;
-		color: #2d3031;
+		color: var(--black);
+		font-size: var(--s0);
 	}
 	body {
 		margin: 0;

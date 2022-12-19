@@ -1,19 +1,31 @@
 <template>
-	<div aria-hidden="true" class="imgs">
-		<div
-			v-if="useStore(featureSettings.isReflectionOn).value"
-			class="reflection"
-		></div>
+	<div aria-hidden="true" class="scene">
+		<transition name="landingScene">
+			<div
+				v-show="useStore(featureSettings.isReflectionOn).value"
+				key="1"
+				class="reflection"
+			></div>
+		</transition>
 		<!-- /.reflection -->
-		<div
-			v-if="useStore(featureSettings.isPracticeOn).value"
-			class="practice"
-		></div>
+		<transition name="landingScene">
+			<div
+				v-show="useStore(featureSettings.isPracticeOn).value"
+				key="2"
+				class="practice"
+			></div>
+		</transition>
 		<!-- /.practice -->
-		<div v-if="useStore(featureSettings.isChoiceOn).value" class="choice"></div>
+		<transition name="landingScene">
+			<div
+				v-show="useStore(featureSettings.isChoiceOn).value"
+				key="3"
+				class="choice"
+			></div>
+		</transition>
 		<!-- /.choice -->
 	</div>
-	<!-- /.imgs -->
+	<!-- /.scene -->
 </template>
 
 <script setup lang="ts">
@@ -22,31 +34,60 @@
 </script>
 
 <style scoped>
-	.imgs {
-		grid-area: 1/1/-1/-1;
+	.scene {
 		justify-self: center;
 		align-self: center;
-		background-image: url('/img/landing/setting.svg');
+		background-image: url('https://fscjcel.blob.core.windows.net/testimgs/setting.svg');
 		display: grid;
 		grid-template-columns: 1fr;
 		grid-template-rows: 1fr;
 		aspect-ratio: 21/9;
+		-webkit-mask-image: linear-gradient(
+			transparent 0%,
+			black 20%,
+			black 80%,
+			transparent 100%
+		);
+		mask-image: linear-gradient(
+			transparent 0%,
+			black 20%,
+			black 80%,
+			transparent 100%
+		);
 	}
-	.imgs,
-	.imgs > * {
+	@media only screen and (max-width: 30em) and (max-height: 700px) {
+		.scene {
+			margin-bottom: var(--s2);
+			align-self: end;
+		}
+	}
+	.scene,
+	.scene > * {
 		grid-area: 1/1/-1/-1;
 		background-size: cover;
 		background-repeat: no-repeat;
 		width: 100%;
 	}
 
-	.imgs > .reflection {
-		background-image: url('/img/landing/setting-reflection.svg');
+	.reflection {
+		background-image: url('https://fscjcel.blob.core.windows.net/testimgs/setting-reflection.svg');
 	}
-	.imgs > .practice {
-		background-image: url('/img/landing/setting-practice.svg');
+	.practice {
+		background-image: url('https://fscjcel.blob.core.windows.net/testimgs/setting-practice.svg');
 	}
-	.imgs > .choice {
-		background-image: url('/img/landing/setting-choice.svg');
+	.choice {
+		background-image: url('https://fscjcel.blob.core.windows.net/testimgs/setting-choice.svg');
+	}
+	.landingScene-enter-from,
+	.landingScene-leave-to {
+		opacity: 0;
+	}
+	.landingScene-enter-active,
+	.landingScene-leave-active {
+		transition: opacity 0.3s ease-in-out;
+	}
+	.landingScene-enter-to,
+	.landingScene-leave-from {
+		opacity: 1;
 	}
 </style>

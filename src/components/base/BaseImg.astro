@@ -1,0 +1,16 @@
+---
+export interface Props {
+	topic: string
+	LU: string
+	fileName: string
+	type: string
+	alt: string
+}
+
+const { topic, LU, fileName, type, alt } = Astro.props
+---
+
+<img
+	src={`https://fscjcel.blob.core.windows.net/${topic}/${LU}/${fileName}.${type}`}
+	alt={`${alt}`}
+/>
