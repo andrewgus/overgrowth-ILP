@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-	import { ref, computed, watch } from 'vue'
+	import { ref, computed, watchEffect } from 'vue'
 
 	import { useStore } from '@nanostores/vue'
 	import featureSettings from '../../store/index.js'
@@ -39,15 +39,12 @@
 	})
 
 	const isBgLoaded = ref(false)
-	watch(
-		() => props.scene,
-		() => {
-			const img = new Image()
-			img.src = `https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}.svg`
-			img.onload = () => (isBgLoaded.value = true)
-		},
-		{ immediate: true }
-	)
+
+	watchEffect(() => {
+		const img = new Image()
+		img.src = `https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}.svg`
+		img.onload = () => (isBgLoaded.value = true)
+	})
 
 	const scene = computed(() => {
 		return `background-image: url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}.svg');`
