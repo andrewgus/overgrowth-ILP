@@ -65,6 +65,6 @@
 	}
 	.options > * {
 		flex-grow: 1;
-		flex-basis: calc((25ch - 100%) * 999);
+		flex-basis: calc((20ch - 100%) * 999);
 	}
 </style>

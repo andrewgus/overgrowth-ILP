@@ -17,5 +17,8 @@
     "astro": "^1.6.15",
     "nanostores": "^0.7.1",
     "vue": "^3.2.45"
+  },
+  "devDependencies": {
+    "sass": "^1.57.1"
   }
 }

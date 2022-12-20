@@ -1,9 +1,9 @@
 <template>
-	<div class="landing" :style="{ backgroundImage: `${bgGradient}` }">
+	<header :style="{ backgroundImage: `${bgGradient}` }">
 		<TheScene :scene="image" />
 		<TitleCard :title="title" />
 		<TheIndicator />
-	</div>
+	</header>
 </template>
 
 <script setup lang="ts">
@@ -21,18 +21,27 @@
 		image: {
 			type: String,
 			required: true,
+			validator(value: string) {
+				const exclude: string[] = ['-', ' ', '_']
+				exclude.some((str) => value.includes(str)) &&
+					console.error(
+						'TheLanding image prop string cannot include spaces, hypens, or underscores.'
+					)
+				return !exclude.some((str) => value.includes(str))
+			},
 		},
 		color: {
 			type: String,
 		},
 	})
+
 	const bgGradient = computed(() => {
 		return `linear-gradient(180deg, white 0%, ${props.color} 50%, white 100%);`
 	})
 </script>
 
 <style scoped>
-	.landing {
+	header {
 		height: 100vh;
 		width: 100vw;
 		display: grid;

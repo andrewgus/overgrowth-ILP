@@ -1,26 +1,23 @@
 <template>
-	<div aria-hidden="true" class="scene">
+	<div aria-hidden="true" class="scene" :style="scene">
 		<transition name="landingScene">
 			<div
 				v-show="useStore(featureSettings.isReflectionOn).value"
-				key="1"
-				class="reflection"
+				:style="isBgLoaded ? reflection : ''"
 			></div>
 		</transition>
 		<!-- /.reflection -->
 		<transition name="landingScene">
 			<div
 				v-show="useStore(featureSettings.isPracticeOn).value"
-				key="2"
-				class="practice"
+				:style="isBgLoaded ? practice : ''"
 			></div>
 		</transition>
 		<!-- /.practice -->
 		<transition name="landingScene">
 			<div
 				v-show="useStore(featureSettings.isChoiceOn).value"
-				key="3"
-				class="choice"
+				:style="isBgLoaded ? choice : ''"
 			></div>
 		</transition>
 		<!-- /.choice -->
@@ -29,6 +26,8 @@
 </template>
 
 <script setup lang="ts">
+	import { ref, computed, watch } from 'vue'
+
 	import { useStore } from '@nanostores/vue'
 	import featureSettings from '../../store/index.js'
 
@@ -38,14 +37,37 @@
 			required: true,
 		},
 	})
-	
+
+	const isBgLoaded = ref(false)
+	watch(
+		() => props.scene,
+		() => {
+			const img = new Image()
+			img.src = `https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}.svg`
+			img.onload = () => (isBgLoaded.value = true)
+		},
+		{ immediate: true }
+	)
+
+	const scene = computed(() => {
+		return `background-image: url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}.svg');`
+	})
+
+	const reflection = computed(() => {
+		return `background-image: url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}-reflection.svg');`
+	})
+	const practice = computed(() => {
+		return `background-image: url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}-practice.svg');`
+	})
+	const choice = computed(() => {
+		return `background-image: url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}-choice.svg');`
+	})
 </script>
 
 <style scoped>
 	.scene {
 		justify-self: center;
 		align-self: center;
-		background-image: url('https://fscjcel.blob.core.windows.net/testimgs/setting.svg');
 		display: grid;
 		grid-template-columns: 1fr;
 		grid-template-rows: 1fr;
@@ -77,15 +99,6 @@
 		width: 100%;
 	}
 
-	.reflection {
-		background-image: url('https://fscjcel.blob.core.windows.net/testimgs/setting-reflection.svg');
-	}
-	.practice {
-		background-image: url('https://fscjcel.blob.core.windows.net/testimgs/setting-practice.svg');
-	}
-	.choice {
-		background-image: url('https://fscjcel.blob.core.windows.net/testimgs/setting-choice.svg');
-	}
 	.landingScene-enter-from,
 	.landingScene-leave-to {
 		opacity: 0;
