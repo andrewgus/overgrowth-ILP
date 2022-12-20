@@ -5,6 +5,7 @@ $colors: (
   "blue": hsl(201, 100%, 28%),
 );
 $percntDiff: 5%;
+
 :root {
   --black: hsl(195, 4%, 18%);
   --darkGray: hsl(200, 2%, 35%);
@@ -12,7 +13,7 @@ $percntDiff: 5%;
   --offWhite: hsl(0, 0%, 98%);
   --white: hsl(0, 0%, 100%);
   --lightBlue: hsl(201, 100%, 97%);
-  --visitedLink: hsl(330, 50%, 40%);
+  --purple: hsl(330, 50%, 40%);
 
   @each $key, $val in $colors {
     --#{$key}-5: #{darken($val, ($percntDiff * 5))};
