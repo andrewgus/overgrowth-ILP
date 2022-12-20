@@ -1,6 +1,6 @@
 <template>
 	<div class="landing" :style="{ backgroundImage: `${bgGradient}` }">
-		<TheScene />
+		<TheScene :scene="image" />
 		<TitleCard :title="title" />
 		<TheIndicator />
 	</div>
@@ -15,6 +15,10 @@
 
 	const props = defineProps({
 		title: {
+			type: String,
+			required: true,
+		},
+		image: {
 			type: String,
 			required: true,
 		},

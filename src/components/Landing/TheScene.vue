@@ -31,6 +31,14 @@
 <script setup lang="ts">
 	import { useStore } from '@nanostores/vue'
 	import featureSettings from '../../store/index.js'
+
+	const props = defineProps({
+		scene: {
+			type: String,
+			required: true,
+		},
+	})
+	
 </script>
 
 <style scoped>

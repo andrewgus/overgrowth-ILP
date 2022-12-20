@@ -24,7 +24,7 @@
 
 <style scoped>
 	div {
-		margin: 0 auto;
+		margin: 0 auto var(--s1);
 	}
 	p {
 		display: block;
