@@ -1,14 +1,15 @@
 ---
 export interface Props {
 	heading: string
+	columnSet?: '6040' | '4060' | '50' | '7525' | '2575' | '30' | '25'
 }
 
-const { heading } = Astro.props
+const { heading, columnSet } = Astro.props
 ---
 
 <section>
 	<h2>{heading}</h2>
-	<div>
+	<div class={columnSet ? columnSet : ''}>
 		<slot />
 	</div>
 </section>
@@ -19,9 +20,11 @@ const { heading } = Astro.props
 		display: flex;
 		flex-flow: column;
 		align-items: center;
+		background-color: var(--white);
 	}
 	section + section {
-		border-top: 1px solid var(--darkGray);
+		border-top: 2px solid var(--darkGray);
+		background-color: var(--offWhite);
 	}
 	section > div {
 		margin: 0 auto;

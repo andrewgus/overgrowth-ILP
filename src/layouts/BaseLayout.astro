@@ -23,6 +23,7 @@ const { title, scene, color } = Astro.props
 		<main>
 			<article>
 				<TheLanding client:load title={title} image={scene} color={color} />
+				<nav></nav>
 				<slot />
 			</article>
 		</main>
@@ -32,6 +33,7 @@ const { title, scene, color } = Astro.props
 	html {
 		font-family: 'Atkinson Hyperlegible', sans-serif;
 		background-color: var(--white);
+		/* scroll-behavior: smooth; */
 		color: var(--black);
 		font-size: var(--s0);
 	}
@@ -54,3 +56,10 @@ const { title, scene, color } = Astro.props
 		line-height: 1.5;
 	}
 </style>
+
+<script>
+	const sections: NodeListOf<HTMLElement> =
+		document.querySelectorAll('article > section')
+
+	sections.forEach((s: HTMLElement, i: number) => (s.id = `section${i + 1}`))
+</script>
