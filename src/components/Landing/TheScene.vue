@@ -82,9 +82,9 @@
 			transparent 100%
 		);
 	}
-	@media only screen and (max-width: 30em) and (max-height: 700px) {
+	@media only screen and (max-width: 700px) and (max-height: 850px) {
 		.scene {
-			margin-bottom: var(--s2);
+			margin-bottom: var(--s4);
 			align-self: end;
 		}
 	}

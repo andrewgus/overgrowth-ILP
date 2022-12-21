@@ -11,4 +11,5 @@
   --s3: calc(var(--s2) * var(--ratio));
   --s4: calc(var(--s3) * var(--ratio));
   --s5: calc(var(--s4) * var(--ratio));
+  --transition: cubic-bezier(0.68, -0.3, 0.32, 1.03);
 }

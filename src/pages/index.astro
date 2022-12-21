@@ -1,13 +1,17 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
-import TheLanding from '../layouts/TheLanding.vue'
+import StaticContent from '../layouts/StaticContent.astro'
 ---
 
-<BaseLayout title='Introduction to Astronomy'>
-	<TheLanding
-		client:load
-		title='Introduction to Astronomy'
-		image='setting'
-		color='var(--green)'
-	/>
+<BaseLayout
+	title='Introduction to Astronomy'
+	scene='setting'
+	color='var(--green)'
+>
+	<StaticContent heading='Welcome to the Course'>
+		<p>In this course, we will&hellip;</p>
+	</StaticContent>
+	<StaticContent heading='Next, We will…'>
+		<p>Follow up...</p>
+	</StaticContent>
 </BaseLayout>

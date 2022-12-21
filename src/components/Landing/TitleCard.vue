@@ -2,29 +2,33 @@
 	<div class="titleCard">
 		<h1>{{ title }}</h1>
 		<p>Included in this lesson are&hellip;</p>
-		<div
-			class="options"
-			role="menubar"
-			aria-label="Options to toggle interactive features"
-		>
+		<ul class="options">
 			<ToggleFeature
 				@click="featureSettings.reflectionToggle"
 				:setting="useStore(featureSettings.isReflectionOn).value"
 				type="Reflection"
 			/>
-			<div role="separator"></div>
+			<div
+				role="separator"
+				aria-hidden="true"
+				aria-orientation="vertical"
+			></div>
 			<ToggleFeature
 				@click="featureSettings.practiceToggle"
 				:setting="useStore(featureSettings.isPracticeOn).value"
 				type="Practice"
 			/>
-			<div role="separator"></div>
+			<div
+				role="separator"
+				aria-hidden="true"
+				aria-orientation="vertical"
+			></div>
 			<ToggleFeature
 				@click="featureSettings.choiceToggle"
 				:setting="useStore(featureSettings.isChoiceOn).value"
 				type="Choice"
 			/>
-		</div>
+		</ul>
 		<!-- /.options -->
 	</div>
 	<!-- /.info -->
@@ -63,8 +67,12 @@
 		margin: 0;
 		text-align: center;
 	}
+	.titleCard p {
+		margin-bottom: var(--s-3);
+	}
 	.options {
-		/* max-width: 60ch; */
+		padding-left: 0;
+		margin: 0;
 		display: flex;
 		justify-content: center;
 		flex-flow: row nowrap;
@@ -72,7 +80,8 @@
 	}
 	.options > div[role='separator'] {
 		flex-grow: 0;
-		border: 1px solid var(--lightGray);
+		border: 1.25px solid var(--lightGray);
+
 		border-radius: var(--s5);
 	}
 </style>

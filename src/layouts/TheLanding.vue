@@ -42,7 +42,7 @@
 
 <style scoped>
 	header {
-		height: 100vh;
+		height: 95vh;
 		width: 100vw;
 		display: grid;
 		grid-template-columns: 1fr;

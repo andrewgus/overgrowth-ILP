@@ -1,16 +1,13 @@
 <template>
-	<SwitchGroup>
-		<div>
-			<SwitchLabel @click.stop>{{ type }}</SwitchLabel>
-			<Switch
-				v-model="enabled"
-				:class="enabled ? 'true' : 'false'"
-				class="switch"
-				role="menuitem"
-			>
-				<span aria-hidden="true">{{ enabled ? 'On' : 'Off' }}</span>
-			</Switch>
-		</div>
+	<SwitchGroup as="li">
+		<SwitchLabel @click.stop>{{ type }}</SwitchLabel>
+		<Switch
+			v-model="enabled"
+			:class="enabled ? 'true' : 'false'"
+			class="switch"
+		>
+			<span aria-hidden="true">{{ enabled ? 'On' : 'Off' }}</span>
+		</Switch>
 	</SwitchGroup>
 </template>
 
@@ -45,7 +42,8 @@
 </style>
 
 <style scoped>
-	div {
+	li {
+		list-style: none;
 		display: flex;
 		flex-flow: column nowrap;
 		align-items: center;
@@ -63,7 +61,7 @@
 		height: 4ch;
 		width: 4ch;
 		border-radius: 50%;
-		transition: all 0.33s cubic-bezier(0.68, -0.3, 0.32, 1.03);
+		transition: all 0.33s var(--transition);
 	}
 
 	.switch.true > span {
