@@ -1,10 +1,13 @@
 ---
 import '../styles/root.scss'
+import TheLanding from '../layouts/TheLanding.vue'
 export interface Props {
 	title: string
+	scene: string
+	color?: string
 }
 
-const { title } = Astro.props
+const { title, scene, color } = Astro.props
 ---
 
 <!DOCTYPE html>
@@ -18,7 +21,10 @@ const { title } = Astro.props
 	</head>
 	<body>
 		<main>
-			<slot />
+			<article>
+				<TheLanding client:load title={title} image={scene} color={color} />
+				<slot />
+			</article>
 		</main>
 	</body>
 </html>
@@ -36,5 +42,15 @@ const { title } = Astro.props
 		font-size: var(--s5);
 		margin-bottom: var(--s3);
 		font-weight: 800;
+	}
+	h2 {
+		font-size: var(--s4);
+		margin-bottom: var(--s3);
+		font-weight: 800;
+	}
+	p {
+		color: var(--black);
+
+		line-height: 1.5;
 	}
 </style>
