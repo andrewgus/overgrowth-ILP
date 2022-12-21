@@ -1,17 +1,24 @@
 <template>
 	<div class="titleCard">
 		<h1>{{ title }}</h1>
-		<div class="options">
+		<p>Included in this lesson are&hellip;</p>
+		<div
+			class="options"
+			role="menubar"
+			aria-label="Options to toggle interactive features"
+		>
 			<ToggleFeature
 				@click="featureSettings.reflectionToggle"
 				:setting="useStore(featureSettings.isReflectionOn).value"
 				type="Reflection"
 			/>
+			<div role="separator"></div>
 			<ToggleFeature
 				@click="featureSettings.practiceToggle"
 				:setting="useStore(featureSettings.isPracticeOn).value"
 				type="Practice"
 			/>
+			<div role="separator"></div>
 			<ToggleFeature
 				@click="featureSettings.choiceToggle"
 				:setting="useStore(featureSettings.isChoiceOn).value"
@@ -44,27 +51,28 @@
 		align-self: start;
 		display: flex;
 		flex-flow: column nowrap;
-		justify-content: center;
+		justify-content: space-between;
 		align-items: center;
 		border-radius: 30px;
-		background-color: rgba(255, 255, 255, 0.5);
-		filter: drop-shadow(0 0 var(--s1) white);
-		padding: var(--s2);
-		margin-top: var(--s3);
+		background-color: hsla(0deg, 0%, 98%, 0.5);
+		filter: drop-shadow(0 0 var(--s1) var(--white));
+		padding: var(--s0);
+		margin-top: var(--s2);
 	}
 	.titleCard h1 {
-		margin-top: 0;
+		margin: 0;
 		text-align: center;
 	}
 	.options {
-		max-width: 60ch;
+		/* max-width: 60ch; */
 		display: flex;
 		justify-content: center;
-		flex-wrap: wrap;
-		gap: var(--s1);
+		flex-flow: row nowrap;
+		gap: var(--s-5);
 	}
-	.options > * {
-		flex-grow: 1;
-		flex-basis: calc((20ch - 100%) * 999);
+	.options > div[role='separator'] {
+		flex-grow: 0;
+		border: 1px solid var(--lightGray);
+		border-radius: var(--s5);
 	}
 </style>

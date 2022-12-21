@@ -6,6 +6,7 @@
 				v-model="enabled"
 				:class="enabled ? 'true' : 'false'"
 				class="switch"
+				role="menuitem"
 			>
 				<span aria-hidden="true">{{ enabled ? 'On' : 'Off' }}</span>
 			</Switch>
@@ -36,7 +37,7 @@
 		display: inline-flex;
 		cursor: pointer;
 		border-radius: 100px;
-		width: 12ch;
+		width: 10ch;
 		border: 1px solid gray;
 		padding: 0;
 		background: white;
@@ -59,8 +60,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		height: 32px;
-		width: 32px;
+		height: 4ch;
+		width: 4ch;
 		border-radius: 50%;
 		transition: all 0.33s cubic-bezier(0.68, -0.3, 0.32, 1.03);
 	}
@@ -70,7 +71,7 @@
 		transform: translateX(0);
 	}
 	.switch.false > span {
-		transform: translateX(8ch);
+		transform: translateX(5.94ch);
 		color: #fff;
 		background: #c02e4c;
 	}

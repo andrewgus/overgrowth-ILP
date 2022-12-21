@@ -8,10 +8,6 @@ $colors: (
 );
 $percntDiff: 10%;
 
-@debug lightness(map.get($colors, "yellow"));
-@debug lightness(scale-color(map.get($colors, "yellow"), $lightness: - 50%));
-@debug lightness(scale-color(map.get($colors, "yellow"), $lightness: - ($percntDiff * 5)));
-
 :root {
   --black: hsl(195deg, 4%, 18%);
   --darkGray: hsl(200deg, 2%, 35%);
