@@ -24,12 +24,19 @@
 
 <style scoped>
 	div {
+		grid-area: 1/1/-1/-1;
+		align-self: end;
+		z-index: 999;
 		margin: 0 auto var(--s1);
 	}
 	p {
+		padding: var(--s-5);
 		display: block;
 		font-size: var(--s0);
 		margin: 0 auto;
+		background-color: hsla(0deg, 0%, 98%, 0.5);
+		filter: drop-shadow(0 0 var(--s1) var(--white));
+		border-radius: 30px;
 	}
 	.scrollArrow {
 		margin: var(--s-1) auto;
