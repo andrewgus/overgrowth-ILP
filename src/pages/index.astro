@@ -1,6 +1,8 @@
 ---
 import LibLayout from '../layouts/LibLayout.astro'
 
+// TODO: Set up NanoStore map to set key/name from Lesson and use here to create a title. e.g. if lesson is in the sci folder, set the key to sci and the name to Science.
+
 const allLessons = await Astro.glob('../pages/*/*.astro')
 
 const topicURLs = [

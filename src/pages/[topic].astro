@@ -1,6 +1,9 @@
 ---
 import LibLayout from '../layouts/LibLayout.astro'
 
+
+// TODO: Set up NanoStore map to set key/name from Lesson and use here to create a title. e.g. if lesson is in the sci folder, set the key to sci and the name to Science.
+
 export async function getStaticPaths() {
 	const allLessons = await Astro.glob('../pages/*/*.astro')
 
@@ -10,9 +13,10 @@ export async function getStaticPaths() {
 		const filteredLessons = allLessons.filter((lesson) =>
 			lesson.url?.includes(topic!)
 		)
+
 		return {
 			params: { topic },
-			props: { topicURLs, filteredLessons },
+			props: { filteredLessons },
 		}
 	})
 }
