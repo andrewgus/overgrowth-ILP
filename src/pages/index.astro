@@ -3,16 +3,28 @@ import LibLayout from '../layouts/LibLayout.astro'
 
 const allLessons = await Astro.glob('../pages/*/*.astro')
 
-const topicURL = allLessons.map((lesson) => lesson.url!.split('/').at(1))
+const topicURLs = [
+	...new Set(allLessons.map((lesson) => lesson.url!.split('/').at(1))),
+]
 
-const topicNamesMap: Map<string, string> = new Map([['sci', 'Science']])
+const topicNamesMap: Map<string, string> = new Map([
+	['sci', 'Science'],
+	['genEd', 'General Education'],
+	['art', 'Art'],
+])
 
-const topicTitles = topicURL.map((t) => topicNamesMap.get(t!))
+const topicTitles = topicURLs.map((t) => topicNamesMap.get(t!))
 ---
 
 <LibLayout title='All Topics'>
 	<!-- TODO: Create a card link component for accessing different topics -->
 	<div>
-		<a href={`${topicURL}`}>{topicTitles}</a>
+		{
+			topicTitles.map((title, i) => (
+				<div>
+					<a href={`${topicURLs[i]}`}>{title}</a>
+				</div>
+			))
+		}
 	</div>
 </LibLayout>

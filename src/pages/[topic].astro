@@ -3,10 +3,34 @@ import LibLayout from '../layouts/LibLayout.astro'
 
 export async function getStaticPaths() {
 	const allLessons = await Astro.glob('../pages/*/*.astro')
-  
+
+	const topicURLs = allLessons.map((lesson) => lesson.url!.split('/').at(1))
+
+	return topicURLs.map((topic) => {
+		const filteredLessons = allLessons.filter((lesson) =>
+			lesson.url?.includes(topic!)
+		)
+		return {
+			params: { topic },
+			props: { topicURLs, filteredLessons },
+		}
+	})
 }
+
+const { topic } = Astro.params
+const { filteredLessons } = Astro.props
 ---
 
-<LibLayout title='Test Topic'>
+<LibLayout title={topic!}>
+	<!-- TODO: Get Topic Name something, prob a map like how I did it for the Lib page (index.astro) -->
 	<p>Hello</p>
+	<p>Here are all of the Science interactive lessons&hellip;</p>
+	<ul>
+		<!-- TODO: Get Lesson Name somehow... -->
+		{
+			filteredLessons.map((fL: { url: string | URL }) => (
+				<a href={fL.url}>Something</a>
+			))
+		}
+	</ul>
 </LibLayout>
