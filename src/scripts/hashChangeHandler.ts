@@ -13,8 +13,6 @@ const obsCallback = function (entries: any) {
 
 	const location = window.location.toString().split('#')[0]
 
-	console.log(entry)
-
 	if (entry.target.nodeName === 'SECTION')
 		history.replaceState(null, '', `${location}#${entry.target.id}`)
 
@@ -24,7 +22,7 @@ const obsCallback = function (entries: any) {
 
 const obsOptions = {
 	root: null,
-	threshold: 1,
+	threshold: 0.8,
 }
 
 const observer = new IntersectionObserver(obsCallback, obsOptions)

@@ -13,7 +13,7 @@
 				:style="isBgLoaded ? practice : ''"
 			></div>
 		</transition>
-		<!-- /.practice -->
+		<!--isC/.practice -->
 		<transition name="landingScene">
 			<div
 				v-show="useStore(featureSettings.isChoiceOn).value"
@@ -36,6 +36,21 @@
 			type: String,
 			required: true,
 		},
+		isReflection: {
+			type: Boolean,
+			required: false,
+			default: true,
+		},
+		isPractice: {
+			type: Boolean,
+			required: false,
+			default: true,
+		},
+		isChoice: {
+			type: Boolean,
+			required: false,
+			default: true,
+		},
 	})
 
 	const isBgLoaded = ref(false)
@@ -57,7 +72,7 @@
 		return `background-image: url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}-practice.svg');`
 	})
 	const choice = computed(() => {
-		return `background-image: url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}-choice.svg');`
+		return `background-image: url('https://fscjcel.blob.core.windows.net/pisCatform-scenes/${props.scene}-choice.svg');`
 	})
 </script>
 

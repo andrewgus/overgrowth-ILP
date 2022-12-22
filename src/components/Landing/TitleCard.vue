@@ -5,7 +5,7 @@
 		<ul class="options">
 			<ToggleFeature
 				@click="featureSettings.reflectionToggle"
-				:setting="useStore(featureSettings.isReflectionOn).value"
+				:set="useStore(featureSettings.isReflectionOn).value"
 				type="Reflection"
 			/>
 			<div
@@ -15,7 +15,7 @@
 			></div>
 			<ToggleFeature
 				@click="featureSettings.practiceToggle"
-				:setting="useStore(featureSettings.isPracticeOn).value"
+				:set="useStore(featureSettings.isPracticeOn).value"
 				type="Practice"
 			/>
 			<div
@@ -25,7 +25,7 @@
 			></div>
 			<ToggleFeature
 				@click="featureSettings.choiceToggle"
-				:setting="useStore(featureSettings.isChoiceOn).value"
+				:set="useStore(featureSettings.isChoiceOn).value"
 				type="Choice"
 			/>
 		</ul>
@@ -81,7 +81,6 @@
 	.options > div[role='separator'] {
 		flex-grow: 0;
 		border: 1.25px solid var(--lightGray);
-
 		border-radius: var(--s5);
 	}
 </style>

@@ -1,7 +1,17 @@
 <template>
 	<header :style="{ backgroundImage: `${bgGradient}` }">
-		<TheScene :scene="image" />
-		<TitleCard :title="title" />
+		<TheScene
+			:scene="image"
+			:isReflection="isReflection"
+			:isPractice="isPractice"
+			:isChoice="isChoice"
+		/>
+		<TitleCard
+			:title="title"
+			:isReflection="isReflection"
+			:isPractice="isPractice"
+			:isChoice="isChoice"
+		/>
 		<TheIndicator />
 	</header>
 </template>
@@ -32,6 +42,19 @@
 		},
 		color: {
 			type: String,
+			default: 'white',
+		},
+		isReflection: {
+			type: Boolean,
+			default: true,
+		},
+		isPractice: {
+			type: Boolean,
+			default: true,
+		},
+		isChoice: {
+			type: Boolean,
+			default: true,
 		},
 	})
 
@@ -42,7 +65,7 @@
 
 <style scoped>
 	header {
-		height: 95vh;
+		min-height: 99vh;
 		width: 100vw;
 		display: grid;
 		grid-template-columns: 1fr;

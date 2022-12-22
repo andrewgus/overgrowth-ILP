@@ -20,13 +20,13 @@
 			type: String,
 			required: true,
 		},
-		setting: {
+		set: {
 			type: Boolean,
 			required: true,
 		},
 	})
 
-	const enabled = ref(props.setting)
+	const enabled = ref(props.set)
 </script>
 
 <style>
@@ -69,7 +69,7 @@
 		transform: translateX(0);
 	}
 	.switch.false > span {
-		transform: translateX(5.94ch);
+		transform: translateX(5.8ch);
 		color: #fff;
 		background: #c02e4c;
 	}

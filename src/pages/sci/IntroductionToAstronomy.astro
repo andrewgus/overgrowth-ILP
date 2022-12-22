@@ -1,0 +1,15 @@
+---
+import LessonLayout from '../../layouts/LessonLayout.astro'
+import StaticContent from '../../layouts/StaticContent.astro'
+
+const title = 'Introduction to Astronomy'
+---
+
+<LessonLayout title={title} scene='setting' gradientColor='var(--green)'>
+	<StaticContent heading='Welcome to the Course' columnSet='50'>
+		<p>In this course, we will&hellip;</p>
+	</StaticContent>
+	<StaticContent heading='Next, We will…' columnSet='50'>
+		<p>Follow up...</p>
+	</StaticContent>
+</LessonLayout>

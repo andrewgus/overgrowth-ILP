@@ -1,0 +1,12 @@
+---
+import LibLayout from '../layouts/LibLayout.astro'
+
+export async function getStaticPaths() {
+	const allLessons = await Astro.glob('../pages/*/*.astro')
+  
+}
+---
+
+<LibLayout title='Test Topic'>
+	<p>Hello</p>
+</LibLayout>

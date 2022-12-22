@@ -1,17 +1,18 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'
-import StaticContent from '../layouts/StaticContent.astro'
+import LibLayout from '../layouts/LibLayout.astro'
+
+const allLessons = await Astro.glob('../pages/*/*.astro')
+
+const topicURL = allLessons.map((lesson) => lesson.url!.split('/').at(1))
+
+const topicNamesMap: Map<string, string> = new Map([['sci', 'Science']])
+
+const topicTitles = topicURL.map((t) => topicNamesMap.get(t!))
 ---
 
-<BaseLayout
-	title='Introduction to Astronomy'
-	scene='setting'
-	color='var(--green)'
->
-	<StaticContent heading='Welcome to the Course' columnSet='50'>
-		<p>In this course, we will&hellip;</p>
-	</StaticContent>
-	<StaticContent heading='Next, We will…' columnSet='50'>
-		<p>Follow up...</p>
-	</StaticContent>
-</BaseLayout>
+<LibLayout title='All Topics'>
+	<!-- TODO: Create a card link component for accessing different topics -->
+	<div>
+		<a href={`${topicURL}`}>{topicTitles}</a>
+	</div>
+</LibLayout>

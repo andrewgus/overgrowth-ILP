@@ -4,10 +4,20 @@ import TheLanding from '../layouts/TheLanding.vue'
 export interface Props {
 	title: string
 	scene: string
-	color?: string
+	gradientColor?: string
+	isReflectionOn?: boolean
+	isPracticeOn?: boolean
+	isChoiceOn?: boolean
 }
 
-const { title, scene, color } = Astro.props
+const {
+	title,
+	scene,
+	gradientColor,
+	isReflectionOn,
+	isPracticeOn,
+	isChoiceOn,
+} = Astro.props
 ---
 
 <!DOCTYPE html>
@@ -22,7 +32,15 @@ const { title, scene, color } = Astro.props
 	<body>
 		<main>
 			<article>
-				<TheLanding client:load title={title} image={scene} color={color} />
+				<TheLanding
+					client:load
+					title={title}
+					image={scene}
+					color={gradientColor!}
+					isReflection={isReflectionOn!}
+					isPractice={isPracticeOn!}
+					isChoice={isChoiceOn!}
+				/>
 				<nav></nav>
 				<slot />
 			</article>
