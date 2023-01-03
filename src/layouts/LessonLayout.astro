@@ -1,0 +1,79 @@
+---
+import '../styles/root.scss'
+import TheLanding from '../layouts/TheLanding.vue'
+export interface Props {
+	title: string
+	scene: string
+	gradientColor?: string
+	isReflectionOn?: boolean
+	isPracticeOn?: boolean
+	isChoiceOn?: boolean
+}
+
+const {
+	title,
+	scene,
+	gradientColor,
+	isReflectionOn,
+	isPracticeOn,
+	isChoiceOn,
+} = Astro.props
+---
+
+<!DOCTYPE html>
+<html lang='en'>
+	<head>
+		<meta charset='UTF-8' />
+		<meta name='viewport' content='width=device-width' />
+		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+		<meta name='generator' content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<main>
+			<article>
+				<TheLanding
+					client:load
+					title={title}
+					image={scene}
+					color={gradientColor!}
+					isReflection={isReflectionOn!}
+					isPractice={isPracticeOn!}
+					isChoice={isChoiceOn!}
+				/>
+				<nav></nav>
+				<slot />
+			</article>
+		</main>
+		<script>
+			import '../scripts/hashChangeHandler.js'
+		</script>
+	</body>
+</html>
+<style is:global>
+	html {
+		font-family: 'Atkinson Hyperlegible', sans-serif;
+		background-color: var(--white);
+		scroll-behavior: smooth;
+		color: var(--black);
+		font-size: var(--s0);
+	}
+	body {
+		margin: 0;
+	}
+	h1 {
+		font-size: var(--s5);
+		margin-bottom: var(--s3);
+		font-weight: 800;
+	}
+	h2 {
+		font-size: var(--s4);
+		margin-bottom: var(--s3);
+		font-weight: 800;
+	}
+	p {
+		color: var(--black);
+
+		line-height: 1.5;
+	}
+</style>

@@ -1,23 +1,32 @@
 ---
-import Layout from '../layouts/Layout.astro'
-import TheLanding from '../layouts/TheLanding.vue'
+import LibLayout from '../layouts/LibLayout.astro'
+
+// TODO: Set up NanoStore map to set key/name from Lesson and use here to create a title. e.g. if lesson is in the sci folder, set the key to sci and the name to Science.
+
+const allLessons = await Astro.glob('../pages/*/*.astro')
+
+const topicURLs = [
+	...new Set(allLessons.map((lesson) => lesson.url!.split('/').at(1))),
+]
+
+const topicNamesMap: Map<string, string> = new Map([
+	['sci', 'Science'],
+	['genEd', 'General Education'],
+	['art', 'Art'],
+])
+
+const topicTitles = topicURLs.map((t) => topicNamesMap.get(t!))
 ---
 
-<Layout title='Overgrowth 1.0'>
-	<main>
-		<TheLanding client:load title='Introduction to Astronomy' />
-	</main>
-</Layout>
-
-<style>
-	main {
-		margin: auto;
-		padding: 1.5rem;
-		max-width: 60ch;
-	}
-	h1 {
-		font-size: var(--s5);
-		font-weight: 800;
-		margin: 0;
-	}
-</style>
+<LibLayout title='All Topics'>
+	<!-- TODO: Create a card link component for accessing different topics -->
+	<div>
+		{
+			topicTitles.map((title, i) => (
+				<div>
+					<a href={`${topicURLs[i]}`}>{title}</a>
+				</div>
+			))
+		}
+	</div>
+</LibLayout>
