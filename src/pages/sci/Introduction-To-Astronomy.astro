@@ -1,11 +1,11 @@
 ---
-import LessonLayout from '../../layouts/LessonLayout.astro'
+import TheLesson from '../../layouts/TheLesson.astro'
 import StaticContent from '../../layouts/StaticContent.astro'
 
 // TODO: Set up NanoStore map to set key/name from Lesson and use here to create a title. e.g. if lesson is in the sci folder, set the key to sci and the name to Science.
 ---
 
-<LessonLayout
+<TheLesson
 	title='Introduction to Astronomy'
 	scene='setting'
 	gradientColor='var(--green)'
@@ -16,4 +16,4 @@ import StaticContent from '../../layouts/StaticContent.astro'
 	<StaticContent heading='Next, We will…' columnSet='50'>
 		<p>Follow up...</p>
 	</StaticContent>
-</LessonLayout>
+</TheLesson>
