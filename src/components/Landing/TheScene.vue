@@ -72,7 +72,7 @@
 		return `background-image: url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}-practice.svg');`
 	})
 	const choice = computed(() => {
-		return `background-image: url('https://fscjcel.blob.core.windows.net/pisCatform-scenes/${props.scene}-choice.svg');`
+		return `background-image: url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}-choice.svg');`
 	})
 </script>
 
