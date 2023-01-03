@@ -1,66 +1,74 @@
 <template>
-	<h1>{{ title }}</h1>
-	<div class="toggleGroup">
-		<ToggleFeature
-			@click="featureSettings.reflectionToggle"
-			:setting="useStore(featureSettings.isReflectionOn).value"
-			name="Reflection"
+	<header :style="{ backgroundImage: `${bgGradient}` }">
+		<TheScene
+			:scene="image"
+			:isReflection="isReflection"
+			:isPractice="isPractice"
+			:isChoice="isChoice"
 		/>
-		<ToggleFeature
-			@click="featureSettings.practiceToggle"
-			:setting="useStore(featureSettings.isPracticeOn).value"
-			name="Practice"
+		<TitleCard
+			:title="title"
+			:isReflection="isReflection"
+			:isPractice="isPractice"
+			:isChoice="isChoice"
 		/>
-		<ToggleFeature
-			@click="featureSettings.choiceToggle"
-			:setting="useStore(featureSettings.isChoiceOn).value"
-			name="Choice"
-		/>
-	</div>
-	<!-- /.toggleGroup -->
-	<p>
-		{{
-			useStore(featureSettings.isReflectionOn).value
-				? 'Reflection On'
-				: ' Reflection Off'
-		}}
-	</p>
-	<p>
-		{{
-			useStore(featureSettings.isPracticeOn).value
-				? 'Practice On'
-				: ' Practice Off'
-		}}
-	</p>
-	<p>
-		{{
-			useStore(featureSettings.isChoiceOn).value ? 'Choice On' : ' Choice Off'
-		}}
-	</p>
+		<TheIndicator />
+	</header>
 </template>
 
 <script setup lang="ts">
 	import { computed } from 'vue'
 
-	import { useStore } from '@nanostores/vue'
-	import featureSettings from '../store/index.js'
+	import TheScene from '../components/Landing/TheScene.vue'
+	import TitleCard from '../components/Landing/TitleCard.vue'
+	import TheIndicator from '../components/Landing/TheIndicator.vue'
 
-	import ToggleFeature from '../components/Landing/ToggleSwitch.vue'
-
-	defineProps({
+	const props = defineProps({
 		title: {
 			type: String,
 			required: true,
 		},
+		image: {
+			type: String,
+			required: true,
+			validator(value: string) {
+				const exclude: string[] = ['-', ' ', '_']
+				exclude.some((str) => value.includes(str)) &&
+					console.error(
+						'TheLanding image prop string cannot include spaces, hypens, or underscores.'
+					)
+				return !exclude.some((str) => value.includes(str))
+			},
+		},
+		color: {
+			type: String,
+			default: 'white',
+		},
+		isReflection: {
+			type: Boolean,
+			default: true,
+		},
+		isPractice: {
+			type: Boolean,
+			default: true,
+		},
+		isChoice: {
+			type: Boolean,
+			default: true,
+		},
 	})
 
-	const setSetting = () => []
+	const bgGradient = computed(() => {
+		return `linear-gradient(180deg, white 0%, ${props.color} 50%, white 100%);`
+	})
 </script>
 
 <style scoped>
-	.toggleGroup {
-		display: flex;
-		flex-flow: row nowrap;
-		gap: 2rem;
+	header {
+		min-height: 99vh;
+		width: 100vw;
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr;
 	}
 </style>
