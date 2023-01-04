@@ -1,64 +1,44 @@
 <template>
 	<header :style="{ backgroundImage: `${bgGradient}` }">
 		<TheScene
-			:scene="image"
-			:isReflection="isReflection"
-			:isPractice="isPractice"
-			:isChoice="isChoice"
+			:scene="scene"
+			:isReflectionOn="isReflectionOn"
+			:isPracticeOn="isPracticeOn"
+			:isChoiceOn="isChoiceOn"
 		/>
 		<TitleCard
 			:title="title"
-			:isReflection="isReflection"
-			:isPractice="isPractice"
-			:isChoice="isChoice"
+			:isReflectionOn="isReflectionOn"
+			:isPracticeOn="isPracticeOn"
+			:isChoiceOn="isChoiceOn"
 		/>
 		<TheIndicator />
 	</header>
 </template>
 
 <script setup lang="ts">
-	import { computed } from 'vue'
+	import { computed, withDefaults } from 'vue'
 
 	import TheScene from '../components/Landing/TheScene.vue'
 	import TitleCard from '../components/Landing/TitleCard.vue'
 	import TheIndicator from '../components/Landing/TheIndicator.vue'
 
-	const props = defineProps({
-		title: {
-			type: String,
-			required: true,
-		},
-		image: {
-			type: String,
-			required: true,
-			validator(value: string) {
-				const exclude: string[] = ['-', ' ', '_']
-				exclude.some((str) => value.includes(str)) &&
-					console.error(
-						'TheLanding image prop string cannot include spaces, hypens, or underscores.'
-					)
-				return !exclude.some((str) => value.includes(str))
-			},
-		},
-		color: {
-			type: String,
-			default: 'white',
-		},
-		isReflection: {
-			type: Boolean,
-			default: true,
-		},
-		isPractice: {
-			type: Boolean,
-			default: true,
-		},
-		isChoice: {
-			type: Boolean,
-			default: true,
-		},
+	export interface Props {
+		title: string
+		scene: string
+		color?: string
+		isReflectionOn?: boolean
+		isPracticeOn?: boolean
+		isChoiceOn?: boolean
+	}
+
+	const props = withDefaults(defineProps<Props>(), {
+		color: 'white',
 	})
 
 	const bgGradient = computed(() => {
+		const gradient = `linear-gradient(180deg, white 0%, ${props.color} 50%, white 100%);`
+
 		return `linear-gradient(180deg, white 0%, ${props.color} 50%, white 100%);`
 	})
 </script>

@@ -1,50 +1,71 @@
 <template>
 	<div class="titleCard">
 		<h1>{{ title }}</h1>
-		<p>Included in this lesson are&hellip;</p>
-		<ul class="options">
-			<ToggleFeature
-				@click="featureSettings.reflectionToggle"
-				:set="useStore(featureSettings.isReflectionOn).value"
-				type="Reflection"
-			/>
-			<div
-				role="separator"
-				aria-hidden="true"
-				aria-orientation="vertical"
-			></div>
-			<ToggleFeature
-				@click="featureSettings.practiceToggle"
-				:set="useStore(featureSettings.isPracticeOn).value"
-				type="Practice"
-			/>
-			<div
-				role="separator"
-				aria-hidden="true"
-				aria-orientation="vertical"
-			></div>
-			<ToggleFeature
-				@click="featureSettings.choiceToggle"
-				:set="useStore(featureSettings.isChoiceOn).value"
-				type="Choice"
-			/>
-		</ul>
-		<!-- /.options -->
+		<div v-if="featuresOn">
+			<p>Included in this lesson are&hellip;</p>
+			<ul class="options">
+				<ToggleFeature
+					v-if="isReflectionOn"
+					@click="featureSettings.reflectionToggle"
+					:set="useStore(featureSettings.isReflectionOn).value"
+					type="Reflection"
+				/>
+				<div
+					v-if="
+						(isReflectionOn && isPracticeOn) || (isReflectionOn && isChoiceOn)
+					"
+					role="separator"
+					aria-hidden="true"
+					aria-orientation="vertical"
+				></div>
+				<ToggleFeature
+					v-if="isPracticeOn"
+					@click="featureSettings.practiceToggle"
+					:set="useStore(featureSettings.isPracticeOn).value"
+					type="Practice"
+				/>
+				<div
+					v-if="isPracticeOn && isChoiceOn"
+					role="separator"
+					aria-hidden="true"
+					aria-orientation="vertical"
+				></div>
+				<ToggleFeature
+					v-if="isChoiceOn"
+					@click="featureSettings.choiceToggle"
+					:set="useStore(featureSettings.isChoiceOn).value"
+					type="Choice"
+				/>
+			</ul>
+			<!-- /.options -->
+		</div>
 	</div>
 	<!-- /.info -->
 </template>
 
 <script setup lang="ts">
 	import { useStore } from '@nanostores/vue'
+	import { computed, withDefaults } from 'vue'
+	import { isChoiceOn } from '../../store/FeatureSettings'
 	import featureSettings from '../../store/index.js'
 
 	import ToggleFeature from '../base/ToggleSwitch.vue'
 
-	defineProps({
-		title: {
-			type: String,
-			required: true,
-		},
+	export interface Props {
+		title: string
+		isReflectionOn?: boolean
+		isPracticeOn?: boolean
+		isChoiceOn?: boolean
+	}
+
+	const props = withDefaults(defineProps<Props>(), {
+		isReflectionOn: false,
+		isPracticeOn: false,
+		isChoiceOn: false,
+	})
+
+	const featuresOn = computed(() => {
+		return props.isChoiceOn || props.isPracticeOn || props.isChoiceOn
 	})
 </script>
 

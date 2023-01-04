@@ -2,6 +2,8 @@
 	<div aria-hidden="true" class="scene" :style="scene">
 		<transition name="landingScene">
 			<div
+				v-if="isReflectionOn"
+				class="reflectionSwitch"
 				v-show="useStore(featureSettings.isReflectionOn).value"
 				:style="isBgLoaded ? reflection : ''"
 			></div>
@@ -9,13 +11,17 @@
 		<!-- /.reflection -->
 		<transition name="landingScene">
 			<div
+				v-if="isPracticeOn"
+				class="practiceSwitch"
 				v-show="useStore(featureSettings.isPracticeOn).value"
 				:style="isBgLoaded ? practice : ''"
 			></div>
 		</transition>
-		<!--isC/.practice -->
+		<!-- /.practice -->
 		<transition name="landingScene">
 			<div
+				v-if="isChoiceOn"
+				class="choiceSwitch"
 				v-show="useStore(featureSettings.isChoiceOn).value"
 				:style="isBgLoaded ? choice : ''"
 			></div>
@@ -26,31 +32,22 @@
 </template>
 
 <script setup lang="ts">
-	import { ref, computed, watchEffect } from 'vue'
+	import { ref, computed, watchEffect, withDefaults } from 'vue'
 
 	import { useStore } from '@nanostores/vue'
 	import featureSettings from '../../store/index.js'
 
-	const props = defineProps({
-		scene: {
-			type: String,
-			required: true,
-		},
-		isReflection: {
-			type: Boolean,
-			required: false,
-			default: true,
-		},
-		isPractice: {
-			type: Boolean,
-			required: false,
-			default: true,
-		},
-		isChoice: {
-			type: Boolean,
-			required: false,
-			default: true,
-		},
+	export interface Props {
+		scene: string
+		isReflectionOn?: boolean
+		isPracticeOn?: boolean
+		isChoiceOn?: boolean
+	}
+
+	const props = withDefaults(defineProps<Props>(), {
+		isReflectionOn: false,
+		isPracticeOn: false,
+		isChoiceOn: false,
 	})
 
 	const isBgLoaded = ref(false)
@@ -109,6 +106,15 @@
 		background-size: cover;
 		background-repeat: no-repeat;
 		width: 100%;
+	}
+	.reflectionSwitch {
+		background-image: transparent;
+	}
+	.choiceSwitch {
+		background-image: transparent;
+	}
+	.practiceSwitch {
+		background-image: transparent;
 	}
 
 	.landingScene-enter-from,
