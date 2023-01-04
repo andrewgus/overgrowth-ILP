@@ -3,7 +3,7 @@ const sections: NodeListOf<HTMLElement> =
 
 sections.forEach((s: HTMLElement, i: number) => (s.id = `section${i + 1}`))
 
-const obsSections = document.querySelectorAll('article > section')!
+const obsSections = document.querySelectorAll('article > section > h2')!
 const obsHeader = document.querySelector('header')!
 
 const obsCallback = function (entries: any) {
@@ -13,16 +13,20 @@ const obsCallback = function (entries: any) {
 
 	const location = window.location.toString().split('#')[0]
 
-	if (entry.target.nodeName === 'SECTION')
+	if (entry.target.nodeName === 'H2') {
+		document.getElementById('lessonNav')!.style.display = 'block'
 		history.replaceState(null, '', `${location}#${entry.target.id}`)
+	}
 
-	if (entry.target.nodeName === 'HEADER')
+	if (entry.target.nodeName === 'HEADER') {
+		document.getElementById('lessonNav')!.style.display = 'none'
 		history.replaceState(null, '', `${location}`)
+	}
 }
 
 const obsOptions = {
 	root: null,
-	threshold: 0.8,
+	threshold: 1,
 }
 
 const observer = new IntersectionObserver(obsCallback, obsOptions)
