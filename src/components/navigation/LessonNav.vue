@@ -16,10 +16,11 @@
 <style scoped>
 	nav {
 		display: block;
-		background-color: hsla(0, 0%, 100%, 0.9);
-		border-width: 1px 0 1px 0;
+		background-color: hsla(0, 0%, 100%, 0.95);
+		padding: var(--s-5) 0;
+		border-width: 0 0 1px 0;
 		border-style: solid;
-		border-color: var(--darkGray);
+		border-color: var(--lightGray);
 		width: 100%;
 		position: sticky;
 		top: 0;
@@ -29,7 +30,22 @@
 		max-width: 72ch;
 	}
 	nav p {
+		background-color: hsla(0, 0%, 100%, 1);
 		font-size: var(--s-1);
+		max-width: 50%;
+		text-overflow: ellipsis;
+		-webkit-mask-image: linear-gradient(
+			transparent 0%,
+			white 20%,
+			white 80%,
+			transparent 100%
+		);
+		mask-image: linear-gradient(
+			transparent 0%,
+			white 20%,
+			white 80%,
+			transparent 100%
+		);
 	}
 	.lessonNav-enter-from,
 	.lessonNav-leave-to {
