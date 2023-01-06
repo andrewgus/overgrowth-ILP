@@ -5,27 +5,13 @@ const isPracticeOn = atom(true)
 const isChoiceOn = atom(true)
 
 const reflectionToggle = () => {
-	if (isReflectionOn.get() === true) {
-		isReflectionOn.set(false)
-	} else {
-		isReflectionOn.set(true)
-	}
+	isReflectionOn.set(!isReflectionOn.get())
 }
-
 const practiceToggle = () => {
-	if (isPracticeOn.get() === true) {
-		isPracticeOn.set(false)
-	} else {
-		isPracticeOn.set(true)
-	}
+	isPracticeOn.set(!isPracticeOn.get())
 }
-
 const choiceToggle = () => {
-	if (isChoiceOn.get() === true) {
-		isChoiceOn.set(false)
-	} else {
-		isChoiceOn.set(true)
-	}
+	isChoiceOn.set(!isChoiceOn.get())
 }
 
 export {

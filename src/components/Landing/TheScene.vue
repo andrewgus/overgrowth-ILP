@@ -35,7 +35,7 @@
 	import { ref, computed, watchEffect, withDefaults } from 'vue'
 
 	import { useStore } from '@nanostores/vue'
-	import featureSettings from '../../store/index.js'
+	import { featureSettings } from '../../store/index.js'
 
 	export interface Props {
 		scene: string
@@ -116,7 +116,6 @@
 	.practiceSwitch {
 		background-image: transparent;
 	}
-
 	.landingScene-enter-from,
 	.landingScene-leave-to {
 		opacity: 0;

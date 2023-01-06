@@ -46,8 +46,7 @@
 <script setup lang="ts">
 	import { useStore } from '@nanostores/vue'
 	import { computed, withDefaults } from 'vue'
-	import { isChoiceOn } from '../../store/FeatureSettings'
-	import featureSettings from '../../store/index.js'
+	import { featureSettings } from '../../store/index.js'
 
 	import ToggleFeature from '../base/ToggleSwitch.vue'
 

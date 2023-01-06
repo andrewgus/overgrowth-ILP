@@ -37,8 +37,6 @@
 	})
 
 	const bgGradient = computed(() => {
-		const gradient = `linear-gradient(180deg, white 0%, ${props.color} 50%, white 100%);`
-
 		return `linear-gradient(180deg, white 0%, ${props.color} 50%, white 100%);`
 	})
 </script>

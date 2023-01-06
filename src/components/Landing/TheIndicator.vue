@@ -20,8 +20,6 @@
 	</div>
 </template>
 
-<script setup lang="ts"></script>
-
 <style scoped>
 	div {
 		grid-area: 1/1/-1/-1;
