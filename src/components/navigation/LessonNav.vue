@@ -6,7 +6,34 @@
 					Currently on:
 					{{ useStore(contentQuery.contentTitle).value }}
 				</p>
+				<ul>
+					<!-- TODO: WORK OUT BUGS BELOW -->
+					<li
+						v-for="section in useStore(contentQuery.allSections).value"
+						:key="section.id"
+					>
+						<a :href="`#${section.id}`">{{ section.title }}</a>
+					</li>
+				</ul>
 			</div>
+			<Menu>
+				<MenuButton>Let&rsquo;s go elsewhere&hellip;</MenuButton>
+				<MenuItems>
+					<MenuItem v-slot="{ active }">
+						<a :class="{ 'bg-blue-500': active }" href="/account-settings">
+							Account settings
+						</a>
+					</MenuItem>
+					<MenuItem v-slot="{ active }">
+						<a :class="{ 'bg-blue-500': active }" href="/account-settings">
+							Documentation
+						</a>
+					</MenuItem>
+					<MenuItem disabled>
+						<span class="opacity-75">Invite a friend (coming soon!)</span>
+					</MenuItem>
+				</MenuItems>
+			</Menu>
 		</nav>
 	</transition>
 </template>
@@ -14,6 +41,7 @@
 <script setup lang="ts">
 	import { useStore } from '@nanostores/vue'
 	import { contentQuery } from '../../store/index.js'
+	import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 </script>
 
 <style scoped>

@@ -1,10 +1,23 @@
 import { useStore } from '@nanostores/vue'
+
 import { contentQuery } from '../store/index.js'
 
 const sections: NodeListOf<HTMLElement> =
 	document.querySelectorAll('article > section')
 
 sections.forEach((s: HTMLElement, i: number) => (s.id = `section${i + 1}`))
+
+let titles: string[] = []
+let sectionIds: string[] = []
+sections.forEach((s: HTMLElement) => {
+	titles.push(s.querySelector('h2')!.textContent!)
+	sectionIds.push(s.id)
+})
+
+for (const [i, section] of sectionIds.entries()) {
+	contentQuery.setAllSections(section, titles[i])
+}
+// send this (above lines 10-15) to LocationStore
 
 const obsSections: NodeListOf<HTMLElement> =
 	document.querySelectorAll('article > section')!
@@ -32,7 +45,7 @@ const obsCallback = function (entries: any) {
 const obsOptions = {
 	root: null,
 	threshold: 0,
-	rootMargin: '0px 0px -80% 0px',
+	rootMargin: '0px 0px -90% 0px',
 }
 
 const observer = new IntersectionObserver(obsCallback, obsOptions)
