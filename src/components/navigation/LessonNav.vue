@@ -2,7 +2,10 @@
 	<transition name="lessonNav">
 		<nav v-show="useStore(contentQuery.isOnContent).value" id="lessonNav">
 			<div>
-				<p>Currently on: {{ useStore(contentQuery.contentTitle) }}</p>
+				<p>
+					Currently on:
+					{{ useStore(contentQuery.contentTitle).value }}
+				</p>
 			</div>
 		</nav>
 	</transition>
@@ -32,7 +35,9 @@
 	nav p {
 		background-color: hsla(0, 0%, 100%, 1);
 		font-size: var(--s-1);
-		max-width: 50%;
+		max-width: 40%;
+		overflow: hidden;
+		white-space: nowrap;
 		text-overflow: ellipsis;
 		-webkit-mask-image: linear-gradient(
 			transparent 0%,
