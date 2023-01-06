@@ -10,9 +10,9 @@
 					<!-- TODO: WORK OUT BUGS BELOW -->
 					<li
 						v-for="section in useStore(contentQuery.allSections).value"
-						:key="section.id"
+						:key="section?.sectionId"
 					>
-						<a :href="`#${section.id}`">{{ section.title }}</a>
+						<a :href="`#${section?.sectionId}`">{{ section?.title }}</a>
 					</li>
 				</ul>
 			</div>

@@ -17,18 +17,20 @@ const setCurrentLocationTitle = (locationId: string) => {
 
 // TODO: WORK OUT BUGS BELOW
 export interface SectionMap {
-	section:
-		| string
-		| {
-				id: string
-				title: string
-		  }
+	id?: {
+		sectionId: string
+		title: string
+	}
 }
 
-const allSections = map<SectionMap>({})
+let allSections = map<SectionMap>({})
 
-const setAllSections = (id: string, title: string) => {
-	allSections.setKey(id, { id, title })
+const setAllSections = (
+	id: keyof SectionMap,
+	sectionId: string,
+	title: string
+) => {
+	allSections.setKey(id, { sectionId, title })
 }
 
 export {

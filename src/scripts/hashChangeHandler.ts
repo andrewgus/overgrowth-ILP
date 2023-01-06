@@ -7,50 +7,49 @@ const sections: NodeListOf<HTMLElement> =
 
 sections.forEach((s: HTMLElement, i: number) => (s.id = `section${i + 1}`))
 
+// Sending all sections and their associated ID to store for LessonNav
 let titles: string[] = []
 let sectionIds: string[] = []
 sections.forEach((s: HTMLElement) => {
 	titles.push(s.querySelector('h2')!.textContent!)
 	sectionIds.push(s.id)
 })
-
 for (const [i, section] of sectionIds.entries()) {
-	contentQuery.setAllSections(section, titles[i])
+	contentQuery.setAllSections(section, section, titles[i])
 }
-// send this (above lines 10-15) to LocationStore
 
+// Observer for Header & sections to update URL hash value w/ scroll
 const obsSections: NodeListOf<HTMLElement> =
 	document.querySelectorAll('article > section')!
 const obsHeader: HTMLElement = document.querySelector('header')!
 
 const obsCallback = function (entries: any) {
 	const [entry] = entries
-
 	if (!entry.isIntersecting) return
-
 	const location = window.location.toString().split('#')[0]
 
 	if (entry.target.nodeName === 'SECTION') {
-		if (!useStore(contentQuery.isOnContent).value) contentQuery.toggleNavShown()
 		history.replaceState(null, '', `${location}#${entry.target.id}`)
+		// Also updating store to toggle LessonNav
+		if (!useStore(contentQuery.isOnContent).value) contentQuery.toggleNavShown()
 		contentQuery.setCurrentLocationTitle(entry.target.id)
 	}
 
 	if (entry.target.nodeName === 'HEADER') {
-		if (useStore(contentQuery.isOnContent).value) contentQuery.toggleNavShown()
 		history.replaceState(null, '', `${location}`)
+		// Also updating store to toggle LessonNav
+		if (useStore(contentQuery.isOnContent).value) contentQuery.toggleNavShown()
 	}
 }
-
 const obsOptions = {
 	root: null,
 	threshold: 0,
 	rootMargin: '0px 0px -90% 0px',
 }
-
 const observer = new IntersectionObserver(obsCallback, obsOptions)
 
 obsSections.forEach((section) => observer.observe(section))
+
 observer.observe(obsHeader)
 
 export {}
