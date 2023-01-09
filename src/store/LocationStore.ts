@@ -1,41 +1,38 @@
 import { atom, map } from 'nanostores'
 
+// Used for determining if user is on content vs header
 const isOnContent = atom(false)
 
 const toggleNavShown = () => {
 	isOnContent.set(!isOnContent.get())
 }
 
-const contentTitle = atom('')
+// Used to set the current section title for the LessonNav
+const currSectionTitle = atom('')
 
 const setCurrentLocationTitle = (locationId: string) => {
 	const sectionTitle = document
 		.getElementById(locationId)
 		?.querySelector('h2')?.textContent
-	contentTitle.set(sectionTitle as string)
+	currSectionTitle.set(sectionTitle as string)
 }
 
-// TODO: WORK OUT BUGS BELOW
-export interface SectionMap {
-	id?: {
+// Used to create a map for all sections to create LessonNav links
+interface SectionMap {
+	[key: string]: {
 		sectionId: string
 		title: string
 	}
 }
-
 let allSections = map<SectionMap>({})
 
-const setAllSections = (
-	id: keyof SectionMap,
-	sectionId: string,
-	title: string
-) => {
-	allSections.setKey(id, { sectionId, title })
+const setAllSections = (sectionId: string, title: string) => {
+	allSections.setKey(sectionId, { sectionId, title })
 }
 
 export {
 	isOnContent,
-	contentTitle,
+	currSectionTitle,
 	allSections,
 	setAllSections,
 	toggleNavShown,

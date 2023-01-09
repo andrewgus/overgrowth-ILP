@@ -14,8 +14,8 @@ sections.forEach((s: HTMLElement) => {
 	titles.push(s.querySelector('h2')!.textContent!)
 	sectionIds.push(s.id)
 })
-for (const [i, section] of sectionIds.entries()) {
-	contentQuery.setAllSections(section, section, titles[i])
+for (const [i, sectionId] of sectionIds.entries()) {
+	contentQuery.setAllSections(sectionId, titles[i])
 }
 
 // Observer for Header & sections to update URL hash value w/ scroll

@@ -4,36 +4,24 @@
 			<div>
 				<p>
 					Currently on:
-					{{ useStore(contentQuery.contentTitle).value }}
+					{{ useStore(contentQuery.currSectionTitle).value }}
 				</p>
-				<ul>
-					<!-- TODO: WORK OUT BUGS BELOW -->
-					<li
-						v-for="section in useStore(contentQuery.allSections).value"
-						:key="section?.sectionId"
-					>
-						<a :href="`#${section?.sectionId}`">{{ section?.title }}</a>
-					</li>
-				</ul>
+				<!-- TODO: Fix hydration issue -->
+				<Menu v-slot="{ open }">
+					<MenuButton>{{
+						!open ? `Let&rsquo;s go elsewhere&hellip;` : 'Close menu'
+					}}</MenuButton>
+					<MenuItems as="ol">
+						<MenuItem
+							as="li"
+							v-for="navItem in navItems"
+							:key="navItem!.sectionId"
+						>
+							<a :href="`#${navItem!.sectionId}`">{{ navItem!.title }}</a>
+						</MenuItem>
+					</MenuItems>
+				</Menu>
 			</div>
-			<Menu>
-				<MenuButton>Let&rsquo;s go elsewhere&hellip;</MenuButton>
-				<MenuItems>
-					<MenuItem v-slot="{ active }">
-						<a :class="{ 'bg-blue-500': active }" href="/account-settings">
-							Account settings
-						</a>
-					</MenuItem>
-					<MenuItem v-slot="{ active }">
-						<a :class="{ 'bg-blue-500': active }" href="/account-settings">
-							Documentation
-						</a>
-					</MenuItem>
-					<MenuItem disabled>
-						<span class="opacity-75">Invite a friend (coming soon!)</span>
-					</MenuItem>
-				</MenuItems>
-			</Menu>
 		</nav>
 	</transition>
 </template>
@@ -42,6 +30,11 @@
 	import { useStore } from '@nanostores/vue'
 	import { contentQuery } from '../../store/index.js'
 	import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+	import { computed } from 'vue'
+
+	const navItems = computed(() => {
+		return useStore(contentQuery.allSections).value
+	})
 </script>
 
 <style scoped>
@@ -57,28 +50,33 @@
 		top: 0;
 	}
 	nav > div {
-		margin: 0 auto;
 		max-width: 72ch;
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
 	}
-	nav p {
-		background-color: hsla(0, 0%, 100%, 1);
+	div > button {
+		justify-self: end;
+		box-shadow: none;
+		border: 1px solid var(--darkGray);
+		padding: var(--s-5);
 		font-size: var(--s-1);
-		max-width: 40%;
+		background-color: var(--lightBlue);
+		border-radius: 6px;
+		display: inline-block;
+	}
+	div > ol {
+		grid-area: 2/1/2/-1;
+	}
+	div > ol > li + li {
+		margin-top: var(--s-3);
+	}
+	div > p {
+		font-size: var(--s-1);
+		max-width: 40ch;
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
-		-webkit-mask-image: linear-gradient(
-			transparent 0%,
-			white 20%,
-			white 80%,
-			transparent 100%
-		);
-		mask-image: linear-gradient(
-			transparent 0%,
-			white 20%,
-			white 80%,
-			transparent 100%
-		);
 	}
 	.lessonNav-enter-from,
 	.lessonNav-leave-to {
