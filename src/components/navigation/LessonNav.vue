@@ -35,10 +35,10 @@
 
 	onMounted(() => {
 		isOnContent.value = useStore(contentQuery.isOnContent).value
-	})
 
-	watchEffect(() => {
-		isOnContent.value = useStore(contentQuery.isOnContent).value
+		watchEffect(() => {
+			isOnContent.value = useStore(contentQuery.isOnContent).value
+		})
 	})
 
 	const navItems = computed(() => {
@@ -81,7 +81,6 @@
 		margin-top: var(--s-3);
 	}
 	div > p {
-		background-color: var(--white);
 		font-size: var(--s-1);
 		max-width: 40ch;
 		overflow: hidden;

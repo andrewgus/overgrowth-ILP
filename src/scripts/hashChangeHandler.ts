@@ -20,9 +20,7 @@ for (const [i, sectionId] of sectionIds.entries()) {
 const location = window.location.toString()
 const baseURL = location.split('#')[0]
 
-if (location.includes('#section')) {
-	contentQuery.isOnContent.set(true)
-}
+if (location.includes('#section')) contentQuery.isOnContent.set(true)
 
 // Observer for Header & sections to update URL hash value w/ scroll
 const obsSections: NodeListOf<HTMLElement> =
