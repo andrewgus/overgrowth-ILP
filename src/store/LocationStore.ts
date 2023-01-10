@@ -1,4 +1,4 @@
-import { atom, map } from 'nanostores'
+import { atom, map, computed } from 'nanostores'
 
 // Used to determine whether user is on content vs header
 const isOnContent = atom(false)
@@ -6,6 +6,12 @@ const isOnContent = atom(false)
 const toggleNavShown = () => {
 	isOnContent.set(!isOnContent.get())
 }
+
+/* TODO: 
+
+Change currSectionTitle to set title by filtering through the allSections map and grabbing the title that relates to the hash.
+
+*/
 
 // Used to set the current section title for the LessonNav
 const currSectionTitle = atom('')

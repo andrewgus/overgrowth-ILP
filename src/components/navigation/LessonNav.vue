@@ -5,6 +5,7 @@
 				<p>
 					Currently on:
 					{{ useStore(contentQuery.currSectionTitle).value }}
+					{{ currSectionTitle }}
 				</p>
 				<Menu v-slot="{ open }">
 					<MenuButton>{{
@@ -43,6 +44,10 @@
 
 	const navItems = computed(() => {
 		return useStore(contentQuery.allSections).value
+	})
+
+	const currSectionTitle = computed(() => {
+		console.log(useStore(contentQuery.allSections).value)
 	})
 </script>
 
