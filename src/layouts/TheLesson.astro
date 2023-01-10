@@ -28,6 +28,9 @@ const {
 		<meta name='viewport' content='width=device-width' />
 		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
 		<meta name='generator' content={Astro.generator} />
+		<script>
+			import '../scripts/hashChangeHandler.js'
+		</script>
 		<title>{title}</title>
 	</head>
 	<body>
@@ -46,9 +49,6 @@ const {
 				<slot />
 			</article>
 		</main>
-		<script>
-			import '../scripts/hashChangeHandler.js'
-		</script>
 	</body>
 </html>
 <style is:global>

@@ -16,8 +16,13 @@ sections.forEach((s: HTMLElement) => {
 for (const [i, sectionId] of sectionIds.entries()) {
 	contentQuery.setAllSections(sectionId, titles[i])
 }
+
 const location = window.location.toString()
 const baseURL = location.split('#')[0]
+
+if (location.includes('#section')) {
+	contentQuery.isOnContent.set(true)
+}
 
 // Observer for Header & sections to update URL hash value w/ scroll
 const obsSections: NodeListOf<HTMLElement> =
@@ -31,13 +36,14 @@ const obsCallback = function (entries: any) {
 	if (entry.target.nodeName === 'SECTION') {
 		history.replaceState(null, '', `${baseURL}#${entry.target.id}`)
 		// Also updating store to toggle LessonNav
-		// if (!useStore(contentQuery.isOnContent).value) contentQuery.toggleNavShown()
+		if (!useStore(contentQuery.isOnContent).value) contentQuery.toggleNavShown()
 		contentQuery.setCurrentLocationTitle(entry.target.id)
 	}
 
 	if (entry.target.nodeName === 'HEADER') {
 		history.replaceState(null, '', `${baseURL}`)
 		// Also updating store to toggle LessonNav
+		if (useStore(contentQuery.isOnContent).value) contentQuery.toggleNavShown()
 		contentQuery.setCurrentLocationTitle('')
 	}
 }

@@ -1,12 +1,19 @@
 import { atom, map } from 'nanostores'
 
+// Used to determine whether user is on content vs header
+const isOnContent = atom(false)
+
+const toggleNavShown = () => {
+	isOnContent.set(!isOnContent.get())
+}
+
 // Used to set the current section title for the LessonNav
 const currSectionTitle = atom('')
 
 const setCurrentLocationTitle = (locationId: string) => {
-	const sectionTitle = document
-		.getElementById(locationId)
-		?.querySelector('h2')?.textContent
+	const sectionTitle = locationId
+		? document.getElementById(locationId)!.querySelector('h2')!.textContent
+		: ''
 	currSectionTitle.set(sectionTitle as string)
 }
 
@@ -24,8 +31,10 @@ const setAllSections = (sectionId: string, title: string) => {
 }
 
 export {
+	isOnContent,
+	toggleNavShown,
 	currSectionTitle,
+	setCurrentLocationTitle,
 	allSections,
 	setAllSections,
-	setCurrentLocationTitle,
 }

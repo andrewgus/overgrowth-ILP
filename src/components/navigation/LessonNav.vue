@@ -1,14 +1,14 @@
 <template>
 	<transition name="lessonNav">
-		<nav id="lessonNav">
+		<nav v-show="isOnContent" id="lessonNav">
 			<div>
-				<p v-show="!!useStore(contentQuery.currSectionTitle).value">
+				<p>
 					Currently on:
 					{{ useStore(contentQuery.currSectionTitle).value }}
 				</p>
 				<Menu v-slot="{ open }">
 					<MenuButton>{{
-						!open ? `Let&rsquo;s go elsewhere&hellip;` : 'Close menu'
+						!open ? `Take me to&hellip;` : 'Close menu'
 					}}</MenuButton>
 					<MenuItems as="ol">
 						<MenuItem
@@ -29,10 +29,19 @@
 	import { useStore } from '@nanostores/vue'
 	import { contentQuery } from '../../store/index.js'
 	import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
-	import { computed } from 'vue'
+	import { ref, computed, onMounted, watchEffect } from 'vue'
+
+	const isOnContent = ref()
+
+	onMounted(() => {
+		isOnContent.value = useStore(contentQuery.isOnContent).value
+	})
+
+	watchEffect(() => {
+		isOnContent.value = useStore(contentQuery.isOnContent).value
+	})
 
 	const navItems = computed(() => {
-		console.log(window.location)
 		return useStore(contentQuery.allSections).value
 	})
 </script>
