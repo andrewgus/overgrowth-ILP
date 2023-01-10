@@ -1,5 +1,4 @@
 import { useStore } from '@nanostores/vue'
-
 import { contentQuery } from '../store/index.js'
 
 const sections: NodeListOf<HTMLElement> =
@@ -17,6 +16,8 @@ sections.forEach((s: HTMLElement) => {
 for (const [i, sectionId] of sectionIds.entries()) {
 	contentQuery.setAllSections(sectionId, titles[i])
 }
+const location = window.location.toString()
+const baseURL = location.split('#')[0]
 
 // Observer for Header & sections to update URL hash value w/ scroll
 const obsSections: NodeListOf<HTMLElement> =
@@ -26,19 +27,18 @@ const obsHeader: HTMLElement = document.querySelector('header')!
 const obsCallback = function (entries: any) {
 	const [entry] = entries
 	if (!entry.isIntersecting) return
-	const location = window.location.toString().split('#')[0]
 
 	if (entry.target.nodeName === 'SECTION') {
-		history.replaceState(null, '', `${location}#${entry.target.id}`)
+		history.replaceState(null, '', `${baseURL}#${entry.target.id}`)
 		// Also updating store to toggle LessonNav
-		if (!useStore(contentQuery.isOnContent).value) contentQuery.toggleNavShown()
+		// if (!useStore(contentQuery.isOnContent).value) contentQuery.toggleNavShown()
 		contentQuery.setCurrentLocationTitle(entry.target.id)
 	}
 
 	if (entry.target.nodeName === 'HEADER') {
-		history.replaceState(null, '', `${location}`)
+		history.replaceState(null, '', `${baseURL}`)
 		// Also updating store to toggle LessonNav
-		if (useStore(contentQuery.isOnContent).value) contentQuery.toggleNavShown()
+		contentQuery.setCurrentLocationTitle('')
 	}
 }
 const obsOptions = {

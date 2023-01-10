@@ -29,6 +29,9 @@ const { heading, columnSet } = Astro.props
 	}
 	section > div {
 		margin: 0 auto;
-		max-width: 72ch;
+		max-width: 80ch;
+	}
+	section > div > :global(p) {
+		max-width: 60ch;
 	}
 </style>

@@ -1,12 +1,11 @@
 <template>
 	<transition name="lessonNav">
-		<nav v-show="useStore(contentQuery.isOnContent).value" id="lessonNav">
+		<nav id="lessonNav">
 			<div>
-				<p>
+				<p v-show="!!useStore(contentQuery.currSectionTitle).value">
 					Currently on:
 					{{ useStore(contentQuery.currSectionTitle).value }}
 				</p>
-				<!-- TODO: Fix hydration issue -->
 				<Menu v-slot="{ open }">
 					<MenuButton>{{
 						!open ? `Let&rsquo;s go elsewhere&hellip;` : 'Close menu'
@@ -33,6 +32,7 @@
 	import { computed } from 'vue'
 
 	const navItems = computed(() => {
+		console.log(window.location)
 		return useStore(contentQuery.allSections).value
 	})
 </script>
@@ -42,9 +42,6 @@
 		display: block;
 		background-color: hsla(0, 0%, 100%, 0.95);
 		padding: var(--s-5) 0;
-		border-width: 0 0 1px 0;
-		border-style: solid;
-		border-color: var(--lightGray);
 		width: 100%;
 		position: sticky;
 		top: 0;
@@ -53,9 +50,11 @@
 		max-width: 72ch;
 		margin: 0 auto;
 		display: grid;
+		align-items: center;
 		grid-template-columns: 1fr 1fr;
 	}
 	div > button {
+		grid-area: 1/2/2/3;
 		justify-self: end;
 		box-shadow: none;
 		border: 1px solid var(--darkGray);
@@ -66,12 +65,14 @@
 		display: inline-block;
 	}
 	div > ol {
-		grid-area: 2/1/2/-1;
+		grid-area: 2/1/3/3;
+		justify-self: center;
 	}
 	div > ol > li + li {
 		margin-top: var(--s-3);
 	}
 	div > p {
+		background-color: var(--white);
 		font-size: var(--s-1);
 		max-width: 40ch;
 		overflow: hidden;
