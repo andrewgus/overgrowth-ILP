@@ -7,20 +7,16 @@ const toggleNavShown = () => {
 	isOnContent.set(!isOnContent.get())
 }
 
-/* TODO: 
-
-Change currSectionTitle to set title by filtering through the allSections map and grabbing the title that relates to the hash.
-
-*/
-
 // Used to set the current section title for the LessonNav
 const currSectionTitle = atom('')
+const currSectionId = atom('')
 
-const setCurrentLocationTitle = (locationId: string) => {
+const setCurrentLocation = (locationId: string) => {
 	const sectionTitle = locationId
 		? document.getElementById(locationId)!.querySelector('h2')!.textContent
 		: ''
 	currSectionTitle.set(sectionTitle as string)
+	currSectionId.set(locationId)
 }
 
 // Used to create a map for all sections to create LessonNav links
@@ -40,7 +36,8 @@ export {
 	isOnContent,
 	toggleNavShown,
 	currSectionTitle,
-	setCurrentLocationTitle,
+	currSectionId,
+	setCurrentLocation,
 	allSections,
 	setAllSections,
 }

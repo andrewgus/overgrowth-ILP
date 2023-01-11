@@ -2,8 +2,6 @@
 import LibLayout from '../layouts/LibLayout.astro'
 import LibraryTopics from '../scripts/LibraryTopics.js'
 
-// TODO: Set up NanoStore map to set key/name from Lesson and use here to create a title. e.g. if lesson is in the sci folder, set the key to sci and the name to Science.
-
 const allLessons = await Astro.glob('../pages/*/*.astro')
 
 const topicURLs = [
@@ -14,7 +12,6 @@ const topicTitles = topicURLs.map((t) => LibraryTopics.get(t!))
 ---
 
 <LibLayout title='All Topics'>
-	<!-- TODO: Create a card link component for accessing different topics -->
 	<div>
 		{
 			topicTitles.map((title, i) => (

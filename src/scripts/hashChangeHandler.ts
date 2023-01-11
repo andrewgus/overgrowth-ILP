@@ -35,20 +35,20 @@ const obsCallback = function (entries: any) {
 		history.replaceState(null, '', `${baseURL}#${entry.target.id}`)
 		// Also updating store to toggle LessonNav
 		if (!useStore(contentQuery.isOnContent).value) contentQuery.toggleNavShown()
-		contentQuery.setCurrentLocationTitle(entry.target.id)
+		contentQuery.setCurrentLocation(entry.target.id)
 	}
 
 	if (entry.target.nodeName === 'HEADER') {
 		history.replaceState(null, '', `${baseURL}`)
 		// Also updating store to toggle LessonNav
 		if (useStore(contentQuery.isOnContent).value) contentQuery.toggleNavShown()
-		contentQuery.setCurrentLocationTitle('')
+		contentQuery.setCurrentLocation('')
 	}
 }
 const obsOptions = {
 	root: null,
 	threshold: 0,
-	rootMargin: '0px 0px -75% 0px',
+	rootMargin: '0px 0px -91% 0px',
 }
 const observer = new IntersectionObserver(obsCallback, obsOptions)
 
