@@ -6,7 +6,6 @@
 					Currently on:
 					{{ useStore(contentQuery.currSectionTitle).value }}
 				</p>
-				<p>{{ getLastSection() }}</p>
 				<div class="nextPrev">
 					<BaseButton
 						link
@@ -16,6 +15,7 @@
 						text="&#9650;"
 					/>
 					<BaseButton
+						v-show="!IsLastSection()"
 						link
 						:href="nextSection"
 						class="btn_next"
@@ -33,7 +33,11 @@
 							v-for="navItem in navItems"
 							:key="navItem!.sectionId"
 						>
-							<a :href="`#${navItem!.sectionId}`">{{ navItem!.title }}</a>
+							<a
+								:href="`#${navItem!.sectionId}`"
+								@click="setCurrentSection(navItem!.sectionId, navItem!.title)"
+								>{{ navItem!.title }}</a
+							>
 						</MenuItem>
 					</MenuItems>
 				</Menu>
@@ -58,12 +62,28 @@
 		return Number(currSectionId.split('').at(-1))
 	}
 
-	const getLastSection = () => {
-		const allSections = useStore(contentQuery.allSections).value
+	// const getLastSection = () => {
+	// 	const allSections = useStore(contentQuery.allSections).value
 
-		for (const [_, { sectionId, title }] of Object.entries(allSections)) {
-			return `${sectionId} and ${title}`
-		}
+	// 	for (const [id, details] of Object.entries(allSections)) {
+	// 		// console.log(details.sectionId)
+	// 	}
+	// }
+
+	/* TODO: 
+	
+
+	Refactor all this, iterating through the existing allSections nanostore map rather than the sectionTitle and sectionId atoms. Set currSection with nav link links & next/prev link clicks.
+	
+	*/
+
+	const IsLastSection = () => {
+		const currSectionId = useStore(contentQuery.currSectionId).value
+		const lastSectionId = Object.keys(
+			useStore(contentQuery.allSections).value
+		).at(-1)
+
+		return currSectionId === lastSectionId
 	}
 
 	onMounted(() => {
@@ -83,6 +103,10 @@
 	const navItems = computed(() => {
 		return useStore(contentQuery.allSections).value
 	})
+	const setCurrentSection = (locationId: string, title: string) => {
+		contentQuery.currSectionTitle.set(title)
+		contentQuery.currSectionId.set(locationId)
+	}
 </script>
 
 <style scoped>
