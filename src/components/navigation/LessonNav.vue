@@ -62,6 +62,8 @@
 		return Number(currSectionId.split('').at(-1))
 	}
 
+
+	// 👇 This may not be needed after refactor, but not removing it yet until I know for sure.
 	// const getLastSection = () => {
 	// 	const allSections = useStore(contentQuery.allSections).value
 
@@ -72,9 +74,16 @@
 
 	/* TODO: 
 	
+	— Refactor all this, iterating through the existing allSections nanostore map rather than the sectionTitle and sectionId atoms. 
 
-	Refactor all this, iterating through the existing allSections nanostore map rather than the sectionTitle and sectionId atoms. Set currSection with nav link links & next/prev link clicks.
-	
+	— Next & Previous links should set the currSectionTitle & ID, just as clicking a TOC link does.
+
+	— TOC links does not need to denote "You are here" because it is already displayed in the nav via "Currently On." Current location link should be disabled, maybe? TOC links should denote if they are locked (and therefore also disabled).
+
+	— Next link should not be shown if on the last section. This includes if the succeeding sections are locked, so without the locked class, perhaps?
+
+	— Previous link should not be shown if on the first section.
+
 	*/
 
 	const IsLastSection = () => {
