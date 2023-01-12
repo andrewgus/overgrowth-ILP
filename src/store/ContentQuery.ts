@@ -9,24 +9,27 @@ const toggleNavShown = () => {
 
 // Used to set the current section title for the LessonNav
 const currSectionTitle = atom('')
-const currSectionId = atom('')
+const currSectionId = atom(0)
 
-const setCurrentLocation = (locationId: string) => {
-	const sectionTitle = locationId
-		? document.getElementById(locationId)!.querySelector('h2')!.textContent
+const setCurrSection = (sectionId: string) => {
+	const sectionTitle = sectionId
+		? document.getElementById(sectionId)!.querySelector('h2')!.textContent
 		: ''
+
+	const sectionNum = Number(sectionId.split('n').at(-1))
+
 	currSectionTitle.set(sectionTitle as string)
-	currSectionId.set(locationId)
+	currSectionId.set(sectionNum)
 }
 
 // Used to create a map for all sections to create LessonNav links
-interface SectionMap {
+interface allSectionsMap {
 	[key: string]: {
 		sectionId: string
 		title: string
 	}
 }
-let allSections = map<SectionMap>({})
+let allSections = map<allSectionsMap>({})
 
 const setAllSections = (sectionId: string, title: string) => {
 	allSections.setKey(sectionId, { sectionId, title })
@@ -37,7 +40,7 @@ export {
 	toggleNavShown,
 	currSectionTitle,
 	currSectionId,
-	setCurrentLocation,
+	setCurrSection,
 	allSections,
 	setAllSections,
 }

@@ -4,20 +4,24 @@
 			<div>
 				<p>
 					Currently on:
-					{{ useStore(contentQuery.currSectionTitle).value }}
+					{{ queryCurrSectionTitle }}
 				</p>
 				<div class="nextPrev">
 					<BaseButton
+						v-show="!isBookendSection().isFirst"
 						link
-						:href="prevSection"
+						:href="`#${prevSection}`"
+						@click="setCurrSection(prevSection as string)"
 						class="btn_prev"
 						title="Go to previous section"
 						text="&#9650;"
 					/>
 					<BaseButton
-						v-show="!IsLastSection()"
+						v-show="!isBookendSection().isLast"
 						link
-						:href="nextSection"
+						:href="`#${nextSection}`"
+						ref="prev"
+						@click="setCurrSection(nextSection as string)"
 						class="btn_next"
 						title="Go to next section"
 						text="&#9660;"
@@ -35,7 +39,7 @@
 						>
 							<a
 								:href="`#${navItem!.sectionId}`"
-								@click="setCurrentSection(navItem!.sectionId, navItem!.title)"
+								@click="setCurrSection(navItem!.sectionId)"
 								>{{ navItem!.title }}</a
 							>
 						</MenuItem>
@@ -47,75 +51,76 @@
 </template>
 
 <script setup lang="ts">
+	/* TODO:
+
+	— Refactor all this, iterating through the existing allSections nanostore map rather than the sectionTitle and sectionId atoms.
+
+	— Next & Previous links should set the currSectionTitle & ID, just as clicking a TOC link does.
+
+	— TOC links does not need to denote "You are here" because it is already displayed in the nav via "Currently On." Current location link should be disabled, maybe? TOC links should denote if they are locked (and therefore also disabled).
+
+	— Next link should not be shown if the succeeding sections are locked, so without the locked class, perhaps?
+
+	*/
+
 	import { useStore } from '@nanostores/vue'
 	import { contentQuery } from '../../store/index.js'
 	import { ref, computed, onMounted, watchEffect } from 'vue'
 	import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 	import BaseButton from '../base/BaseButton.vue'
 
+	const queryOnContent = useStore(contentQuery.isOnContent)
+	const queryAllSections = useStore(contentQuery.allSections)
+	const queryCurrSectionId = useStore(contentQuery.currSectionId)
+	const queryCurrSectionTitle = useStore(contentQuery.currSectionTitle)
+
 	const isOnContent = ref<boolean>()
 	const nextSection = ref<string>()
 	const prevSection = ref<string>()
 
-	const getSectionNum = () => {
-		const currSectionId = useStore(contentQuery.currSectionId).value
-		return Number(currSectionId.split('').at(-1))
+	const navItems = computed(() => {
+		return queryAllSections.value
+	})
+
+	const setCurrSection = (sectionId: string) => {
+		contentQuery.setCurrSection(sectionId)
 	}
 
+	const isBookendSection = () => {
+		const currSectionId = `section${queryCurrSectionId.value}`
+		const bookendSectionId = {
+			first: Object.keys(queryAllSections.value).at(0),
+			last: Object.keys(queryAllSections.value).at(-1),
+		}
 
-	// 👇 This may not be needed after refactor, but not removing it yet until I know for sure.
-	// const getLastSection = () => {
-	// 	const allSections = useStore(contentQuery.allSections).value
+		const isFirst = currSectionId === bookendSectionId.first
+		const isLast = currSectionId === bookendSectionId.last
 
-	// 	for (const [id, details] of Object.entries(allSections)) {
-	// 		// console.log(details.sectionId)
-	// 	}
-	// }
+		return { isFirst, isLast }
+	}
 
-	/* TODO: 
-	
-	— Refactor all this, iterating through the existing allSections nanostore map rather than the sectionTitle and sectionId atoms. 
+	const setPrevSection = () => {
+		prevSection.value = !isBookendSection().isFirst
+			? `section${queryCurrSectionId.value - 1}`
+			: ''
+	}
 
-	— Next & Previous links should set the currSectionTitle & ID, just as clicking a TOC link does.
-
-	— TOC links does not need to denote "You are here" because it is already displayed in the nav via "Currently On." Current location link should be disabled, maybe? TOC links should denote if they are locked (and therefore also disabled).
-
-	— Next link should not be shown if on the last section. This includes if the succeeding sections are locked, so without the locked class, perhaps?
-
-	— Previous link should not be shown if on the first section.
-
-	*/
-
-	const IsLastSection = () => {
-		const currSectionId = useStore(contentQuery.currSectionId).value
-		const lastSectionId = Object.keys(
-			useStore(contentQuery.allSections).value
-		).at(-1)
-
-		return currSectionId === lastSectionId
+	const setNextSection = () => {
+		nextSection.value = !isBookendSection().isLast
+			? `section${queryCurrSectionId.value + 1}`
+			: ''
 	}
 
 	onMounted(() => {
-		isOnContent.value = useStore(contentQuery.isOnContent).value
+		isOnContent.value = queryOnContent.value
 
 		watchEffect(() => {
-			isOnContent.value = useStore(contentQuery.isOnContent).value
-			nextSection.value = `#section${getSectionNum()! + 1}`
+			isOnContent.value = queryOnContent.value
 
-			prevSection.value =
-				`#section${getSectionNum()! - 1}` !== '#section0'
-					? `#section${getSectionNum()! - 1}`
-					: '#'
+			setPrevSection()
+			setNextSection()
 		})
 	})
-
-	const navItems = computed(() => {
-		return useStore(contentQuery.allSections).value
-	})
-	const setCurrentSection = (locationId: string, title: string) => {
-		contentQuery.currSectionTitle.set(title)
-		contentQuery.currSectionId.set(locationId)
-	}
 </script>
 
 <style scoped>
@@ -146,8 +151,25 @@
 		grid-area: 1/2/2/3;
 		justify-self: end;
 		display: flex;
-		flex-flow: column nowrap;
+		height: 48px;
+		border-radius: 30px 0 0 30px;
+		overflow: hidden;
+		border: 1px solid var(--darkGray);
 	}
+
+	.nextPrev > * + * {
+		margin-left: var(--s-10);
+	}
+	.nextPrev > * {
+		overflow: hidden;
+		border-radius: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 30px;
+		border: none;
+	}
+
 	div > button {
 		cursor: pointer;
 		grid-area: 1/3/2/4;
@@ -157,8 +179,10 @@
 		padding: var(--s-5);
 		font-size: var(--s-1);
 		background-color: var(--lightBlue);
-		border-radius: 6px;
 		display: inline-block;
+		border-radius: 0px 30px 30px 0px;
+		height: 48px;
+		margin-left: var(--s-3);
 	}
 	div > ol {
 		grid-area: 2/1/3/3;

@@ -35,14 +35,14 @@ const obsCallback = function (entries: any) {
 		history.replaceState(null, '', `${baseURL}#${entry.target.id}`)
 		// Also updating store to toggle LessonNav
 		if (!useStore(contentQuery.isOnContent).value) contentQuery.toggleNavShown()
-		contentQuery.setCurrentLocation(entry.target.id)
+		contentQuery.setCurrSection(entry.target.id)
 	}
 
 	if (entry.target.nodeName === 'HEADER') {
 		history.replaceState(null, '', `${baseURL}`)
 		// Also updating store to toggle LessonNav
 		if (useStore(contentQuery.isOnContent).value) contentQuery.toggleNavShown()
-		contentQuery.setCurrentLocation('')
+		contentQuery.setCurrSection('')
 	}
 }
 const obsOptions = {
