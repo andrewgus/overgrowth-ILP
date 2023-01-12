@@ -6,12 +6,13 @@
 					Currently on:
 					{{ queryCurrSectionTitle }}
 				</p>
+				<!-- BUG: The @click on the next Prev buttons not functional. Need to figure out how to go about that. -->
 				<div class="nextPrev">
 					<BaseButton
 						v-show="!isBookendSection().isFirst"
 						link
 						:href="`#${prevSection}`"
-						@click="setCurrSection(prevSection as string)"
+						@click="setCurrSection(`section${queryCurrSectionId}`)"
 						class="btn_prev"
 						title="Go to previous section"
 						text="&#9650;"
@@ -21,7 +22,7 @@
 						link
 						:href="`#${nextSection}`"
 						ref="prev"
-						@click="setCurrSection(nextSection as string)"
+						@click="setCurrSection(`section${queryCurrSectionId}`)"
 						class="btn_next"
 						title="Go to next section"
 						text="&#9660;"
@@ -83,6 +84,7 @@
 	})
 
 	const setCurrSection = (sectionId: string) => {
+		console.log(sectionId)
 		contentQuery.setCurrSection(sectionId)
 	}
 
