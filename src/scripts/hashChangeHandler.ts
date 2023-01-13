@@ -6,16 +6,7 @@ const sections: NodeListOf<HTMLElement> =
 
 sections.forEach((s: HTMLElement, i: number) => (s.id = `section${i + 1}`))
 
-// Sending all sections and their associated ID to store for LessonNav
-let titles: string[] = []
-let sectionIds: string[] = []
-sections.forEach((s: HTMLElement) => {
-	titles.push(s.querySelector('h2')!.textContent!)
-	sectionIds.push(s.id)
-})
-for (const [i, sectionId] of sectionIds.entries()) {
-	contentQuery.setAllSections(sectionId, titles[i])
-}
+contentQuery.setAllSections(sections)
 
 const location = window.location.toString()
 const baseURL = location.split('#')[0]
@@ -27,9 +18,12 @@ const obsSections: NodeListOf<HTMLElement> =
 	document.querySelectorAll('article > section')!
 const obsHeader: HTMLElement = document.querySelector('header')!
 
-const obsCallback = function (entries: any) {
+const obsCallback = function (entries: Array<IntersectionObserverEntry>) {
 	const [entry] = entries
 	if (!entry.isIntersecting) return
+
+	// 🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑
+	// console.log(entry.boundingClientRect)
 
 	if (entry.target.nodeName === 'SECTION') {
 		history.replaceState(null, '', `${baseURL}#${entry.target.id}`)

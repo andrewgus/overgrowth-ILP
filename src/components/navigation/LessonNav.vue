@@ -12,7 +12,7 @@
 						v-show="!isBookendSection().isFirst"
 						link
 						:href="`#${prevSection}`"
-						@click="setCurrSection(`section${queryCurrSectionId}`)"
+						@click="setCurrSection(`section${querycurrSectionIdNum}`)"
 						class="btn_prev"
 						title="Go to previous section"
 						text="&#9650;"
@@ -22,7 +22,7 @@
 						link
 						:href="`#${nextSection}`"
 						ref="prev"
-						@click="setCurrSection(`section${queryCurrSectionId}`)"
+						@click="setCurrSection(`section${querycurrSectionIdNum}`)"
 						class="btn_next"
 						title="Go to next section"
 						text="&#9660;"
@@ -33,14 +33,10 @@
 						!open ? `Take me to&hellip;` : 'Close menu'
 					}}</MenuButton>
 					<MenuItems as="ol">
-						<MenuItem
-							as="li"
-							v-for="navItem in navItems"
-							:key="navItem!.sectionId"
-						>
+						<MenuItem as="li" v-for="navItem in navItems" :key="navItem!.id">
 							<a
-								:href="`#${navItem!.sectionId}`"
-								@click="setCurrSection(navItem!.sectionId)"
+								:href="`#${navItem!.id}`"
+								@click="setCurrSection(navItem!.id)"
 								>{{ navItem!.title }}</a
 							>
 						</MenuItem>
@@ -72,7 +68,7 @@
 
 	const queryOnContent = useStore(contentQuery.isOnContent)
 	const queryAllSections = useStore(contentQuery.allSections)
-	const queryCurrSectionId = useStore(contentQuery.currSectionId)
+	const querycurrSectionIdNum = useStore(contentQuery.currSectionIdNum)
 	const queryCurrSectionTitle = useStore(contentQuery.currSectionTitle)
 
 	const isOnContent = ref<boolean>()
@@ -80,36 +76,56 @@
 	const prevSection = ref<string>()
 
 	const navItems = computed(() => {
-		return queryAllSections.value
+		let titles: string[] = []
+		let sectionIds: string[] = []
+
+		queryAllSections.value.forEach((s: HTMLElement) => {
+			titles.push(s.querySelector('h2')!.textContent!)
+			sectionIds.push(s.id)
+		})
+
+		const allSectionsObj: {
+			[key: string]: {
+				id: string
+				title: string
+			}
+		} = {}
+
+		for (const [i, sectionId] of sectionIds.entries()) {
+			allSectionsObj[sectionId] = {
+				id: sectionId,
+				title: titles[i],
+			}
+		}
+		return allSectionsObj
 	})
 
 	const setCurrSection = (sectionId: string) => {
-		console.log(sectionId)
 		contentQuery.setCurrSection(sectionId)
 	}
 
 	const isBookendSection = () => {
-		const currSectionId = `section${queryCurrSectionId.value}`
+		const currSectionIdNum = `section${querycurrSectionIdNum.value}`
 		const bookendSectionId = {
-			first: Object.keys(queryAllSections.value).at(0),
-			last: Object.keys(queryAllSections.value).at(-1),
+			first: Object.keys(navItems.value).at(0),
+			last: Object.keys(navItems.value).at(-1),
 		}
 
-		const isFirst = currSectionId === bookendSectionId.first
-		const isLast = currSectionId === bookendSectionId.last
+		const isFirst = currSectionIdNum === bookendSectionId.first
+		const isLast = currSectionIdNum === bookendSectionId.last
 
 		return { isFirst, isLast }
 	}
 
 	const setPrevSection = () => {
 		prevSection.value = !isBookendSection().isFirst
-			? `section${queryCurrSectionId.value - 1}`
+			? `section${querycurrSectionIdNum.value - 1}`
 			: ''
 	}
 
 	const setNextSection = () => {
 		nextSection.value = !isBookendSection().isLast
-			? `section${queryCurrSectionId.value + 1}`
+			? `section${querycurrSectionIdNum.value + 1}`
 			: ''
 	}
 
