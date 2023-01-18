@@ -155,7 +155,7 @@
 		margin: 0 auto;
 		display: grid;
 		align-items: center;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 2.5fr 1fr;
 		padding: 0 var(--s-5);
 	}
 	div > p {

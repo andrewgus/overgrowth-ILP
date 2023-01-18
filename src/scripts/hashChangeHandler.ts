@@ -3,7 +3,8 @@ import { contentQuery } from '../store/index.js'
 
 const location = window.location.toString()
 const baseURL = location.split('#')[0]
-const header: HTMLElement = document.querySelector('header')!
+
+// Setting all section ids and storing sections for LessonNav
 const sections: NodeListOf<HTMLElement> =
 	document.querySelectorAll('article > section')!
 
@@ -11,50 +12,87 @@ sections.forEach((s: HTMLElement, i: number) => (s.id = `section${i + 1}`))
 
 contentQuery.setAllSections(sections)
 
-if (location.includes('#section')) contentQuery.isOnContent.set(true)
+if (location.includes('#section')) {
+	contentQuery.isOnContent.set(true)
+	contentQuery.setCurrSection(location.split('#').at(-1)!)
+}
 
-// Observer for Header & sections to update URL hash value w/ scroll
+// Observer for header, sections, & headings to update URL hash value w/ scroll
+const header: HTMLElement = document.querySelector('header')!
+const sectionHeadings: NodeListOf<HTMLElement> = document.querySelectorAll(
+	'article > section > h2'
+)!
 
-const observerCallback = function (entries: Array<IntersectionObserverEntry>) {
+const observerCallbackHeader = function (
+	entries: Array<IntersectionObserverEntry>
+) {
 	const [entry] = entries
 
-	/*  TODO:  
-				Within this observer callback,
+	if (!entry.isIntersecting) return
 
-				1. only fires when isIntersecting boolean changes.
+	history.replaceState(null, '', `${baseURL}`)
+	// Updating store to toggle LessonNav & set current section id
+	if (useStore(contentQuery.isOnContent).value) contentQuery.toggleNavShown()
+	contentQuery.setCurrSection('')
+}
 
-				I want this for scrolling Up. Change as soon as the items intersects.
+const observerCallbackHeadings = function (
+	entries: Array<IntersectionObserverEntry>
+) {
+	const [entry] = entries
 
-				For scrolling down, I want to watch the H2 of a given section and when boundingRect.top is approx 0, then change as well.
-	
-	*/
+	if (!entry.isIntersecting) return
 
-	// if (!entry.isIntersecting) return
-	console.log(entry)
+	history.replaceState(null, '', `${baseURL}#${entry.target.parentElement!.id}`)
+	// Updating store to toggle LessonNav & set current section id
+	if (!useStore(contentQuery.isOnContent).value) contentQuery.toggleNavShown()
+	contentQuery.setCurrSection(entry.target.parentElement!.id)
+}
 
-	if (entry.target.nodeName === 'SECTION') {
+const observerCallbackSections = function (
+	entries: Array<IntersectionObserverEntry>
+) {
+	const [entry] = entries
+
+	if (!entry.isIntersecting) return
+
+	// Only fires when scrolling up
+	if (entry.intersectionRect.top === 0) {
 		history.replaceState(null, '', `${baseURL}#${entry.target.id}`)
-		// Also updating store to toggle LessonNav
-		if (!useStore(contentQuery.isOnContent).value) contentQuery.toggleNavShown()
+		//setting current section id
 		contentQuery.setCurrSection(entry.target.id)
 	}
-
-	if (entry.target.nodeName === 'HEADER') {
-		history.replaceState(null, '', `${baseURL}`)
-		// Also updating store to toggle LessonNav
-		if (useStore(contentQuery.isOnContent).value) contentQuery.toggleNavShown()
-		contentQuery.setCurrSection('')
-	}
 }
-const observerOptions = {
+
+const observerOptionsHeader = {
 	root: null,
-	threshold: 0.4,
-	// rootMargin: '0px 0px -50% 0px',
+	threshold: 0.66,
 }
-const observer = new IntersectionObserver(observerCallback, observerOptions)
+const observerOptionsHeadings = {
+	root: null,
+	threshold: 1,
+	rootMargin: '0px 0px -75% 0px',
+}
+const observerOptionsSections = {
+	root: null,
+	threshold: 0.1,
+}
 
-sections.forEach((section) => observer.observe(section))
+const observerHeader = new IntersectionObserver(
+	observerCallbackHeader,
+	observerOptionsHeader
+)
+const observerHeadings = new IntersectionObserver(
+	observerCallbackHeadings,
+	observerOptionsHeadings
+)
+const observerSections = new IntersectionObserver(
+	observerCallbackSections,
+	observerOptionsSections
+)
 
-observer.observe(header)
+observerHeader.observe(header)
+sectionHeadings.forEach((heading) => observerHeadings.observe(heading))
+sections.forEach((section) => observerSections.observe(section))
 
 export {}
