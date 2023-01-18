@@ -1,6 +1,6 @@
 <template>
 	<button v-if="!link">{{ text }}</button>
-	<a v-else :href="url">{{ text }}</a>
+	<a v-else :href="url" :class="{ disabled: isDisabled }">{{ text }}</a>
 </template>
 
 <script setup lang="ts">
@@ -8,6 +8,10 @@
 		text: {
 			type: String,
 			required: true,
+		},
+		isDisabled: {
+			type: Boolean,
+			default: false,
 		},
 		link: {
 			type: Boolean,
@@ -40,5 +44,11 @@
 	a {
 		text-decoration: none;
 		color: var(--black);
+	}
+	.disabled {
+		cursor: not-allowed;
+		pointer-events: none;
+		opacity: 0.5;
+		background-color: var(--lightGray);
 	}
 </style>

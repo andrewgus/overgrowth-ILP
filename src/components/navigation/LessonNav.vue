@@ -1,15 +1,14 @@
 <template>
 	<transition name="lessonNav">
-		<nav v-show="isOnContent" id="lessonNav">
+		<nav :class="{ isInvisible: !isOnContent }" id="lessonNav">
 			<div>
 				<p>
 					Currently on:
 					{{ queryCurrSectionTitle }}
 				</p>
-				<!-- BUG: The @click on the next Prev buttons not functional. Need to figure out how to go about that. -->
 				<div class="nextPrev">
 					<BaseButton
-						v-show="!isBookendSection().isFirst"
+						:isDisabled="isBookendSection().isFirst"
 						link
 						:href="`#${prevSection}`"
 						@click="setCurrSection(`section${querycurrSectionIdNum}`)"
@@ -18,7 +17,7 @@
 						text="&#9650;"
 					/>
 					<BaseButton
-						v-show="!isBookendSection().isLast"
+						:isDisabled="isBookendSection().isLast"
 						link
 						:href="`#${nextSection}`"
 						ref="prev"
@@ -28,12 +27,11 @@
 						text="&#9660;"
 					/>
 				</div>
+				<!-- BUG: This Menu function does not properly send user to section when using screen reader. May have to create it myself -->
 				<Menu v-slot="{ open }">
-					<MenuButton>{{
-						!open ? `Take me to&hellip;` : 'Close menu'
-					}}</MenuButton>
-					<MenuItems as="ol">
-						<MenuItem as="li" v-for="navItem in navItems" :key="navItem!.id">
+					<MenuButton>{{ !open ? `Go to&hellip;` : 'Close menu' }}</MenuButton>
+					<MenuItems>
+						<MenuItem v-for="navItem in navItems" :key="navItem!.id">
 							<a
 								:href="`#${navItem!.id}`"
 								@click="setCurrSection(navItem!.id)"
@@ -49,15 +47,9 @@
 
 <script setup lang="ts">
 	/* TODO:
-
-	— Refactor all this, iterating through the existing allSections nanostore map rather than the sectionTitle and sectionId atoms.
-
-	— Next & Previous links should set the currSectionTitle & ID, just as clicking a TOC link does.
-
 	— TOC links does not need to denote "You are here" because it is already displayed in the nav via "Currently On." Current location link should be disabled, maybe? TOC links should denote if they are locked (and therefore also disabled).
 
 	— Next link should not be shown if the succeeding sections are locked, so without the locked class, perhaps?
-
 	*/
 
 	import { useStore } from '@nanostores/vue'
@@ -143,12 +135,17 @@
 
 <style scoped>
 	nav {
+		transition: 0.3s all ease-in-out;
 		display: block;
 		background-color: hsla(0, 0%, 100%, 0.95);
 		padding: var(--s-5) 0;
 		width: 100%;
 		position: sticky;
 		top: 0;
+	}
+	nav.isInvisible {
+		visibility: hidden;
+		opacity: 0;
 	}
 	nav > div {
 		max-width: 72ch;
@@ -170,13 +167,9 @@
 		justify-self: end;
 		display: flex;
 		height: 48px;
-		border-radius: 30px 0 0 30px;
 		overflow: hidden;
 		border: 1px solid var(--darkGray);
-	}
-
-	.nextPrev > * + * {
-		margin-left: var(--s-10);
+		border-radius: 30px 0 0 30px;
 	}
 	.nextPrev > * {
 		overflow: hidden;
@@ -184,8 +177,11 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		width: 30px;
+		width: var(--s3);
 		border: none;
+	}
+	.btn_prev {
+		border-radius: 30px 0 0 30px;
 	}
 
 	div > button {
