@@ -4,12 +4,14 @@
 		<div v-if="featuresOn">
 			<p>Included in this lesson are&hellip;</p>
 			<ul class="options">
-				<ToggleFeature
-					v-if="isReflectionOn"
-					@click="featureSettings.reflectionToggle"
-					:set="useStore(featureSettings.isReflectionOn).value"
-					type="Reflection"
-				/>
+				<li>
+					<BaseSwitch
+						v-if="isReflectionOn"
+						@toggleSwitch="featureSettings.reflectionToggle"
+						:set="useStore(featureSettings.isReflectionOn).value"
+						type="Reflection"
+					/>
+				</li>
 				<div
 					v-if="
 						(isReflectionOn && isPracticeOn) || (isReflectionOn && isChoiceOn)
@@ -18,24 +20,28 @@
 					aria-hidden="true"
 					aria-orientation="vertical"
 				></div>
-				<ToggleFeature
-					v-if="isPracticeOn"
-					@click="featureSettings.practiceToggle"
-					:set="useStore(featureSettings.isPracticeOn).value"
-					type="Practice"
-				/>
+				<li>
+					<BaseSwitch
+						v-if="isPracticeOn"
+						@toggleSwitch="featureSettings.practiceToggle"
+						:set="useStore(featureSettings.isPracticeOn).value"
+						type="Practice"
+					/>
+				</li>
 				<div
 					v-if="isPracticeOn && isChoiceOn"
 					role="separator"
 					aria-hidden="true"
 					aria-orientation="vertical"
 				></div>
-				<ToggleFeature
-					v-if="isChoiceOn"
-					@click="featureSettings.choiceToggle"
-					:set="useStore(featureSettings.isChoiceOn).value"
-					type="Choice"
-				/>
+				<li>
+					<BaseSwitch
+						v-if="isChoiceOn"
+						@toggleSwitch="featureSettings.choiceToggle"
+						:set="useStore(featureSettings.isChoiceOn).value"
+						type="Choice"
+					/>
+				</li>
 			</ul>
 			<!-- /.options -->
 		</div>
@@ -48,7 +54,7 @@
 	import { computed, withDefaults } from 'vue'
 	import { featureSettings } from '../../store/index.js'
 
-	import ToggleFeature from '../base/ToggleSwitch.vue'
+	import BaseSwitch from '../base/BaseSwitch.vue'
 
 	export interface Props {
 		title: string
@@ -97,6 +103,13 @@
 		justify-content: center;
 		flex-flow: row nowrap;
 		gap: var(--s-5);
+	}
+	li {
+		list-style: none;
+		display: flex;
+		flex-flow: column nowrap;
+		align-items: center;
+		justify-content: start;
 	}
 	.options > div[role='separator'] {
 		flex-grow: 0;
