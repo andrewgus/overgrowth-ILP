@@ -45,7 +45,7 @@ const {
 					isPracticeOn={isPracticeOn}
 					isChoiceOn={isChoiceOn}
 				/>
-				<LessonNav client:idle />
+				<LessonNav client:only='vue' />
 				<slot />
 			</article>
 		</main>

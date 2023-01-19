@@ -39,7 +39,7 @@
 				>
 					{{ !isMenuOpen ? 'Go to&hellip;' : 'Close' }}
 				</button>
-				<transition name="navTOC">
+				<transition appear name="navTOC">
 					<ol
 						v-show="isMenuOpen"
 						aria-label="table of contents links"
@@ -77,10 +77,6 @@
 	const querycurrSectionIdNum = useStore(contentQuery.currSectionIdNum)
 	const queryCurrSectionTitle = useStore(contentQuery.currSectionTitle)
 
-	const isOnContent = ref<boolean>()
-	const nextSection = ref<string>()
-	const prevSection = ref<string>()
-
 	const navItems = computed(() => {
 		let titles: string[] = []
 		let sectionIds: string[] = []
@@ -103,6 +99,7 @@
 				title: titles[i],
 			}
 		}
+		console.log(Object.keys(allSectionsObj).length)
 		return allSectionsObj
 	})
 
@@ -122,6 +119,10 @@
 
 		return { isFirst, isLast }
 	}
+
+	const isOnContent = ref<boolean>()
+	const nextSection = ref<string>()
+	const prevSection = ref<string>()
 
 	const setPrevSection = () => {
 		prevSection.value = !isBookendSection().isFirst
