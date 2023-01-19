@@ -1,5 +1,5 @@
 <template>
-	<SwitchGroup as="li">
+	<!-- <SwitchGroup as="li">
 		<SwitchLabel @click.stop>{{ type }}</SwitchLabel>
 		<Switch
 			v-model="enabled"
@@ -8,7 +8,22 @@
 		>
 			<span aria-hidden="true">{{ enabled ? 'On' : 'Off' }}</span>
 		</Switch>
-	</SwitchGroup>
+	</SwitchGroup> -->
+
+	<li>
+		<label :for="`${type}Switch`">{{ type }}</label>
+		<button
+			@click="$emit('toggleFeature')"
+			:id="`${type}Switch`"
+			class="toggleSwitch"
+			:class="enabled ? 'true' : 'false'"
+			role="switch"
+			type="button"
+			:aria-checked="enabled"
+		>
+			<span aria-hidden="true">{{ enabled ? 'On' : 'Off' }}</span>
+		</button>
+	</li>
 </template>
 
 <script setup lang="ts">
@@ -26,20 +41,10 @@
 		},
 	})
 
+	const emits = defineEmits(['toggleFeature'])
+
 	const enabled = ref(props.set)
 </script>
-
-<style>
-	.switch {
-		display: inline-flex;
-		cursor: pointer;
-		border-radius: 100px;
-		width: 10ch;
-		border: 1px solid gray;
-		padding: 0;
-		background: white;
-	}
-</style>
 
 <style scoped>
 	li {
@@ -49,12 +54,16 @@
 		align-items: center;
 		justify-content: start;
 	}
-	.sr-only {
-		position: fixed;
-		top: -99999px;
-		left: -99999px;
+	.toggleSwitch {
+		display: inline-flex;
+		cursor: pointer;
+		border-radius: 100px;
+		width: 10ch;
+		border: 1px solid gray;
+		padding: 0;
+		background: white;
 	}
-	.switch > span {
+	.toggleSwitch > span {
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -64,11 +73,11 @@
 		transition: all 0.33s var(--transition);
 	}
 
-	.switch.true > span {
+	.toggleSwitch.true > span {
 		background-color: #2ebfa2;
 		transform: translateX(0);
 	}
-	.switch.false > span {
+	.toggleSwitch.false > span {
 		transform: translateX(5.8ch);
 		color: #fff;
 		background: #c02e4c;

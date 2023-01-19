@@ -32,7 +32,7 @@
 		font-size: var(--s-1);
 		background-color: var(--lightBlue);
 		border-radius: 6px;
-		transition: 0.3s all var(--transition);
+		transition: 0.5s all var(--transition);
 	}
 	button:hover,
 	a:hover {

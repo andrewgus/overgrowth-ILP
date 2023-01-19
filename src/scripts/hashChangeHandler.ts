@@ -66,7 +66,7 @@ const observerCallbackSections = function (
 
 const observerOptionsHeader = {
 	root: null,
-	threshold: 0.66,
+	threshold: 0.5,
 }
 const observerOptionsHeadings = {
 	root: null,

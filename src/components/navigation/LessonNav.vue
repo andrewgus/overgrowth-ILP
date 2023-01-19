@@ -14,6 +14,7 @@
 						@click="setCurrSection(`section${querycurrSectionIdNum}`)"
 						class="btn_prev"
 						title="Go to previous section"
+						aria-label="Go to previous section"
 						text="&#9650;"
 					/>
 					<BaseButton
@@ -24,39 +25,52 @@
 						@click="setCurrSection(`section${querycurrSectionIdNum}`)"
 						class="btn_next"
 						title="Go to next section"
+						aria-label="Go to next section"
 						text="&#9660;"
 					/>
 				</div>
-				<!-- BUG: This Menu function does not properly send user to section when using screen reader. May have to create it myself -->
-				<Menu v-slot="{ open }">
-					<MenuButton>{{ !open ? `Go to&hellip;` : 'Close menu' }}</MenuButton>
-					<MenuItems>
-						<MenuItem v-for="navItem in navItems" :key="navItem!.id">
-							<a
-								:href="`#${navItem!.id}`"
-								@click="setCurrSection(navItem!.id)"
-								>{{ navItem!.title }}</a
-							>
-						</MenuItem>
-					</MenuItems>
-				</Menu>
+
+				<button
+					id="menuBtn"
+					aria-haspopup="menu"
+					:aria-expanded="isMenuOpen"
+					aria-controls="navItemsList"
+					@click="openMenu"
+				>
+					{{ !isMenuOpen ? 'Go to&hellip;' : 'Close' }}
+				</button>
+				<transition name="navTOC">
+					<ol
+						v-show="isMenuOpen"
+						aria-label="table of contents links"
+						id="navItemsList"
+					>
+						<li v-for="navItem in navItems" :key="navItem!.id">
+							<a :href="`#${navItem!.id}`" @click="navToSection(navItem!.id)">{{
+								navItem!.title
+							}}</a>
+						</li>
+					</ol>
+				</transition>
 			</div>
 		</nav>
 	</transition>
 </template>
 
 <script setup lang="ts">
-	/* TODO:
-	— TOC links does not need to denote "You are here" because it is already displayed in the nav via "Currently On." Current location link should be disabled, maybe? TOC links should denote if they are locked (and therefore also disabled).
-
-	— Next link should not be shown if the succeeding sections are locked, so without the locked class, perhaps?
-	*/
-
 	import { useStore } from '@nanostores/vue'
 	import { contentQuery } from '../../store/index.js'
 	import { ref, computed, onMounted, watchEffect } from 'vue'
-	import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 	import BaseButton from '../base/BaseButton.vue'
+
+	const isMenuOpen = ref(false)
+
+	const openMenu = () => (isMenuOpen.value = !isMenuOpen.value)
+
+	const navToSection = (section: string) => {
+		setCurrSection(section)
+		isMenuOpen.value = !isMenuOpen.value
+	}
 
 	const queryOnContent = useStore(contentQuery.isOnContent)
 	const queryAllSections = useStore(contentQuery.allSections)
@@ -184,7 +198,7 @@
 		border-radius: 30px 0 0 30px;
 	}
 
-	div > button {
+	#menuBtn {
 		cursor: pointer;
 		grid-area: 1/3/2/4;
 		justify-self: end;
@@ -198,14 +212,14 @@
 		height: 48px;
 		margin-left: var(--s-3);
 	}
-	div > ol {
+	#navItemsList {
 		grid-area: 2/1/3/3;
 		justify-self: center;
 	}
-	div > ol > li + li {
+	#navItemsList > li + li {
 		margin-top: var(--s-3);
 	}
-	/* transition */
+	/* lessonNav transition */
 	.lessonNav-enter-from,
 	.lessonNav-leave-to {
 		opacity: 0;
@@ -216,6 +230,21 @@
 	}
 	.lessonNav-enter-to,
 	.lessonNav-leave-from {
+		opacity: 1;
+	}
+	/* navTOC transition */
+	.navTOC-enter-from,
+	.navTOC-leave-to {
+		transform: translateY(calc(-1 * var(--s0)));
+		opacity: 0;
+	}
+	.navTOC-enter-active,
+	.navTOC-leave-active {
+		transition: all 0.5s ease-in-out;
+	}
+	.navTOC-enter-to,
+	.navTOC-leave-from {
+		transform: translateY(0);
 		opacity: 1;
 	}
 </style>
