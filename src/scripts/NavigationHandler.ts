@@ -30,20 +30,21 @@ const useNavItems = computed(() => {
 			title: titles[i],
 		}
 	}
+
 	return allSectionsObj
 })
 
-const useIsBookendSection = computed(() => {
+const useIsBookendSection = () => {
 	const currSectionIdNum = `section${querycurrSectionIdNum.value}`
 	const bookendSectionId = {
-		first: Object.keys(useNavItems).at(0),
-		last: Object.keys(useNavItems).at(-1),
+		first: Object.keys(useNavItems.value).at(0),
+		last: Object.keys(useNavItems.value).at(-1),
 	}
 
 	const isFirst = currSectionIdNum === bookendSectionId.first
 	const isLast = currSectionIdNum === bookendSectionId.last
 
 	return { isFirst, isLast }
-})
+}
 
 export { useSetCurrSection, useNavItems, useIsBookendSection }

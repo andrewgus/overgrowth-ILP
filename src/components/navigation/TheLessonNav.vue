@@ -6,52 +6,11 @@
 					Currently on:
 					{{ queryCurrSectionTitle }}
 				</p>
-				<div class="nextPrev">
-					<BaseButton
-						:isDisabled="isBookendSection().isFirst"
-						:aria-hidden="isBookendSection().isFirst"
-						link
-						:href="`#${prevSection}`"
-						@click="setCurrSection(`section${querycurrSectionIdNum}`)"
-						class="btn_prev"
-						title="Go to previous section"
-						aria-label="Go to previous section"
-						text="&#9650;"
-					/>
-					<BaseButton
-						:isDisabled="isBookendSection().isLast"
-						:aria-hidden="isBookendSection().isLast"
-						link
-						:href="`#${nextSection}`"
-						ref="prev"
-						@click="setCurrSection(`section${querycurrSectionIdNum}`)"
-						class="btn_next"
-						title="Go to next section"
-						aria-label="Go to next section"
-						text="&#9660;"
-					/>
-				</div>
-				<BaseButton
-					:text="!isMenuOpen ? 'Go to&hellip;' : 'Close'"
-					id="menuBtn"
-					aria-haspopup="menu"
-					:aria-expanded="isMenuOpen"
-					aria-controls="navItemsList"
-					@click="openMenu"
+				<TheNextPrevSectionButtons
+					:prevSection="prevSection!"
+					:nextSection="nextSection!"
 				/>
-				<transition appear name="navTOC">
-					<ol
-						v-show="isMenuOpen"
-						aria-label="table of contents links"
-						id="navItemsList"
-					>
-						<li v-for="navItem in navItems" :key="navItem!.id">
-							<a :href="`#${navItem!.id}`" @click="navToSection(navItem!.id)">{{
-								navItem!.title
-							}}</a>
-						</li>
-					</ol>
-				</transition>
+				<TheNavToc :currSectionId="querycurrSectionIdNum" />
 			</div>
 		</nav>
 	</transition>
@@ -60,82 +19,27 @@
 <script setup lang="ts">
 	import { useStore } from '@nanostores/vue'
 	import { contentQuery } from '../../store/index.js'
-	import { ref, computed, watchEffect } from 'vue'
-	import BaseButton from '../base/BaseButton.vue'
-
-	const isMenuOpen = ref(false)
-
-	const openMenu = () => (isMenuOpen.value = !isMenuOpen.value)
-
-	const navToSection = (section: string) => {
-		setCurrSection(section)
-		isMenuOpen.value = !isMenuOpen.value
-	}
+	import { ref, watchEffect } from 'vue'
+	import { useIsBookendSection } from '../../scripts/NavigationHandler'
+	import TheNavToc from './TheNavTOC.vue'
+	import TheNextPrevSectionButtons from './TheNextPrevSectionButtons.vue'
 
 	const queryOnContent = useStore(contentQuery.isOnContent)
 	const queryCurrSectionTitle = useStore(contentQuery.currSectionTitle)
-
-	// AllSections for TOC
-	const queryAllSections = useStore(contentQuery.allSections)
-	// CurrSectionIDNum for BookEnd & Next & Prev
 	const querycurrSectionIdNum = useStore(contentQuery.currSectionIdNum)
 
-	const navItems = computed(() => {
-		let titles: string[] = []
-		let sectionIds: string[] = []
-
-		queryAllSections.value.forEach((s: HTMLElement) => {
-			titles.push(s.querySelector('h2')!.textContent!)
-			sectionIds.push(s.id)
-		})
-
-		const allSectionsObj: {
-			[key: string]: {
-				id: string
-				title: string
-			}
-		} = {}
-
-		for (const [i, sectionId] of sectionIds.entries()) {
-			allSectionsObj[sectionId] = {
-				id: sectionId,
-				title: titles[i],
-			}
-		}
-		return allSectionsObj
-	})
-
-	const setCurrSection = (sectionId: string) => {
-		contentQuery.setCurrSection(sectionId)
-	}
-
-	const isBookendSection = () => {
-		const currSectionIdNum = `section${querycurrSectionIdNum.value}`
-		const bookendSectionId = {
-			first: Object.keys(navItems.value).at(0),
-			last: Object.keys(navItems.value).at(-1),
-		}
-
-		const isFirst = currSectionIdNum === bookendSectionId.first
-		const isLast = currSectionIdNum === bookendSectionId.last
-
-		return { isFirst, isLast }
-	}
-
+	const isOnContent = ref<boolean>()
 	const prevSection = ref<string>()
 	const nextSection = ref<string>()
 
-	// NEED THIS
-	const isOnContent = ref<boolean>()
-
 	const setPrevSection = () => {
-		prevSection.value = !isBookendSection().isFirst
+		prevSection.value = !useIsBookendSection().isFirst
 			? `section${querycurrSectionIdNum.value - 1}`
 			: ''
 	}
 
 	const setNextSection = () => {
-		nextSection.value = !isBookendSection().isLast
+		nextSection.value = !useIsBookendSection().isLast
 			? `section${querycurrSectionIdNum.value + 1}`
 			: ''
 	}

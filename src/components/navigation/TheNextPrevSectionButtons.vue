@@ -1,8 +1,9 @@
 <template>
 	<div class="nextPrev">
 		<BaseButton
-			:isDisabled="useIsBookendSection.isFirst"
-			:aria-hidden="useIsBookendSection.isFirst"
+			tabindex="0"
+			:isDisabled="useIsBookendSection().isFirst"
+			:aria-hidden="useIsBookendSection().isFirst"
 			link
 			:href="`#${prevSection}`"
 			@click="useSetCurrSection(`section${querycurrSectionIdNum}`)"
@@ -12,8 +13,9 @@
 			text="&#9650;"
 		/>
 		<BaseButton
-			:isDisabled="useIsBookendSection.isLast"
-			:aria-hidden="useIsBookendSection.isLast"
+			tabindex="0"
+			:isDisabled="useIsBookendSection().isLast"
+			:aria-hidden="useIsBookendSection().isLast"
 			link
 			:href="`#${nextSection}`"
 			ref="prev"
@@ -29,7 +31,6 @@
 <script setup lang="ts">
 	import { useStore } from '@nanostores/vue'
 	import { contentQuery } from '../../store/index.js'
-	import { ref } from 'vue'
 	import BaseButton from '../base/BaseButton.vue'
 	import {
 		useIsBookendSection,
@@ -38,20 +39,16 @@
 
 	const querycurrSectionIdNum = useStore(contentQuery.currSectionIdNum)
 
-	const prevSection = ref<string>()
-	const nextSection = ref<string>()
-
-	const setPrevSection = () => {
-		prevSection.value = !useIsBookendSection.value.isFirst
-			? `section${querycurrSectionIdNum.value - 1}`
-			: ''
-	}
-
-	const setNextSection = () => {
-		nextSection.value = !useIsBookendSection.value.isLast
-			? `section${querycurrSectionIdNum.value + 1}`
-			: ''
-	}
+	defineProps({
+		prevSection: {
+			type: String,
+			required: true,
+		},
+		nextSection: {
+			type: String,
+			required: true,
+		},
+	})
 </script>
 
 <style scoped>
