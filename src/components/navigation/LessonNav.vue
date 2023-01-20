@@ -6,6 +6,7 @@
 					Currently on:
 					{{ queryCurrSectionTitle }}
 				</p>
+				<!-- TODO: refactor the below nextPrev into a component  -->
 				<div class="nextPrev">
 					<BaseButton
 						:isDisabled="isBookendSection().isFirst"
@@ -29,16 +30,15 @@
 						text="&#9660;"
 					/>
 				</div>
-
-				<button
+				<!-- TODO: refactor the below TOC into a component -->
+				<BaseButton
+					:text="!isMenuOpen ? 'Go to&hellip;' : 'Close'"
 					id="menuBtn"
 					aria-haspopup="menu"
 					:aria-expanded="isMenuOpen"
 					aria-controls="navItemsList"
 					@click="openMenu"
-				>
-					{{ !isMenuOpen ? 'Go to&hellip;' : 'Close' }}
-				</button>
+				/>
 				<transition appear name="navTOC">
 					<ol
 						v-show="isMenuOpen"
@@ -99,7 +99,6 @@
 				title: titles[i],
 			}
 		}
-		console.log(Object.keys(allSectionsObj).length)
 		return allSectionsObj
 	})
 
@@ -196,18 +195,14 @@
 		border: none;
 	}
 	.btn_prev {
-		border-radius: 30px 0 0 30px;
+		border-radius: 20px 0 0 20px;
 	}
 
 	#menuBtn {
-		cursor: pointer;
 		grid-area: 1/3/2/4;
 		justify-self: end;
-		box-shadow: none;
-		border: 1px solid var(--darkGray);
 		padding: var(--s-5);
 		font-size: var(--s-1);
-		background-color: var(--lightBlue);
 		display: inline-block;
 		border-radius: 0px 30px 30px 0px;
 		height: 48px;

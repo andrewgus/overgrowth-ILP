@@ -32,10 +32,11 @@
 </template>
 
 <script setup lang="ts">
-	import { ref, computed, watchEffect, withDefaults } from 'vue'
-
 	import { useStore } from '@nanostores/vue'
 	import { featureSettings } from '../../store/index.js'
+
+	import { ref, computed, watchEffect, withDefaults } from 'vue'
+	import { useCssVar } from '@vueuse/core'
 
 	export interface Props {
 		scene: string
@@ -51,6 +52,8 @@
 	})
 
 	const isBgLoaded = ref(false)
+	// // TODO: test how to make useCssVar work, rather than inline styles
+	// const sceneBg = useCssVar('--sceneBg', null, { initialValue: 'red' })
 
 	watchEffect(() => {
 		const img = new Image()
@@ -65,9 +68,11 @@
 	const reflection = computed(() => {
 		return `background-image: url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}-reflection.svg');`
 	})
+
 	const practice = computed(() => {
 		return `background-image: url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}-practice.svg');`
 	})
+
 	const choice = computed(() => {
 		return `background-image: url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}-choice.svg');`
 	})
@@ -75,6 +80,7 @@
 
 <style scoped>
 	.scene {
+		background-color: var(--sceneBg) !important;
 		justify-self: center;
 		align-self: center;
 		display: grid;

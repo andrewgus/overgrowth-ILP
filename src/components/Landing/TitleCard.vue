@@ -3,6 +3,8 @@
 		<h1>{{ title }}</h1>
 		<div v-if="featuresOn">
 			<p>Included in this lesson are&hellip;</p>
+			<!-- TODO: refactor the following ordered list into a component -->
+			<!-- TODO: refactor a given seperator element into a component -->
 			<ul class="options">
 				<li>
 					<BaseSwitch
