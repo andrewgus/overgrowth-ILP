@@ -39,7 +39,7 @@
 	import {
 		useSetCurrSection,
 		useNavItems,
-	} from '../../scripts/NavigationHandler.js'
+	} from '../../scripts/UseNavigation.js'
 
 	const props = defineProps({
 		currSectionId: {

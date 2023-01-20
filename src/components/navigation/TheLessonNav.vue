@@ -2,7 +2,7 @@
 	<transition name="lessonNav">
 		<nav :class="{ isInvisible: !isOnContent }" id="lessonNav">
 			<div>
-				<p>
+				<p v-show="!!queryCurrSectionTitle">
 					Currently on:
 					{{ queryCurrSectionTitle }}
 				</p>
@@ -20,7 +20,7 @@
 	import { useStore } from '@nanostores/vue'
 	import { contentQuery } from '../../store/index.js'
 	import { ref, watchEffect } from 'vue'
-	import { useIsBookendSection } from '../../scripts/NavigationHandler'
+	import { useIsBookendSection } from '../../scripts/UseNavigation'
 	import TheNavToc from './TheNavTOC.vue'
 	import TheNextPrevSectionButtons from './TheNextPrevSectionButtons.vue'
 
@@ -63,8 +63,11 @@
 		top: 0;
 	}
 	nav.isInvisible {
-		visibility: hidden;
+		/* visibility: hidden; */
 		opacity: 0;
+	}
+	nav.isInvisible:focus-within {
+		opacity: 1;
 	}
 	nav > div {
 		max-width: 72ch;

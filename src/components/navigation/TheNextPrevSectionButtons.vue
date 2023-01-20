@@ -1,7 +1,6 @@
 <template>
 	<div class="nextPrev">
 		<BaseButton
-			tabindex="0"
 			:isDisabled="useIsBookendSection().isFirst"
 			:aria-hidden="useIsBookendSection().isFirst"
 			link
@@ -13,7 +12,6 @@
 			text="&#9650;"
 		/>
 		<BaseButton
-			tabindex="0"
 			:isDisabled="useIsBookendSection().isLast"
 			:aria-hidden="useIsBookendSection().isLast"
 			link
@@ -35,7 +33,7 @@
 	import {
 		useIsBookendSection,
 		useSetCurrSection,
-	} from '../../scripts/NavigationHandler'
+	} from '../../scripts/UseNavigation'
 
 	const querycurrSectionIdNum = useStore(contentQuery.currSectionIdNum)
 

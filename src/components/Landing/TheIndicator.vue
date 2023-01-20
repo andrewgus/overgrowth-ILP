@@ -1,22 +1,24 @@
 <template>
 	<div>
-		<p>Scroll to start</p>
-		<div class="scrollArrow" aria-hidden="true">
-			<svg
-				width="60"
-				height="38"
-				viewBox="0 0 60 38"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<path
-					d="M5 5L30 30L55 5"
-					stroke="#2d3031"
-					stroke-width="10"
-					stroke-linecap="round"
-				/>
-			</svg>
-		</div>
+		<a href="#section1" aria-hidden="true">
+			<p>Scroll to start</p>
+			<span class="scrollArrow">
+				<svg
+					width="60"
+					height="38"
+					viewBox="0 0 60 38"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<path
+						d="M5 5L30 30L55 5"
+						stroke="#2d3031"
+						stroke-width="10"
+						stroke-linecap="round"
+					/>
+				</svg>
+			</span>
+		</a>
 	</div>
 </template>
 
@@ -26,6 +28,16 @@
 		align-self: end;
 		z-index: 999;
 		margin: 0 auto var(--s1);
+	}
+	a,
+	a:focus,
+	a:hover {
+		all: unset;
+		display: flex;
+		font-size: 500;
+		flex-flow: column nowrap;
+		justify-content: center;
+		align-items: center;
 	}
 	p {
 		padding: var(--s-5);

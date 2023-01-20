@@ -5,6 +5,11 @@
 * {
   box-sizing: border-box;
 }
+:focus {
+  padding: 10px;
+  outline: 1px solid var(--purple);
+}
+
 html {
   font-family: "Atkinson Hyperlegible", sans-serif;
   background-color: var(--white);
