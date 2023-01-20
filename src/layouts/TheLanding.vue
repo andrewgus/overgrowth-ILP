@@ -6,7 +6,7 @@
 			:isPracticeOn="isPracticeOn"
 			:isChoiceOn="isChoiceOn"
 		/>
-		<TitleCard
+		<TheTitleCard
 			:title="title"
 			:isReflectionOn="isReflectionOn"
 			:isPracticeOn="isPracticeOn"
@@ -20,10 +20,10 @@
 	import { computed, withDefaults } from 'vue'
 
 	import TheScene from '../components/Landing/TheScene.vue'
-	import TitleCard from '../components/Landing/TitleCard.vue'
+	import TheTitleCard from '../components/Landing/TheTitleCard.vue'
 	import TheIndicator from '../components/Landing/TheIndicator.vue'
 
-	export interface Props {
+	interface Props {
 		title: string
 		scene: string
 		color?: string
