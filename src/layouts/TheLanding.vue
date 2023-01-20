@@ -1,5 +1,5 @@
 <template>
-	<header :style="{ backgroundImage: `${bgGradient}` }">
+	<header>
 		<TheScene
 			:scene="scene"
 			:isReflectionOn="isReflectionOn"
@@ -43,6 +43,7 @@
 
 <style scoped>
 	header {
+		background-image: v-bind(bgGradient);
 		min-height: 99vh;
 		width: 100vw;
 		display: grid;

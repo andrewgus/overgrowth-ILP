@@ -3,8 +3,6 @@
 		<h1>{{ title }}</h1>
 		<div v-if="featuresOn">
 			<p>Included in this lesson are&hellip;</p>
-			<!-- TODO: refactor the following ordered list into a component -->
-			<!-- TODO: refactor a given seperator element into a component -->
 			<ul class="options">
 				<li>
 					<BaseSwitch
@@ -14,14 +12,11 @@
 						type="Reflection"
 					/>
 				</li>
-				<div
+				<BaseSeparator
 					v-if="
 						(isReflectionOn && isPracticeOn) || (isReflectionOn && isChoiceOn)
 					"
-					role="separator"
-					aria-hidden="true"
-					aria-orientation="vertical"
-				></div>
+				/>
 				<li>
 					<BaseSwitch
 						v-if="isPracticeOn"
@@ -30,12 +25,7 @@
 						type="Practice"
 					/>
 				</li>
-				<div
-					v-if="isPracticeOn && isChoiceOn"
-					role="separator"
-					aria-hidden="true"
-					aria-orientation="vertical"
-				></div>
+				<BaseSeparator v-if="isPracticeOn && isChoiceOn" />
 				<li>
 					<BaseSwitch
 						v-if="isChoiceOn"
@@ -57,6 +47,7 @@
 	import { featureSettings } from '../../store/index.js'
 
 	import BaseSwitch from '../base/BaseSwitch.vue'
+	import BaseSeparator from '../base/BaseSeparator.vue'
 
 	export interface Props {
 		title: string
@@ -112,10 +103,5 @@
 		flex-flow: column nowrap;
 		align-items: center;
 		justify-content: start;
-	}
-	.options > div[role='separator'] {
-		flex-grow: 0;
-		border: 1.25px solid var(--lightGray);
-		border-radius: var(--s5);
 	}
 </style>

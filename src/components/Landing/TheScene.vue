@@ -1,29 +1,26 @@
 <template>
-	<div aria-hidden="true" class="scene" :style="scene">
+	<div aria-hidden="true" class="scene">
 		<transition name="landingScene">
 			<div
 				v-if="isReflectionOn"
-				class="reflectionSwitch"
+				:class="{ reflectionSwitch: isBgLoaded }"
 				v-show="useStore(featureSettings.isReflectionOn).value"
-				:style="isBgLoaded ? reflection : ''"
 			></div>
 		</transition>
 		<!-- /.reflection -->
 		<transition name="landingScene">
 			<div
 				v-if="isPracticeOn"
-				class="practiceSwitch"
+				:class="{ practiceSwitch: isBgLoaded }"
 				v-show="useStore(featureSettings.isPracticeOn).value"
-				:style="isBgLoaded ? practice : ''"
 			></div>
 		</transition>
 		<!-- /.practice -->
 		<transition name="landingScene">
 			<div
 				v-if="isChoiceOn"
-				class="choiceSwitch"
+				:class="{ choiceSwitch: isBgLoaded }"
 				v-show="useStore(featureSettings.isChoiceOn).value"
-				:style="isBgLoaded ? choice : ''"
 			></div>
 		</transition>
 		<!-- /.choice -->
@@ -34,17 +31,14 @@
 <script setup lang="ts">
 	import { useStore } from '@nanostores/vue'
 	import { featureSettings } from '../../store/index.js'
+	import { ref, computed, watchEffect, withDefaults, onMounted } from 'vue'
 
-	import { ref, computed, watchEffect, withDefaults } from 'vue'
-	import { useCssVar } from '@vueuse/core'
-
-	export interface Props {
+	interface Props {
 		scene: string
 		isReflectionOn?: boolean
 		isPracticeOn?: boolean
 		isChoiceOn?: boolean
 	}
-
 	const props = withDefaults(defineProps<Props>(), {
 		isReflectionOn: false,
 		isPracticeOn: false,
@@ -52,8 +46,6 @@
 	})
 
 	const isBgLoaded = ref(false)
-	// // TODO: test how to make useCssVar work, rather than inline styles
-	// const sceneBg = useCssVar('--sceneBg', null, { initialValue: 'red' })
 
 	watchEffect(() => {
 		const img = new Image()
@@ -61,26 +53,26 @@
 		img.onload = () => (isBgLoaded.value = true)
 	})
 
-	const scene = computed(() => {
-		return `background-image: url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}.svg');`
+	const sceneBg = computed(() => {
+		return `url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}.svg');`
 	})
 
-	const reflection = computed(() => {
-		return `background-image: url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}-reflection.svg');`
+	const reflectionImg = computed(() => {
+		return `url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}-reflection.svg');`
 	})
 
-	const practice = computed(() => {
-		return `background-image: url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}-practice.svg');`
+	const practiceImg = computed(() => {
+		return `url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}-practice.svg');`
 	})
 
-	const choice = computed(() => {
-		return `background-image: url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}-choice.svg');`
+	const choiceImg = computed(() => {
+		return `url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}-choice.svg');`
 	})
 </script>
 
 <style scoped>
 	.scene {
-		background-color: var(--sceneBg) !important;
+		background-image: v-bind(sceneBg);
 		justify-self: center;
 		align-self: center;
 		display: grid;
@@ -114,13 +106,13 @@
 		width: 100%;
 	}
 	.reflectionSwitch {
-		background-image: transparent;
+		background-image: v-bind(reflectionImg);
 	}
 	.choiceSwitch {
-		background-image: transparent;
+		background-image: v-bind(choiceImg);
 	}
 	.practiceSwitch {
-		background-image: transparent;
+		background-image: v-bind(practiceImg);
 	}
 	.landingScene-enter-from,
 	.landingScene-leave-to {
