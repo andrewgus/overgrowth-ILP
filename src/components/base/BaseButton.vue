@@ -36,6 +36,7 @@
 	}
 	button:hover,
 	a:hover {
+		background-color: var(--peach);
 		box-shadow: inset var(--s-10) var(--s-10) 0 var(--blue),
 			inset calc(-1 * var(--s-10)) calc(-1 * var(--s-10)) 0 var(--blue),
 			inset var(--s-10) calc(-1 * var(--s-10)) 0 var(--blue),

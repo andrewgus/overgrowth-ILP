@@ -1,0 +1,82 @@
+<template>
+	<div class="nextPrev">
+		<BaseButton
+			:isDisabled="useIsBookendSection.isFirst"
+			:aria-hidden="useIsBookendSection.isFirst"
+			link
+			:href="`#${prevSection}`"
+			@click="useSetCurrSection(`section${querycurrSectionIdNum}`)"
+			class="btn_prev"
+			title="Go to previous section"
+			aria-label="Go to previous section"
+			text="&#9650;"
+		/>
+		<BaseButton
+			:isDisabled="useIsBookendSection.isLast"
+			:aria-hidden="useIsBookendSection.isLast"
+			link
+			:href="`#${nextSection}`"
+			ref="prev"
+			@click="useSetCurrSection(`section${querycurrSectionIdNum}`)"
+			class="btn_next"
+			title="Go to next section"
+			aria-label="Go to next section"
+			text="&#9660;"
+		/>
+	</div>
+</template>
+
+<script setup lang="ts">
+	import { useStore } from '@nanostores/vue'
+	import { contentQuery } from '../../store/index.js'
+	import { ref } from 'vue'
+	import BaseButton from '../base/BaseButton.vue'
+	import {
+		useIsBookendSection,
+		useSetCurrSection,
+	} from '../../scripts/NavigationHandler'
+
+	const querycurrSectionIdNum = useStore(contentQuery.currSectionIdNum)
+
+	const prevSection = ref<string>()
+	const nextSection = ref<string>()
+
+	const setPrevSection = () => {
+		prevSection.value = !useIsBookendSection.value.isFirst
+			? `section${querycurrSectionIdNum.value - 1}`
+			: ''
+	}
+
+	const setNextSection = () => {
+		nextSection.value = !useIsBookendSection.value.isLast
+			? `section${querycurrSectionIdNum.value + 1}`
+			: ''
+	}
+</script>
+
+<style scoped>
+	div > .nextPrev {
+		grid-area: 1/2/2/3;
+		justify-self: end;
+		display: flex;
+		height: 48px;
+		overflow: hidden;
+		border: 1px solid var(--darkGray);
+		border-radius: 30px 0 0 30px;
+	}
+	.nextPrev > * {
+		overflow: hidden;
+		border-radius: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: var(--s3);
+		border: none;
+	}
+	.nextPrev > *:visited {
+		color: var(--black);
+	}
+	.btn_prev {
+		border-radius: 20px 0 0 20px;
+	}
+</style>

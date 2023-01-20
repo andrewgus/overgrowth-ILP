@@ -15,7 +15,8 @@ $percntDiff: 10%;
   --offWhite: hsl(0deg, 0%, 98%);
   --white: hsl(0deg, 0%, 100%);
   --lightBlue: hsl(201deg, 100%, 97%);
-  --purple: hsl(330deg, 50%, 40%);
+  --peach: hsl(32deg, 100%, 97%);
+  --purple: hsl(300deg, 59%, 36%);
 
   @each $key, $val in $colors {
     --#{$key}-5: #{scale-color($val, $lightness: - $percntDiff * 5)};

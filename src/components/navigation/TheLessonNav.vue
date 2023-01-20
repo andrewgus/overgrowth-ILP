@@ -6,10 +6,10 @@
 					Currently on:
 					{{ queryCurrSectionTitle }}
 				</p>
-				<!-- TODO: refactor the below nextPrev into a component  -->
 				<div class="nextPrev">
 					<BaseButton
 						:isDisabled="isBookendSection().isFirst"
+						:aria-hidden="isBookendSection().isFirst"
 						link
 						:href="`#${prevSection}`"
 						@click="setCurrSection(`section${querycurrSectionIdNum}`)"
@@ -20,6 +20,7 @@
 					/>
 					<BaseButton
 						:isDisabled="isBookendSection().isLast"
+						:aria-hidden="isBookendSection().isLast"
 						link
 						:href="`#${nextSection}`"
 						ref="prev"
@@ -30,7 +31,6 @@
 						text="&#9660;"
 					/>
 				</div>
-				<!-- TODO: refactor the below TOC into a component -->
 				<BaseButton
 					:text="!isMenuOpen ? 'Go to&hellip;' : 'Close'"
 					id="menuBtn"
@@ -60,7 +60,7 @@
 <script setup lang="ts">
 	import { useStore } from '@nanostores/vue'
 	import { contentQuery } from '../../store/index.js'
-	import { ref, computed, onMounted, watchEffect } from 'vue'
+	import { ref, computed, watchEffect } from 'vue'
 	import BaseButton from '../base/BaseButton.vue'
 
 	const isMenuOpen = ref(false)
@@ -73,9 +73,12 @@
 	}
 
 	const queryOnContent = useStore(contentQuery.isOnContent)
-	const queryAllSections = useStore(contentQuery.allSections)
-	const querycurrSectionIdNum = useStore(contentQuery.currSectionIdNum)
 	const queryCurrSectionTitle = useStore(contentQuery.currSectionTitle)
+
+	// AllSections for TOC
+	const queryAllSections = useStore(contentQuery.allSections)
+	// CurrSectionIDNum for BookEnd & Next & Prev
+	const querycurrSectionIdNum = useStore(contentQuery.currSectionIdNum)
 
 	const navItems = computed(() => {
 		let titles: string[] = []
@@ -119,9 +122,11 @@
 		return { isFirst, isLast }
 	}
 
-	const isOnContent = ref<boolean>()
-	const nextSection = ref<string>()
 	const prevSection = ref<string>()
+	const nextSection = ref<string>()
+
+	// NEED THIS
+	const isOnContent = ref<boolean>()
 
 	const setPrevSection = () => {
 		prevSection.value = !isBookendSection().isFirst
@@ -135,15 +140,11 @@
 			: ''
 	}
 
-	onMounted(() => {
+	watchEffect(() => {
 		isOnContent.value = queryOnContent.value
 
-		watchEffect(() => {
-			isOnContent.value = queryOnContent.value
-
-			setPrevSection()
-			setNextSection()
-		})
+		setPrevSection()
+		setNextSection()
 	})
 </script>
 
@@ -194,6 +195,9 @@
 		width: var(--s3);
 		border: none;
 	}
+	.nextPrev > *:visited {
+		color: var(--black);
+	}
 	.btn_prev {
 		border-radius: 20px 0 0 20px;
 	}
@@ -211,9 +215,14 @@
 	#navItemsList {
 		grid-area: 2/1/3/3;
 		justify-self: center;
+		list-style: none;
+		padding: 0;
+		max-width: 55ch;
+		width: 100%;
 	}
+
 	#navItemsList > li + li {
-		margin-top: var(--s-3);
+		margin-top: var(--s-1);
 	}
 	/* lessonNav transition */
 	.lessonNav-enter-from,

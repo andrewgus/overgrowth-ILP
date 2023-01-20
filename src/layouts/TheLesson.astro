@@ -1,7 +1,7 @@
 ---
 import '../styles/root.scss'
 import TheLanding from '../layouts/TheLanding.vue'
-import LessonNav from '../components/navigation/LessonNav.vue'
+import TheLessonNav from '../components/navigation/TheLessonNav.vue'
 export interface Props {
 	title: string
 	scene: string
@@ -45,40 +45,9 @@ const {
 					isPracticeOn={isPracticeOn}
 					isChoiceOn={isChoiceOn}
 				/>
-				<LessonNav client:only='vue' />
+				<TheLessonNav client:only='vue' />
 				<slot />
 			</article>
 		</main>
 	</body>
 </html>
-<style is:global>
-	* {
-		box-sizing: border-box;
-	}
-	html {
-		font-family: 'Atkinson Hyperlegible', sans-serif;
-		background-color: var(--white);
-		overflow: scroll;
-		scroll-behavior: smooth;
-		scroll-padding-top: var(--s7);
-		color: var(--black);
-		font-size: var(--s0);
-	}
-	body {
-		margin: 0;
-	}
-	h1 {
-		font-size: var(--s5);
-		margin-bottom: var(--s3);
-		font-weight: 800;
-	}
-	h2 {
-		font-size: var(--s4);
-		margin-bottom: var(--s3);
-		font-weight: 800;
-	}
-	p {
-		color: var(--black);
-		line-height: 1.5;
-	}
-</style>
