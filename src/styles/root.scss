@@ -6,8 +6,9 @@
   box-sizing: border-box;
 }
 :focus {
-  padding: 10px;
-  outline: 1px solid var(--purple);
+  box-shadow: inset var(--s-10) var(--s-10) 0 var(--blue),
+    inset calc(-1 * var(--s-10)) calc(-1 * var(--s-10)) 0 var(--blue),
+    inset var(--s-10) calc(-1 * var(--s-10)) 0 var(--blue), inset calc(-1 * var(--s-10)) var(--s-10) 0 var(--blue);
 }
 
 html {
@@ -40,8 +41,9 @@ a:visited {
   color: var(--purple);
 }
 
-a:hover,
-a:focus {
+p > a:hover,
+p > a:focus {
+  box-shadow: none;
   outline: 1.5px solid var(--blue);
   padding: 0 var(--s-10);
   font-weight: 700;

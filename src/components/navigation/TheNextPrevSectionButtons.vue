@@ -1,6 +1,7 @@
 <template>
 	<div class="nextPrev">
 		<BaseButton
+			:tabindex="useIsBookendSection().isFirst ? '-1' : '0'"
 			:isDisabled="useIsBookendSection().isFirst"
 			:aria-hidden="useIsBookendSection().isFirst"
 			link
@@ -12,6 +13,7 @@
 			text="&#9650;"
 		/>
 		<BaseButton
+			:tabindex="useIsBookendSection().isLast ? '-1' : 0"
 			:isDisabled="useIsBookendSection().isLast"
 			:aria-hidden="useIsBookendSection().isLast"
 			link

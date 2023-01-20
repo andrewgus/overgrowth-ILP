@@ -26,7 +26,6 @@
 	button,
 	a {
 		cursor: pointer;
-		box-shadow: none;
 		border: 1px solid var(--darkGray);
 		padding: var(--s-5);
 		font-size: var(--s-1);
