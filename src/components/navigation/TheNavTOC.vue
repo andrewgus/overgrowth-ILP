@@ -95,6 +95,7 @@
 		background-color: var(--peach);
 	}
 	li::before {
+		transition: 0.4s all var(--transition);
 		content: '';
 		margin-left: calc(-1 * var(--s-2));
 		margin-right: var(--s-5);

@@ -64,7 +64,6 @@
 		top: 0;
 	}
 	nav.isInvisible {
-		/* visibility: hidden; */
 		opacity: 0;
 	}
 	nav.isInvisible:focus-within {
@@ -85,53 +84,6 @@
 		white-space: nowrap;
 		text-overflow: ellipsis;
 	}
-	div > .nextPrev {
-		grid-area: 1/2/2/3;
-		justify-self: end;
-		display: flex;
-		height: 48px;
-		overflow: hidden;
-		border: 1px solid var(--darkGray);
-		border-radius: 30px 0 0 30px;
-	}
-	.nextPrev > * {
-		overflow: hidden;
-		border-radius: 0;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: var(--s3);
-		border: none;
-	}
-	.nextPrev > *:visited {
-		color: var(--black);
-	}
-	.btn_prev {
-		border-radius: 20px 0 0 20px;
-	}
-
-	#menuBtn {
-		grid-area: 1/3/2/4;
-		justify-self: end;
-		padding: var(--s-5);
-		font-size: var(--s-1);
-		display: inline-block;
-		border-radius: 0px 30px 30px 0px;
-		height: 48px;
-		margin-left: var(--s-3);
-	}
-	#navItemsList {
-		grid-area: 2/1/3/3;
-		justify-self: center;
-		list-style: none;
-		padding: 0;
-		max-width: 55ch;
-		width: 100%;
-	}
-
-	#navItemsList > li + li {
-		margin-top: var(--s-1);
-	}
 	/* lessonNav transition */
 	.lessonNav-enter-from,
 	.lessonNav-leave-to {
@@ -143,21 +95,6 @@
 	}
 	.lessonNav-enter-to,
 	.lessonNav-leave-from {
-		opacity: 1;
-	}
-	/* navTOC transition */
-	.navTOC-enter-from,
-	.navTOC-leave-to {
-		transform: translateY(calc(-1 * var(--s0)));
-		opacity: 0;
-	}
-	.navTOC-enter-active,
-	.navTOC-leave-active {
-		transition: all 0.5s ease-in-out;
-	}
-	.navTOC-enter-to,
-	.navTOC-leave-from {
-		transform: translateY(0);
 		opacity: 1;
 	}
 </style>
