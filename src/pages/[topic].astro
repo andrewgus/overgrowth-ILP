@@ -1,6 +1,6 @@
 ---
 import LibLayout from '../layouts/LibLayout.astro'
-import LibraryTopics from '../scripts/LibraryTopics.js'
+import TopicsLibrary from '../scripts/TopicsLibrary.js'
 
 export async function getStaticPaths() {
 	const allLessons = await Astro.glob('../pages/*/*.astro')
@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 		const filteredLessons = allLessons.filter((lesson) =>
 			lesson.url?.includes(topic!)
 		)
-		const topicTitle = LibraryTopics.get(topic!)
+		const topicTitle = TopicsLibrary.get(topic!)
 
 		return {
 			params: { topic },

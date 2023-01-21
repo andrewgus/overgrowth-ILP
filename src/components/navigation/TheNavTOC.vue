@@ -13,25 +13,28 @@
 			aria-label="table of contents links"
 			id="navItemsList"
 		>
-			<li v-for="navItem in useNavItems" :key="navItem!.id">
-				<span
-					:id="`${navItem!.id}dot`"
-					title="You are here"
-					aria-label="You are here"
-					:class="{ greenDot: isLocatedHere(navItem!.id) }"
-					:aria-hidden="!isLocatedHere(navItem!.id)"
-					role="marquee"
-				></span>
-				<a :href="`#${navItem!.id}`" @click="navToSection(navItem!.id)">{{
-					navItem!.title
-				}}</a>
+			<li
+				v-for="navItem in useNavItems"
+				:key="navItem!.id"
+				:class="{ greenDot: isLocatedHere(navItem!.id) }"
+			>
+				<BaseButton
+					link
+					:url="`#${navItem!.id}`"
+					:text="navItem!.title"
+					@click="navToSection(navItem!.id)"
+					:title="isLocatedHere(navItem!.id) ? 'You are here' : ''"
+				/>
 			</li>
 		</ol>
 	</transition>
 </template>
 
 <script setup lang="ts">
-	import { useSetCurrSection, useNavItems } from '../../composables/UseNavigation.js'
+	import {
+		useSetCurrSection,
+		useNavItems,
+	} from '../../composables/UseNavigation.js'
 	import { ref } from 'vue'
 	import BaseButton from '../base/BaseButton.vue'
 
@@ -74,21 +77,37 @@
 		max-width: 55ch;
 		width: 100%;
 	}
-
-	#navItemsList > li + li {
-		margin-top: var(--s-1);
+	#navItemsList > li {
+		text-indent: var(--s-2);
 	}
-	#navItemsList span {
-		transition: 0.3s all var(--transition);
+	#navItemsList > li a {
+		all: unset;
+		text-decoration: underline;
+	}
+	#navItemsList > li a:visited {
+		color: var(--purple);
+	}
+	#navItemsList > li a:hover {
+		font-weight: 700;
+		background-color: var(--peach);
+	}
+
+	#navItemsList > li::before {
+		content: '';
+		margin-left: calc(-1 * var(--s-2));
+		margin-right: var(--s-5);
 		display: inline-block;
 		height: var(--s-2);
 		width: var(--s-2);
 		border-radius: 50%;
-		margin-right: var(--s-5);
 	}
-	.greenDot {
+	#navItemsList > .greenDot::before {
 		background-color: var(--green);
 	}
+	#navItemsList > li + li {
+		margin-top: var(--s-1);
+	}
+
 	/* navTOC transition */
 	.navTOC-enter-from,
 	.navTOC-leave-to {

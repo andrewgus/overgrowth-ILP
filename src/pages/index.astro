@@ -1,6 +1,6 @@
 ---
 import LibLayout from '../layouts/LibLayout.astro'
-import LibraryTopics from '../scripts/LibraryTopics.js'
+import TopicsLibrary from '../scripts/TopicsLibrary.js'
 
 const allLessons = await Astro.glob('../pages/*/*.astro')
 
@@ -8,7 +8,7 @@ const topicURLs = [
 	...new Set(allLessons.map((lesson) => lesson.url!.split('/').at(1))),
 ]
 
-const topicTitles = topicURLs.map((t) => LibraryTopics.get(t!))
+const topicTitles = topicURLs.map((t) => TopicsLibrary.get(t!))
 ---
 
 <LibLayout title='All Topics'>
