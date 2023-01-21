@@ -7,6 +7,7 @@
 					{{ queryCurrSectionTitle }}
 				</p>
 				<TheNextPrevSectionButtons
+					:currSectionId="querycurrSectionIdNum"
 					:prevSection="prevSection!"
 					:nextSection="nextSection!"
 				/>
@@ -19,8 +20,8 @@
 <script setup lang="ts">
 	import { useStore } from '@nanostores/vue'
 	import { contentQuery } from '../../store/index.js'
+	import { useIsBookendSection } from './UseNavigation'
 	import { ref, watchEffect } from 'vue'
-	import { useIsBookendSection } from '../../scripts/UseNavigation'
 	import TheNavToc from './TheNavTOC.vue'
 	import TheNextPrevSectionButtons from './TheNextPrevSectionButtons.vue'
 
@@ -33,13 +34,13 @@
 	const nextSection = ref<string>()
 
 	const setPrevSection = () => {
-		prevSection.value = !useIsBookendSection().isFirst
+		prevSection.value = !useIsBookendSection.value.isFirst
 			? `section${querycurrSectionIdNum.value - 1}`
 			: ''
 	}
 
 	const setNextSection = () => {
-		nextSection.value = !useIsBookendSection().isLast
+		nextSection.value = !useIsBookendSection.value.isLast
 			? `section${querycurrSectionIdNum.value + 1}`
 			: ''
 	}

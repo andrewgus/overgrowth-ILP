@@ -1,25 +1,25 @@
 <template>
 	<div class="nextPrev">
 		<BaseButton
-			:tabindex="useIsBookendSection().isFirst ? '-1' : '0'"
-			:isDisabled="useIsBookendSection().isFirst"
-			:aria-hidden="useIsBookendSection().isFirst"
+			:tabindex="useIsBookendSection.isFirst ? '-1' : '0'"
+			:isDisabled="useIsBookendSection.isFirst"
+			:aria-hidden="useIsBookendSection.isFirst"
 			link
 			:href="`#${prevSection}`"
-			@click="useSetCurrSection(`section${querycurrSectionIdNum}`)"
+			@click="useSetCurrSection(`section${currSectionId}`)"
 			class="btn_prev"
 			title="Go to previous section"
 			aria-label="Go to previous section"
 			text="&#9650;"
 		/>
 		<BaseButton
-			:tabindex="useIsBookendSection().isLast ? '-1' : 0"
-			:isDisabled="useIsBookendSection().isLast"
-			:aria-hidden="useIsBookendSection().isLast"
+			:tabindex="useIsBookendSection.isLast ? '-1' : 0"
+			:isDisabled="useIsBookendSection.isLast"
+			:aria-hidden="useIsBookendSection.isLast"
 			link
 			:href="`#${nextSection}`"
 			ref="prev"
-			@click="useSetCurrSection(`section${querycurrSectionIdNum}`)"
+			@click="useSetCurrSection(`section${currSectionId}`)"
 			class="btn_next"
 			title="Go to next section"
 			aria-label="Go to next section"
@@ -29,17 +29,14 @@
 </template>
 
 <script setup lang="ts">
-	import { useStore } from '@nanostores/vue'
-	import { contentQuery } from '../../store/index.js'
+	import { useIsBookendSection, useSetCurrSection } from './UseNavigation'
 	import BaseButton from '../base/BaseButton.vue'
-	import {
-		useIsBookendSection,
-		useSetCurrSection,
-	} from '../../scripts/UseNavigation'
-
-	const querycurrSectionIdNum = useStore(contentQuery.currSectionIdNum)
 
 	defineProps({
+		currSectionId: {
+			type: Number,
+			required: true,
+		},
 		prevSection: {
 			type: String,
 			required: true,

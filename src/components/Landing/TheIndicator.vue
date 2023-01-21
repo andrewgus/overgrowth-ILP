@@ -34,7 +34,6 @@
 	a:hover {
 		all: unset;
 		display: flex;
-		font-size: 500;
 		flex-flow: column nowrap;
 		justify-content: center;
 		align-items: center;

@@ -18,28 +18,22 @@
 					:id="`${navItem!.id}dot`"
 					title="You are here"
 					aria-label="You are here"
-					:class="{ greenDot: isHere(navItem!.id) }"
-					:aria-hidden="!isHere(navItem!.id)"
+					:class="{ greenDot: isLocatedHere(navItem!.id) }"
+					:aria-hidden="!isLocatedHere(navItem!.id)"
 					role="marquee"
 				></span>
-				<a
-					:aria-describedby="`${navItem!.id}dot`"
-					:href="`#${navItem!.id}`"
-					@click="navToSection(navItem!.id)"
-					>{{ navItem!.title }}</a
-				>
+				<a :href="`#${navItem!.id}`" @click="navToSection(navItem!.id)">{{
+					navItem!.title
+				}}</a>
 			</li>
 		</ol>
 	</transition>
 </template>
 
 <script setup lang="ts">
+	import { useSetCurrSection, useNavItems } from './UseNavigation.js'
 	import { ref } from 'vue'
 	import BaseButton from '../base/BaseButton.vue'
-	import {
-		useSetCurrSection,
-		useNavItems,
-	} from '../../scripts/UseNavigation.js'
 
 	const props = defineProps({
 		currSectionId: {
@@ -49,10 +43,9 @@
 	})
 
 	const isMenuOpen = ref<boolean>(false)
-
 	const openMenu = () => (isMenuOpen.value = !isMenuOpen.value)
 
-	const isHere = (id: string) => {
+	const isLocatedHere = (id: string) => {
 		return id === `section${props.currSectionId}`
 	}
 
