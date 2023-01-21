@@ -69,7 +69,7 @@
 		height: 48px;
 		margin-left: var(--s-3);
 	}
-	#navItemsList {
+	ol {
 		grid-area: 2/1/3/3;
 		justify-self: center;
 		list-style: none;
@@ -77,22 +77,25 @@
 		max-width: 55ch;
 		width: 100%;
 	}
-	#navItemsList > li {
+	li {
 		text-indent: var(--s-2);
 	}
-	#navItemsList > li a {
+	li + li {
+		margin-top: var(--s-1);
+	}
+	li a {
 		all: unset;
 		text-decoration: underline;
 	}
-	#navItemsList > li a:visited {
+	li a:visited {
 		color: var(--purple);
 	}
-	#navItemsList > li a:hover {
+	li a:hover {
 		font-weight: 700;
 		background-color: var(--peach);
 	}
-
-	#navItemsList > li::before {
+	li::before {
+		transition: 0.4s all var(--transition);
 		content: '';
 		margin-left: calc(-1 * var(--s-2));
 		margin-right: var(--s-5);
@@ -101,11 +104,8 @@
 		width: var(--s-2);
 		border-radius: 50%;
 	}
-	#navItemsList > .greenDot::before {
+	.greenDot::before {
 		background-color: var(--green);
-	}
-	#navItemsList > li + li {
-		margin-top: var(--s-1);
 	}
 
 	/* navTOC transition */
