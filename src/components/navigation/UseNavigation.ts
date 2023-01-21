@@ -1,6 +1,6 @@
-import { computed } from 'vue'
 import { useStore } from '@nanostores/vue'
-import { contentQuery } from '../store/index.js'
+import { contentQuery } from '../../store/index.js'
+import { computed } from 'vue'
 
 const querycurrSectionIdNum = useStore(contentQuery.currSectionIdNum)
 const queryAllSections = useStore(contentQuery.allSections)
@@ -34,7 +34,7 @@ const useNavItems = computed(() => {
 	return allSectionsObj
 })
 
-const useIsBookendSection = () => {
+const useIsBookendSection = computed(() => {
 	const currSectionIdNum = `section${querycurrSectionIdNum.value}`
 	const bookendSectionId = {
 		first: Object.keys(useNavItems.value).at(0),
@@ -45,6 +45,6 @@ const useIsBookendSection = () => {
 	const isLast = currSectionIdNum === bookendSectionId.last
 
 	return { isFirst, isLast }
-}
+})
 
 export { useSetCurrSection, useNavItems, useIsBookendSection }
