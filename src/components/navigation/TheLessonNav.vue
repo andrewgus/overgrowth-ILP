@@ -20,7 +20,7 @@
 <script setup lang="ts">
 	import { useStore } from '@nanostores/vue'
 	import { contentQuery } from '../../store/index.js'
-	import { useIsBookendSection } from './UseNavigation'
+	import { useIsBookendSection } from '../../composables/UseNavigation'
 	import { ref, watchEffect } from 'vue'
 	import TheNavToc from './TheNavTOC.vue'
 	import TheNextPrevSectionButtons from './TheNextPrevSectionButtons.vue'

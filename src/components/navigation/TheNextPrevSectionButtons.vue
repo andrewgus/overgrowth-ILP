@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-	import { useIsBookendSection, useSetCurrSection } from './UseNavigation'
+	import { useIsBookendSection, useSetCurrSection } from '../../composables/UseNavigation'
 	import BaseButton from '../base/BaseButton.vue'
 
 	defineProps({

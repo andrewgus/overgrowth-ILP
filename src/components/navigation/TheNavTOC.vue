@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-	import { useSetCurrSection, useNavItems } from './UseNavigation.js'
+	import { useSetCurrSection, useNavItems } from '../../composables/UseNavigation.js'
 	import { ref } from 'vue'
 	import BaseButton from '../base/BaseButton.vue'
 

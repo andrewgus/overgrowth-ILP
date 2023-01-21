@@ -1,5 +1,5 @@
 import { useStore } from '@nanostores/vue'
-import { contentQuery } from '../../store/index.js'
+import { contentQuery } from '../store/index.js'
 import { computed } from 'vue'
 
 const querycurrSectionIdNum = useStore(contentQuery.currSectionIdNum)
