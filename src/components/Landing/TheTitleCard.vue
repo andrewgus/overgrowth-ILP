@@ -87,6 +87,7 @@
 		text-align: center;
 	}
 	.titleCard p {
+		text-align: center;
 		margin-bottom: var(--s-3);
 	}
 	.options {
