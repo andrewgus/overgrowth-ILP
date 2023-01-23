@@ -6,7 +6,7 @@
   box-sizing: border-box;
 }
 :focus {
-  outline: var(--s-10) solid var(--blue1);
+  animation: focusPulse 0.33s var(--transition) forwards;
 }
 
 html {
@@ -44,4 +44,18 @@ p > a:focus {
   border-radius: var(--s-10);
   padding: 0 var(--s-10);
   font-weight: 700;
+}
+
+@keyframes focusPulse {
+  0% {
+    outline-offset: 0;
+    outline-color: var(--blue1);
+  }
+  99% {
+    outline-color: var(--blue1);
+    outline-offset: var(--s-10);
+  }
+  100% {
+    outline: var(--s-10) solid var(--blue1);
+  }
 }

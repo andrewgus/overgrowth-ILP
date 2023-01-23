@@ -69,10 +69,11 @@
 		width: var(--s3);
 		border: none;
 	}
-	.nextPrev > *:visited:not(:hover) {
+	.nextPrev > *:visited:not(:hover):not(:focus) {
 		color: var(--black);
 	}
 	.nextPrev > *:focus {
+		animation: none;
 		outline: none;
 		background-color: var(--blue1);
 		color: var(--white);
