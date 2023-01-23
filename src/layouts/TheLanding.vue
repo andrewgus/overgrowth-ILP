@@ -12,7 +12,7 @@
 			:isPracticeOn="isPracticeOn"
 			:isChoiceOn="isChoiceOn"
 		/>
-		<TheIndicator />
+		<BaseIndicator hidden text="Scroll to start" />
 	</header>
 </template>
 
@@ -21,7 +21,7 @@
 
 	import TheScene from '../components/Landing/TheScene.vue'
 	import TheTitleCard from '../components/Landing/TheTitleCard.vue'
-	import TheIndicator from '../components/Landing/TheIndicator.vue'
+	import BaseIndicator from '../components/base/BaseIndicator.vue'
 
 	interface Props {
 		title: string

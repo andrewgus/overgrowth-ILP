@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<a href="#section1" aria-hidden="true">
-			<p>Scroll to start</p>
+		<a :href="nextSection" :aria-hidden="hidden">
+			<p>{{ text }}</p>
 			<span class="scrollArrow">
 				<svg
 					width="60"
@@ -21,6 +21,26 @@
 		</a>
 	</div>
 </template>
+
+<script setup lang="ts">
+	import { useStore } from '@nanostores/vue'
+	import { computed } from 'vue'
+	import { contentQuery } from '../../store/index.js'
+	defineProps({
+		text: {
+			type: String,
+			required: true,
+		},
+		hidden: {
+			type: Boolean,
+		},
+	})
+
+	const nextSection = computed(() => {
+		const currSectionNum = useStore(contentQuery.currSectionIdNum).value
+		return currSectionNum ? `#section${currSectionNum + 1}` : '#section1'
+	})
+</script>
 
 <style scoped>
 	div {
