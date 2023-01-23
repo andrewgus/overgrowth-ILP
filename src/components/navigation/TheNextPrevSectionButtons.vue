@@ -29,7 +29,10 @@
 </template>
 
 <script setup lang="ts">
-	import { useIsBookendSection, useSetCurrSection } from '../../composables/UseNavigation'
+	import {
+		useIsBookendSection,
+		useSetCurrSection,
+	} from '../../composables/UseNavigation'
 	import BaseButton from '../base/BaseButton.vue'
 
 	defineProps({
@@ -49,7 +52,7 @@
 </script>
 
 <style scoped>
-	div > .nextPrev {
+	.nextPrev {
 		grid-area: 1/2/2/3;
 		justify-self: end;
 		display: flex;
@@ -66,6 +69,10 @@
 		align-items: center;
 		width: var(--s3);
 		border: none;
+	}
+	.nextPrev > *:focus {
+		background-color: var(--blue1);
+		color: var(--white);
 	}
 	.nextPrev > *:visited {
 		color: var(--black);

@@ -24,7 +24,8 @@
 	div:focus {
 		outline: 1px solid var(--blue);
 	}
-	a {
+	a,
+	a:visited {
 		color: var(--white);
 	}
 </style>

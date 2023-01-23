@@ -18,13 +18,12 @@
 				:key="navItem!.id"
 				:class="{ greenDot: isLocatedHere(navItem!.id) }"
 			>
-				<BaseButton
-					link
-					:url="`#${navItem!.id}`"
-					:text="navItem!.title"
+				<a
+					:href="`#${navItem!.id}`"
 					@click="navToSection(navItem!.id)"
 					:title="isLocatedHere(navItem!.id) ? 'You are here' : ''"
-				/>
+					>{{ navItem!.title }}</a
+				>
 			</li>
 		</ol>
 	</transition>
@@ -69,6 +68,10 @@
 		height: 48px;
 		margin-left: var(--s-3);
 	}
+	#menuBtn:focus {
+		background-color: var(--blue1);
+		color: var(--white);
+	}
 	ol {
 		grid-area: 2/1/3/3;
 		justify-self: center;
@@ -84,13 +87,15 @@
 		margin-top: var(--s-1);
 	}
 	li a {
-		all: unset;
+		padding: 0 var(--s-8);
 		text-decoration: underline;
 	}
 	li a:visited {
 		color: var(--purple);
 	}
 	li a:hover {
+		border: var(--s-10) solid var(--blue);
+		border-radius: var(--s-10);
 		font-weight: 700;
 		background-color: var(--peach);
 	}

@@ -6,9 +6,7 @@
   box-sizing: border-box;
 }
 :focus {
-  box-shadow: inset var(--s-10) var(--s-10) 0 var(--blue),
-    inset calc(-1 * var(--s-10)) calc(-1 * var(--s-10)) 0 var(--blue),
-    inset var(--s-10) calc(-1 * var(--s-10)) 0 var(--blue), inset calc(-1 * var(--s-10)) var(--s-10) 0 var(--blue);
+  outline: var(--s-10) solid var(--blue1);
 }
 
 html {
@@ -43,8 +41,7 @@ a:visited {
 
 p > a:hover,
 p > a:focus {
-  box-shadow: none;
-  outline: 1.5px solid var(--blue);
+  border-radius: var(--s-10);
   padding: 0 var(--s-10);
   font-weight: 700;
 }
