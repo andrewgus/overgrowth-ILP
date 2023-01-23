@@ -1,12 +1,13 @@
 <template>
-	<BaseButton
-		:text="!isMenuOpen ? 'Go to&hellip;' : 'Close'"
-		id="menuBtn"
-		aria-haspopup="menu"
-		:aria-expanded="isMenuOpen"
-		aria-controls="navItemsList"
-		@click="openMenu"
-	/>
+	<div>
+		<BaseButton
+			:text="!isMenuOpen ? 'Go to&hellip;' : 'Close'"
+			aria-haspopup="menu"
+			:aria-expanded="isMenuOpen"
+			aria-controls="navItemsList"
+			@click="openMenu"
+		/>
+	</div>
 	<transition appear name="navTOC">
 		<ol
 			v-show="isMenuOpen"
@@ -58,19 +59,30 @@
 </script>
 
 <style scoped>
-	#menuBtn {
+	div {
 		grid-area: 1/3/2/4;
 		justify-self: end;
+		overflow: hidden;
+		border: 1px solid var(--darkGray);
+		border-radius: 0px var(--s5) var(--s5) 0px;
+		margin-left: var(--s-3);
+	}
+	button {
+		border: none;
+		overflow: hidden;
 		padding: var(--s-5);
 		font-size: var(--s-1);
 		display: inline-block;
-		border-radius: 0px 30px 30px 0px;
+		border-radius: 0px 20px 20px 0px;
 		height: 48px;
-		margin-left: var(--s-3);
 	}
-	#menuBtn:focus {
+	button:focus {
+		outline: none;
 		background-color: var(--blue1);
 		color: var(--white);
+	}
+	button:focus:hover {
+		box-shadow: none;
 	}
 	ol {
 		grid-area: 2/1/3/3;
@@ -82,22 +94,7 @@
 	}
 	li {
 		text-indent: var(--s-2);
-	}
-	li + li {
-		margin-top: var(--s-1);
-	}
-	li a {
-		padding: 0 var(--s-8);
-		text-decoration: underline;
-	}
-	li a:visited {
-		color: var(--purple);
-	}
-	li a:hover {
-		border: var(--s-10) solid var(--blue);
-		border-radius: var(--s-10);
-		font-weight: 700;
-		background-color: var(--peach);
+		padding: var(--s-2) 0;
 	}
 	li::before {
 		-webkit-transition: 0.4s all var(--transition);
@@ -112,6 +109,22 @@
 	}
 	.greenDot::before {
 		background-color: var(--green);
+	}
+	li + li {
+		border-top: 1px solid var(--darkGray);
+	}
+	a {
+		padding: 0 var(--s-8);
+		text-decoration: none;
+	}
+	a:visited {
+		color: var(--purple);
+	}
+	a:focus,
+	a:hover {
+		font-weight: 700;
+		outline: none;
+		text-decoration: underline;
 	}
 
 	/* navTOC transition */

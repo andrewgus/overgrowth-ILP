@@ -59,10 +59,9 @@
 		height: 48px;
 		overflow: hidden;
 		border: 1px solid var(--darkGray);
-		border-radius: 30px 0 0 30px;
+		border-radius: var(--s5) 0 0 var(--s5);
 	}
 	.nextPrev > * {
-		overflow: hidden;
 		border-radius: 0;
 		display: flex;
 		justify-content: center;
@@ -70,12 +69,13 @@
 		width: var(--s3);
 		border: none;
 	}
+	.nextPrev > *:visited:not(:hover) {
+		color: var(--black);
+	}
 	.nextPrev > *:focus {
+		outline: none;
 		background-color: var(--blue1);
 		color: var(--white);
-	}
-	.nextPrev > *:visited {
-		color: var(--black);
 	}
 	.btn_prev {
 		border-radius: 20px 0 0 20px;

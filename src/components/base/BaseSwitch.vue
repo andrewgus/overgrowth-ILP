@@ -41,9 +41,9 @@
 		cursor: pointer;
 		border-radius: 100px;
 		width: 10ch;
-		border: 1px solid gray;
+		border: 1px solid var(--darkGray);
 		padding: 0;
-		background: white;
+		background: var(--white);
 	}
 	button > span {
 		display: flex;
