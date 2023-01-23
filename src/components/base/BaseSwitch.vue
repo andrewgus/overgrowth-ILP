@@ -4,8 +4,8 @@
 		@click="toggleSwitch"
 		:id="`${type}Switch`"
 		:class="enabled ? 'true' : 'false'"
-		role="switch"
 		type="button"
+		role="switch"
 		:aria-checked="enabled"
 	>
 		<span aria-hidden="true">{{ enabled ? 'On' : 'Off' }}</span>
@@ -52,6 +52,7 @@
 		height: 4ch;
 		width: 4ch;
 		border-radius: 50%;
+		-webkit-transition: all 0.33s var(--transition);
 		transition: all 0.33s var(--transition);
 	}
 

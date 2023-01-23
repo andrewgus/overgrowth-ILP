@@ -1,7 +1,8 @@
 <template>
 	<transition name="lessonNav">
 		<nav :class="{ isInvisible: !isOnContent }" id="lessonNav">
-			<div>
+			<SkipToContent v-if="!isOnContent" />
+			<div class="navInfo">
 				<p v-show="!!queryCurrSectionTitle">
 					Currently on:
 					{{ queryCurrSectionTitle }}
@@ -24,6 +25,7 @@
 	import { ref, watchEffect } from 'vue'
 	import TheNavToc from './TheNavTOC.vue'
 	import TheNextPrevSectionButtons from './TheNextPrevSectionButtons.vue'
+	import SkipToContent from './SkipToContent.vue'
 
 	const queryOnContent = useStore(contentQuery.isOnContent)
 	const queryCurrSectionTitle = useStore(contentQuery.currSectionTitle)
@@ -55,6 +57,7 @@
 
 <style scoped>
 	nav {
+		-webkit-transition: 0.3s all ease-in-out;
 		transition: 0.3s all ease-in-out;
 		display: block;
 		background-color: hsla(0, 0%, 100%, 0.95);
@@ -69,7 +72,7 @@
 	nav.isInvisible:focus-within {
 		opacity: 1;
 	}
-	nav > div {
+	.navInfo {
 		max-width: 72ch;
 		margin: 0 auto;
 		display: grid;
@@ -77,7 +80,7 @@
 		grid-template-columns: 2.5fr 1fr;
 		padding: 0 var(--s-5);
 	}
-	div > p {
+	.navInfo > p {
 		font-size: var(--s-1);
 		max-width: 40ch;
 		overflow: hidden;
@@ -91,6 +94,7 @@
 	}
 	.lessonNav-enter-active,
 	.lessonNav-leave-active {
+		-webkit-transition: opacity 0.3s ease-in-out;
 		transition: opacity 0.3s ease-in-out;
 	}
 	.lessonNav-enter-to,

@@ -95,6 +95,7 @@
 		background-color: var(--peach);
 	}
 	li::before {
+		-webkit-transition: 0.4s all var(--transition);
 		transition: 0.4s all var(--transition);
 		content: '';
 		margin-left: calc(-1 * var(--s-2));
@@ -116,6 +117,7 @@
 	}
 	.navTOC-enter-active,
 	.navTOC-leave-active {
+		-webkit-transition: all 0.5s ease-in-out;
 		transition: all 0.5s ease-in-out;
 	}
 	.navTOC-enter-to,
