@@ -12,15 +12,15 @@
 			:isPracticeOn="isPracticeOn"
 			:isChoiceOn="isChoiceOn"
 		/>
-		<BaseIndicator hidden text="Scroll to start" />
+		<BaseIndicator isOnLanding hidden text="Scroll to start" />
 	</header>
 </template>
 
 <script setup lang="ts">
 	import { computed, withDefaults } from 'vue'
 
-	import TheScene from '../components/Landing/TheScene.vue'
-	import TheTitleCard from '../components/Landing/TheTitleCard.vue'
+	import TheScene from '../components/landing/TheScene.vue'
+	import TheTitleCard from '../components/landing/TheTitleCard.vue'
 	import BaseIndicator from '../components/base/BaseIndicator.vue'
 
 	interface Props {
@@ -47,7 +47,7 @@
 		min-height: 99vh;
 		width: 100vw;
 		display: grid;
-		grid-template-columns: 1fr;
-		grid-template-rows: 1fr;
+		grid-template-columns: [landing-top] 1fr [landing-bottom];
+		grid-template-rows: [card-start] 5fr [card-indicator] 1fr [indicator-end];
 	}
 </style>

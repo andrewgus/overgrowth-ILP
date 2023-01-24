@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div :class="{ landing: isOnLanding }">
 		<a :href="nextSection" :aria-hidden="hidden">
 			<p>{{ text }}</p>
 			<span class="scrollArrow">
@@ -34,6 +34,9 @@
 		hidden: {
 			type: Boolean,
 		},
+		isOnLanding: {
+			type: Boolean,
+		},
 	})
 
 	const nextSection = computed(() => {
@@ -44,10 +47,12 @@
 
 <style scoped>
 	div {
-		grid-area: 1/1/-1/-1;
+		display: contents;
 		align-self: end;
-		z-index: 999;
 		margin: 0 auto var(--s1);
+	}
+	.landing {
+		grid-area: landing-top/card-indicator/landing-bottom/indicator-end;
 	}
 	a,
 	a:focus,

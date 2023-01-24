@@ -69,7 +69,7 @@
 
 <style scoped>
 	.titleCard {
-		grid-area: 1/1/-1/-1;
+		grid-area: card-start/landing-top/card-indicator/landing-bottom;
 		justify-self: center;
 		align-self: start;
 		display: flex;
