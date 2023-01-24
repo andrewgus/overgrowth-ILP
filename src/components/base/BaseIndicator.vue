@@ -65,7 +65,7 @@
 		margin: 0 auto;
 		background-color: hsla(0deg, 0%, 98%, 0.5);
 		filter: drop-shadow(0 0 var(--s1) var(--white));
-		border-radius: var(--s5);
+		border-radius: var(--s10);
 	}
 	.scrollArrow {
 		margin: var(--s-1) auto;

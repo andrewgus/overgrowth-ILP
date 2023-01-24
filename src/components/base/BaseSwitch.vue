@@ -39,7 +39,7 @@
 	button {
 		display: inline-flex;
 		cursor: pointer;
-		border-radius: 100px;
+		border-radius: var(--s10);
 		width: 10ch;
 		border: 1px solid var(--darkGray);
 		padding: 0;

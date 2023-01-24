@@ -1,13 +1,12 @@
 <template>
-	<div>
-		<BaseButton
-			:text="!isMenuOpen ? 'Go to&hellip;' : 'Close'"
-			aria-haspopup="menu"
-			:aria-expanded="isMenuOpen"
-			aria-controls="navItemsList"
-			@click="openMenu"
-		/>
-	</div>
+	<BaseButton
+		isForNav
+		:text="!isMenuOpen ? 'Go to&hellip;' : 'Close'"
+		aria-haspopup="menu"
+		:aria-expanded="isMenuOpen"
+		aria-controls="navItemsList"
+		@click="openMenu"
+	/>
 	<transition appear name="navTOC">
 		<ol
 			v-show="isMenuOpen"
@@ -59,30 +58,13 @@
 </script>
 
 <style scoped>
-	div {
-		grid-area: 1/3/2/4;
-		justify-self: end;
-		overflow: hidden;
-		border: 1px solid var(--darkGray);
-		border-radius: 0px var(--s5) var(--s5) 0px;
-		margin-left: var(--s-3);
-	}
 	button {
-		border: none;
-		overflow: hidden;
-		padding: var(--s-5);
-		font-size: var(--s-1);
-		display: inline-block;
-		border-radius: 0px 20px 20px 0px;
+		grid-area: 1/3/2/4;
 		height: 48px;
-	}
-	button:focus {
-		outline: none;
-		background-color: var(--blue1);
-		color: var(--white);
-	}
-	button:focus:hover {
-		box-shadow: none;
+		justify-self: end;
+		border: 1px solid var(--darkGray);
+		border-radius: 0px var(--s10) var(--s10) 0px;
+		margin-left: var(--s-3);
 	}
 	ol {
 		grid-area: 2/1/3/4;
@@ -91,13 +73,6 @@
 		padding: 0;
 		max-width: 60ch;
 		width: 100%;
-	}
-	li {
-		display: flex;
-		flex-flow: row nowrap;
-		align-items: center;
-		justify-content: flex-start;
-		gap: var(--s-4);
 	}
 	li::before {
 		-webkit-transition: 0.4s all var(--transition);
@@ -110,6 +85,13 @@
 	}
 	.greenDot::before {
 		background-color: var(--green);
+	}
+	li {
+		display: flex;
+		flex-flow: row nowrap;
+		align-items: center;
+		justify-content: flex-start;
+		gap: var(--s-4);
 	}
 	li + li {
 		border-top: 1px solid var(--darkGray);

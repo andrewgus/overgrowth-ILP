@@ -76,7 +76,7 @@
 		flex-flow: column nowrap;
 		justify-content: space-between;
 		align-items: center;
-		border-radius: 30px;
+		border-radius: var(--s5);
 		background-color: hsla(0deg, 0%, 98%, 0.5);
 		filter: drop-shadow(0 0 var(--s1) var(--white));
 		padding: var(--s0);

@@ -1,10 +1,11 @@
 <template>
 	<div class="nextPrev">
 		<BaseButton
+			link
+			isForNav
 			:tabindex="useIsBookendSection.isFirst ? '-1' : '0'"
 			:isDisabled="useIsBookendSection.isFirst"
 			:aria-hidden="useIsBookendSection.isFirst"
-			link
 			:href="`#${prevSection}`"
 			@click="useSetCurrSection(`section${currSectionId}`)"
 			class="btn_prev"
@@ -13,12 +14,12 @@
 			text="&#9650;"
 		/>
 		<BaseButton
+			link
+			isForNav
 			:tabindex="useIsBookendSection.isLast ? '-1' : 0"
 			:isDisabled="useIsBookendSection.isLast"
 			:aria-hidden="useIsBookendSection.isLast"
-			link
 			:href="`#${nextSection}`"
-			ref="prev"
 			@click="useSetCurrSection(`section${currSectionId}`)"
 			class="btn_next"
 			title="Go to next section"
@@ -57,9 +58,9 @@
 		justify-self: end;
 		display: flex;
 		height: 48px;
-		overflow: hidden;
 		border: 1px solid var(--darkGray);
-		border-radius: var(--s5) 0 0 var(--s5);
+		border-radius: var(--s10) 0 0 var(--s10);
+		background-color: var(--lightBlue);
 	}
 	.nextPrev > * {
 		border-radius: 0;
@@ -69,16 +70,8 @@
 		width: var(--s3);
 		border: none;
 	}
-	.nextPrev > *:visited:not(:hover):not(:focus) {
-		color: var(--black);
-	}
-	.nextPrev > *:focus {
-		animation: none;
-		outline: none;
-		background-color: var(--blue1);
-		color: var(--white);
-	}
+
 	.btn_prev {
-		border-radius: 20px 0 0 20px;
+		border-radius: var(--s10) 0 0 var(--s10);
 	}
 </style>

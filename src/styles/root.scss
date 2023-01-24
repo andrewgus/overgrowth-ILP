@@ -4,9 +4,13 @@
 
 * {
   box-sizing: border-box;
-}
-:focus {
-  animation: focusPulse 0.33s var(--transition) forwards;
+
+  &:focus {
+    animation: focusPulse 0.33s var(--transition) forwards;
+  }
+  &:visited {
+    color: var(--purple);
+  }
 }
 
 html {
@@ -31,25 +35,28 @@ h2 {
   margin-bottom: var(--s3);
   font-weight: 800;
 }
+
 p {
   color: var(--black);
   line-height: 1.6;
-}
-a:visited {
-  color: var(--purple);
-}
 
-p > a:hover,
-p > a:focus {
-  border-radius: var(--s-10);
-  padding: 0 var(--s-10);
-  font-weight: 700;
-}
-p > a:hover {
-  background-color: var(--peach);
-  text-underline-offset: var(--s-8);
-  text-decoration-skip-ink: none;
-  text-decoration-thickness: var(--s-10);
+  & > a {
+    &:hover,
+    &:focus {
+      font-weight: 700;
+    }
+    &:focus {
+      padding: 0 var(--s-10);
+      border-radius: var(--s-10);
+    }
+    &:hover {
+      background-color: var(--peach);
+      text-underline-offset: var(--s-8);
+      text-decoration-skip-ink: none;
+      text-decoration-thickness: var(--s-10);
+      animation: linkHover 0.33s var(--transition) forwards;
+    }
+  }
 }
 
 @keyframes focusPulse {

@@ -1,6 +1,8 @@
 <template>
-	<button v-if="!link">{{ text }}</button>
-	<a v-else :href="url" :class="{ disabled: isDisabled }">{{ text }}</a>
+	<button v-if="!link" :class="{ navBtn: isForNav }">{{ text }}</button>
+	<a v-else :href="url" :class="{ disabled: isDisabled, navBtn: isForNav }">{{
+		text
+	}}</a>
 </template>
 
 <script setup lang="ts">
@@ -20,6 +22,9 @@
 		},
 		url: {
 			type: String,
+		},
+		isForNav: {
+			type: Boolean,
 		},
 		color: {
 			type: String,
@@ -47,8 +52,8 @@
 	a {
 		text-decoration: none;
 	}
-	button:hover,
-	a:hover {
+	button:not(.navBtn):hover,
+	a:not(.navBtn):hover {
 		color: var(--blue);
 		background-color: var(--peach);
 		box-shadow: inset var(--s-10) var(--s-10) 0 var(--blue),
@@ -62,5 +67,15 @@
 		pointer-events: none;
 		opacity: 0.5;
 		background-color: var(--lightGray);
+	}
+	.navBtn:hover,
+	.navBtn:focus {
+		outline: none;
+		background-color: var(--blue);
+		color: var(--white);
+		z-index: 2;
+	}
+	.navBtn:visited:not(:hover):not(:focus) {
+		color: var(--black);
 	}
 </style>

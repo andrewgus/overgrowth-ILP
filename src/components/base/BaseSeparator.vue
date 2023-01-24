@@ -6,6 +6,6 @@
 	div {
 		flex-grow: 0;
 		border: 1.25px solid var(--lightGray);
-		border-radius: var(--s5);
+		border-radius: var(--s10);
 	}
 </style>
