@@ -97,7 +97,7 @@
 		flex-flow: row nowrap;
 		align-items: center;
 		justify-content: flex-start;
-		gap: var(--s-2);
+		gap: var(--s-4);
 	}
 	li::before {
 		-webkit-transition: 0.4s all var(--transition);
@@ -115,7 +115,7 @@
 		border-top: 1px solid var(--darkGray);
 	}
 	a {
-		padding: var(--s-2) 0;
+		padding: var(--s-2) var(--s-4);
 		width: 100%;
 		text-decoration: none;
 	}
