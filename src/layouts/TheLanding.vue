@@ -48,6 +48,6 @@
 		width: 100vw;
 		display: grid;
 		grid-template-columns: [landing-top] 1fr [landing-bottom];
-		grid-template-rows: [card-start] 4fr [card-indicator] 10vh [indicator-end];
+		grid-template-rows: [card-start] 4fr [card-indicator] 20vh [indicator-end];
 	}
 </style>

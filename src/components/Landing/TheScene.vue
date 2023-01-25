@@ -98,6 +98,7 @@
 		grid-area: 1/1/-1/-1;
 		background-size: cover;
 		background-repeat: no-repeat;
+		background-position: center;
 		width: 100%;
 	}
 
@@ -111,19 +112,15 @@
 		background-image: v-bind(practiceImg);
 	}
 	/* media queries */
-	@media only screen and (max-width: 950px) and (max-height: 850px) {
+	@media only screen and (max-width: 950px) {
 		.scene {
 			grid-area: card-start/landing-top/card-indicator/landing-bottom;
-			align-self: center;
-			margin-top: var(--s10);
-		}
-	}
-	@media only screen and (max-width: 650px) and (max-height: 850px) {
-		.scene {
-			margin-top: 0;
+			aspect-ratio: 4/5;
+			max-height: 60vh;
 			align-self: end;
 		}
 	}
+
 	/* transition styles */
 	.landingScene-enter-from,
 	.landingScene-leave-to {

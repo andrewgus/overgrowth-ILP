@@ -110,8 +110,8 @@
 		align-items: center;
 		justify-content: start;
 	}
-	/* media 	queries */
-	@media only screen and (max-width: 700px) and (max-height: 850px) {
+
+	@media only screen and (max-width: 950px) {
 		.titleCard {
 			line-height: 1.1;
 			padding: var(--s-10);
