@@ -3,7 +3,7 @@
 		<transition name="landingScene">
 			<div
 				v-if="isReflectionOn"
-				:class="{ reflectionSwitch: isBgLoaded }"
+				:class="{ reflectionBg: isBgLoaded }"
 				v-show="useStore(featureSettings.isReflectionOn).value"
 			></div>
 		</transition>
@@ -11,7 +11,7 @@
 		<transition name="landingScene">
 			<div
 				v-if="isPracticeOn"
-				:class="{ practiceSwitch: isBgLoaded }"
+				:class="{ practiceBg: isBgLoaded }"
 				v-show="useStore(featureSettings.isPracticeOn).value"
 			></div>
 		</transition>
@@ -19,7 +19,7 @@
 		<transition name="landingScene">
 			<div
 				v-if="isChoiceOn"
-				:class="{ choiceSwitch: isBgLoaded }"
+				:class="{ choiceBg: isBgLoaded }"
 				v-show="useStore(featureSettings.isChoiceOn).value"
 			></div>
 		</transition>
@@ -31,7 +31,7 @@
 <script setup lang="ts">
 	import { useStore } from '@nanostores/vue'
 	import { featureSettings } from '../../store/index.js'
-	import { ref, computed, watchEffect, withDefaults } from 'vue'
+	import { ref, watchEffect, withDefaults } from 'vue'
 
 	interface Props {
 		scene: string
@@ -53,27 +53,28 @@
 		img.onload = () => (isBgLoaded.value = true)
 	})
 
-	const sceneBg = computed(() => {
-		return `url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}.svg');`
-	})
+	const imgURL = (type?: string) => {
+		return `url('https://fscjcel.blob.core.windows.net/platform-scenes/${
+			props.scene
+		}${type ? `-${type}` : ''}.svg')`
+	}
 
-	const reflectionImg = computed(() => {
-		return `url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}-reflection.svg');`
-	})
-
-	const practiceImg = computed(() => {
-		return `url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}-practice.svg');`
-	})
-
-	const choiceImg = computed(() => {
-		return `url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}-choice.svg');`
-	})
+	const sceneDecor = {
+		backdrop: imgURL(),
+		backdropSmall: imgURL('small'),
+		reflection: imgURL('reflection'),
+		reflectionSmall: imgURL('reflection-small'),
+		practice: imgURL('practice'),
+		practiceSmall: imgURL('practice-small'),
+		choice: imgURL('choice'),
+		choiceSmall: imgURL('choice-small'),
+	}
 </script>
 
 <style scoped>
 	.scene {
 		aspect-ratio: 21/9;
-		background-image: v-bind(sceneBg);
+		background-image: v-bind('sceneDecor.backdrop');
 		justify-self: center;
 		align-self: center;
 		display: grid;
@@ -102,23 +103,33 @@
 		width: 100%;
 	}
 
-	.reflectionSwitch {
-		background-image: v-bind(reflectionImg);
+	.reflectionBg {
+		background-image: v-bind('sceneDecor.reflection');
 	}
-	.choiceSwitch {
-		background-image: v-bind(choiceImg);
+	.practiceBg {
+		background-image: v-bind('sceneDecor.practice');
 	}
-	.practiceSwitch {
-		background-image: v-bind(practiceImg);
+	.choiceBg {
+		background-image: v-bind('sceneDecor.choice');
 	}
 
 	/* media queries */
 	@media only screen and (max-width: 950px) {
 		.scene {
+			background-image: v-bind('sceneDecor.backdropSmall');
 			grid-area: card-start/landing-top/card-indicator/landing-bottom;
 			aspect-ratio: 4/5;
 			max-height: 60vh;
 			align-self: end;
+		}
+		.reflectionBg {
+			background-image: v-bind('sceneDecor.reflectionSmall');
+		}
+		.practiceBg {
+			background-image: v-bind('sceneDecor.practiceSmall');
+		}
+		.choiceBg {
+			background-image: v-bind('sceneDecor.choiceSmall');
 		}
 	}
 

@@ -3,8 +3,10 @@
 		<h1>{{ title }}</h1>
 		<div v-if="featuresOn">
 			<p>Included in this lesson are&hellip;</p>
-			<!-- TODO: Incorporate some sort of aria-label/description to signal that the user has the options to turn these features on and off -->
-			<ul class="options">
+			<ul
+				aria-label="each item can be toggled on and off for this lesson"
+				class="options"
+			>
 				<li>
 					<BaseSwitch
 						v-if="isReflectionOn"
@@ -127,5 +129,3 @@
 		}
 	}
 </style>
-
-
