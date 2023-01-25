@@ -111,14 +111,21 @@
 		justify-content: start;
 	}
 
+	/* media queries */
 	@media only screen and (max-width: 950px) {
-		.titleCard {
+		.titleCard h1 {
 			line-height: 1.1;
-			padding: var(--s-10);
-			margin-top: 0;
 		}
 		.titleCard p {
 			margin: var(--s-6);
 		}
 	}
+	@media only screen and (max-height: 950px) {
+		.titleCard {
+			padding: var(--s-10);
+			margin-top: 0;
+		}
+	}
 </style>
+
+

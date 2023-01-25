@@ -31,7 +31,7 @@
 <script setup lang="ts">
 	import { useStore } from '@nanostores/vue'
 	import { featureSettings } from '../../store/index.js'
-	import { ref, computed, watchEffect, withDefaults, onMounted } from 'vue'
+	import { ref, computed, watchEffect, withDefaults } from 'vue'
 
 	interface Props {
 		scene: string
@@ -111,6 +111,7 @@
 	.practiceSwitch {
 		background-image: v-bind(practiceImg);
 	}
+
 	/* media queries */
 	@media only screen and (max-width: 950px) {
 		.scene {
