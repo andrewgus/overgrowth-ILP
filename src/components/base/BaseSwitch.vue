@@ -1,8 +1,8 @@
 <template>
-	<label :for="`${type}Switch`">{{ type }}</label>
+	<label :for="`${type.toLowerCase()}Switch`">{{ type }}</label>
 	<button
 		@click="toggleSwitch"
-		:id="`${type}Switch`"
+		:id="`${type.toLowerCase()}Switch`"
 		:class="enabled ? 'true' : 'false'"
 		type="button"
 		role="switch"

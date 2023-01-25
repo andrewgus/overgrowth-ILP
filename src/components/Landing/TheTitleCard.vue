@@ -3,6 +3,7 @@
 		<h1>{{ title }}</h1>
 		<div v-if="featuresOn">
 			<p>Included in this lesson are&hellip;</p>
+			<!-- TODO: Incorporate some sort of aria-label/description to signal that the user has the options to turn these features on and off -->
 			<ul class="options">
 				<li>
 					<BaseSwitch
@@ -12,11 +13,7 @@
 						type="Reflection"
 					/>
 				</li>
-				<BaseSeparator
-					v-if="
-						(isReflectionOn && isPracticeOn) || (isReflectionOn && isChoiceOn)
-					"
-				/>
+				<BaseSeparator hidden v-if="multiFeatures.reflectionAnd" />
 				<li>
 					<BaseSwitch
 						v-if="isPracticeOn"
@@ -25,7 +22,7 @@
 						type="Practice"
 					/>
 				</li>
-				<BaseSeparator v-if="isPracticeOn && isChoiceOn" />
+				<BaseSeparator hidden v-if="multiFeatures.practiceAndChoice" />
 				<li>
 					<BaseSwitch
 						v-if="isChoiceOn"
@@ -65,6 +62,14 @@
 	const featuresOn = computed(() => {
 		return props.isChoiceOn || props.isPracticeOn || props.isChoiceOn
 	})
+	const multiFeatures = computed(() => {
+		const reflectionAnd =
+			(props.isReflectionOn && props.isPracticeOn) ||
+			(props.isReflectionOn && props.isChoiceOn)
+		const practiceAndChoice = props.isPracticeOn && props.isChoiceOn
+
+		return { reflectionAnd, practiceAndChoice }
+	})
 </script>
 
 <style scoped>
@@ -88,7 +93,7 @@
 	}
 	.titleCard p {
 		text-align: center;
-		margin-bottom: var(--s-3);
+		margin: var(--s-3);
 	}
 	.options {
 		padding-left: 0;
@@ -104,5 +109,16 @@
 		flex-flow: column nowrap;
 		align-items: center;
 		justify-content: start;
+	}
+	/* media 	queries */
+	@media only screen and (max-width: 700px) and (max-height: 850px) {
+		.titleCard {
+			line-height: 1.1;
+			padding: var(--s-10);
+			margin-top: 0;
+		}
+		.titleCard p {
+			margin: var(--s-6);
+		}
 	}
 </style>

@@ -1,5 +1,5 @@
 <template>
-	<div :class="{ landing: isOnLanding }">
+	<div :class="{ OnlandingIndicator: isOnLanding }">
 		<a :href="nextSection" :aria-hidden="hidden">
 			<p>{{ text }}</p>
 			<span class="scrollArrow">
@@ -47,12 +47,11 @@
 
 <style scoped>
 	div {
-		display: contents;
-		align-self: end;
-		margin: 0 auto var(--s1);
+		align-self: center;
+		margin: 0 auto;
 	}
-	.landing {
-		grid-area: landing-top/card-indicator/landing-bottom/indicator-end;
+	.OnlandingIndicator {
+		grid-area: card-indicator/landing-top/indicator-end/landing-bottom;
 	}
 	a,
 	a:focus,
@@ -73,7 +72,7 @@
 		border-radius: var(--s10);
 	}
 	.scrollArrow {
-		margin: var(--s-1) auto;
+		margin: var(--s-10) auto;
 		max-width: fit-content;
 		animation: bounce 1s ease-in-out infinite alternate;
 	}
