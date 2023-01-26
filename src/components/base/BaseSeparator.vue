@@ -1,5 +1,10 @@
 <template>
-	<div role="separator" :aria-hidden="hidden" aria-orientation="vertical"></div>
+	<div
+		:class="$style.separator"
+		role="separator"
+		:aria-hidden="hidden"
+		aria-orientation="vertical"
+	></div>
 </template>
 
 <script setup lang="ts">
@@ -10,8 +15,8 @@
 	})
 </script>
 
-<style scoped>
-	div {
+<style module>
+	.separator {
 		border: 1.25px solid var(--lightGray);
 		border-radius: var(--s10);
 	}

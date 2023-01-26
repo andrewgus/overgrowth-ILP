@@ -3,17 +3,19 @@
 	<button
 		@click="toggleSwitch"
 		:id="`${type.toLowerCase()}Switch`"
-		:class="enabled ? 'true' : 'false'"
+		:class="switchStyles"
 		type="button"
 		role="switch"
 		:aria-checked="enabled"
 	>
-		<span aria-hidden="true">{{ enabled ? 'On' : 'Off' }}</span>
+		<span :class="$style.onOff" aria-hidden="true">{{
+			enabled ? 'On' : 'Off'
+		}}</span>
 	</button>
 </template>
 
 <script setup lang="ts">
-	import { ref } from 'vue'
+	import { ref, computed, useCssModule } from 'vue'
 
 	const props = defineProps({
 		type: {
@@ -33,10 +35,18 @@
 		enabled.value = !enabled.value
 		emit('toggleSwitch')
 	}
+
+	const style = useCssModule()
+
+	const switchStyles = computed(() => {
+		const styles = [style.btn]
+		enabled.value ? styles.push(style.true) : styles.push(style.false)
+		return styles
+	})
 </script>
 
-<style scoped>
-	button {
+<style module lang="scss">
+	.btn {
 		display: inline-flex;
 		cursor: pointer;
 		border-radius: var(--s10);
@@ -44,25 +54,25 @@
 		border: 1px solid var(--darkGray);
 		padding: 0;
 		background: var(--white);
-	}
-	button > span {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		height: 4ch;
-		width: 4ch;
-		border-radius: 50%;
-		-webkit-transition: all 0.33s var(--transition);
-		transition: all 0.33s var(--transition);
-	}
 
-	button.true > span {
-		background-color: #2ebfa2;
+		& > .onOff {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 4ch;
+			width: 4ch;
+			border-radius: 50%;
+			-webkit-transition: all 0.33s var(--transition);
+			transition: all 0.33s var(--transition);
+		}
+	}
+	.true > .onOff {
+		background-color: var(--green1);
 		transform: translateX(0);
 	}
-	button.false > span {
+	.false > .onOff {
 		transform: translateX(5.8ch);
 		color: #fff;
-		background: #c02e4c;
+		background: var(--red);
 	}
 </style>

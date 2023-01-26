@@ -1,8 +1,8 @@
 <template>
-	<div :class="{ OnlandingIndicator: isOnLanding }">
-		<a :href="nextSection" :aria-hidden="hidden">
-			<p>{{ text }}</p>
-			<span class="scrollArrow">
+	<div :class="indicatorStyles">
+		<a :class="$style.indicatorLink" :href="nextSection" :aria-hidden="hidden">
+			<p :class="$style.text">{{ text }}</p>
+			<span :class="$style.scrollArrow">
 				<svg
 					width="60"
 					height="38"
@@ -24,9 +24,9 @@
 
 <script setup lang="ts">
 	import { useStore } from '@nanostores/vue'
-	import { computed } from 'vue'
+	import { computed, useCssModule } from 'vue'
 	import { contentQuery } from '../../store/index.js'
-	defineProps({
+	const props = defineProps({
 		text: {
 			type: String,
 			required: true,
@@ -43,26 +43,33 @@
 		const currSectionNum = useStore(contentQuery.currSectionIdNum).value
 		return currSectionNum ? `#section${currSectionNum + 1}` : '#section1'
 	})
+
+	const style = useCssModule()
+
+	const indicatorStyles = computed(() => {
+		const styles = [style.indicator]
+		if (props.isOnLanding) styles.push(style.OnlandingIndicator)
+
+		return styles
+	})
 </script>
 
-<style scoped>
-	div {
+<style module lang="scss">
+	.indicator {
 		align-self: center;
 		margin: 0 auto;
 	}
 	.OnlandingIndicator {
 		grid-area: card-indicator/landing-top/indicator-end/landing-bottom;
 	}
-	a,
-	a:focus,
-	a:hover {
+	.indicatorLink {
 		all: unset;
 		display: flex;
 		flex-flow: column nowrap;
 		justify-content: center;
 		align-items: center;
 	}
-	p {
+	.text {
 		padding: var(--s-5);
 		display: block;
 		font-size: var(--s0);
