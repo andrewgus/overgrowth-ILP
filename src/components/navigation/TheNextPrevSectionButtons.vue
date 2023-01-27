@@ -1,5 +1,5 @@
 <template>
-	<div class="nextPrev">
+	<div :class="$style.nextPrev">
 		<BaseButton
 			link
 			isForNav
@@ -8,7 +8,7 @@
 			:aria-hidden="useIsBookendSection.isFirst"
 			:href="`#${prevSection}`"
 			@click="useSetCurrSection(`section${currSectionId}`)"
-			class="btn_prev"
+			:class="$style.btn_prev"
 			title="Go to previous section"
 			aria-label="Go to previous section"
 			text="&#9650;"
@@ -21,7 +21,7 @@
 			:aria-hidden="useIsBookendSection.isLast"
 			:href="`#${nextSection}`"
 			@click="useSetCurrSection(`section${currSectionId}`)"
-			class="btn_next"
+			:class="$style.btn_next"
 			title="Go to next section"
 			aria-label="Go to next section"
 			text="&#9660;"
@@ -52,7 +52,7 @@
 	})
 </script>
 
-<style scoped>
+<style module lang="scss">
 	.nextPrev {
 		grid-area: 1/2/2/3;
 		justify-self: end;
@@ -61,17 +61,17 @@
 		border: 1px solid var(--darkGray);
 		border-radius: var(--s10) 0 0 var(--s10);
 		background-color: var(--lightBlue);
-	}
-	.nextPrev > * {
-		border-radius: 0;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: var(--s3);
-		border: none;
-	}
 
-	.btn_prev {
-		border-radius: var(--s10) 0 0 var(--s10);
+		> * {
+			border-radius: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: var(--s3);
+			border: none;
+		}
+		> .btn_prev {
+			border-radius: var(--s10) 0 0 var(--s10);
+		}
 	}
 </style>

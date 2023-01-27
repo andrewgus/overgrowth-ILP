@@ -3,7 +3,7 @@
 	<button
 		@click="toggleSwitch"
 		:id="`${type.toLowerCase()}Switch`"
-		:class="switchStyles"
+		:class="[$style.btn, { [$style.off]: !enabled }]"
 		type="button"
 		role="switch"
 		:aria-checked="enabled"
@@ -15,8 +15,7 @@
 </template>
 
 <script setup lang="ts">
-	import { ref, computed, useCssModule } from 'vue'
-	import useComputedCssModule from '../../composables/UseComputedCssModule'
+	import { ref } from 'vue'
 
 	const props = defineProps({
 		type: {
@@ -36,14 +35,6 @@
 		enabled.value = !enabled.value
 		emit('toggleSwitch')
 	}
-
-	const style = useCssModule()
-
-	const switchStyles = computed(() => {
-		const styles = [style.btn]
-		enabled.value ? styles.push(style.true) : styles.push(style.false)
-		return styles
-	})
 </script>
 
 <style module lang="scss">
@@ -65,15 +56,13 @@
 			border-radius: 50%;
 			-webkit-transition: all 0.33s var(--transition);
 			transition: all 0.33s var(--transition);
+			background-color: var(--green1);
+			transform: translateX(0);
 		}
-	}
-	.true > .onOff {
-		background-color: var(--green1);
-		transform: translateX(0);
-	}
-	.false > .onOff {
-		transform: translateX(5.8ch);
-		color: #fff;
-		background: var(--red);
+		&.off > .onOff {
+			transform: translateX(5.8ch);
+			color: #fff;
+			background: var(--red);
+		}
 	}
 </style>

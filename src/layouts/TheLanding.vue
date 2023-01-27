@@ -1,5 +1,5 @@
 <template>
-	<header>
+	<header :class="$style.landing">
 		<TheScene
 			:scene="scene"
 			:isReflectionOn="isReflectionOn"
@@ -41,8 +41,8 @@
 	})
 </script>
 
-<style scoped>
-	header {
+<style module>
+	.landing {
 		background-image: v-bind(bgGradient);
 		min-height: 99vh;
 		width: 100vw;

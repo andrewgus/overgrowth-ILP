@@ -1,11 +1,11 @@
 <template>
-	<div class="titleCard">
+	<div :class="$style.titleCard">
 		<h1>{{ title }}</h1>
 		<div v-if="featuresOn">
 			<p>Included in this lesson are&hellip;</p>
 			<ul
 				aria-label="each item can be toggled on and off for this lesson"
-				class="options"
+				:class="$style.options"
 			>
 				<li>
 					<BaseSwitch
@@ -41,8 +41,8 @@
 </template>
 
 <script setup lang="ts">
-	import { useStore } from '@nanostores/vue'
 	import { computed, withDefaults } from 'vue'
+	import { useStore } from '@nanostores/vue'
 	import { featureSettings } from '../../store/index.js'
 
 	import BaseSwitch from '../base/BaseSwitch.vue'
@@ -74,7 +74,7 @@
 	})
 </script>
 
-<style scoped>
+<style module lang="scss">
 	.titleCard {
 		grid-area: card-start/landing-top/card-indicator/landing-bottom;
 		justify-self: center;
@@ -88,14 +88,15 @@
 		filter: drop-shadow(0 0 var(--s1) var(--white));
 		padding: var(--s0);
 		margin-top: var(--s2);
-	}
-	.titleCard h1 {
-		margin: 0;
-		text-align: center;
-	}
-	.titleCard p {
-		text-align: center;
-		margin: var(--s-3);
+
+		> h1 {
+			margin: 0;
+			text-align: center;
+		}
+		> p {
+			text-align: center;
+			margin: var(--s-3);
+		}
 	}
 	.options {
 		padding-left: 0;
@@ -104,22 +105,24 @@
 		justify-content: center;
 		flex-flow: row nowrap;
 		gap: var(--s-5);
-	}
-	li {
-		list-style: none;
-		display: flex;
-		flex-flow: column nowrap;
-		align-items: center;
-		justify-content: start;
+		> li {
+			list-style: none;
+			display: flex;
+			flex-flow: column nowrap;
+			align-items: center;
+			justify-content: start;
+		}
 	}
 
 	/* media queries */
 	@media only screen and (max-width: 950px) {
-		.titleCard h1 {
-			line-height: 1.1;
-		}
-		.titleCard p {
-			margin: var(--s-6);
+		.titleCard {
+			> h1 {
+				line-height: 1.1;
+			}
+			> p {
+				margin: var(--s-6);
+			}
 		}
 	}
 	@media only screen and (max-height: 950px) {

@@ -1,37 +1,32 @@
 <template>
-	<div aria-hidden="true" class="scene">
-		<transition name="landingScene">
-			<div
-				v-if="isReflectionOn"
-				:class="{ reflectionBg: isBgLoaded }"
-				v-show="useStore(featureSettings.isReflectionOn).value"
-			></div>
-		</transition>
-		<!-- /.reflection -->
-		<transition name="landingScene">
-			<div
-				v-if="isPracticeOn"
-				:class="{ practiceBg: isBgLoaded }"
-				v-show="useStore(featureSettings.isPracticeOn).value"
-			></div>
-		</transition>
-		<!-- /.practice -->
-		<transition name="landingScene">
-			<div
-				v-if="isChoiceOn"
-				:class="{ choiceBg: isBgLoaded }"
-				v-show="useStore(featureSettings.isChoiceOn).value"
-			></div>
-		</transition>
-		<!-- /.choice -->
-	</div>
-	<!-- /.scene -->
+	<TransitionGroup
+		name="landingScene"
+		tag="div"
+		aria-hidden="true"
+		:class="$style.scene"
+	>
+		<div
+			v-if="isReflectionOn"
+			:class="{ [$style.reflectionBg]: isBgLoaded }"
+			v-show="useStore(featureSettings.isReflectionOn).value"
+		></div>
+		<div
+			v-if="isPracticeOn"
+			:class="{ [$style.practiceBg]: isBgLoaded }"
+			v-show="useStore(featureSettings.isPracticeOn).value"
+		></div>
+		<div
+			v-if="isChoiceOn"
+			:class="{ [$style.choiceBg]: isBgLoaded }"
+			v-show="useStore(featureSettings.isChoiceOn).value"
+		></div>
+	</TransitionGroup>
 </template>
 
 <script setup lang="ts">
+	import { ref, watchEffect, withDefaults } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import { featureSettings } from '../../store/index.js'
-	import { ref, watchEffect, withDefaults } from 'vue'
 
 	interface Props {
 		scene: string
@@ -71,7 +66,7 @@
 	}
 </script>
 
-<style scoped>
+<style module lang="scss">
 	.scene {
 		aspect-ratio: 21/9;
 		background-image: v-bind('sceneDecor.backdrop');
@@ -92,25 +87,24 @@
 			black 80%,
 			transparent 100%
 		);
-	}
 
-	.scene,
-	.scene > * {
-		grid-area: 1/1/-1/-1;
-		background-size: cover;
-		background-repeat: no-repeat;
-		background-position: center;
-		width: 100%;
-	}
-
-	.reflectionBg {
-		background-image: v-bind('sceneDecor.reflection');
-	}
-	.practiceBg {
-		background-image: v-bind('sceneDecor.practice');
-	}
-	.choiceBg {
-		background-image: v-bind('sceneDecor.choice');
+		&,
+		& > * {
+			grid-area: 1/1/-1/-1;
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center;
+			width: 100%;
+		}
+		> .reflectionBg {
+			background-image: v-bind('sceneDecor.reflection');
+		}
+		> .practiceBg {
+			background-image: v-bind('sceneDecor.practice');
+		}
+		> .choiceBg {
+			background-image: v-bind('sceneDecor.choice');
+		}
 	}
 
 	/* media queries */
@@ -121,18 +115,19 @@
 			aspect-ratio: 4/5;
 			max-height: 60vh;
 			align-self: end;
-		}
-		.reflectionBg {
-			background-image: v-bind('sceneDecor.reflectionSmall');
-		}
-		.practiceBg {
-			background-image: v-bind('sceneDecor.practiceSmall');
-		}
-		.choiceBg {
-			background-image: v-bind('sceneDecor.choiceSmall');
+			> .reflectionBg {
+				background-image: v-bind('sceneDecor.reflectionSmall');
+			}
+			> .practiceBg {
+				background-image: v-bind('sceneDecor.practiceSmall');
+			}
+			> .choiceBg {
+				background-image: v-bind('sceneDecor.choiceSmall');
+			}
 		}
 	}
-
+</style>
+<style scoped>
 	/* transition styles */
 	.landingScene-enter-from,
 	.landingScene-leave-to {
