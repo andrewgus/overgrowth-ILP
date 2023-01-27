@@ -34,14 +34,11 @@
 		return `var(--${props.color ? props.color : 'lightBlue'})`
 	})
 
-	const computedDisabled = computed(() => props.isDisabled)
-	const computedNav = computed(() => props.isForNav)
-
-	const btnStyles = useComputedCssModule(
-		'btn',
-		[computedDisabled, computedNav],
-		['disabled', 'navBtn']
-	)
+	const computedConditions = new Map([
+		[computed(() => props.isDisabled), 'disabled'],
+		[computed(() => props.isForNav), 'navBtn'],
+	])
+	const btnStyles = useComputedCssModule('btn', computedConditions)
 </script>
 
 <style module lang="scss">

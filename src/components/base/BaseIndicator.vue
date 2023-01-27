@@ -1,5 +1,7 @@
 <template>
-	<div :class="indicatorStyles">
+	<div
+		:class="[$style.indicator, { [$style.OnlandingIndicator]: isOnLanding }]"
+	>
 		<a :class="$style.indicatorLink" :href="nextSection" :aria-hidden="hidden">
 			<p>{{ text }}</p>
 			<span :class="$style.scrollArrow">
@@ -26,7 +28,6 @@
 	import { computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import { contentQuery } from '../../store/index.js'
-	import useComputedCssModule from '../../composables/UseComputedCssModule'
 	const props = defineProps({
 		text: {
 			type: String,
@@ -44,13 +45,6 @@
 		const currSectionNum = useStore(contentQuery.currSectionIdNum).value
 		return currSectionNum ? `#section${currSectionNum + 1}` : '#section1'
 	})
-
-	const computedIsOnLanding = computed(() => props.isOnLanding)
-	const indicatorStyles = useComputedCssModule(
-		'indicator',
-		[computedIsOnLanding],
-		['OnlandingIndicator']
-	)
 </script>
 
 <style module lang="scss">

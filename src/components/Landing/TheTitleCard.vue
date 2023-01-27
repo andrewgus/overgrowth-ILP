@@ -15,7 +15,7 @@
 						type="Reflection"
 					/>
 				</li>
-				<BaseSeparator hidden v-if="multiFeatures.reflectionAnd" />
+				<BaseSeparator hidden v-if="multiFeatures.reflectionAndOther" />
 				<li>
 					<BaseSwitch
 						v-if="isPracticeOn"
@@ -65,12 +65,12 @@
 		return props.isChoiceOn || props.isPracticeOn || props.isChoiceOn
 	})
 	const multiFeatures = computed(() => {
-		const reflectionAnd =
+		const reflectionAndOther =
 			(props.isReflectionOn && props.isPracticeOn) ||
 			(props.isReflectionOn && props.isChoiceOn)
 		const practiceAndChoice = props.isPracticeOn && props.isChoiceOn
 
-		return { reflectionAnd, practiceAndChoice }
+		return { reflectionAndOther, practiceAndChoice }
 	})
 </script>
 
