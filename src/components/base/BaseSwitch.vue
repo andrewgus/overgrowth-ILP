@@ -16,6 +16,7 @@
 
 <script setup lang="ts">
 	import { ref, computed, useCssModule } from 'vue'
+	import useComputedCssModule from '../../composables/UseComputedCssModule'
 
 	const props = defineProps({
 		type: {

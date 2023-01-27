@@ -1,32 +1,30 @@
-import { computed, useCssModule } from 'vue'
+import { Ref, useCssModule, computed } from 'vue'
 
 /**
  * To be used when applying multiple conditional classes with CSS modules
  * @param baseClass class that is always applied
- * @param conditions condition to be met to apply condition classes
+ * @param conditions condition to be met to apply conditional classes
  * @param conditionalClasses class to be applied if condition is met
  * @param moduleName Optional name for the css module
  * @returns array of classes to be applied to an element
  */
 
-const useComputedCssModule = (
+export default function useComputedCssModule(
 	baseClass: string,
-	conditions: boolean[],
+	conditions: Ref<boolean>[],
 	conditionalClasses: string[],
 	moduleName?: string
-) => {
+) {
 	const styles = useCssModule(moduleName)
 
 	const computedStyles = computed(() => {
-		const styleArr: string[] = [styles[baseClass]]
+		const stylesArr: string[] = [styles[baseClass]]
 
 		for (const [i, condition] of conditions.entries()) {
-			if (condition) styleArr.push(styles[conditionalClasses[i]])
+			if (condition.value) stylesArr.push(styles[conditionalClasses[i]])
 		}
-
-		return styleArr
+		return stylesArr
 	})
+
 	return computedStyles
 }
-
-export { useComputedCssModule }

@@ -1,13 +1,11 @@
 <template>
-	<button v-if="!link" :class="computedStyles">
-		{{ text }}
-	</button>
-	<a v-else :href="url" :class="styles2">{{ text }}</a>
+	<button v-if="!link" :class="btnStyles">{{ text }}</button>
+	<a v-else :href="url" :class="btnStyles">{{ text }}</a>
 </template>
 
 <script setup lang="ts">
-	import { computed, useCssModule } from 'vue'
-	import { useComputedCssModule } from '../../composables/UseComputedCssModule'
+	import { computed } from 'vue'
+	import useComputedCssModule from '../../composables/UseComputedCssModule'
 
 	const props = defineProps({
 		text: {
@@ -36,21 +34,13 @@
 		return `var(--${props.color ? props.color : 'lightBlue'})`
 	})
 
-	const styles = useCssModule()
+	const computedDisabled = computed(() => props.isDisabled)
+	const computedNav = computed(() => props.isForNav)
 
-	const computedStyles = computed(() => {
-		const styleArr: string[] = [styles.btn]
-
-		if (props.isForNav) styleArr.push(styles.navBtn)
-		if (props.isDisabled) styleArr.push(styles.disabled)
-
-		return styleArr
-	})
-
-	const styles2 = useComputedCssModule(
+	const btnStyles = useComputedCssModule(
 		'btn',
-		[props.isForNav, props.isDisabled],
-		['navBtn', 'disabled']
+		[computedDisabled, computedNav],
+		['disabled', 'navBtn']
 	)
 </script>
 

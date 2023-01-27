@@ -24,8 +24,9 @@
 
 <script setup lang="ts">
 	import { useStore } from '@nanostores/vue'
-	import { computed, useCssModule } from 'vue'
 	import { contentQuery } from '../../store/index.js'
+	import { computed } from 'vue'
+	import useComputedCssModule from '../../composables/UseComputedCssModule'
 	const props = defineProps({
 		text: {
 			type: String,
@@ -44,14 +45,12 @@
 		return currSectionNum ? `#section${currSectionNum + 1}` : '#section1'
 	})
 
-	const style = useCssModule()
-
-	const indicatorStyles = computed(() => {
-		const styles = [style.indicator]
-		if (props.isOnLanding) styles.push(style.OnlandingIndicator)
-
-		return styles
-	})
+	const computedIsOnLanding = computed(() => props.isOnLanding)
+	const indicatorStyles = useComputedCssModule(
+		'indicator',
+		[computedIsOnLanding],
+		['OnlandingIndicator']
+	)
 </script>
 
 <style module lang="scss">
