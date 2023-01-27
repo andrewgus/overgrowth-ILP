@@ -18,13 +18,10 @@
 		margin: 0 auto var(--s0);
 		max-width: max-content;
 		border: 1px solid var(--white);
-		-webkit-transition: top 1s var(--transition);
-		transition: top 1s var(--transition);
-
 		&:focus {
 			outline: 1px solid var(--blue);
 		}
-		> a:visited {
+		> a {
 			color: var(--white);
 		}
 	}
