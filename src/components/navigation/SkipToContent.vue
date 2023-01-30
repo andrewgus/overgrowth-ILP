@@ -18,11 +18,14 @@
 		margin: 0 auto var(--s0);
 		max-width: max-content;
 		border: 1px solid var(--white);
-		&:focus {
-			outline: 1px solid var(--blue);
-		}
+
 		> a {
+			opacity: 0;
 			color: var(--white);
+			&:focus {
+				opacity: 1;
+				outline: 1px solid var(--blue);
+			}
 		}
 	}
 </style>

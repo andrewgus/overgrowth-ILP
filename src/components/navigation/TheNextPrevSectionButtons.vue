@@ -3,9 +3,9 @@
 		<BaseButton
 			link
 			isForNav
-			:tabindex="useIsBookendSection.isFirst ? '-1' : '0'"
-			:isDisabled="useIsBookendSection.isFirst || !!!currSectionId"
-			:aria-hidden="useIsBookendSection.isFirst || !!!currSectionId"
+			:tabindex="isPrevDisabled ? '-1' : '0'"
+			:isDisabled="isPrevDisabled"
+			:aria-hidden="isPrevDisabled"
 			:href="`#${prevSection}`"
 			@click="useSetCurrSection(`section${currSectionId}`)"
 			:class="$style.btn_prev"
@@ -16,7 +16,7 @@
 		<BaseButton
 			link
 			isForNav
-			:tabindex="useIsBookendSection.isLast ? '-1' : 0"
+			:tabindex="useIsBookendSection.isLast ? '-1' : '0'"
 			:isDisabled="useIsBookendSection.isLast"
 			:aria-hidden="useIsBookendSection.isLast"
 			:href="`#${nextSection}`"
@@ -30,13 +30,15 @@
 </template>
 
 <script setup lang="ts">
+	import type { ObjectProperty } from '@babel/types'
+	import { computed } from 'vue'
 	import {
 		useIsBookendSection,
 		useSetCurrSection,
 	} from '../../composables/UseNavigation'
 	import BaseButton from '../base/BaseButton.vue'
 
-	defineProps({
+	const props = defineProps({
 		currSectionId: {
 			type: Number,
 			required: true,
@@ -49,6 +51,10 @@
 			type: String,
 			required: true,
 		},
+	})
+
+	const isPrevDisabled = computed(() => {
+		return useIsBookendSection.value.isFirst || !!!props.currSectionId
 	})
 </script>
 

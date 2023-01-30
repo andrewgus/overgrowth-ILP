@@ -1,24 +1,22 @@
 <template>
-	<transition name="lessonNav">
-		<nav
-			:class="[$style.lessonNav, { [$style.isInvisible]: !isOnContent }]"
-			id="lessonNav"
-		>
-			<SkipToContent v-if="!isOnContent" />
-			<div :class="$style.navInfo">
-				<p v-show="!!queryCurrSectionTitle">
-					Currently on:
-					{{ queryCurrSectionTitle }}
-				</p>
-				<TheNextPrevSectionButtons
-					:currSectionId="querycurrSectionIdNum"
-					:prevSection="prevSection!"
-					:nextSection="nextSection!"
-				/>
-				<TheNavToc :currSectionId="querycurrSectionIdNum" />
-			</div>
-		</nav>
-	</transition>
+	<nav
+		:class="[$style.lessonNav, { [$style.isInvisible]: !isOnContent }]"
+		id="lessonNav"
+	>
+		<SkipToContent v-if="!isOnContent" />
+		<div :class="$style.navInfo">
+			<p v-show="!!queryCurrSectionTitle">
+				Currently on:
+				{{ queryCurrSectionTitle }}
+			</p>
+			<TheNextPrevSectionButtons
+				:currSectionId="querycurrSectionIdNum"
+				:prevSection="prevSection!"
+				:nextSection="nextSection!"
+			/>
+			<TheNavToc :currSectionId="querycurrSectionIdNum" />
+		</div>
+	</nav>
 </template>
 
 <script setup lang="ts">
@@ -94,21 +92,5 @@
 				text-overflow: ellipsis;
 			}
 		}
-	}
-</style>
-<style scoped>
-	/* lessonNav transition */
-	.lessonNav-enter-from,
-	.lessonNav-leave-to {
-		opacity: 0;
-	}
-	.lessonNav-enter-active,
-	.lessonNav-leave-active {
-		-webkit-transition: opacity 0.3s ease-in-out;
-		transition: opacity 0.3s ease-in-out;
-	}
-	.lessonNav-enter-to,
-	.lessonNav-leave-from {
-		opacity: 1;
 	}
 </style>
