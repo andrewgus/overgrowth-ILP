@@ -5,9 +5,17 @@ import { computed } from 'vue'
 const querycurrSectionIdNum = useStore(contentQuery.currSectionIdNum)
 const queryAllSections = useStore(contentQuery.allSections)
 
+/**
+ * To set the current section in the store
+ * @param sectionId The section ID to be set as the current section
+ * @returns The given section ID is set as the current section in the store
+ */
 const useSetCurrSection = (sectionId: string) =>
 	contentQuery.setCurrSection(sectionId)
 
+/**
+ * Returns an array of all items in the lesson
+ */
 const useNavItems = computed(() => {
 	let titles: string[] = []
 	let sectionIds: string[] = []
@@ -33,6 +41,10 @@ const useNavItems = computed(() => {
 
 	return allSectionsObj
 })
+
+/**
+ * Returns an object with the first and last section of the lesson as bookends
+ */
 
 const useIsBookendSection = computed(() => {
 	const currSectionIdNum = `section${querycurrSectionIdNum.value}`

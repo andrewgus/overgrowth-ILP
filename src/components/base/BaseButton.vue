@@ -1,10 +1,11 @@
 <template>
-	<button v-if="!link">{{ text }}</button>
-	<a v-else :href="url" :class="{ disabled: isDisabled }">{{ text }}</a>
+	<button v-if="!link" :class="btnStyles">{{ text }}</button>
+	<a v-else :href="url" :class="btnStyles">{{ text }}</a>
 </template>
 
 <script setup lang="ts">
 	import { computed } from 'vue'
+	import useComputedCssModule from '../../composables/UseComputedCssModule'
 
 	const props = defineProps({
 		text: {
@@ -21,6 +22,9 @@
 		url: {
 			type: String,
 		},
+		isForNav: {
+			type: Boolean,
+		},
 		color: {
 			type: String,
 		},
@@ -29,11 +33,16 @@
 	const btnColor = computed(() => {
 		return `var(--${props.color ? props.color : 'lightBlue'})`
 	})
+
+	const computedConditionalClasses = new Map([
+		[computed(() => props.isDisabled), 'disabled'],
+		[computed(() => props.isForNav), 'navBtn'],
+	])
+	const btnStyles = useComputedCssModule('btn', computedConditionalClasses)
 </script>
 
-<style scoped>
-	button,
-	a {
+<style module lang="scss">
+	.btn {
 		color: var(--black);
 		cursor: pointer;
 		border: 1px solid var(--darkGray);
@@ -43,24 +52,33 @@
 		border-radius: var(--s-8);
 		-webkit-transition: 0.5s all var(--transition);
 		transition: 0.5s all var(--transition);
-	}
-	a {
 		text-decoration: none;
-	}
-	button:hover,
-	a:hover {
-		color: var(--blue);
-		background-color: var(--peach);
-		box-shadow: inset var(--s-10) var(--s-10) 0 var(--blue),
-			inset calc(-1 * var(--s-10)) calc(-1 * var(--s-10)) 0 var(--blue),
-			inset var(--s-10) calc(-1 * var(--s-10)) 0 var(--blue),
-			inset calc(-1 * var(--s-10)) var(--s-10) 0 var(--blue);
-	}
 
-	.disabled {
-		cursor: not-allowed;
-		pointer-events: none;
-		opacity: 0.5;
-		background-color: var(--lightGray);
+		&:not(.navBtn):hover {
+			color: var(--blue);
+			background-color: var(--peach);
+			box-shadow: inset var(--s-10) var(--s-10) 0 var(--blue),
+				inset calc(-1 * var(--s-10)) calc(-1 * var(--s-10)) 0 var(--blue),
+				inset var(--s-10) calc(-1 * var(--s-10)) 0 var(--blue),
+				inset calc(-1 * var(--s-10)) var(--s-10) 0 var(--blue);
+		}
+		&.disabled {
+			cursor: not-allowed;
+			pointer-events: none;
+			opacity: 0.5;
+			background-color: var(--lightGray);
+		}
+	}
+	.navBtn {
+		&:hover,
+		&:focus {
+			outline: none;
+			background-color: var(--blue);
+			color: var(--white);
+			z-index: 2;
+		}
+		&:visited:not(:hover):not(:focus) {
+			color: var(--black);
+		}
 	}
 </style>

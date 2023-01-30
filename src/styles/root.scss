@@ -4,9 +4,13 @@
 
 * {
   box-sizing: border-box;
-}
-:focus {
-  outline: var(--s-10) solid var(--blue1);
+
+  &:focus {
+    animation: focusPulse 0.33s var(--transition) forwards;
+  }
+  &:visited {
+    color: var(--purple);
+  }
 }
 
 html {
@@ -31,17 +35,40 @@ h2 {
   margin-bottom: var(--s3);
   font-weight: 800;
 }
+
 p {
   color: var(--black);
-  line-height: 1.5;
-}
-a:visited {
-  color: var(--purple);
+  line-height: 1.6;
+
+  & > a {
+    &:hover,
+    &:focus {
+      font-weight: 700;
+    }
+    &:focus {
+      padding: 0 var(--s-10);
+      border-radius: var(--s-10);
+    }
+    &:hover {
+      background-color: var(--peach);
+      text-underline-offset: var(--s-8);
+      text-decoration-skip-ink: none;
+      text-decoration-thickness: var(--s-10);
+      animation: linkHover 0.33s var(--transition) forwards;
+    }
+  }
 }
 
-p > a:hover,
-p > a:focus {
-  border-radius: var(--s-10);
-  padding: 0 var(--s-10);
-  font-weight: 700;
+@keyframes focusPulse {
+  0% {
+    outline-offset: 0;
+    outline-color: var(--blue1);
+  }
+  99% {
+    outline-color: var(--blue1);
+    outline-offset: var(--s-10);
+  }
+  100% {
+    outline: var(--s-10) solid var(--blue1);
+  }
 }

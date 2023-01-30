@@ -1,5 +1,5 @@
 <template>
-	<header>
+	<header :class="$style.landing">
 		<TheScene
 			:scene="scene"
 			:isReflectionOn="isReflectionOn"
@@ -12,16 +12,16 @@
 			:isPracticeOn="isPracticeOn"
 			:isChoiceOn="isChoiceOn"
 		/>
-		<TheIndicator />
+		<BaseIndicator isOnLanding hidden text="Scroll to start" />
 	</header>
 </template>
 
 <script setup lang="ts">
 	import { computed, withDefaults } from 'vue'
 
-	import TheScene from '../components/Landing/TheScene.vue'
-	import TheTitleCard from '../components/Landing/TheTitleCard.vue'
-	import TheIndicator from '../components/Landing/TheIndicator.vue'
+	import TheScene from '../components/landing/TheScene.vue'
+	import TheTitleCard from '../components/landing/TheTitleCard.vue'
+	import BaseIndicator from '../components/base/BaseIndicator.vue'
 
 	interface Props {
 		title: string
@@ -41,13 +41,13 @@
 	})
 </script>
 
-<style scoped>
-	header {
+<style module>
+	.landing {
 		background-image: v-bind(bgGradient);
 		min-height: 99vh;
 		width: 100vw;
 		display: grid;
-		grid-template-columns: 1fr;
-		grid-template-rows: 1fr;
+		grid-template-columns: [landing-top] 1fr [landing-bottom];
+		grid-template-rows: [card-start] 4fr [card-indicator] 20vh [indicator-end];
 	}
 </style>

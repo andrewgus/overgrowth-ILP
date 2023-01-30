@@ -1,9 +1,12 @@
 <template>
-	<div class="titleCard">
+	<div :class="$style.titleCard">
 		<h1>{{ title }}</h1>
 		<div v-if="featuresOn">
 			<p>Included in this lesson are&hellip;</p>
-			<ul class="options">
+			<ul
+				aria-label="each item can be toggled on and off for this lesson"
+				:class="$style.options"
+			>
 				<li>
 					<BaseSwitch
 						v-if="isReflectionOn"
@@ -12,11 +15,7 @@
 						type="Reflection"
 					/>
 				</li>
-				<BaseSeparator
-					v-if="
-						(isReflectionOn && isPracticeOn) || (isReflectionOn && isChoiceOn)
-					"
-				/>
+				<BaseSeparator hidden v-if="multiFeatures.reflectionAndOther" />
 				<li>
 					<BaseSwitch
 						v-if="isPracticeOn"
@@ -25,7 +24,7 @@
 						type="Practice"
 					/>
 				</li>
-				<BaseSeparator v-if="isPracticeOn && isChoiceOn" />
+				<BaseSeparator hidden v-if="multiFeatures.practiceAndChoice" />
 				<li>
 					<BaseSwitch
 						v-if="isChoiceOn"
@@ -42,8 +41,8 @@
 </template>
 
 <script setup lang="ts">
-	import { useStore } from '@nanostores/vue'
 	import { computed, withDefaults } from 'vue'
+	import { useStore } from '@nanostores/vue'
 	import { featureSettings } from '../../store/index.js'
 
 	import BaseSwitch from '../base/BaseSwitch.vue'
@@ -65,30 +64,39 @@
 	const featuresOn = computed(() => {
 		return props.isChoiceOn || props.isPracticeOn || props.isChoiceOn
 	})
+	const multiFeatures = computed(() => {
+		const reflectionAndOther =
+			(props.isReflectionOn && props.isPracticeOn) ||
+			(props.isReflectionOn && props.isChoiceOn)
+		const practiceAndChoice = props.isPracticeOn && props.isChoiceOn
+
+		return { reflectionAndOther, practiceAndChoice }
+	})
 </script>
 
-<style scoped>
+<style module lang="scss">
 	.titleCard {
-		grid-area: 1/1/-1/-1;
+		grid-area: card-start/landing-top/card-indicator/landing-bottom;
 		justify-self: center;
 		align-self: start;
 		display: flex;
 		flex-flow: column nowrap;
 		justify-content: space-between;
 		align-items: center;
-		border-radius: 30px;
+		border-radius: var(--s5);
 		background-color: hsla(0deg, 0%, 98%, 0.5);
 		filter: drop-shadow(0 0 var(--s1) var(--white));
 		padding: var(--s0);
 		margin-top: var(--s2);
-	}
-	.titleCard h1 {
-		margin: 0;
-		text-align: center;
-	}
-	.titleCard p {
-		text-align: center;
-		margin-bottom: var(--s-3);
+
+		> h1 {
+			margin: 0;
+			text-align: center;
+		}
+		> div p {
+			text-align: center;
+			margin: var(--s-3);
+		}
 	}
 	.options {
 		padding-left: 0;
@@ -97,12 +105,31 @@
 		justify-content: center;
 		flex-flow: row nowrap;
 		gap: var(--s-5);
+		> li {
+			list-style: none;
+			display: flex;
+			flex-flow: column nowrap;
+			align-items: center;
+			justify-content: start;
+		}
 	}
-	li {
-		list-style: none;
-		display: flex;
-		flex-flow: column nowrap;
-		align-items: center;
-		justify-content: start;
+
+	/* media queries */
+	@media only screen and (max-width: 950px) {
+		.titleCard {
+			> h1 {
+				line-height: 1.1;
+			}
+			> p {
+				margin: var(--s-6);
+			}
+		}
+	}
+	@media only screen and (max-height: 950px) and (max-width: 950px) {
+		.titleCard {
+			padding: var(--s-10);
+			margin-top: 0;
+			width: 100%;
+		}
 	}
 </style>

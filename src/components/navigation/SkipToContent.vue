@@ -1,5 +1,5 @@
 <template>
-	<div id="skipToContent">
+	<div :class="$style.skipBtn" id="skipToContent">
 		<BaseButton
 			link
 			text="Skip to main content"
@@ -13,19 +13,21 @@
 	import BaseButton from '../base/BaseButton.vue'
 </script>
 
-<style scoped>
-	div {
+<style module lang="scss">
+	.skipBtn {
 		margin: 0 auto var(--s0);
 		max-width: max-content;
 		border: 1px solid var(--white);
-		-webkit-transition: top 1s var(--transition);
-		transition: top 1s var(--transition);
-	}
-	div:focus {
-		outline: 1px solid var(--blue);
-	}
-	a,
-	a:visited {
-		color: var(--white);
+
+		> a {
+			display: block;
+			margin-top: -5vh;
+			opacity: 0;
+			color: var(--white);
+			&:focus {
+				opacity: 1;
+				outline: 1px solid var(--blue);
+			}
+		}
 	}
 </style>

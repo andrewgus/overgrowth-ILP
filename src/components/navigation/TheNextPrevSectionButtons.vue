@@ -1,26 +1,27 @@
 <template>
-	<div class="nextPrev">
+	<div :class="$style.nextPrev">
 		<BaseButton
-			:tabindex="useIsBookendSection.isFirst ? '-1' : '0'"
-			:isDisabled="useIsBookendSection.isFirst"
-			:aria-hidden="useIsBookendSection.isFirst"
 			link
+			isForNav
+			:tabindex="isPrevDisabled ? '-1' : '0'"
+			:isDisabled="isPrevDisabled"
+			:aria-hidden="isPrevDisabled"
 			:href="`#${prevSection}`"
 			@click="useSetCurrSection(`section${currSectionId}`)"
-			class="btn_prev"
+			:class="$style.btn_prev"
 			title="Go to previous section"
 			aria-label="Go to previous section"
 			text="&#9650;"
 		/>
 		<BaseButton
-			:tabindex="useIsBookendSection.isLast ? '-1' : 0"
+			link
+			isForNav
+			:tabindex="useIsBookendSection.isLast ? '-1' : '0'"
 			:isDisabled="useIsBookendSection.isLast"
 			:aria-hidden="useIsBookendSection.isLast"
-			link
 			:href="`#${nextSection}`"
-			ref="prev"
 			@click="useSetCurrSection(`section${currSectionId}`)"
-			class="btn_next"
+			:class="$style.btn_next"
 			title="Go to next section"
 			aria-label="Go to next section"
 			text="&#9660;"
@@ -29,13 +30,14 @@
 </template>
 
 <script setup lang="ts">
+	import { computed } from 'vue'
 	import {
 		useIsBookendSection,
 		useSetCurrSection,
 	} from '../../composables/UseNavigation'
 	import BaseButton from '../base/BaseButton.vue'
 
-	defineProps({
+	const props = defineProps({
 		currSectionId: {
 			type: Number,
 			required: true,
@@ -49,35 +51,32 @@
 			required: true,
 		},
 	})
+
+	const isPrevDisabled = computed(() => {
+		return useIsBookendSection.value.isFirst || !!!props.currSectionId
+	})
 </script>
 
-<style scoped>
+<style module lang="scss">
 	.nextPrev {
 		grid-area: 1/2/2/3;
 		justify-self: end;
 		display: flex;
-		height: 48px;
-		overflow: hidden;
+		height: var(--s4);
 		border: 1px solid var(--darkGray);
-		border-radius: 30px 0 0 30px;
-	}
-	.nextPrev > * {
-		overflow: hidden;
-		border-radius: 0;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: var(--s3);
-		border: none;
-	}
-	.nextPrev > *:focus {
-		background-color: var(--blue1);
-		color: var(--white);
-	}
-	.nextPrev > *:visited {
-		color: var(--black);
-	}
-	.btn_prev {
-		border-radius: 20px 0 0 20px;
+		border-radius: var(--s10) 0 0 var(--s10);
+		background-color: var(--lightBlue);
+
+		> * {
+			border-radius: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: var(--s3);
+			border: none;
+		}
+		> .btn_prev {
+			border-radius: var(--s10) 0 0 var(--s10);
+		}
 	}
 </style>

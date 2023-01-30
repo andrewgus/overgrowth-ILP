@@ -1,11 +1,23 @@
 <template>
-	<div role="separator" aria-hidden="true" aria-orientation="vertical"></div>
+	<div
+		:class="$style.separator"
+		role="separator"
+		:aria-hidden="hidden"
+		aria-orientation="vertical"
+	></div>
 </template>
 
-<style scoped>
-	div {
-		flex-grow: 0;
+<script setup lang="ts">
+	defineProps({
+		hidden: {
+			type: Boolean,
+		},
+	})
+</script>
+
+<style module>
+	.separator {
 		border: 1.25px solid var(--lightGray);
-		border-radius: var(--s5);
+		border-radius: var(--s10);
 	}
 </style>
