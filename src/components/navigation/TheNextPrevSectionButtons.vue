@@ -4,8 +4,8 @@
 			link
 			isForNav
 			:tabindex="useIsBookendSection.isFirst ? '-1' : '0'"
-			:isDisabled="useIsBookendSection.isFirst"
-			:aria-hidden="useIsBookendSection.isFirst"
+			:isDisabled="useIsBookendSection.isFirst || !!!currSectionId"
+			:aria-hidden="useIsBookendSection.isFirst || !!!currSectionId"
 			:href="`#${prevSection}`"
 			@click="useSetCurrSection(`section${currSectionId}`)"
 			:class="$style.btn_prev"

@@ -39,9 +39,10 @@
 	const nextSection = ref<string>('#')
 
 	const setPrevSection = () => {
-		prevSection.value = !useIsBookendSection.value.isFirst
-			? `section${querycurrSectionIdNum.value - 1}`
-			: ''
+		prevSection.value =
+			!useIsBookendSection.value.isFirst && !!querycurrSectionIdNum.value
+				? `section${querycurrSectionIdNum.value - 1}`
+				: ''
 	}
 
 	const setNextSection = () => {
@@ -68,6 +69,7 @@
 		width: 100%;
 		position: sticky;
 		top: 0;
+		border-bottom: 1px dotted var(--lightGray);
 
 		&.isInvisible {
 			opacity: 0;
