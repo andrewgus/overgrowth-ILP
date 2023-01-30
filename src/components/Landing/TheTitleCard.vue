@@ -93,7 +93,7 @@
 			margin: 0;
 			text-align: center;
 		}
-		> p {
+		> div p {
 			text-align: center;
 			margin: var(--s-3);
 		}
@@ -125,10 +125,11 @@
 			}
 		}
 	}
-	@media only screen and (max-height: 950px) {
+	@media only screen and (max-height: 950px) and (max-width: 950px) {
 		.titleCard {
 			padding: var(--s-10);
 			margin-top: 0;
+			width: 100%;
 		}
 	}
 </style>
