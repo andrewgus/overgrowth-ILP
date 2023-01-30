@@ -20,6 +20,8 @@
 		border: 1px solid var(--white);
 
 		> a {
+			display: block;
+			margin-top: -5vh;
 			opacity: 0;
 			color: var(--white);
 			&:focus {
