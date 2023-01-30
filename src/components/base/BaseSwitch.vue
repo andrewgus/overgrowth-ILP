@@ -1,17 +1,20 @@
 <template>
+	<!-- TODO: implicit label instead? Wrap the button inside the label element? -->
 	<label :for="`${type.toLowerCase()}Switch`">{{ type }}</label>
-	<button
-		@click="toggleSwitch"
-		:id="`${type.toLowerCase()}Switch`"
-		:class="[$style.btn, { [$style.off]: !enabled }]"
-		type="button"
-		role="switch"
-		:aria-checked="enabled"
-	>
+	<div :class="$style.switch">
+		<input
+			@click="toggleSwitch"
+			:id="`${type.toLowerCase()}Switch`"
+			:class="[$style.input, { [$style.off]: !enabled }]"
+			type="button"
+			role="switch"
+			:aria-checked="enabled"
+			:value="enabled ? 'on' : 'off'"
+		/>
 		<span :class="$style.onOff" aria-hidden="true">{{
 			enabled ? 'On' : 'Off'
 		}}</span>
-	</button>
+	</div>
 </template>
 
 <script setup lang="ts">
@@ -38,31 +41,46 @@
 </script>
 
 <style module lang="scss">
-	.btn {
-		display: inline-flex;
-		cursor: pointer;
-		border-radius: var(--s10);
-		width: 10ch;
-		border: 1px solid var(--darkGray);
-		padding: 0;
-		background: var(--white);
+	.switch {
+		display: grid;
+		grid-template: 1fr/ 1fr;
+		align-items: center;
 
-		& > .onOff {
+		> * {
+			grid-area: 1/1/-1/-1;
+		}
+
+		> .input {
+			cursor: pointer;
+			padding: 0;
+			border-radius: var(--s10);
+			width: var(--s6);
+			height: calc(var(--s2) + 1px);
+			border: 1px solid var(--darkGray);
+			background: var(--white);
+			color: transparent;
+
+			&.off + .onOff {
+				transform: translateX(var(--s2));
+				margin: 0 0 0 2px;
+				color: #fff;
+				background: var(--red);
+			}
+		}
+		> .onOff {
+			font-size: var(--s-1);
+			pointer-events: none;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			height: 4ch;
-			width: 4ch;
+			width: var(--s0);
+			height: var(--s0);
+			padding: var(--s-2);
 			border-radius: 50%;
+			margin: 0 0 0 1px;
 			-webkit-transition: all 0.33s var(--transition);
 			transition: all 0.33s var(--transition);
 			background-color: var(--green1);
-			transform: translateX(0);
-		}
-		&.off > .onOff {
-			transform: translateX(5.8ch);
-			color: #fff;
-			background: var(--red);
 		}
 	}
 </style>

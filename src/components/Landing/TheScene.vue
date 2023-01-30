@@ -73,8 +73,7 @@
 		justify-self: center;
 		align-self: center;
 		display: grid;
-		grid-template-columns: 1fr;
-		grid-template-rows: 1fr;
+		grid-template: 1fr / 1fr;
 		-webkit-mask-image: linear-gradient(
 			transparent 0%,
 			black 20%,
