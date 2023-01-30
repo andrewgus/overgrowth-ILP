@@ -30,7 +30,6 @@
 </template>
 
 <script setup lang="ts">
-	import type { ObjectProperty } from '@babel/types'
 	import { computed } from 'vue'
 	import {
 		useIsBookendSection,
@@ -63,7 +62,7 @@
 		grid-area: 1/2/2/3;
 		justify-self: end;
 		display: flex;
-		height: 48px;
+		height: var(--s4);
 		border: 1px solid var(--darkGray);
 		border-radius: var(--s10) 0 0 var(--s10);
 		background-color: var(--lightBlue);

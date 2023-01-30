@@ -83,7 +83,7 @@
 			transform: translateY(0);
 		}
 		to {
-			transform: translateY(10px);
+			transform: translateY(var(--s-5));
 		}
 	}
 </style>

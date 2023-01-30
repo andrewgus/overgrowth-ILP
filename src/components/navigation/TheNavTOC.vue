@@ -62,7 +62,7 @@
 <style module lang="scss">
 	.btnTOC {
 		grid-area: 1/3/2/4;
-		height: 48px;
+		height: var(--s4);
 		justify-self: end;
 		border: 1px solid var(--darkGray);
 		border-radius: 0px var(--s10) var(--s10) 0px;
