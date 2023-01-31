@@ -75,7 +75,7 @@ const observerOptionsHeadings = {
 }
 const observerOptionsSections = {
 	root: null,
-	threshold: 0.1,
+	threshold: 0.33,
 }
 
 const observerHeader = new IntersectionObserver(
