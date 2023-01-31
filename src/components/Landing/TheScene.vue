@@ -6,16 +6,19 @@
 		:class="$style.scene"
 	>
 		<div
+			key="reflection"
 			v-if="isReflectionOn"
 			:class="{ [$style.reflectionBg]: isBgLoaded }"
 			v-show="useStore(featureSettings.isReflectionOn).value"
 		></div>
 		<div
+			key="practice"
 			v-if="isPracticeOn"
 			:class="{ [$style.practiceBg]: isBgLoaded }"
 			v-show="useStore(featureSettings.isPracticeOn).value"
 		></div>
 		<div
+			key="choice"
 			v-if="isChoiceOn"
 			:class="{ [$style.choiceBg]: isBgLoaded }"
 			v-show="useStore(featureSettings.isChoiceOn).value"

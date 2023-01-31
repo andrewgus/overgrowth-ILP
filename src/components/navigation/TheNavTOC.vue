@@ -8,27 +8,25 @@
 		aria-controls="navItemsList"
 		@click="openMenu"
 	/>
-	<transition appear name="navTOC">
-		<ol
-			:class="$style.listTOC"
-			v-show="isMenuOpen"
-			aria-label="table of contents links"
-			id="navItemsList"
+	<ol
+		:class="$style.listTOC"
+		v-show="isMenuOpen"
+		aria-label="table of contents links"
+		id="navItemsList"
+	>
+		<li
+			v-for="navItem in useNavItems"
+			:key="navItem!.id"
+			:class="{ [$style.greenDot]: isLocatedHere(navItem!.id) }"
 		>
-			<li
-				v-for="navItem in useNavItems"
-				:key="navItem!.id"
-				:class="{ [$style.greenDot]: isLocatedHere(navItem!.id) }"
+			<a
+				:href="`#${navItem!.id}`"
+				@click="navToSection(navItem!.id)"
+				:title="isLocatedHere(navItem!.id) ? 'You are here' : ''"
+				>{{ navItem!.title }}</a
 			>
-				<a
-					:href="`#${navItem!.id}`"
-					@click="navToSection(navItem!.id)"
-					:title="isLocatedHere(navItem!.id) ? 'You are here' : ''"
-					>{{ navItem!.title }}</a
-				>
-			</li>
-		</ol>
-	</transition>
+		</li>
+	</ol>
 </template>
 
 <script setup lang="ts">
@@ -115,24 +113,5 @@
 				}
 			}
 		}
-	}
-</style>
-
-<style scoped>
-	/* navTOC transition */
-	.navTOC-enter-from,
-	.navTOC-leave-to {
-		transform: translateY(calc(-1 * var(--s0)));
-		opacity: 0;
-	}
-	.navTOC-enter-active,
-	.navTOC-leave-active {
-		-webkit-transition: all 0.5s ease-in-out;
-		transition: all 0.5s ease-in-out;
-	}
-	.navTOC-enter-to,
-	.navTOC-leave-from {
-		transform: translateY(0);
-		opacity: 1;
 	}
 </style>
