@@ -7,15 +7,15 @@ export interface Props {
 const { heading, columnSet } = Astro.props
 ---
 
-<section>
-	<h2>{heading}</h2>
-	<div class={columnSet ? columnSet : ''}>
+<section class='staticContent'>
+	<div class:list={['content', { columnSet: columnSet }]}>
+		<h2>{heading}</h2>
 		<slot />
 	</div>
 </section>
 
 <style>
-	section {
+	.staticContent {
 		min-height: 90vh;
 		padding: 0 var(--s-3);
 		display: flex;
@@ -23,15 +23,13 @@ const { heading, columnSet } = Astro.props
 		align-items: center;
 		background-color: var(--white);
 	}
-	section + section {
-		border-top: 2px solid var(--darkGray);
-		background-color: var(--offWhite);
-	}
-	section > div {
+	.staticContent > div {
+		font-size: var(--s0);
 		margin: 0 auto;
-		max-width: 80ch;
+		max-width: 60ch;
+		widows: 100%;
 	}
-	section > div > :global(p) {
+	.staticContent > div > :global(p) {
 		max-width: 60ch;
 	}
 </style>
