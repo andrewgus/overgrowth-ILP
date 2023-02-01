@@ -15,21 +15,13 @@ const { heading, columnSet } = Astro.props
 </section>
 
 <style>
-	.staticContent {
-		min-height: 90vh;
-		padding: 0 var(--s-3);
-		display: flex;
-		flex-flow: column;
-		align-items: center;
-		background-color: var(--white);
-	}
 	.staticContent > div {
 		font-size: var(--s0);
 		margin: 0 auto;
 		max-width: 60ch;
-		widows: 100%;
+		width: 100%;
 	}
-	.staticContent > div > :global(p) {
+	.staticContent > div :global(p) {
 		max-width: 60ch;
 	}
 </style>

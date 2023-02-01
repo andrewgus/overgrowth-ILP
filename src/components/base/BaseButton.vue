@@ -50,8 +50,8 @@
 		font-size: var(--s-1);
 		background-color: v-bind(btnColor);
 		border-radius: var(--s-8);
-		-webkit-transition: 0.5s all var(--transition);
-		transition: 0.5s all var(--transition);
+		-webkit-transition: var(--timeLong) all var(--transitionFlourish);
+		transition: var(--timeLong) all var(--transitionFlourish);
 		text-decoration: none;
 
 		&:not(.navBtn):hover {

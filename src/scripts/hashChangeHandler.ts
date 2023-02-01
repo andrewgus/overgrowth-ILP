@@ -4,9 +4,16 @@ import { contentQuery } from '../store/index.js'
 const location = window.location.toString()
 const baseURL = location.split('#')[0]
 
+const header: HTMLElement = document.querySelector('header')!
+const sectionHeadings: NodeListOf<HTMLElement> =
+	document.querySelectorAll('article section h2')!
+
 // Setting all section ids and storing sections for LessonNav
-const sections: NodeListOf<HTMLElement> =
-	document.querySelectorAll('article > section')!
+let sections: Array<HTMLElement> = []
+
+for (const heading of sectionHeadings) {
+	sections.push(heading.closest('section')!)
+}
 
 sections.forEach((s: HTMLElement, i: number) => (s.id = `section${i + 1}`))
 
@@ -18,11 +25,6 @@ if (location.includes('#section')) {
 }
 
 // Observer for header, sections, & headings to update URL hash value w/ scroll
-const header: HTMLElement = document.querySelector('header')!
-const sectionHeadings: NodeListOf<HTMLElement> = document.querySelectorAll(
-	'article > section h2'
-)!
-
 const observerCallbackHeader = function (
 	entries: Array<IntersectionObserverEntry>
 ) {

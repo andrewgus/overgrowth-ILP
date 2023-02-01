@@ -99,8 +99,8 @@
 		width: 100%;
 		max-height: 90vh;
 		overflow: scroll;
-		-webkit-transition: 0.4s all ease-in-out;
-		transition: 0.4s all ease-in-out;
+		-webkit-transition: var(--timeShort) all ease-in-out;
+		transition: var(--timeShort) all ease-in-out;
 
 		& {
 			opacity: 0;
@@ -123,8 +123,9 @@
 			}
 
 			&::before {
-				-webkit-transition: 0.4s all var(--transition);
-				transition: 0.4s all var(--transition);
+				-webkit-transition: var(--timeShort) background-color
+					var(--transitionFlourish);
+				transition: var(--timeShort) background-color var(--transitionFlourish);
 				content: '';
 				display: inline-block;
 				height: var(--s-2);

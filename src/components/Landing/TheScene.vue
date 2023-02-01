@@ -137,7 +137,7 @@
 	}
 	.landingScene-enter-active,
 	.landingScene-leave-active {
-		transition: opacity 0.3s ease-in-out;
+		transition: var(--timeShort) opacity ease-in-out;
 	}
 	.landingScene-enter-to,
 	.landingScene-leave-from {

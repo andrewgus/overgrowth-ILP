@@ -23,9 +23,9 @@ const setCurrSection = (sectionId: string) => {
 	currSectionIdNum.set(sectionNum)
 }
 
-const allSections: WritableAtom<NodeListOf<HTMLElement>> = atom([])
+const allSections: WritableAtom<Array<HTMLElement>> = atom([])
 
-const setAllSections = (sections: NodeListOf<HTMLElement>) => {
+const setAllSections = (sections: Array<HTMLElement>) => {
 	allSections.set(sections)
 }
 

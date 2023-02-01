@@ -59,8 +59,8 @@
 
 <style module lang="scss">
 	.lessonNav {
-		-webkit-transition: 0.3s all ease-in-out;
-		transition: 0.3s all ease-in-out;
+		-webkit-transition: var(--timeShort) all ease-in-out;
+		transition: var(--timeShort) all ease-in-out;
 		display: block;
 		background-color: hsla(0, 0%, 100%, 0.95);
 		padding: var(--s-5) 0 0;

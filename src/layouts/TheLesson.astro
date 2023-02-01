@@ -53,10 +53,14 @@ const {
 </html>
 
 <style is:global>
-	.theLesson > section + section {
+	.theLesson section[id^='section'] {
+		min-height: 90vh;
+		padding: 0 var(--s-2);
+	}
+	.theLesson section[id^='section']:not([id='section1']) {
 		border-top: 2px solid var(--darkGray);
 	}
-	.theLesson > section:nth-child(2n + 1) {
+	.theLesson section:not(.feature)[id^='section']:nth-child(2n + 1) {
 		background-color: var(--offWhite);
 	}
 </style>

@@ -1,6 +1,7 @@
 ---
 import TheLesson from '../../layouts/TheLesson.astro'
 import StaticContent from '../../layouts/StaticContent.astro'
+import ReflectionFeature from '../../components/features/reflection/reflectionFeature.vue'
 ---
 
 <TheLesson
@@ -11,6 +12,11 @@ import StaticContent from '../../layouts/StaticContent.astro'
 	isPracticeOn={true}
 	isReflectionOn={true}
 >
+	<ReflectionFeature
+		client:visible
+		title='What Do You Think?'
+		prompt='When you think about Astronomy, what is/are the first thing(s) that comes to mind?'
+	/>
 	<StaticContent heading='Welcome to the Course'>
 		<p>In this course, we will&hellip;</p>
 		<p>

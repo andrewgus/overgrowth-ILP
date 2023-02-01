@@ -78,8 +78,8 @@
 			padding: var(--s-2);
 			border-radius: 50%;
 			margin: 0 0 0 1px;
-			-webkit-transition: all 0.33s var(--transition);
-			transition: all 0.33s var(--transition);
+			-webkit-transition: var(--timeShort) all var(--transitionFlourish);
+			transition: var(--timeShort) all var(--transitionFlourish);
 			background-color: var(--green1);
 		}
 	}
