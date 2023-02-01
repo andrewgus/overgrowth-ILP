@@ -35,7 +35,7 @@ const {
 	</head>
 	<body>
 		<main>
-			<article>
+			<article class='theLesson'>
 				<TheLanding
 					client:load
 					title={title}
@@ -51,3 +51,12 @@ const {
 		</main>
 	</body>
 </html>
+
+<style is:global>
+	.theLesson > section + section {
+		border-top: 2px solid var(--darkGray);
+	}
+	.theLesson > section:nth-child(2n + 1) {
+		background-color: var(--offWhite);
+	}
+</style>

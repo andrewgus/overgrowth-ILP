@@ -25,15 +25,38 @@ html {
 body {
   margin: 0;
 }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 800;
+}
 h1 {
   font-size: var(--s5);
+  margin-top: 0;
   margin-bottom: var(--s3);
-  font-weight: 800;
 }
 h2 {
   font-size: var(--s4);
-  margin-bottom: var(--s3);
-  font-weight: 800;
+  margin-top: var(--s6);
+  margin-bottom: var(--s2);
+}
+h3 {
+  font-size: var(--s3);
+  margin-top: var(--s5);
+  margin-bottom: var(--s1);
+}
+h4 {
+  font-size: var(--s2);
+  margin-top: var(--s4);
+  margin-bottom: var(--s0);
+}
+h5 {
+  font-size: var(--s1);
+  margin-top: var(--s3);
+  margin-bottom: var(--s-1);
 }
 
 p {
