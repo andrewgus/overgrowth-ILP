@@ -63,7 +63,7 @@
 		transition: 0.3s all ease-in-out;
 		display: block;
 		background-color: hsla(0, 0%, 100%, 0.95);
-		padding: var(--s-5) 0;
+		padding: var(--s-5) 0 0;
 		width: 100%;
 		position: sticky;
 		top: 0;
