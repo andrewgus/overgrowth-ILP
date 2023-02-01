@@ -100,7 +100,7 @@
 		grid-area: 2/1/3/4;
 		justify-self: center;
 		list-style: none;
-		padding: 0;
+		padding: var(--s-10);
 		margin: 0;
 		max-width: 60ch;
 		width: 100%;
