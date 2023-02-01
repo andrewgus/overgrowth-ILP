@@ -20,7 +20,7 @@ if (location.includes('#section')) {
 // Observer for header, sections, & headings to update URL hash value w/ scroll
 const header: HTMLElement = document.querySelector('header')!
 const sectionHeadings: NodeListOf<HTMLElement> = document.querySelectorAll(
-	'article > section > h2'
+	'article > section h2'
 )!
 
 const observerCallbackHeader = function (
@@ -43,10 +43,14 @@ const observerCallbackHeadings = function (
 
 	if (!entry.isIntersecting) return
 
-	history.replaceState(null, '', `${baseURL}#${entry.target.parentElement!.id}`)
+	history.replaceState(
+		null,
+		'',
+		`${baseURL}#${entry.target.closest('section')!.id}`
+	)
 	// Updating store to toggle LessonNav & set current section id
 	if (!useStore(contentQuery.isOnContent).value) contentQuery.toggleNavShown()
-	contentQuery.setCurrSection(entry.target.parentElement!.id)
+	contentQuery.setCurrSection(entry.target.closest('section')!.id)
 }
 
 const observerCallbackSections = function (
