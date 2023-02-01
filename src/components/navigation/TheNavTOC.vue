@@ -41,7 +41,7 @@
 		useSetCurrSection,
 		useNavItems,
 	} from '../../composables/UseNavigation.js'
-	import { ref } from 'vue'
+	import { ref, useCssModule } from 'vue'
 	import BaseButton from '../base/BaseButton.vue'
 
 	const props = defineProps({
@@ -63,27 +63,20 @@
 	}
 
 	// transition enter only
+	const styles = useCssModule()
+
 	const onBeforeEnter = (el: HTMLElement) => {
-		el.style.transform = 'translateY(-10px)'
-		el.style.opacity = '0'
+		el.classList.remove(styles.listShown)
 	}
 	const onEnter = (el: HTMLElement, done: Function) => {
-		let opacityVal = 0
-		let transformVal = -10
 		const interval = setInterval(function () {
-			opacityVal += 0.1
-			transformVal += 1
-			el.style.transform = `translateY(${transformVal}px)`
-			el.style.opacity = `${opacityVal}`
-			if (transformVal === 0) {
-				clearInterval(interval)
-			}
+			el.classList.toggle(styles.listShown)
+			clearInterval(interval)
 		}, 20)
 		done()
 	}
 	const onBeforeLeave = (el: HTMLElement) => {
-		el.style.transform = 'translateY(-10px)'
-		el.style.opacity = '0'
+		el.classList.remove(styles.listShown)
 	}
 </script>
 
@@ -106,6 +99,17 @@
 		width: 100%;
 		max-height: 90vh;
 		overflow: scroll;
+		-webkit-transition: 0.4s all ease-in-out;
+		transition: 0.4s all ease-in-out;
+
+		& {
+			opacity: 0;
+			transform: translateY(-10px);
+		}
+		&.listShown {
+			opacity: 1;
+			transform: translateY(0px);
+		}
 
 		> li {
 			display: flex;
