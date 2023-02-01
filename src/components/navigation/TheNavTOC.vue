@@ -8,25 +8,32 @@
 		aria-controls="navItemsList"
 		@click="openMenu"
 	/>
-	<ol
-		:class="$style.listTOC"
-		v-show="isMenuOpen"
-		aria-label="table of contents links"
-		id="navItemsList"
+	<transition
+		:css="false"
+		@before-enter="onBeforeEnter"
+		@enter="onEnter"
+		@before-leave="onBeforeLeave"
 	>
-		<li
-			v-for="navItem in useNavItems"
-			:key="navItem!.id"
-			:class="{ [$style.greenDot]: isLocatedHere(navItem!.id) }"
+		<ol
+			:class="$style.listTOC"
+			v-show="isMenuOpen"
+			aria-label="table of contents links"
+			id="navItemsList"
 		>
-			<a
-				:href="`#${navItem!.id}`"
-				@click="navToSection(navItem!.id)"
-				:title="isLocatedHere(navItem!.id) ? 'You are here' : ''"
-				>{{ navItem!.title }}</a
+			<li
+				v-for="navItem in useNavItems"
+				:key="navItem!.id"
+				:class="{ [$style.greenDot]: isLocatedHere(navItem!.id) }"
 			>
-		</li>
-	</ol>
+				<a
+					:href="`#${navItem!.id}`"
+					@click="navToSection(navItem!.id)"
+					:title="isLocatedHere(navItem!.id) ? 'You are here' : ''"
+					>{{ navItem!.title }}</a
+				>
+			</li>
+		</ol>
+	</transition>
 </template>
 
 <script setup lang="ts">
@@ -50,10 +57,33 @@
 	const isLocatedHere = (id: string) => {
 		return id === `section${props.currSectionId}`
 	}
-
 	const navToSection = (section: string) => {
 		useSetCurrSection(section)
 		isMenuOpen.value = !isMenuOpen.value
+	}
+
+	// transition enter only
+	const onBeforeEnter = (el: HTMLElement) => {
+		el.style.transform = 'translateY(-10px)'
+		el.style.opacity = '0'
+	}
+	const onEnter = (el: HTMLElement, done: Function) => {
+		let opacityVal = 0
+		let transformVal = -10
+		const interval = setInterval(function () {
+			opacityVal += 0.1
+			transformVal += 1
+			el.style.transform = `translateY(${transformVal}px)`
+			el.style.opacity = `${opacityVal}`
+			if (transformVal === 0) {
+				clearInterval(interval)
+			}
+		}, 20)
+		done()
+	}
+	const onBeforeLeave = (el: HTMLElement) => {
+		el.style.transform = 'translateY(-10px)'
+		el.style.opacity = '0'
 	}
 </script>
 
@@ -71,8 +101,11 @@
 		justify-self: center;
 		list-style: none;
 		padding: 0;
+		margin: 0;
 		max-width: 60ch;
 		width: 100%;
+		max-height: 90vh;
+		overflow: scroll;
 
 		> li {
 			display: flex;
@@ -102,8 +135,10 @@
 				padding: var(--s-2) var(--s-4);
 				width: 100%;
 				text-decoration: none;
+
 				&:hover,
 				&:focus {
+					background-color: var(--peach);
 					font-weight: 700;
 					outline: none;
 					text-decoration: underline;
