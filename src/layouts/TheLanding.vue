@@ -1,29 +1,19 @@
 <template>
 	<header :class="$style.landing">
-		<TheScene
-			:scene="scene"
-			:isReflectionOn="isReflectionOn"
-			:isPracticeOn="isPracticeOn"
-			:isChoiceOn="isChoiceOn"
-		/>
-		<TheTitleCard
-			:title="title"
-			:isReflectionOn="isReflectionOn"
-			:isPracticeOn="isPracticeOn"
-			:isChoiceOn="isChoiceOn"
-		/>
+		<TheScene :scene="scene" />
+		<TheTitleCard :title="title" />
 		<BaseIndicator isOnLanding hidden text="Scroll to start" />
 	</header>
 </template>
 
 <script setup lang="ts">
-	import { computed, withDefaults } from 'vue'
-
+	import { computed, onBeforeMount } from 'vue'
 	import TheScene from '../components/landing/TheScene.vue'
 	import TheTitleCard from '../components/landing/TheTitleCard.vue'
 	import BaseIndicator from '../components/base/BaseIndicator.vue'
+	import { featureSettings } from '../store'
 
-	interface Props {
+	export interface Props {
 		title: string
 		scene: string
 		color?: string
@@ -31,9 +21,12 @@
 		isPracticeOn?: boolean
 		isChoiceOn?: boolean
 	}
+	const props = defineProps<Props>()
 
-	const props = withDefaults(defineProps<Props>(), {
-		color: 'white',
+	onBeforeMount(() => {
+		if (props.isReflectionOn) featureSettings.isReflectionOn.set(true)
+		if (props.isPracticeOn) featureSettings.isPracticeOn.set(true)
+		if (props.isChoiceOn) featureSettings.isChoiceOn.set(true)
 	})
 
 	const bgGradient = computed(() => {

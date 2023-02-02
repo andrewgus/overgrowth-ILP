@@ -1,6 +1,6 @@
 <template>
-	<!-- TODO: implicit label instead? Wrap the button inside the label element? -->
 	<label :for="`${type.toLowerCase()}Switch`">{{ type }}</label>
+	<p>{{ enabled }}</p>
 	<div :class="$style.switch">
 		<input
 			@click="toggleSwitch"
@@ -45,11 +45,9 @@
 		display: grid;
 		grid-template: 1fr/ 1fr;
 		align-items: center;
-
 		> * {
 			grid-area: 1/1/-1/-1;
 		}
-
 		> .input {
 			cursor: pointer;
 			padding: 0;

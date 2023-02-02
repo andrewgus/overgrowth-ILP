@@ -2,22 +2,23 @@
 import '../styles/root.scss'
 import TheLanding from '../layouts/TheLanding.vue'
 import TheLessonNav from '../components/navigation/TheLessonNav.vue'
+
 export interface Props {
 	title: string
 	scene: string
 	gradientColor?: string
-	isReflectionOn?: boolean
-	isPracticeOn?: boolean
-	isChoiceOn?: boolean
+	ReflectionOn?: boolean
+	PracticeOn?: boolean
+	ChoiceOn?: boolean
 }
 
 const {
 	title,
 	scene,
-	gradientColor,
-	isReflectionOn,
-	isPracticeOn,
-	isChoiceOn,
+	gradientColor = 'var(--white)',
+	ReflectionOn = false,
+	PracticeOn = false,
+	ChoiceOn = false,
 } = Astro.props
 ---
 
@@ -41,9 +42,9 @@ const {
 					title={title}
 					scene={scene}
 					color={gradientColor}
-					isReflectionOn={isReflectionOn}
-					isPracticeOn={isPracticeOn}
-					isChoiceOn={isChoiceOn}
+					isReflectionOn={ReflectionOn}
+					isPracticeOn={PracticeOn}
+					isChoiceOn={ChoiceOn}
 				/>
 				<TheLessonNav client:only='vue' />
 				<slot />

@@ -3,15 +3,20 @@
 		<h1>{{ title }}</h1>
 		<div v-if="featuresOn">
 			<p>Included in this lesson are&hellip;</p>
+			<!-- TESTING 👇 -->
+			<p>STORE CHOICE: {{ useStore(featureSettings.isChoiceOn).value }}</p>
+			<p>CHOICE: {{ getFeature('isChoiceOn') }}</p>
+			<!-- TESTING 👆 -->
+			<!-- TODO: FIX this so that, if a feature is off, that is sent to store to turn off feature there too. -->
 			<ul
 				aria-label="each item can be toggled on and off for this lesson"
 				:class="$style.options"
 			>
 				<li>
 					<BaseSwitch
-						v-if="isReflectionOn"
+						v-if="getFeature('isReflectionOn')"
 						@toggleSwitch="featureSettings.reflectionToggle"
-						:set="useStore(featureSettings.isReflectionOn).value"
+						:set="getFeature('isReflectionOn')"
 						type="Reflection"
 					/>
 				</li>
@@ -20,7 +25,7 @@
 					<BaseSwitch
 						v-if="isPracticeOn"
 						@toggleSwitch="featureSettings.practiceToggle"
-						:set="useStore(featureSettings.isPracticeOn).value"
+						:set="getFeature('isPracticeOn')"
 						type="Practice"
 					/>
 				</li>
@@ -29,7 +34,7 @@
 					<BaseSwitch
 						v-if="isChoiceOn"
 						@toggleSwitch="featureSettings.choiceToggle"
-						:set="useStore(featureSettings.isChoiceOn).value"
+						:set="getFeature('isChoiceOn')"
 						type="Choice"
 					/>
 				</li>
@@ -41,10 +46,9 @@
 </template>
 
 <script setup lang="ts">
-	import { computed, withDefaults } from 'vue'
+	import { computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import { featureSettings } from '../../store/index.js'
-
 	import BaseSwitch from '../base/BaseSwitch.vue'
 	import BaseSeparator from '../base/BaseSeparator.vue'
 
@@ -54,21 +58,28 @@
 		isPracticeOn?: boolean
 		isChoiceOn?: boolean
 	}
+	const props = defineProps<Props>()
 
-	const props = withDefaults(defineProps<Props>(), {
-		isReflectionOn: false,
-		isPracticeOn: false,
-		isChoiceOn: false,
-	})
+	const getFeature = (
+		featureType: 'isReflectionOn' | 'isPracticeOn' | 'isChoiceOn'
+	) => {
+		return useStore(featureSettings[featureType]).value
+	}
 
 	const featuresOn = computed(() => {
-		return props.isChoiceOn || props.isPracticeOn || props.isChoiceOn
+		// return props.isChoiceOn || props.isPracticeOn || props.isChoiceOn
+		return (
+			getFeature('isReflectionOn') ||
+			getFeature('isPracticeOn') ||
+			getFeature('isChoiceOn')
+		)
 	})
 	const multiFeatures = computed(() => {
 		const reflectionAndOther =
-			(props.isReflectionOn && props.isPracticeOn) ||
-			(props.isReflectionOn && props.isChoiceOn)
-		const practiceAndChoice = props.isPracticeOn && props.isChoiceOn
+			(getFeature('isReflectionOn') && getFeature('isPracticeOn')) ||
+			(getFeature('isReflectionOn') && getFeature('isChoiceOn'))
+		const practiceAndChoice =
+			getFeature('isPracticeOn') && getFeature('isChoiceOn')
 
 		return { reflectionAndOther, practiceAndChoice }
 	})

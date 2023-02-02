@@ -7,41 +7,34 @@
 	>
 		<div
 			key="reflection"
-			v-if="isReflectionOn"
-			:class="{ [$style.reflectionBg]: isBgLoaded }"
 			v-show="useStore(featureSettings.isReflectionOn).value"
+			:class="{ [$style.reflectionBg]: isBgLoaded }"
 		></div>
 		<div
 			key="practice"
-			v-if="isPracticeOn"
-			:class="{ [$style.practiceBg]: isBgLoaded }"
 			v-show="useStore(featureSettings.isPracticeOn).value"
+			:class="{ [$style.practiceBg]: isBgLoaded }"
 		></div>
 		<div
 			key="choice"
-			v-if="isChoiceOn"
-			:class="{ [$style.choiceBg]: isBgLoaded }"
 			v-show="useStore(featureSettings.isChoiceOn).value"
+			:class="{ [$style.choiceBg]: isBgLoaded }"
 		></div>
 	</TransitionGroup>
 </template>
 
 <script setup lang="ts">
-	import { ref, watchEffect, withDefaults } from 'vue'
+	import { ref, watchEffect } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import { featureSettings } from '../../store/index.js'
 
 	interface Props {
 		scene: string
-		isReflectionOn?: boolean
-		isPracticeOn?: boolean
-		isChoiceOn?: boolean
+		// isReflectionOn?: boolean
+		// isPracticeOn?: boolean
+		// isChoiceOn?: boolean
 	}
-	const props = withDefaults(defineProps<Props>(), {
-		isReflectionOn: false,
-		isPracticeOn: false,
-		isChoiceOn: false,
-	})
+	const props = defineProps<Props>()
 
 	const isBgLoaded = ref(false)
 

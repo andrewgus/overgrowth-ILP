@@ -1,5 +1,20 @@
 import { useStore } from '@nanostores/vue'
-import { contentQuery } from '../store/index.js'
+import { contentQuery, featureSettings } from '../store/index.js'
+
+type featureType = 'reflection' | 'practice' | 'choice'
+
+const featureExists = (featureType: featureType) => {
+	if (document.querySelector(`.${featureType}Feature`)) {
+		featureSettings.features.setKey(featureType, true)
+	}
+}
+featureExists('choice')
+featureExists('practice')
+featureExists('reflection')
+
+console.log(useStore(featureSettings.features).value.choice)
+console.log(useStore(featureSettings.features).value.practice)
+console.log(useStore(featureSettings.features).value.reflection)
 
 const location = window.location.toString()
 const baseURL = location.split('#')[0]

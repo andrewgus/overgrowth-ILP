@@ -1,22 +1,26 @@
 ---
 import TheLesson from '../../layouts/TheLesson.astro'
 import StaticContent from '../../layouts/StaticContent.astro'
-import ReflectionFeature from '../../components/features/reflection/reflectionFeature.vue'
+import ReflectionFeature from '../../layouts/ReflectionFeature.vue'
+import ChoiceFeature from '../../layouts/ChoiceFeature.vue'
+import PracticeFeature from '../../layouts/PracticeFeature.vue'
 ---
 
 <TheLesson
 	title='Introduction to Astronomy'
 	scene='setting'
 	gradientColor='var(--green)'
-	isChoiceOn={true}
-	isPracticeOn={true}
-	isReflectionOn={true}
+	ReflectionOn
+	PracticeOn
+	ChoiceOn
 >
 	<ReflectionFeature
 		client:visible
 		title='What Do You Think?'
 		prompt='When you think about Astronomy, what is/are the first thing(s) that comes to mind?'
 	/>
+	<ChoiceFeature title='Choice Feature' />
+	<PracticeFeature title='Practice Feature' />
 	<StaticContent heading='Welcome to the Course'>
 		<p>In this course, we will&hellip;</p>
 		<p>
