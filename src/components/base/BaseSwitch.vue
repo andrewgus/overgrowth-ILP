@@ -1,6 +1,5 @@
 <template>
 	<label :for="`${type.toLowerCase()}Switch`">{{ type }}</label>
-	<p>{{ enabled }}</p>
 	<div :class="$style.switch">
 		<input
 			@click="toggleSwitch"

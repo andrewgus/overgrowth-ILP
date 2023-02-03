@@ -3,7 +3,6 @@
 		<h1>{{ title }}</h1>
 		<div v-if="featuresOn">
 			<p>Included in this lesson are&hellip;</p>
-			<!-- TODO: FIX this so that, if a feature is off, that is sent to store to turn off feature there too. -->
 			<ul
 				aria-label="each item can be toggled on and off for this lesson"
 				:class="$style.options"
@@ -35,7 +34,6 @@
 					/>
 				</li>
 			</ul>
-			<!-- /.options -->
 		</div>
 	</div>
 	<!-- /.info -->

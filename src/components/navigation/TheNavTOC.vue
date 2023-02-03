@@ -40,7 +40,7 @@
 	import {
 		useSetCurrSection,
 		useNavItems,
-	} from '../../composables/UseNavigation.js'
+	} from '../../composables/UseNavigationHelpers.js'
 	import { ref, useCssModule } from 'vue'
 	import BaseButton from '../base/BaseButton.vue'
 

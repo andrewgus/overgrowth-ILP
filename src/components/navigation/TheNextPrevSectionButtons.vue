@@ -34,7 +34,7 @@
 	import {
 		useIsBookendSection,
 		useSetCurrSection,
-	} from '../../composables/UseNavigation'
+	} from '../../composables/UseNavigationHelpers'
 	import BaseButton from '../base/BaseButton.vue'
 
 	const props = defineProps({

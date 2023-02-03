@@ -1,9 +1,8 @@
-import { useStore } from '@nanostores/vue'
 import { contentQuery } from '../store/index.js'
 import { computed } from 'vue'
 
-const querycurrSectionIdNum = useStore(contentQuery.currSectionIdNum)
-const queryAllSections = useStore(contentQuery.allSections)
+const querycurrSectionIdNum = contentQuery.currSectionIdNum.get()
+const queryAllSections = contentQuery.allSections.get()
 
 /**
  * To set the current section in the store
@@ -20,7 +19,7 @@ const useNavItems = computed(() => {
 	let titles: string[] = []
 	let sectionIds: string[] = []
 
-	queryAllSections.value.forEach((s: HTMLElement) => {
+	queryAllSections.forEach((s: HTMLElement) => {
 		titles.push(s.querySelector('h2')!.textContent!)
 		sectionIds.push(s.id)
 	})
@@ -47,7 +46,7 @@ const useNavItems = computed(() => {
  */
 
 const useIsBookendSection = computed(() => {
-	const currSectionIdNum = `section${querycurrSectionIdNum.value}`
+	const currSectionIdNum = `section${querycurrSectionIdNum}`
 	const bookendSectionId = {
 		first: Object.keys(useNavItems.value).at(0),
 		last: Object.keys(useNavItems.value).at(-1),

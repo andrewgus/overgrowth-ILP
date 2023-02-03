@@ -26,7 +26,7 @@
 	import TheNavToc from './TheNavTOC.vue'
 	import TheNextPrevSectionButtons from './TheNextPrevSectionButtons.vue'
 	import SkipToContent from './SkipToContent.vue'
-	import { useIsBookendSection } from '../../composables/UseNavigation'
+	import { useIsBookendSection } from '../../composables/UseNavigationHelpers'
 
 	const queryOnContent = useStore(contentQuery.isOnContent)
 	const queryCurrSectionTitle = useStore(contentQuery.currSectionTitle)
