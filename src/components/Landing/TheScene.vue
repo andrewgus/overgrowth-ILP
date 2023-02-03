@@ -6,35 +6,47 @@
 		:class="$style.scene"
 	>
 		<div
+			v-if="useFeatureExists('reflection') ?? false"
 			key="reflection"
-			v-show="useStore(featureSettings.isReflectionOn).value"
+			v-show="useGetFeature('reflection')"
 			:class="{ [$style.reflectionBg]: isBgLoaded }"
 		></div>
 		<div
+			v-if="useFeatureExists('practice') ?? false"
 			key="practice"
-			v-show="useStore(featureSettings.isPracticeOn).value"
+			v-show="useGetFeature('practice')"
 			:class="{ [$style.practiceBg]: isBgLoaded }"
 		></div>
 		<div
+			v-if="useFeatureExists('choice') ?? false"
 			key="choice"
-			v-show="useStore(featureSettings.isChoiceOn).value"
+			v-show="useGetFeature('choice')"
 			:class="{ [$style.choiceBg]: isBgLoaded }"
 		></div>
 	</TransitionGroup>
 </template>
 
 <script setup lang="ts">
-	import { ref, watchEffect } from 'vue'
+	import { onBeforeMount, ref, watchEffect } from 'vue'
+	import {
+		useGetFeature,
+		useFeatureExists,
+	} from '../../composables/useFeatureHelpers'
+
 	import { useStore } from '@nanostores/vue'
 	import { featureSettings } from '../../store/index.js'
 
-	interface Props {
-		scene: string
-		// isReflectionOn?: boolean
-		// isPracticeOn?: boolean
-		// isChoiceOn?: boolean
-	}
-	const props = defineProps<Props>()
+	onBeforeMount(() => {
+		console.log(featureSettings.features.get().practice)
+		console.log(featureSettings.features.get().practice ?? false)
+	})
+
+	const props = defineProps({
+		scene: {
+			type: String,
+			required: true,
+		},
+	})
 
 	const isBgLoaded = ref(false)
 

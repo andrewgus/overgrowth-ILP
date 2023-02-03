@@ -1,6 +1,6 @@
 <template>
-	<section class="practiceFeature" :class="$style.practiceFeature">
-		<p>{{ title }}</p>
+	<section class="feature" :class="$style.practiceFeature">
+		<h2>{{ title }}</h2>
 	</section>
 </template>
 

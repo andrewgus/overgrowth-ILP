@@ -1,20 +1,4 @@
-import { useStore } from '@nanostores/vue'
-import { contentQuery, featureSettings } from '../store/index.js'
-
-type featureType = 'reflection' | 'practice' | 'choice'
-
-const featureExists = (featureType: featureType) => {
-	if (document.querySelector(`.${featureType}Feature`)) {
-		featureSettings.features.setKey(featureType, true)
-	}
-}
-featureExists('choice')
-featureExists('practice')
-featureExists('reflection')
-
-console.log(useStore(featureSettings.features).value.choice)
-console.log(useStore(featureSettings.features).value.practice)
-console.log(useStore(featureSettings.features).value.reflection)
+import { contentQuery } from '../store/index.js'
 
 const location = window.location.toString()
 const baseURL = location.split('#')[0]
@@ -49,7 +33,7 @@ const observerCallbackHeader = function (
 
 	history.replaceState(null, '', `${baseURL}`)
 	// Updating store to toggle LessonNav & set current section id
-	if (useStore(contentQuery.isOnContent).value) contentQuery.toggleNavShown()
+	if (contentQuery.isOnContent.get()) contentQuery.toggleNavShown()
 	contentQuery.setCurrSection('')
 }
 
@@ -66,7 +50,7 @@ const observerCallbackHeadings = function (
 		`${baseURL}#${entry.target.closest('section')!.id}`
 	)
 	// Updating store to toggle LessonNav & set current section id
-	if (!useStore(contentQuery.isOnContent).value) contentQuery.toggleNavShown()
+	if (!contentQuery.isOnContent.get()) contentQuery.toggleNavShown()
 	contentQuery.setCurrSection(entry.target.closest('section')!.id)
 }
 

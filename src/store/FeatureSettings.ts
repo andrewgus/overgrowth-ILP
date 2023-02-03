@@ -1,4 +1,4 @@
-import { atom, map } from 'nanostores'
+import { map } from 'nanostores'
 
 export interface FeatureMap {
 	reflection: boolean
@@ -8,26 +8,14 @@ export interface FeatureMap {
 
 const features = map<FeatureMap>()
 
-const isReflectionOn = atom<boolean>(false)
-const isPracticeOn = atom<boolean>(false)
-const isChoiceOn = atom<boolean>(false)
-
 const reflectionToggle = () => {
-	isReflectionOn.set(!isReflectionOn.get())
+	features.setKey('reflection', !features.get().reflection)
 }
 const practiceToggle = () => {
-	isPracticeOn.set(!isPracticeOn.get())
+	features.setKey('practice', !features.get().practice)
 }
 const choiceToggle = () => {
-	isChoiceOn.set(!isChoiceOn.get())
+	features.setKey('choice', !features.get().choice)
 }
 
-export {
-	features,
-	isReflectionOn,
-	isPracticeOn,
-	isChoiceOn,
-	reflectionToggle,
-	practiceToggle,
-	choiceToggle,
-}
+export { features, reflectionToggle, practiceToggle, choiceToggle }

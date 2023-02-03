@@ -1,5 +1,5 @@
 <template>
-	<section class="feature reflectionFeature" :class="$style.reflectionFeature">
+	<section class="feature" :class="$style.reflectionFeature">
 		<div>
 			<h2>{{ title }}</h2>
 			<p>{{ prompt }}</p>
