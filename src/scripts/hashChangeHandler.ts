@@ -1,4 +1,4 @@
-import { contentQuery } from '../store/index.js'
+import { contentQuery } from '../store'
 
 const location = window.location.toString()
 const baseURL = location.split('#')[0]

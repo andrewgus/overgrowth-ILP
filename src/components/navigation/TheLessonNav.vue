@@ -22,7 +22,7 @@
 <script setup lang="ts">
 	import { ref, watchEffect } from 'vue'
 	import { useStore } from '@nanostores/vue'
-	import { contentQuery } from '../../store/index.js'
+	import { contentQuery } from '../../store'
 	import TheNavToc from './TheNavTOC.vue'
 	import TheNextPrevSectionButtons from './TheNextPrevSectionButtons.vue'
 	import SkipToContent from './SkipToContent.vue'

@@ -27,7 +27,7 @@
 <script setup lang="ts">
 	import { computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
-	import { contentQuery } from '../../store/index.js'
+	import { contentQuery } from '../../store'
 	const props = defineProps({
 		text: {
 			type: String,

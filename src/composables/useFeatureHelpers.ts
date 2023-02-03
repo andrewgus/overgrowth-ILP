@@ -1,14 +1,12 @@
 import { useStore } from '@nanostores/vue'
-import { featureSettings } from '../store/index.js'
+import { featureSettings } from '../store'
 
 type FeatureType = 'reflection' | 'practice' | 'choice'
 
 const useFeatureTypes: Array<FeatureType> = ['reflection', 'practice', 'choice']
 
 function useDoesFeatureExist(feature: FeatureType) {
-	if (document.querySelector(`[class*="${feature}"]`)) {
-		featureSettings.features.setKey(feature, true)
-	}
+	featureSettings.features.setKey(feature, true)
 }
 
 function useFeatureExists(feature: FeatureType) {
@@ -20,3 +18,4 @@ function useGetFeature(featureType: FeatureType) {
 }
 
 export { useFeatureTypes, useDoesFeatureExist, useFeatureExists, useGetFeature }
+export type { FeatureType }

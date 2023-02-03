@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-	import { ref, watchEffect } from 'vue'
+	import { onBeforeMount, ref, watchEffect } from 'vue'
 	import {
 		useGetFeature,
 		useFeatureExists,
@@ -39,6 +39,7 @@
 			required: true,
 		},
 	})
+
 
 	const isBgLoaded = ref(false)
 

@@ -43,7 +43,7 @@
 	import { computed } from 'vue'
 	import BaseSwitch from '../base/BaseSwitch.vue'
 	import BaseSeparator from '../base/BaseSeparator.vue'
-	import { featureSettings } from '../../store/index.js'
+	import { featureSettings } from '../../store'
 	import {
 		useGetFeature,
 		useFeatureExists,
@@ -57,7 +57,6 @@
 	})
 
 	const featuresOn = computed(() => {
-		useFeatureExists('reflection')
 		return (
 			useFeatureExists('reflection') ||
 			useFeatureExists('practice') ||

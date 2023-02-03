@@ -7,9 +7,19 @@ export interface Props {
 	title: string
 	scene: string
 	gradientColor?: string
+	reflectionOn?: boolean | undefined
+	practiceOn?: boolean | undefined
+	choiceOn?: boolean | undefined
 }
 
-const { title, scene, gradientColor = 'var(--white)' } = Astro.props
+const {
+	title,
+	scene,
+	gradientColor = 'var(--white)',
+	reflectionOn = undefined,
+	practiceOn = undefined,
+	choiceOn = undefined,
+} = Astro.props
 ---
 
 <!DOCTYPE html>
@@ -32,6 +42,9 @@ const { title, scene, gradientColor = 'var(--white)' } = Astro.props
 					title={title}
 					scene={scene}
 					color={gradientColor}
+					isReflectionOn={reflectionOn}
+					isChoiceOn={choiceOn}
+					isPracticeOn={practiceOn}
 				/>
 				<TheLessonNav client:only='vue' />
 				<slot />

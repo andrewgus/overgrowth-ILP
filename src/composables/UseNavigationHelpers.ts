@@ -1,4 +1,4 @@
-import { contentQuery } from '../store/index.js'
+import { contentQuery } from '../store'
 import { computed } from 'vue'
 
 const querycurrSectionIdNum = contentQuery.currSectionIdNum.get()
