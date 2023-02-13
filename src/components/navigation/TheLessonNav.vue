@@ -1,60 +1,32 @@
 <template>
 	<nav
-		:class="[$style.lessonNav, { [$style.isInvisible]: !isOnContent }]"
+		:class="[
+			$style.lessonNav,
+			{ [$style.isInvisible]: !useStore(isOnContent).value },
+		]"
 		id="lessonNav"
 	>
-		<SkipToContent v-if="!isOnContent" />
+		<SkipToContent v-if="!useStore(isOnContent).value" />
 		<div :class="$style.navInfo">
-			<p v-show="!!queryCurrSectionTitle">
+			<p v-show="useStore(isOnContent).value">
 				Currently on:
-				{{ queryCurrSectionTitle }}
+				{{ useStore(currSectionTitle).value }}
 			</p>
-			<TheNextPrevSectionButtons
-				:currSectionId="querycurrSectionIdNum"
-				:prevSection="prevSection!"
-				:nextSection="nextSection!"
-			/>
-			<TheNavToc :currSectionId="querycurrSectionIdNum" />
+			<TheNextPrevSectionButtons />
+			<TheNavToc />
 		</div>
 	</nav>
 </template>
 
 <script setup lang="ts">
-	import { ref, watchEffect } from 'vue'
 	import { useStore } from '@nanostores/vue'
-	import { contentQuery } from '../../store'
+	import { NavigationStore } from '../../store'
 	import TheNavToc from './TheNavTOC.vue'
 	import TheNextPrevSectionButtons from './TheNextPrevSectionButtons.vue'
 	import SkipToContent from './SkipToContent.vue'
-	import { useIsBookendSection } from '../../composables/UseNavigationHelpers'
 
-	const queryOnContent = useStore(contentQuery.isOnContent)
-	const queryCurrSectionTitle = useStore(contentQuery.currSectionTitle)
-	const querycurrSectionIdNum = useStore(contentQuery.currSectionIdNum)
-
-	const isOnContent = ref<boolean>(true)
-	const prevSection = ref<string>('#')
-	const nextSection = ref<string>('#')
-
-	const setPrevSection = () => {
-		prevSection.value =
-			!useIsBookendSection.value.isFirst && !!querycurrSectionIdNum.value
-				? `section${querycurrSectionIdNum.value - 1}`
-				: ''
-	}
-
-	const setNextSection = () => {
-		nextSection.value = !useIsBookendSection.value.isLast
-			? `section${querycurrSectionIdNum.value + 1}`
-			: ''
-	}
-
-	watchEffect(() => {
-		isOnContent.value = queryOnContent.value
-
-		setPrevSection()
-		setNextSection()
-	})
+	const isOnContent = NavigationStore.isOnContent
+	const currSectionTitle = NavigationStore.currSectionTitle
 </script>
 
 <style module lang="scss">

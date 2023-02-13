@@ -6,32 +6,30 @@
 		:class="$style.scene"
 	>
 		<div
-			v-if="useFeatureExists('reflection')"
+			v-if="FeatureSettingsStore.useFeatureExists('reflection')"
 			key="reflection"
-			v-show="useGetFeature('reflection')"
+			v-show="useStore(FeatureSettingsStore.features).value.reflection"
 			:class="{ [$style.reflectionBg]: isBgLoaded }"
 		></div>
 		<div
-			v-if="useFeatureExists('practice')"
+			v-if="FeatureSettingsStore.useFeatureExists('practice')"
 			key="practice"
-			v-show="useGetFeature('practice')"
+			v-show="useStore(FeatureSettingsStore.features).value.practice"
 			:class="{ [$style.practiceBg]: isBgLoaded }"
 		></div>
 		<div
-			v-if="useFeatureExists('choice')"
+			v-if="FeatureSettingsStore.useFeatureExists('choice')"
 			key="choice"
-			v-show="useGetFeature('choice')"
+			v-show="useStore(FeatureSettingsStore.features).value.choice"
 			:class="{ [$style.choiceBg]: isBgLoaded }"
 		></div>
 	</TransitionGroup>
 </template>
 
 <script setup lang="ts">
-	import { onBeforeMount, ref, watchEffect } from 'vue'
-	import {
-		useGetFeature,
-		useFeatureExists,
-	} from '../../composables/useFeatureHelpers'
+	import { ref, watchEffect } from 'vue'
+	import { useStore } from '@nanostores/vue'
+	import { FeatureSettingsStore } from '../../store'
 
 	const props = defineProps({
 		scene: {
@@ -39,7 +37,6 @@
 			required: true,
 		},
 	})
-
 
 	const isBgLoaded = ref(false)
 

@@ -1,13 +1,13 @@
 <template>
-	<div :class="$style.nextPrev">
+	<div v-if="useStore(isOnContent).value" :class="$style.nextPrev">
 		<BaseButton
 			link
 			isForNav
-			:tabindex="isPrevDisabled ? '-1' : '0'"
-			:isDisabled="isPrevDisabled"
-			:aria-hidden="isPrevDisabled"
-			:href="`#${prevSection}`"
-			@click="useSetCurrSection(`section${currSectionId}`)"
+			:tabindex="isOnFirstSection ? '-1' : '0'"
+			:isDisabled="isOnFirstSection"
+			:aria-hidden="isOnFirstSection"
+			:href="prevSection"
+			@click="NavigationStore.setCurrSection(useStore(currSectionId).value)"
 			:class="$style.btn_prev"
 			title="Go to previous section"
 			aria-label="Go to previous section"
@@ -16,11 +16,11 @@
 		<BaseButton
 			link
 			isForNav
-			:tabindex="useIsBookendSection.isLast ? '-1' : '0'"
-			:isDisabled="useIsBookendSection.isLast"
-			:aria-hidden="useIsBookendSection.isLast"
-			:href="`#${nextSection}`"
-			@click="useSetCurrSection(`section${currSectionId}`)"
+			:tabindex="isOnLastSection ? '-1' : '0'"
+			:isDisabled="isOnLastSection"
+			:aria-hidden="isOnLastSection"
+			:href="nextSection"
+			@click="NavigationStore.setCurrSection(useStore(currSectionId).value)"
 			:class="$style.btn_next"
 			title="Go to next section"
 			aria-label="Go to next section"
@@ -31,29 +31,50 @@
 
 <script setup lang="ts">
 	import { computed } from 'vue'
-	import {
-		useIsBookendSection,
-		useSetCurrSection,
-	} from '../../composables/UseNavigationHelpers'
+	import { useStore } from '@nanostores/vue'
+	import { NavigationStore } from '../../store'
 	import BaseButton from '../base/BaseButton.vue'
 
-	const props = defineProps({
-		currSectionId: {
-			type: Number,
-			required: true,
-		},
-		prevSection: {
-			type: String,
-			required: true,
-		},
-		nextSection: {
-			type: String,
-			required: true,
-		},
+	const isOnContent = NavigationStore.isOnContent
+	const allSections = NavigationStore.allSectionsMap
+	const currSectionId = NavigationStore.currSectionId
+
+	const prevSection = computed(() => {
+		const prevSectionOrderNum =
+			useStore(allSections).value[useStore(currSectionId).value].orderNum - 1
+
+		const prevSectionId = Object.keys(useStore(allSections).value).at(
+			prevSectionOrderNum
+		)
+
+		return `#${prevSectionId}`
 	})
 
-	const isPrevDisabled = computed(() => {
-		return useIsBookendSection.value.isFirst || !!!props.currSectionId
+	const nextSection = computed(() => {
+		const nextSectionOrderNum =
+			useStore(allSections).value[useStore(currSectionId).value].orderNum + 1
+
+		const nextSectionId = Object.keys(useStore(allSections).value).at(
+			nextSectionOrderNum
+		)
+
+		if (nextSectionId === undefined) return '#'
+
+		return `#${nextSectionId}`
+	})
+
+	const isOnFirstSection = computed(() => {
+		return (
+			useStore(allSections).value[useStore(currSectionId).value].orderNum === 0
+		)
+	})
+
+	const isOnLastSection = computed(() => {
+		const lastSection: string = Object.keys(allSections.get()).at(-1)!
+		return (
+			useStore(allSections).value[useStore(currSectionId).value].orderNum ===
+			useStore(allSections).value[lastSection].orderNum
+		)
 	})
 </script>
 

@@ -1,25 +1,15 @@
 ---
 import '../styles/root.scss'
-import TheLanding from '../layouts/TheLanding.vue'
+import TheLanding from '../components/landing/TheLanding.vue'
 import TheLessonNav from '../components/navigation/TheLessonNav.vue'
 
 export interface Props {
 	title: string
 	scene: string
 	gradientColor?: string
-	reflectionOn?: boolean | undefined
-	practiceOn?: boolean | undefined
-	choiceOn?: boolean | undefined
 }
 
-const {
-	title,
-	scene,
-	gradientColor = 'var(--white)',
-	reflectionOn = undefined,
-	practiceOn = undefined,
-	choiceOn = undefined,
-} = Astro.props
+const { title, scene, gradientColor = 'var(--white)' } = Astro.props
 ---
 
 <!DOCTYPE html>
@@ -42,9 +32,6 @@ const {
 					title={title}
 					scene={scene}
 					color={gradientColor}
-					isReflectionOn={reflectionOn}
-					isChoiceOn={choiceOn}
-					isPracticeOn={practiceOn}
 				/>
 				<TheLessonNav client:only='vue' />
 				<slot />
@@ -54,14 +41,15 @@ const {
 </html>
 
 <style is:global>
-	.theLesson section[id^='section'] {
+	.theLesson > section,
+	.theLesson > astro-island > section {
 		min-height: 90vh;
 		padding: 0 var(--s-2);
 	}
-	.theLesson section[id^='section']:not([id='section1']) {
+	.theLesson section:not([id='section1']) {
 		border-top: 2px solid var(--darkGray);
 	}
-	.theLesson section:not(.feature)[id^='section']:nth-child(2n + 1) {
+	.theLesson section:not(.feature):nth-child(2n + 1) {
 		background-color: var(--offWhite);
 	}
 </style>

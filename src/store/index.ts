@@ -1,4 +1,4 @@
-import * as featureSettings from './FeatureSettings'
-import * as contentQuery from './ContentQuery'
+import * as FeatureSettingsStore from './FeatureSettingsStore'
+import * as NavigationStore from './NavigationStore'
 
-export { featureSettings, contentQuery }
+export { FeatureSettingsStore, NavigationStore }

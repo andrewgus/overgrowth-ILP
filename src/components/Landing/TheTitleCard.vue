@@ -9,27 +9,27 @@
 			>
 				<li>
 					<BaseSwitch
-						v-if="useFeatureExists('reflection')"
-						@toggleSwitch="featureSettings.reflectionToggle"
-						:set="useGetFeature('reflection')"
+						v-if="FeatureSettingsStore.useFeatureExists('reflection')"
+						@toggleSwitch="FeatureSettingsStore.reflectionToggle"
+						:set="FeatureSettingsStore.features.get().reflection"
 						type="Reflection"
 					/>
 				</li>
 				<BaseSeparator hidden v-if="multiFeatures.reflectionAndOther" />
 				<li>
 					<BaseSwitch
-						v-if="useFeatureExists('practice')"
-						@toggleSwitch="featureSettings.practiceToggle"
-						:set="useGetFeature('practice')"
+						v-if="FeatureSettingsStore.useFeatureExists('practice')"
+						@toggleSwitch="FeatureSettingsStore.practiceToggle"
+						:set="FeatureSettingsStore.features.get().practice"
 						type="Practice"
 					/>
 				</li>
 				<BaseSeparator hidden v-if="multiFeatures.practiceAndChoice" />
 				<li>
 					<BaseSwitch
-						v-if="useFeatureExists('choice')"
-						@toggleSwitch="featureSettings.choiceToggle"
-						:set="useGetFeature('choice')"
+						v-if="FeatureSettingsStore.useFeatureExists('choice')"
+						@toggleSwitch="FeatureSettingsStore.choiceToggle"
+						:set="FeatureSettingsStore.features.get().choice"
 						type="Choice"
 					/>
 				</li>
@@ -40,14 +40,10 @@
 </template>
 
 <script setup lang="ts">
-	import { computed } from 'vue'
+	import { computed, onMounted } from 'vue'
 	import BaseSwitch from '../base/BaseSwitch.vue'
 	import BaseSeparator from '../base/BaseSeparator.vue'
-	import { featureSettings } from '../../store'
-	import {
-		useGetFeature,
-		useFeatureExists,
-	} from '../../composables/useFeatureHelpers'
+	import { FeatureSettingsStore } from '../../store'
 
 	defineProps({
 		title: {
@@ -58,17 +54,20 @@
 
 	const featuresOn = computed(() => {
 		return (
-			useFeatureExists('reflection') ||
-			useFeatureExists('practice') ||
-			useFeatureExists('choice')
+			FeatureSettingsStore.useFeatureExists('reflection') ||
+			FeatureSettingsStore.useFeatureExists('practice') ||
+			FeatureSettingsStore.useFeatureExists('choice')
 		)
 	})
 	const multiFeatures = computed(() => {
 		const reflectionAndOther =
-			(useFeatureExists('reflection') && useFeatureExists('practice')) ||
-			(useFeatureExists('reflection') && useFeatureExists('choice'))
+			(FeatureSettingsStore.useFeatureExists('reflection') &&
+				FeatureSettingsStore.useFeatureExists('practice')) ||
+			(FeatureSettingsStore.useFeatureExists('reflection') &&
+				FeatureSettingsStore.useFeatureExists('choice'))
 		const practiceAndChoice =
-			useFeatureExists('practice') && useFeatureExists('choice')
+			FeatureSettingsStore.useFeatureExists('practice') &&
+			FeatureSettingsStore.useFeatureExists('choice')
 
 		return { reflectionAndOther, practiceAndChoice }
 	})

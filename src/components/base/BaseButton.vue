@@ -5,7 +5,7 @@
 
 <script setup lang="ts">
 	import { computed } from 'vue'
-	import useComputedCssModule from '../../composables/UseComputedCssModule'
+	import useComputedCssModule from '../../composables/useComputedCssModule'
 
 	const props = defineProps({
 		text: {

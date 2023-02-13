@@ -1,4 +1,6 @@
-import { contentQuery } from '../store'
+import { NavigationStore } from '../store'
+import useCreateID from '../composables/useCreateId'
+import type { SectionDetails } from '../store/NavigationStore'
 
 const location = window.location.toString()
 const baseURL = location.split('#')[0]
@@ -14,13 +16,29 @@ for (const heading of sectionHeadings) {
 	sections.push(heading.closest('section')!)
 }
 
-sections.forEach((s: HTMLElement, i: number) => (s.id = `section${i + 1}`))
+sections.forEach((s: HTMLElement, i: number) => {
+	const section: SectionDetails = {
+		title: s.querySelector('h2')!.textContent!,
+		id: useCreateID(s.querySelector('h2')!.textContent!),
+		orderNum: i,
+		isLocked: true,
+	}
 
-contentQuery.setAllSections(sections)
+	NavigationStore.allSectionsMap.setKey(
+		useCreateID(s.querySelector('h2')!.textContent!),
+		section
+	)
 
-if (location.includes('#section')) {
-	contentQuery.isOnContent.set(true)
-	contentQuery.setCurrSection(location.split('#').at(-1)!)
+	s.id =
+		NavigationStore.allSectionsMap.get()[
+			useCreateID(s.querySelector('h2')!.textContent!)
+		].id
+})
+
+if (location.includes('#')) {
+	NavigationStore.isOnContent.set(true)
+
+	NavigationStore.setCurrSection(location.split('#').at(-1)!)
 }
 
 // Observer for header, sections, & headings to update URL hash value w/ scroll
@@ -33,8 +51,8 @@ const observerCallbackHeader = function (
 
 	history.replaceState(null, '', `${baseURL}`)
 	// Updating store to toggle LessonNav & set current section id
-	if (contentQuery.isOnContent.get()) contentQuery.toggleNavShown()
-	contentQuery.setCurrSection('')
+	if (NavigationStore.isOnContent.get()) NavigationStore.toggleNavShown()
+	NavigationStore.setCurrSection('')
 }
 
 const observerCallbackHeadings = function (
@@ -50,8 +68,9 @@ const observerCallbackHeadings = function (
 		`${baseURL}#${entry.target.closest('section')!.id}`
 	)
 	// Updating store to toggle LessonNav & set current section id
-	if (!contentQuery.isOnContent.get()) contentQuery.toggleNavShown()
-	contentQuery.setCurrSection(entry.target.closest('section')!.id)
+	if (!NavigationStore.isOnContent.get()) NavigationStore.toggleNavShown()
+
+	NavigationStore.setCurrSection(entry.target.closest('section')!.id)
 }
 
 const observerCallbackSections = function (
@@ -65,7 +84,7 @@ const observerCallbackSections = function (
 	if (entry.intersectionRect.top === 0) {
 		history.replaceState(null, '', `${baseURL}#${entry.target.id}`)
 		//setting current section id
-		contentQuery.setCurrSection(entry.target.id)
+		NavigationStore.setCurrSection(entry.target.id)
 	}
 }
 

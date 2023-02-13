@@ -27,7 +27,7 @@
 <script setup lang="ts">
 	import { computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
-	import { contentQuery } from '../../store'
+	import { NavigationStore } from '../../store'
 	const props = defineProps({
 		text: {
 			type: String,
@@ -42,7 +42,7 @@
 	})
 
 	const nextSection = computed(() => {
-		const currSectionNum = useStore(contentQuery.currSectionIdNum).value
+		const currSectionNum = useStore(NavigationStore.currSectionId).value
 		return currSectionNum ? `#section${currSectionNum + 1}` : '#section1'
 	})
 </script>

@@ -10,17 +10,14 @@ import PracticeFeature from '../../layouts/PracticeFeature.vue'
 	title='Introduction to Astronomy'
 	scene='setting'
 	gradientColor='var(--green)'
-	choiceOn
-	reflectionOn
-	practiceOn
 >
 	<ReflectionFeature
-		client:visible
+		client:load
 		title='What Do You Think?'
 		prompt='When you think about Astronomy, what is/are the first thing(s) that comes to mind?'
 	/>
-	<PracticeFeature title='Practice Feature' />
-	<ChoiceFeature title='Choice Feature' />
+	<PracticeFeature client:load title='Practice Feature' />
+	<ChoiceFeature client:load title='Choice Feature' />
 	<StaticContent heading='Welcome to the Course'>
 		<p>In this course, we will&hellip;</p>
 		<p>
