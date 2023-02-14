@@ -1,6 +1,6 @@
 <template>
 	<section
-		v-show="useStore(FeatureSettingsStore.features).value.reflection"
+		v-show="features.reflection"
 		class="feature"
 		:class="$style.reflectionFeature"
 	>
@@ -27,7 +27,7 @@
 	import { FeatureSettingsStore } from '../store'
 	import { ref } from 'vue'
 
-	const props = defineProps({
+	defineProps({
 		title: {
 			type: String,
 			required: true,
@@ -37,6 +37,8 @@
 			required: true,
 		},
 	})
+
+	const features = useStore(FeatureSettingsStore.features)
 
 	FeatureSettingsStore.useDoesFeatureExist('reflection')
 

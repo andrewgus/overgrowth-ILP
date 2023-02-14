@@ -2,7 +2,7 @@
 	<div
 		:class="[$style.indicator, { [$style.OnlandingIndicator]: isOnLanding }]"
 	>
-		<a :class="$style.indicatorLink" :href="nextSection" :aria-hidden="hidden">
+		<a :class="$style.indicatorLink" :href="firstSection" :aria-hidden="hidden">
 			<p>{{ text }}</p>
 			<span :class="$style.scrollArrow">
 				<svg
@@ -28,7 +28,8 @@
 	import { computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import { NavigationStore } from '../../store'
-	const props = defineProps({
+
+	defineProps({
 		text: {
 			type: String,
 			required: true,
@@ -41,9 +42,11 @@
 		},
 	})
 
-	const nextSection = computed(() => {
-		const currSectionNum = useStore(NavigationStore.currSectionId).value
-		return currSectionNum ? `#section${currSectionNum + 1}` : '#section1'
+	const allSections = useStore(NavigationStore.allSectionsMap)
+
+	const firstSection = computed(() => {
+		const first = Object.keys(allSections.value).at(0)
+		return `#${first}`
 	})
 </script>
 

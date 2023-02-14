@@ -1,5 +1,5 @@
 <template>
-	<div v-if="useStore(isOnContent).value" :class="$style.nextPrev">
+	<div v-if="isOnContent" :class="$style.nextPrev">
 		<BaseButton
 			link
 			isForNav
@@ -7,7 +7,7 @@
 			:isDisabled="isOnFirstSection"
 			:aria-hidden="isOnFirstSection"
 			:href="prevSection"
-			@click="NavigationStore.setCurrSection(useStore(currSectionId).value)"
+			@click="NavigationStore.setCurrSection(currSectionId)"
 			:class="$style.btn_prev"
 			title="Go to previous section"
 			aria-label="Go to previous section"
@@ -20,7 +20,7 @@
 			:isDisabled="isOnLastSection"
 			:aria-hidden="isOnLastSection"
 			:href="nextSection"
-			@click="NavigationStore.setCurrSection(useStore(currSectionId).value)"
+			@click="NavigationStore.setCurrSection(currSectionId)"
 			:class="$style.btn_next"
 			title="Go to next section"
 			aria-label="Go to next section"
@@ -35,28 +35,24 @@
 	import { NavigationStore } from '../../store'
 	import BaseButton from '../base/BaseButton.vue'
 
-	const isOnContent = NavigationStore.isOnContent
-	const allSections = NavigationStore.allSectionsMap
-	const currSectionId = NavigationStore.currSectionId
+	const allSections = useStore(NavigationStore.allSectionsMap)
+	const isOnContent = useStore(NavigationStore.isOnContent)
+	const currSectionId = useStore(NavigationStore.currSectionId)
 
 	const prevSection = computed(() => {
 		const prevSectionOrderNum =
-			useStore(allSections).value[useStore(currSectionId).value].orderNum - 1
+			allSections.value[currSectionId.value].orderNum - 1
 
-		const prevSectionId = Object.keys(useStore(allSections).value).at(
-			prevSectionOrderNum
-		)
+		const prevSectionId = Object.keys(allSections.value).at(prevSectionOrderNum)
 
 		return `#${prevSectionId}`
 	})
 
 	const nextSection = computed(() => {
 		const nextSectionOrderNum =
-			useStore(allSections).value[useStore(currSectionId).value].orderNum + 1
+			allSections.value[currSectionId.value].orderNum + 1
 
-		const nextSectionId = Object.keys(useStore(allSections).value).at(
-			nextSectionOrderNum
-		)
+		const nextSectionId = Object.keys(allSections.value).at(nextSectionOrderNum)
 
 		if (nextSectionId === undefined) return '#'
 
@@ -64,16 +60,14 @@
 	})
 
 	const isOnFirstSection = computed(() => {
-		return (
-			useStore(allSections).value[useStore(currSectionId).value].orderNum === 0
-		)
+		return allSections.value[currSectionId.value].orderNum === 0
 	})
 
 	const isOnLastSection = computed(() => {
-		const lastSection: string = Object.keys(allSections.get()).at(-1)!
+		const lastSection: string = Object.keys(allSections.value).at(-1)!
 		return (
-			useStore(allSections).value[useStore(currSectionId).value].orderNum ===
-			useStore(allSections).value[lastSection].orderNum
+			allSections.value[currSectionId.value].orderNum ===
+			allSections.value[lastSection].orderNum
 		)
 	})
 </script>

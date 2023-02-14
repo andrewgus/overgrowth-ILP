@@ -24,22 +24,5 @@ function useFeatureExists(feature: FeatureType) {
 	return undefined
 }
 
-const reflectionToggle = () => {
-	features.setKey('reflection', !features.get().reflection)
-}
-const practiceToggle = () => {
-	features.setKey('practice', !features.get().practice)
-}
-const choiceToggle = () => {
-	features.setKey('choice', !features.get().choice)
-}
-
-export {
-	features,
-	reflectionToggle,
-	practiceToggle,
-	choiceToggle,
-	useDoesFeatureExist,
-	useFeatureExists,
-}
+export { features, useDoesFeatureExist, useFeatureExists }
 export type { FeatureType }

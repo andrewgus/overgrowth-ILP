@@ -10,24 +10,24 @@
 				<li v-if="FeatureSettingsStore.useFeatureExists('reflection')">
 					<BaseSwitch
 						type="Reflection"
-						:set="(FeatureSettingsStore.features.get().reflection as boolean)"
-						@toggleSwitch="FeatureSettingsStore.reflectionToggle"
+						:set="getFeature('reflection')"
+						@toggleSwitch="toggleFeature('reflection')"
 					/>
 				</li>
 				<BaseSeparator hidden v-if="multiFeatures.reflectionAndOther" />
 				<li v-if="FeatureSettingsStore.useFeatureExists('practice')">
 					<BaseSwitch
 						type="Practice"
-						:set="(FeatureSettingsStore.features.get().practice as boolean)"
-						@toggleSwitch="FeatureSettingsStore.practiceToggle"
+						:set="getFeature('practice')"
+						@toggleSwitch="toggleFeature('practice')"
 					/>
 				</li>
 				<BaseSeparator hidden v-if="multiFeatures.practiceAndChoice" />
 				<li v-if="FeatureSettingsStore.useFeatureExists('choice')">
 					<BaseSwitch
 						type="Choice"
-						:set="(FeatureSettingsStore.features.get().choice as boolean)"
-						@toggleSwitch="FeatureSettingsStore.choiceToggle"
+						:set="getFeature('choice')"
+						@toggleSwitch="toggleFeature('choice')"
 					/>
 				</li>
 			</ul>
@@ -37,8 +37,10 @@
 </template>
 
 <script setup lang="ts">
+	import { useStore } from '@nanostores/vue'
 	import { computed } from 'vue'
 	import { FeatureSettingsStore } from '../../store'
+	import type { FeatureType } from '../../store/FeatureSettingsStore'
 	import BaseSeparator from '../base/BaseSeparator.vue'
 	import BaseSwitch from '../base/BaseSwitch.vue'
 
@@ -49,6 +51,8 @@
 		},
 	})
 
+	const features = useStore(FeatureSettingsStore.features)
+
 	const featuresOn = computed(() => {
 		return (
 			FeatureSettingsStore.useFeatureExists('reflection') ||
@@ -56,18 +60,29 @@
 			FeatureSettingsStore.useFeatureExists('choice')
 		)
 	})
+
+	const twoFeatures = (feature1: FeatureType, feature2: FeatureType) => {
+		return (
+			FeatureSettingsStore.useFeatureExists(feature1) &&
+			FeatureSettingsStore.useFeatureExists(feature2)
+		)
+	}
 	const multiFeatures = computed(() => {
 		const reflectionAndOther =
-			(FeatureSettingsStore.useFeatureExists('reflection') &&
-				FeatureSettingsStore.useFeatureExists('practice')) ||
-			(FeatureSettingsStore.useFeatureExists('reflection') &&
-				FeatureSettingsStore.useFeatureExists('choice'))
-		const practiceAndChoice =
-			FeatureSettingsStore.useFeatureExists('practice') &&
-			FeatureSettingsStore.useFeatureExists('choice')
+			twoFeatures('reflection', 'practice') ||
+			twoFeatures('reflection', 'choice')
+
+		const practiceAndChoice = twoFeatures('practice', 'choice')
 
 		return { reflectionAndOther, practiceAndChoice }
 	})
+
+	const getFeature = (feature: FeatureType) => {
+		return features.value[feature] as boolean
+	}
+	const toggleFeature = (feature: FeatureType) => {
+		FeatureSettingsStore.features.setKey(feature, !features.value[feature])
+	}
 </script>
 
 <style module lang="scss">

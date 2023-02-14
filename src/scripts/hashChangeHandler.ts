@@ -22,6 +22,7 @@ sections.forEach((s: HTMLElement, i: number) => {
 		title: s.querySelector('h2')!.textContent!,
 		id: useCreateID(s.querySelector('h2')!.textContent!),
 		orderNum: i,
+		isFeature: s.classList.contains('feature'),
 		isLocked: true,
 	}
 

@@ -33,7 +33,7 @@ const { title, scene, gradientColor = 'var(--white)' } = Astro.props
 					scene={scene}
 					color={gradientColor}
 				/>
-				<TheLessonNav client:only='vue' />
+				<TheLessonNav client:load />
 				<slot />
 			</article>
 		</main>

@@ -5,6 +5,7 @@ export interface SectionDetails {
 	title: string
 	id: string
 	orderNum: number
+	isFeature: boolean
 	isLocked: boolean
 }
 

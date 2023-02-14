@@ -1,16 +1,14 @@
 <template>
 	<nav
-		:class="[
-			$style.lessonNav,
-			{ [$style.isInvisible]: !useStore(isOnContent).value },
-		]"
+		v-if="areSectionsAvailable"
 		id="lessonNav"
+		:class="[$style.lessonNav, { [$style.isInvisible]: !isOnContent }]"
 	>
-		<SkipToContent v-if="!useStore(isOnContent).value" />
+		<SkipToContent v-if="!isOnContent" />
 		<div :class="$style.navInfo">
-			<p v-show="useStore(isOnContent).value">
+			<p v-show="isOnContent">
 				Currently on:
-				{{ useStore(currSectionTitle).value }}
+				{{ currSectionTitle }}
 			</p>
 			<TheNextPrevSectionButtons />
 			<TheNavToc />
@@ -19,14 +17,22 @@
 </template>
 
 <script setup lang="ts">
+	import { ref, onMounted } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import { NavigationStore } from '../../store'
 	import TheNavToc from './TheNavTOC.vue'
 	import TheNextPrevSectionButtons from './TheNextPrevSectionButtons.vue'
 	import SkipToContent from './SkipToContent.vue'
 
-	const isOnContent = NavigationStore.isOnContent
-	const currSectionTitle = NavigationStore.currSectionTitle
+	const allSections = useStore(NavigationStore.allSectionsMap)
+	const isOnContent = useStore(NavigationStore.isOnContent)
+	const currSectionTitle = useStore(NavigationStore.currSectionTitle)
+
+	let areSectionsAvailable = ref<boolean>(false)
+
+	onMounted(() => {
+		areSectionsAvailable.value = Object.keys(allSections.value).length > 0
+	})
 </script>
 
 <style module lang="scss">

@@ -1,6 +1,6 @@
 <template>
 	<section
-		v-show="useStore(FeatureSettingsStore.features).value.practice"
+		v-show="features.practice"
 		class="feature"
 		:class="$style.practiceFeature"
 	>
@@ -12,12 +12,14 @@
 	import { useStore } from '@nanostores/vue'
 	import { FeatureSettingsStore } from '../store'
 
-	const props = defineProps({
+	defineProps({
 		title: {
 			type: String,
 			required: true,
 		},
 	})
+
+	const features = useStore(FeatureSettingsStore.features)
 
 	FeatureSettingsStore.useDoesFeatureExist('practice')
 </script>

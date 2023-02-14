@@ -1,6 +1,6 @@
 <template>
 	<section
-		v-show="useStore(FeatureSettingsStore.features).value.choice"
+		v-show="features.choice"
 		class="feature"
 		:class="$style.choiceFeature"
 	>
@@ -13,12 +13,14 @@
 	import { useStore } from '@nanostores/vue'
 	import { FeatureSettingsStore } from '../store'
 
-	const props = defineProps({
+	defineProps({
 		title: {
 			type: String,
 			required: true,
 		},
 	})
+
+	const features = useStore(FeatureSettingsStore.features)
 
 	FeatureSettingsStore.useDoesFeatureExist('choice')
 </script>
