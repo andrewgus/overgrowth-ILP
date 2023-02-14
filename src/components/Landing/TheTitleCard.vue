@@ -7,30 +7,27 @@
 				aria-label="each item can be toggled on and off for this lesson"
 				:class="$style.options"
 			>
-				<li>
+				<li v-if="FeatureSettingsStore.useFeatureExists('reflection')">
 					<BaseSwitch
-						v-if="FeatureSettingsStore.useFeatureExists('reflection')"
-						@toggleSwitch="FeatureSettingsStore.reflectionToggle"
-						:set="FeatureSettingsStore.features.get().reflection"
 						type="Reflection"
+						:set="(FeatureSettingsStore.features.get().reflection as boolean)"
+						@toggleSwitch="FeatureSettingsStore.reflectionToggle"
 					/>
 				</li>
 				<BaseSeparator hidden v-if="multiFeatures.reflectionAndOther" />
-				<li>
+				<li v-if="FeatureSettingsStore.useFeatureExists('practice')">
 					<BaseSwitch
-						v-if="FeatureSettingsStore.useFeatureExists('practice')"
-						@toggleSwitch="FeatureSettingsStore.practiceToggle"
-						:set="FeatureSettingsStore.features.get().practice"
 						type="Practice"
+						:set="(FeatureSettingsStore.features.get().practice as boolean)"
+						@toggleSwitch="FeatureSettingsStore.practiceToggle"
 					/>
 				</li>
 				<BaseSeparator hidden v-if="multiFeatures.practiceAndChoice" />
-				<li>
+				<li v-if="FeatureSettingsStore.useFeatureExists('choice')">
 					<BaseSwitch
-						v-if="FeatureSettingsStore.useFeatureExists('choice')"
-						@toggleSwitch="FeatureSettingsStore.choiceToggle"
-						:set="FeatureSettingsStore.features.get().choice"
 						type="Choice"
+						:set="(FeatureSettingsStore.features.get().choice as boolean)"
+						@toggleSwitch="FeatureSettingsStore.choiceToggle"
 					/>
 				</li>
 			</ul>
@@ -40,10 +37,10 @@
 </template>
 
 <script setup lang="ts">
-	import { computed, onMounted } from 'vue'
-	import BaseSwitch from '../base/BaseSwitch.vue'
-	import BaseSeparator from '../base/BaseSeparator.vue'
+	import { computed } from 'vue'
 	import { FeatureSettingsStore } from '../../store'
+	import BaseSeparator from '../base/BaseSeparator.vue'
+	import BaseSwitch from '../base/BaseSwitch.vue'
 
 	defineProps({
 		title: {

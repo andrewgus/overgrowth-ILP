@@ -24,8 +24,8 @@
 <script setup lang="ts">
 	// TODO: When this is here, the activity is not complete, the completeBtn has not yet been selected, then all other content that comes after that is hidden. Need to figure out how to accomplish that. Think it will end up being a state management thing...
 	import { useStore } from '@nanostores/vue'
-	import { NavigationStore, FeatureSettingsStore } from '../store'
-	import { ref, onBeforeMount, computed, ComputedRef, onMounted } from 'vue'
+	import { FeatureSettingsStore } from '../store'
+	import { ref } from 'vue'
 
 	const props = defineProps({
 		title: {

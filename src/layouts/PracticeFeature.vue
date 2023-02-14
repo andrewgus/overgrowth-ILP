@@ -10,8 +10,7 @@
 
 <script setup lang="ts">
 	import { useStore } from '@nanostores/vue'
-	import { NavigationStore, FeatureSettingsStore } from '../store'
-	import { onBeforeMount, computed, ComputedRef } from 'vue'
+	import { FeatureSettingsStore } from '../store'
 
 	const props = defineProps({
 		title: {

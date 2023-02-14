@@ -11,14 +11,13 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/vue": "^2.0.0",
+    "@astrojs/vue": "^2.0.1",
     "@headlessui/vue": "^1.7.7",
-    "@nanostores/vue": "^0.6.1",
+    "@nanostores/vue": "^0.7.0",
     "@vueuse/core": "^9.11.0",
-    "astro": "^2.0.0",
-    "lodash": "^4.17.21",
-    "nanostores": "^0.7.1",
-    "vue": "^3.2.45"
+    "astro": "^2.0.11",
+    "nanostores": "^0.7.3",
+    "vue": "^3.2.47"
   },
   "devDependencies": {
     "sass": "^1.57.1"

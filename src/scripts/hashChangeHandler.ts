@@ -6,8 +6,9 @@ const location = window.location.toString()
 const baseURL = location.split('#')[0]
 
 const header: HTMLElement = document.querySelector('header')!
-const sectionHeadings: NodeListOf<HTMLElement> =
-	document.querySelectorAll('article section h2')!
+const sectionHeadings: NodeListOf<HTMLElement> = document.querySelectorAll(
+	'article section h2:first-of-type'
+)!
 
 // Setting all section ids and storing sections for LessonNav
 let sections: Array<HTMLElement> = []

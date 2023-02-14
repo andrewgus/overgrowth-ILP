@@ -1,21 +1,27 @@
+import { useStore } from '@nanostores/vue'
 import { map } from 'nanostores'
 
 type FeatureType = 'reflection' | 'practice' | 'choice'
 
 interface FeatureMap {
-	reflection: boolean
-	practice: boolean
-	choice: boolean
+	reflection: boolean | undefined
+	practice: boolean | undefined
+	choice: boolean | undefined
 }
 
-const features = map<FeatureMap>()
+const features = map<FeatureMap>({
+	reflection: undefined,
+	practice: undefined,
+	choice: undefined,
+})
 
 function useDoesFeatureExist(feature: FeatureType) {
 	features.setKey(feature, true)
 }
 
 function useFeatureExists(feature: FeatureType) {
-	if (features.get()[feature] !== undefined) return true
+	if (useStore(features).value[feature] !== undefined) return true
+	return undefined
 }
 
 const reflectionToggle = () => {

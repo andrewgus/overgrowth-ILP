@@ -1,7 +1,7 @@
 <template>
 	<header :class="$style.landing">
-		<TheScene :scene="scene" />
-		<TheTitleCard :title="title" />
+		<TheScene v-if="isListAvailable" :scene="scene" />
+		<TheTitleCard v-if="isListAvailable" :title="title" />
 		<BaseIndicator isOnLanding hidden text="Scroll to start" />
 	</header>
 </template>
@@ -10,6 +10,9 @@
 	import TheScene from './TheScene.vue'
 	import TheTitleCard from './TheTitleCard.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
+	import { useStore } from '@nanostores/vue'
+	import { NavigationStore } from '../../store'
+	import { onMounted, ref } from 'vue'
 
 	interface Props {
 		title: string
@@ -17,6 +20,13 @@
 		color?: string
 	}
 	const props = defineProps<Props>()
+
+	let isListAvailable = ref<boolean>(false)
+	onMounted(() => {
+		isListAvailable.value =
+			Object.keys(useStore(NavigationStore.allSectionsMap).value).length > 0
+		console.log(isListAvailable.value)
+	})
 
 	const bgGradient = `linear-gradient(to bottom, white 0%, ${props.color} 40%, ${props.color} 60%, white 100%);`
 </script>
