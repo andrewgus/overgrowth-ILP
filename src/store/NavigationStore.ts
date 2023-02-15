@@ -29,12 +29,10 @@ const filteredSectionsMap = computed(
 			// Must be either static content or  feature must be true
 			return featureSelected === false || featureValue === true
 		})
-
-		// need to update orderNum!!!
+		// updating orderNum to match new order
 		filteredSections.forEach(([_, details], i) => {
 			details.orderNum = i
 		})
-		console.log(Object.fromEntries(filteredSections))
 		return Object.fromEntries(filteredSections)
 	}
 )
