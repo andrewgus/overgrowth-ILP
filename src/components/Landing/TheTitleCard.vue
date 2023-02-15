@@ -7,27 +7,27 @@
 				aria-label="each item can be toggled on and off for this lesson"
 				:class="$style.options"
 			>
-				<li v-if="FeatureSettingsStore.useFeatureExists('reflection')">
+				<li v-if="useFeatureExists('reflection')">
 					<BaseSwitch
 						type="Reflection"
-						:set="getFeature('reflection')"
-						@toggleSwitch="toggleFeature('reflection')"
+						:set="getFeatureValue('reflection')"
+						@toggleSwitch="useToggleFeature('reflection')"
 					/>
 				</li>
 				<BaseSeparator hidden v-if="multiFeatures.reflectionAndOther" />
-				<li v-if="FeatureSettingsStore.useFeatureExists('practice')">
+				<li v-if="useFeatureExists('practice')">
 					<BaseSwitch
 						type="Practice"
-						:set="getFeature('practice')"
-						@toggleSwitch="toggleFeature('practice')"
+						:set="getFeatureValue('practice')"
+						@toggleSwitch="useToggleFeature('practice')"
 					/>
 				</li>
 				<BaseSeparator hidden v-if="multiFeatures.practiceAndChoice" />
-				<li v-if="FeatureSettingsStore.useFeatureExists('choice')">
+				<li v-if="useFeatureExists('choice')">
 					<BaseSwitch
 						type="Choice"
-						:set="getFeature('choice')"
-						@toggleSwitch="toggleFeature('choice')"
+						:set="getFeatureValue('choice')"
+						@toggleSwitch="useToggleFeature('choice')"
 					/>
 				</li>
 			</ul>
@@ -39,7 +39,12 @@
 <script setup lang="ts">
 	import { useStore } from '@nanostores/vue'
 	import { computed } from 'vue'
-	import { FeatureSettingsStore } from '../../store'
+	import { filteredSectionsMap } from '../../store/NavigationStore'
+	import {
+		featuresMap,
+		useFeatureExists,
+		useToggleFeature,
+	} from '../../store/FeatureSettingsStore'
 	import type { FeatureType } from '../../store/FeatureSettingsStore'
 	import BaseSeparator from '../base/BaseSeparator.vue'
 	import BaseSwitch from '../base/BaseSwitch.vue'
@@ -51,21 +56,19 @@
 		},
 	})
 
-	const features = useStore(FeatureSettingsStore.features)
+	const features = useStore(featuresMap)
+	const filteredSections = useStore(filteredSectionsMap)
 
 	const featuresOn = computed(() => {
 		return (
-			FeatureSettingsStore.useFeatureExists('reflection') ||
-			FeatureSettingsStore.useFeatureExists('practice') ||
-			FeatureSettingsStore.useFeatureExists('choice')
+			useFeatureExists('reflection') ||
+			useFeatureExists('practice') ||
+			useFeatureExists('choice')
 		)
 	})
 
 	const twoFeatures = (feature1: FeatureType, feature2: FeatureType) => {
-		return (
-			FeatureSettingsStore.useFeatureExists(feature1) &&
-			FeatureSettingsStore.useFeatureExists(feature2)
-		)
+		return useFeatureExists(feature1) && useFeatureExists(feature2)
 	}
 	const multiFeatures = computed(() => {
 		const reflectionAndOther =
@@ -77,11 +80,8 @@
 		return { reflectionAndOther, practiceAndChoice }
 	})
 
-	const getFeature = (feature: FeatureType) => {
+	const getFeatureValue = (feature: FeatureType) => {
 		return features.value[feature] as boolean
-	}
-	const toggleFeature = (feature: FeatureType) => {
-		FeatureSettingsStore.features.setKey(feature, !features.value[feature])
 	}
 </script>
 

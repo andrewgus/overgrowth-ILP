@@ -19,14 +19,18 @@
 <script setup lang="ts">
 	import { ref, onMounted } from 'vue'
 	import { useStore } from '@nanostores/vue'
-	import { NavigationStore } from '../../store'
+	import {
+		isOnContentAtom,
+		allSectionsMap,
+		currSectionTitleAtom,
+	} from '../../store/NavigationStore'
 	import TheNavToc from './TheNavTOC.vue'
 	import TheNextPrevSectionButtons from './TheNextPrevSectionButtons.vue'
 	import SkipToContent from './SkipToContent.vue'
 
-	const allSections = useStore(NavigationStore.allSectionsMap)
-	const isOnContent = useStore(NavigationStore.isOnContent)
-	const currSectionTitle = useStore(NavigationStore.currSectionTitle)
+	const allSections = useStore(allSectionsMap)
+	const isOnContent = useStore(isOnContentAtom)
+	const currSectionTitle = useStore(currSectionTitleAtom)
 
 	let areSectionsAvailable = ref<boolean>(false)
 

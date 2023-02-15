@@ -1,16 +1,15 @@
 <template>
-	<section
-		v-show="features.practice"
-		class="feature"
-		:class="$style.practiceFeature"
-	>
+	<section v-show="features.practice" class="feature" :class="$style.practice">
 		<h2>{{ title }}</h2>
 	</section>
 </template>
 
 <script setup lang="ts">
 	import { useStore } from '@nanostores/vue'
-	import { FeatureSettingsStore } from '../store'
+	import {
+		featuresMap,
+		useDoesFeatureExist,
+	} from '../store/FeatureSettingsStore'
 
 	defineProps({
 		title: {
@@ -19,13 +18,13 @@
 		},
 	})
 
-	const features = useStore(FeatureSettingsStore.features)
+	const features = useStore(featuresMap)
 
-	FeatureSettingsStore.useDoesFeatureExist('practice')
+	useDoesFeatureExist('practice')
 </script>
 
 <style module lang="scss">
-	.practiceFeature {
+	.practice {
 		color: var(--black);
 	}
 </style>

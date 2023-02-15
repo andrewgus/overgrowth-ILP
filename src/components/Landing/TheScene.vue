@@ -6,19 +6,19 @@
 		:class="$style.scene"
 	>
 		<div
-			v-if="FeatureSettingsStore.useFeatureExists('reflection')"
+			v-if="useFeatureExists('reflection')"
 			key="reflection"
 			v-show="features.reflection"
 			:class="{ [$style.reflectionBg]: isBgLoaded }"
 		></div>
 		<div
-			v-if="FeatureSettingsStore.useFeatureExists('practice')"
+			v-if="useFeatureExists('practice')"
 			key="practice"
 			v-show="features.practice"
 			:class="{ [$style.practiceBg]: isBgLoaded }"
 		></div>
 		<div
-			v-if="FeatureSettingsStore.useFeatureExists('choice')"
+			v-if="useFeatureExists('choice')"
 			key="choice"
 			v-show="features.choice"
 			:class="{ [$style.choiceBg]: isBgLoaded }"
@@ -29,7 +29,10 @@
 <script setup lang="ts">
 	import { ref, watchEffect } from 'vue'
 	import { useStore } from '@nanostores/vue'
-	import { FeatureSettingsStore } from '../../store'
+	import {
+		featuresMap,
+		useFeatureExists,
+	} from '../../store/FeatureSettingsStore'
 
 	const props = defineProps({
 		scene: {
@@ -38,7 +41,7 @@
 		},
 	})
 
-	const features = useStore(FeatureSettingsStore.features)
+	const features = useStore(featuresMap)
 	const isBgLoaded = ref(false)
 
 	watchEffect(() => {

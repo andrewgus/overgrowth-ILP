@@ -1,9 +1,5 @@
 <template>
-	<section
-		v-show="features.choice"
-		class="feature"
-		:class="$style.choiceFeature"
-	>
+	<section v-show="features.choice" class="feature" :class="$style.choice">
 		<h2>{{ title }}</h2>
 		<p></p>
 	</section>
@@ -11,7 +7,10 @@
 
 <script setup lang="ts">
 	import { useStore } from '@nanostores/vue'
-	import { FeatureSettingsStore } from '../store'
+	import {
+		featuresMap,
+		useDoesFeatureExist,
+	} from '../store/FeatureSettingsStore'
 
 	defineProps({
 		title: {
@@ -20,13 +19,13 @@
 		},
 	})
 
-	const features = useStore(FeatureSettingsStore.features)
+	const features = useStore(featuresMap)
 
-	FeatureSettingsStore.useDoesFeatureExist('choice')
+	useDoesFeatureExist('choice')
 </script>
 
 <style module lang="scss">
-	.choiceFeature {
+	.choice {
 		color: var(--black);
 	}
 </style>

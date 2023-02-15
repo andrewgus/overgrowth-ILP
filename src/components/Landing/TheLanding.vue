@@ -16,7 +16,7 @@
 	import TheTitleCard from './TheTitleCard.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
 	import { useStore } from '@nanostores/vue'
-	import { NavigationStore } from '../../store'
+	import { allSectionsMap } from '../../store/NavigationStore'
 	import { onMounted, ref } from 'vue'
 
 	interface Props {
@@ -26,13 +26,13 @@
 	}
 	const props = defineProps<Props>()
 
-	const allSections = useStore(NavigationStore.allSectionsMap)
+	const allSections = useStore(allSectionsMap)
 	let areSectionsAvailable = ref<boolean>(false)
 
 	onMounted(() => {
 		areSectionsAvailable.value = Object.keys(allSections.value).length > 0
 	})
-	
+
 	const bgGradient = `linear-gradient(to bottom, white 0%, ${props.color} 40%, ${props.color} 60%, white 100%);`
 </script>
 

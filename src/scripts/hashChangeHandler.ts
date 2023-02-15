@@ -1,18 +1,23 @@
-import { NavigationStore } from '../store'
-import useCreateID from '../composables/useCreateId'
+import {
+	isOnContentAtom,
+	allSectionsMap,
+	useSetCurrSection,
+	useToggleNavShown,
+} from '../store/NavigationStore'
 import type { SectionDetails } from '../store/NavigationStore'
+import useCreateID from '../composables/useCreateId'
+import useGetFeatureType from '../composables/useGetFeatureType'
 
 const location = window.location.toString()
 const baseURL = location.split('#')[0]
 
 const header: HTMLElement = document.querySelector('header')!
 const sectionHeadings: NodeListOf<HTMLElement> = document.querySelectorAll(
-	'article section h2:first-of-type'
+	'article section  h2:first-of-type'
 )!
-
-// Setting all section ids and storing sections for LessonNav
 let sections: Array<HTMLElement> = []
 
+// Setting all section ids and storing sections
 for (const heading of sectionHeadings) {
 	sections.push(heading.closest('section')!)
 }
@@ -22,25 +27,25 @@ sections.forEach((s: HTMLElement, i: number) => {
 		title: s.querySelector('h2')!.textContent!,
 		id: useCreateID(s.querySelector('h2')!.textContent!),
 		orderNum: i,
-		isFeature: s.classList.contains('feature'),
+		isFeatureType:
+			s.classList.contains('feature') &&
+			useGetFeatureType(s.classList.toString()),
+		isVisible: true,
 		isLocked: true,
 	}
 
-	NavigationStore.allSectionsMap.setKey(
+	allSectionsMap.setKey(
 		useCreateID(s.querySelector('h2')!.textContent!),
 		section
 	)
 
 	s.id =
-		NavigationStore.allSectionsMap.get()[
-			useCreateID(s.querySelector('h2')!.textContent!)
-		].id
+		allSectionsMap.get()[useCreateID(s.querySelector('h2')!.textContent!)].id
 })
 
 if (location.includes('#')) {
-	NavigationStore.isOnContent.set(true)
-
-	NavigationStore.setCurrSection(location.split('#').at(-1)!)
+	isOnContentAtom.set(true)
+	useSetCurrSection(location.split('#').at(-1)!)
 }
 
 // Observer for header, sections, & headings to update URL hash value w/ scroll
@@ -53,8 +58,8 @@ const observerCallbackHeader = function (
 
 	history.replaceState(null, '', `${baseURL}`)
 	// Updating store to toggle LessonNav & set current section id
-	if (NavigationStore.isOnContent.get()) NavigationStore.toggleNavShown()
-	NavigationStore.setCurrSection('')
+	if (isOnContentAtom.get()) useToggleNavShown()
+	useSetCurrSection('')
 }
 
 const observerCallbackHeadings = function (
@@ -70,9 +75,9 @@ const observerCallbackHeadings = function (
 		`${baseURL}#${entry.target.closest('section')!.id}`
 	)
 	// Updating store to toggle LessonNav & set current section id
-	if (!NavigationStore.isOnContent.get()) NavigationStore.toggleNavShown()
+	if (!isOnContentAtom.get()) useToggleNavShown()
 
-	NavigationStore.setCurrSection(entry.target.closest('section')!.id)
+	useSetCurrSection(entry.target.closest('section')!.id)
 }
 
 const observerCallbackSections = function (
@@ -86,7 +91,7 @@ const observerCallbackSections = function (
 	if (entry.intersectionRect.top === 0) {
 		history.replaceState(null, '', `${baseURL}#${entry.target.id}`)
 		//setting current section id
-		NavigationStore.setCurrSection(entry.target.id)
+		useSetCurrSection(entry.target.id)
 	}
 }
 

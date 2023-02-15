@@ -1,11 +1,14 @@
-import { atom, map } from 'nanostores'
+import { atom, map, computed } from 'nanostores'
+import { featuresMap } from './FeatureSettingsStore'
+import type { FeatureType } from './FeatureSettingsStore'
 
 // All sections
 export interface SectionDetails {
 	title: string
 	id: string
 	orderNum: number
-	isFeature: boolean
+	isFeatureType: FeatureType | boolean
+	isVisible: boolean
 	isLocked: boolean
 }
 
@@ -15,33 +18,51 @@ interface SectionsMap {
 
 const allSectionsMap = map<SectionsMap>()
 
-// Used to determine whether user is on content vs header
-const isOnContent = atom(false)
+const filteredSectionsMap = computed(
+	[allSectionsMap, featuresMap],
+	(sections, feature) => {
+		const sectionsAsArray: [string, SectionDetails][] = Object.entries(sections)
 
-const toggleNavShown = () => {
-	isOnContent.set(!isOnContent.get())
+		const filteredSections = sectionsAsArray.filter(([_, details]) => {
+			const featureSelected = details.isFeatureType
+
+			// the selected feature
+			const featureChosen = feature[featureSelected as FeatureType]
+
+			return featureSelected === false || featureChosen === true
+		})
+		return filteredSections
+	}
+)
+
+// Used to determine whether user is on content vs header
+const isOnContentAtom = atom(false)
+
+const useToggleNavShown = () => {
+	isOnContentAtom.set(!isOnContentAtom.get())
 }
 
 // Used to set the current section title for the LessonNav
-const currSectionTitle = atom('')
-const currSectionId = atom('')
+const currSectionTitleAtom = atom('')
+const currSectionIdAtom = atom('')
 
-const setCurrSection = (sectionKey: string) => {
+const useSetCurrSection = (sectionKey: string) => {
 	if (sectionKey === '') {
-		currSectionTitle.set('')
-		currSectionId.set('')
+		currSectionTitleAtom.set('')
+		currSectionIdAtom.set('')
 	} else {
 		const sectionTitle = allSectionsMap.get()[sectionKey].title
-		currSectionTitle.set(sectionTitle)
-		currSectionId.set(sectionKey)
+		currSectionTitleAtom.set(sectionTitle)
+		currSectionIdAtom.set(sectionKey)
 	}
 }
 
 export {
-	isOnContent,
-	toggleNavShown,
-	currSectionTitle,
-	currSectionId,
-	setCurrSection,
+	isOnContentAtom,
+	currSectionTitleAtom,
+	currSectionIdAtom,
+	useSetCurrSection,
+	useToggleNavShown,
 	allSectionsMap,
+	filteredSectionsMap,
 }

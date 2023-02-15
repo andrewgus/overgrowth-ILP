@@ -7,7 +7,7 @@
 			:isDisabled="isOnFirstSection"
 			:aria-hidden="isOnFirstSection"
 			:href="prevSection"
-			@click="NavigationStore.setCurrSection(currSectionId)"
+			@click="useSetCurrSection(currSectionId)"
 			:class="$style.btn_prev"
 			title="Go to previous section"
 			aria-label="Go to previous section"
@@ -20,7 +20,7 @@
 			:isDisabled="isOnLastSection"
 			:aria-hidden="isOnLastSection"
 			:href="nextSection"
-			@click="NavigationStore.setCurrSection(currSectionId)"
+			@click="useSetCurrSection(currSectionId)"
 			:class="$style.btn_next"
 			title="Go to next section"
 			aria-label="Go to next section"
@@ -32,12 +32,17 @@
 <script setup lang="ts">
 	import { computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
-	import { NavigationStore } from '../../store'
+	import {
+		allSectionsMap,
+		isOnContentAtom,
+		currSectionIdAtom,
+		useSetCurrSection,
+	} from '../../store/NavigationStore'
 	import BaseButton from '../base/BaseButton.vue'
 
-	const allSections = useStore(NavigationStore.allSectionsMap)
-	const isOnContent = useStore(NavigationStore.isOnContent)
-	const currSectionId = useStore(NavigationStore.currSectionId)
+	const allSections = useStore(allSectionsMap)
+	const isOnContent = useStore(isOnContentAtom)
+	const currSectionId = useStore(currSectionIdAtom)
 
 	const prevSection = computed(() => {
 		const prevSectionOrderNum =

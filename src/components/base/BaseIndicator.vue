@@ -27,7 +27,7 @@
 <script setup lang="ts">
 	import { computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
-	import { NavigationStore } from '../../store'
+	import { allSectionsMap } from '../../store/NavigationStore'
 
 	defineProps({
 		text: {
@@ -42,7 +42,7 @@
 		},
 	})
 
-	const allSections = useStore(NavigationStore.allSectionsMap)
+	const allSections = useStore(allSectionsMap)
 
 	const firstSection = computed(() => {
 		const first = Object.keys(allSections.value).at(0)

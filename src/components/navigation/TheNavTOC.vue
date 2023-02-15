@@ -22,13 +22,13 @@
 		>
 			<li
 				v-for="navItem in allSections"
-				:key="navItem!.id"
-				:class="{ [$style.greenDot]: isLocatedHere(navItem!.id) }"
+				:key="navItem.id"
+				:class="{ [$style.greenDot]: isLocatedHere(navItem.id) }"
 			>
 				<a
-					:href="`#${navItem!.id}`"
-					@click="navToSection(navItem!.id)"
-					:title="isLocatedHere(navItem!.id) ? 'You are here' : ''"
+					:href="`#${navItem.id}`"
+					@click="navToSection(navItem.id)"
+					:title="isLocatedHere(navItem.id) ? 'You are here' : ''"
 					>{{ navItem!.title }}</a
 				>
 			</li>
@@ -37,13 +37,17 @@
 </template>
 
 <script setup lang="ts">
-	import {ref, useCssModule } from 'vue'
+	import { ref, useCssModule } from 'vue'
 	import BaseButton from '../base/BaseButton.vue'
-	import { NavigationStore } from '../../store'
+	import {
+		allSectionsMap,
+		currSectionIdAtom,
+		useSetCurrSection,
+	} from '../../store/NavigationStore'
 	import { useStore } from '@nanostores/vue'
 
-	const allSections = useStore(NavigationStore.allSectionsMap)
-	const currSectionId = useStore(NavigationStore.currSectionId)
+	const allSections = useStore(allSectionsMap)
+	const currSectionId = useStore(currSectionIdAtom)
 
 	const isMenuOpen = ref<boolean>(false)
 	const openMenu = () => (isMenuOpen.value = !isMenuOpen.value)
@@ -54,7 +58,7 @@
 		}
 	}
 	const navToSection = (section: string) => {
-		NavigationStore.setCurrSection(section)
+		useSetCurrSection(section)
 		isMenuOpen.value = !isMenuOpen.value
 	}
 

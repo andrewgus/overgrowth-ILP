@@ -9,20 +9,27 @@ interface FeatureMap {
 	choice: boolean | undefined
 }
 
-const features = map<FeatureMap>({
+const featuresMap = map<FeatureMap>({
 	reflection: undefined,
 	practice: undefined,
 	choice: undefined,
 })
 
 function useDoesFeatureExist(feature: FeatureType) {
-	features.setKey(feature, true)
+	featuresMap.setKey(feature, true)
+}
+
+function useToggleFeature(feature: FeatureType) {
+	featuresMap.setKey(feature, !featuresMap.get()[feature])
 }
 
 function useFeatureExists(feature: FeatureType) {
-	if (useStore(features).value[feature] !== undefined) return true
-	return undefined
+	if (useStore(featuresMap).value[feature] !== undefined) {
+		return true
+	} else {
+		return false
+	}
 }
 
-export { features, useDoesFeatureExist, useFeatureExists }
+export { featuresMap, useDoesFeatureExist, useFeatureExists, useToggleFeature }
 export type { FeatureType }
