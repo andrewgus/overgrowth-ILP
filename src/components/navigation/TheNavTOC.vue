@@ -21,7 +21,7 @@
 			id="navItemsList"
 		>
 			<li
-				v-for="navItem in allSections"
+				v-for="navItem in filteredSections"
 				:key="navItem.id"
 				:class="{ [$style.greenDot]: isLocatedHere(navItem.id) }"
 			>
@@ -40,13 +40,13 @@
 	import { ref, useCssModule } from 'vue'
 	import BaseButton from '../base/BaseButton.vue'
 	import {
-		allSectionsMap,
+		filteredSectionsMap,
 		currSectionIdAtom,
 		useSetCurrSection,
 	} from '../../store/NavigationStore'
 	import { useStore } from '@nanostores/vue'
 
-	const allSections = useStore(allSectionsMap)
+	const filteredSections = useStore(filteredSectionsMap)
 	const currSectionId = useStore(currSectionIdAtom)
 
 	const isMenuOpen = ref<boolean>(false)

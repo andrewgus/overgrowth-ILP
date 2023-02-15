@@ -25,13 +25,17 @@ const filteredSectionsMap = computed(
 
 		const filteredSections = sectionsAsArray.filter(([_, details]) => {
 			const featureSelected = details.isFeatureType
-
-			// the selected feature
-			const featureChosen = feature[featureSelected as FeatureType]
-
-			return featureSelected === false || featureChosen === true
+			const featureValue = feature[featureSelected as FeatureType]
+			// Must be either static content or  feature must be true
+			return featureSelected === false || featureValue === true
 		})
-		return filteredSections
+
+		// need to update orderNum!!!
+		filteredSections.forEach(([_, details], i) => {
+			details.orderNum = i
+		})
+		console.log(Object.fromEntries(filteredSections))
+		return Object.fromEntries(filteredSections)
 	}
 )
 

@@ -33,31 +33,35 @@
 	import { computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import {
-		allSectionsMap,
+		filteredSectionsMap,
 		isOnContentAtom,
 		currSectionIdAtom,
 		useSetCurrSection,
 	} from '../../store/NavigationStore'
 	import BaseButton from '../base/BaseButton.vue'
 
-	const allSections = useStore(allSectionsMap)
+	const filteredSections = useStore(filteredSectionsMap)
 	const isOnContent = useStore(isOnContentAtom)
 	const currSectionId = useStore(currSectionIdAtom)
 
 	const prevSection = computed(() => {
 		const prevSectionOrderNum =
-			allSections.value[currSectionId.value].orderNum - 1
+			filteredSections.value[currSectionId.value].orderNum - 1
 
-		const prevSectionId = Object.keys(allSections.value).at(prevSectionOrderNum)
+		const prevSectionId = Object.keys(filteredSections.value).at(
+			prevSectionOrderNum
+		)
 
 		return `#${prevSectionId}`
 	})
 
 	const nextSection = computed(() => {
 		const nextSectionOrderNum =
-			allSections.value[currSectionId.value].orderNum + 1
+			filteredSections.value[currSectionId.value].orderNum + 1
 
-		const nextSectionId = Object.keys(allSections.value).at(nextSectionOrderNum)
+		const nextSectionId = Object.keys(filteredSections.value).at(
+			nextSectionOrderNum
+		)
 
 		if (nextSectionId === undefined) return '#'
 
@@ -65,14 +69,14 @@
 	})
 
 	const isOnFirstSection = computed(() => {
-		return allSections.value[currSectionId.value].orderNum === 0
+		return filteredSections.value[currSectionId.value].orderNum === 0
 	})
 
 	const isOnLastSection = computed(() => {
-		const lastSection: string = Object.keys(allSections.value).at(-1)!
+		const lastSection: string = Object.keys(filteredSections.value).at(-1)!
 		return (
-			allSections.value[currSectionId.value].orderNum ===
-			allSections.value[lastSection].orderNum
+			filteredSections.value[currSectionId.value].orderNum ===
+			filteredSections.value[lastSection].orderNum
 		)
 	})
 </script>

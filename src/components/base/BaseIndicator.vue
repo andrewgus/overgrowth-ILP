@@ -27,7 +27,7 @@
 <script setup lang="ts">
 	import { computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
-	import { allSectionsMap } from '../../store/NavigationStore'
+	import { filteredSectionsMap } from '../../store/NavigationStore'
 
 	defineProps({
 		text: {
@@ -42,10 +42,10 @@
 		},
 	})
 
-	const allSections = useStore(allSectionsMap)
+	const filteredSections = useStore(filteredSectionsMap)
 
 	const firstSection = computed(() => {
-		const first = Object.keys(allSections.value).at(0)
+		const first = Object.keys(filteredSections.value).at(0)
 		return `#${first}`
 	})
 </script>
