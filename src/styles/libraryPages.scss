@@ -1,0 +1,49 @@
+.cardGrid {
+  list-style-type: none;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10ch, 20ch));
+  grid-gap: var(--s2);
+  justify-content: center;
+  align-items: center;
+}
+.linkCard {
+  border-radius: var(--s-10);
+  font-size: var(--s1);
+  display: flex;
+  flex-flow: column nowrap;
+  text-align: center;
+  justify-content: space-between;
+  align-items: center;
+  aspect-ratio: 1/1;
+  padding-bottom: var(--s0);
+  border: 1px solid var(--darkGray);
+  background-color: var(--lightBlue);
+  transition: var(--timeLong) all var(--transitionFlourish);
+  &::before {
+    content: "";
+    height: 80%;
+    width: 100%;
+    background-image: linear-gradient(
+      225deg,
+      hsl(201deg 100% 18%) 0%,
+      hsl(199deg 100% 20%) 8%,
+      hsl(197deg 100% 23%) 17%,
+      hsl(195deg 100% 25%) 25%,
+      hsl(194deg 76% 34%) 33%,
+      hsl(193deg 64% 42%) 42%,
+      hsl(191deg 56% 51%) 50%,
+      hsl(186deg 69% 45%) 58%,
+      hsl(182deg 88% 38%) 67%,
+      hsl(178deg 100% 34%) 75%,
+      hsl(167deg 100% 36%) 83%,
+      hsl(139deg 53% 48%) 92%,
+      hsl(87deg 70% 43%) 100%
+    );
+  }
+  &:hover {
+    box-shadow: inset var(--s-10) var(--s-10) 0 var(--blue),
+      inset calc(-1 * var(--s-10)) calc(-1 * var(--s-10)) 0 var(--blue),
+      inset var(--s-10) calc(-1 * var(--s-10)) 0 var(--blue), inset calc(-1 * var(--s-10)) var(--s-10) 0 var(--blue);
+  }
+}

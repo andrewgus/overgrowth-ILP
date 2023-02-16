@@ -1,4 +1,5 @@
 ---
+import '../styles/libraryPages.scss'
 import LibLayout from '../layouts/LibLayout.astro'
 import TopicsLibrary from '../scripts/topicsLibrary.js'
 
@@ -32,15 +33,13 @@ const { filteredLessons, topicTitle } = Astro.props
 	<p>
 		Here are all of the {topicTitle.toLowerCase()} interactive lessons&hellip;
 	</p>
-	<ul>
+	<ul class='cardGrid'>
 		{
 			filteredLessons.map((fL: { url: string }) => (
 				<li>
-					<p>
-						<a href={fL.url}>
-							{fL.url.split('/').at(-1)!.replaceAll('-', ' ')}
-						</a>
-					</p>
+					<a class='linkCard' href={fL.url}>
+						{fL.url.split('/').at(-1)!.replaceAll('-', ' ')}
+					</a>
 				</li>
 			))
 		}

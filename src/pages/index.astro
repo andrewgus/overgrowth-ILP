@@ -1,4 +1,5 @@
 ---
+import '../styles/libraryPages.scss'
 import LibLayout from '../layouts/LibLayout.astro'
 import TopicsLibrary from '../scripts/topicsLibrary.js'
 
@@ -12,13 +13,15 @@ const topicTitles = topicURLs.map((t) => TopicsLibrary.get(t!))
 ---
 
 <LibLayout title='All Topics'>
-	<div>
+	<ul class='cardGrid'>
 		{
 			topicTitles.map((title, i) => (
-				<div>
-					<a href={`${topicURLs[i]}`}>{title}</a>
-				</div>
+				<li>
+					<a class='linkCard' href={`/${topicURLs[i]}`}>
+						{title}
+					</a>
+				</li>
 			))
 		}
-	</div>
+	</ul>
 </LibLayout>
