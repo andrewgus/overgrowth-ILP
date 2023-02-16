@@ -1,15 +1,15 @@
 ---
 interface Props {
-	heading: string
+	title: string
 	columnSet?: '6040' | '4060' | '50' | '7525' | '2575' | '30' | '25'
 }
 
-const { heading, columnSet } = Astro.props
+const { title, columnSet } = Astro.props
 ---
 
 <section class='staticContent'>
 	<div class:list={['content', { columnSet: columnSet }]}>
-		<h2>{heading}</h2>
+		<h2>{title}</h2>
 		<slot />
 	</div>
 </section>
