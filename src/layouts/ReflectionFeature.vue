@@ -1,35 +1,21 @@
 <template>
-	<section
-		v-show="features.reflection"
-		class="feature"
-		:class="$style.reflection"
-	>
-		<div>
-			<h2>{{ title }}</h2>
-			<p>{{ prompt }}</p>
-			<div :class="$style.userInput">
-				<!-- TODO: Need to create dynamic ids for this, but later -->
-				<label for="reflectioninput">Write your response&hellip;</label>
-				<textarea
-					placeholder="I think&hellip;"
-					id="reflectioninput"
-					rows="7"
-					v-model="input"
-				></textarea>
-			</div>
+	<FeatureSection feature-type="reflection" :title="title">
+		<div :class="$style.userInput">
+			<label for="reflectioninput">Write your response&hellip;</label>
+			<textarea
+				placeholder="I think&hellip;"
+				id="reflectioninput"
+				rows="7"
+				v-model="input"
+			></textarea>
 		</div>
-	</section>
+	</FeatureSection>
 </template>
 
 <script setup lang="ts">
 	// TODO: When this is here, the activity is not complete, the completeBtn has not yet been selected, then all other content that comes after that is hidden. Need to figure out how to accomplish that. Think it will end up being a state management thing...
+	import FeatureSection from '../components/features/FeatureSection.vue'
 	import { ref } from 'vue'
-	import { useStore } from '@nanostores/vue'
-
-	import {
-		featuresMap,
-		useDoesFeatureExist,
-	} from '../store/FeatureSettingsStore'
 
 	defineProps({
 		title: {
@@ -41,10 +27,6 @@
 			required: true,
 		},
 	})
-
-	const features = useStore(featuresMap)
-
-	useDoesFeatureExist('reflection')
 
 	const input = ref('')
 </script>

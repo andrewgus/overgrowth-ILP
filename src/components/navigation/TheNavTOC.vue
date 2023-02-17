@@ -40,20 +40,20 @@
 	import { ref, useCssModule } from 'vue'
 	import BaseButton from '../base/BaseButton.vue'
 	import {
-		filteredSectionsMap,
-		currSectionIdAtom,
+		filteredSectionsComputed,
+		currSectionMap,
 		useSetCurrSection,
 	} from '../../store/NavigationStore'
 	import { useStore } from '@nanostores/vue'
 
-	const filteredSections = useStore(filteredSectionsMap)
-	const currSectionId = useStore(currSectionIdAtom)
+	const filteredSections = useStore(filteredSectionsComputed)
+	const currSection = useStore(currSectionMap)
 
 	const isMenuOpen = ref<boolean>(false)
 	const openMenu = () => (isMenuOpen.value = !isMenuOpen.value)
 
 	const isLocatedHere = (id: string) => {
-		if (id == currSectionId.value) {
+		if (id == currSection.value.id) {
 			return true
 		}
 	}

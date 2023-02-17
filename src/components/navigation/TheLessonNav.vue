@@ -4,11 +4,11 @@
 		id="lessonNav"
 		:class="[$style.lessonNav, { [$style.isInvisible]: !isOnContent }]"
 	>
-		<SkipToContent v-if="!isOnContent" />
+		<SkipToContent v-if="!isOnContent && areSectionsAvailable" />
 		<div :class="$style.navInfo">
-			<p v-show="isOnContent">
+			<p v-if="currSectionAvailable" v-show="isOnContent">
 				Currently on:
-				{{ currSectionTitle }}
+				{{ currSection.title }}
 			</p>
 			<TheNextPrevSectionButtons />
 			<TheNavToc />
@@ -21,8 +21,8 @@
 	import { useStore } from '@nanostores/vue'
 	import {
 		isOnContentAtom,
+		currSectionMap,
 		allSectionsMap,
-		currSectionTitleAtom,
 	} from '../../store/NavigationStore'
 	import TheNavToc from './TheNavTOC.vue'
 	import TheNextPrevSectionButtons from './TheNextPrevSectionButtons.vue'
@@ -30,12 +30,14 @@
 
 	const allSections = useStore(allSectionsMap)
 	const isOnContent = useStore(isOnContentAtom)
-	const currSectionTitle = useStore(currSectionTitleAtom)
+	const currSection = useStore(currSectionMap)
 
 	let areSectionsAvailable = ref<boolean>(false)
+	let currSectionAvailable = ref<boolean>(false)
 
 	onMounted(() => {
 		areSectionsAvailable.value = Object.keys(allSections.value).length > 0
+		currSectionAvailable.value = Object.values(currSection.value).length > 0
 	})
 </script>
 

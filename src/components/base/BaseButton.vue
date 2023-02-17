@@ -1,5 +1,7 @@
 <template>
-	<button v-if="!link" :class="btnStyles">{{ text }}</button>
+	<button v-if="!link" :class="btnStyles" @click="$emit('btnClick')">
+		{{ text }}
+	</button>
 	<a v-else :href="url" :class="btnStyles">{{ text }}</a>
 </template>
 

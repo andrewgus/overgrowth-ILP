@@ -2,7 +2,12 @@
 	<div
 		:class="[$style.indicator, { [$style.OnlandingIndicator]: isOnLanding }]"
 	>
-		<a :class="$style.indicatorLink" :href="firstSection" :aria-hidden="hidden">
+		<a
+			:class="$style.indicatorLink"
+			:href="goToNextSection"
+			:aria-hidden="hidden"
+			:tabindex="hidden ? '-1' : '0'"
+		>
 			<p>{{ text }}</p>
 			<span :class="$style.scrollArrow">
 				<svg
@@ -27,9 +32,13 @@
 <script setup lang="ts">
 	import { computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
-	import { filteredSectionsMap } from '../../store/NavigationStore'
+	import {
+		firstSectionComputed,
+		filteredSectionsComputed,
+		currSectionMap,
+	} from '../../store/NavigationStore'
 
-	defineProps({
+	const props = defineProps({
 		text: {
 			type: String,
 			required: true,
@@ -42,11 +51,27 @@
 		},
 	})
 
-	const filteredSections = useStore(filteredSectionsMap)
+	const filteredSections = useStore(filteredSectionsComputed)
+	const currSection = useStore(currSectionMap)
+	const firstSection = useStore(firstSectionComputed)
 
-	const firstSection = computed(() => {
-		const first = Object.keys(filteredSections.value).at(0)
-		return `#${first}`
+	console.log(props.isOnLanding)
+
+	const goToNextSection = computed(() => {
+		if (props.isOnLanding) {
+			return `#${firstSection.value.id}`
+		} else {
+			const nextSectionOrderNum =
+				filteredSections.value[currSection.value.id].orderNum! + 1
+
+			const nextSectionId = Object.keys(filteredSections.value).at(
+				nextSectionOrderNum
+			)
+
+			if (nextSectionId === undefined) return '#'
+
+			return `#${nextSectionId}`
+		}
 	})
 </script>
 
@@ -57,22 +82,29 @@
 	}
 	.OnlandingIndicator {
 		grid-area: card-indicator/landing-top/indicator-end/landing-bottom;
+
+		p {
+			background-color: hsla(0deg, 0%, 98%, 0.5);
+			filter: drop-shadow(0 0 var(--s1) var(--white));
+			border-radius: var(--s10);
+		}
 	}
 	.indicatorLink {
-		all: unset;
-		display: flex;
-		flex-flow: column nowrap;
-		justify-content: center;
-		align-items: center;
+		&,
+		&:hover,
+		&:focus {
+			all: unset;
+			display: flex;
+			flex-flow: column nowrap;
+			justify-content: center;
+			align-items: center;
+		}
 
 		> p {
 			padding: var(--s-5);
 			display: block;
 			font-size: var(--s0);
-			margin: 0 auto;
-			background-color: hsla(0deg, 0%, 98%, 0.5);
-			filter: drop-shadow(0 0 var(--s1) var(--white));
-			border-radius: var(--s10);
+			margin: 0 auto var(--s-10);
 		}
 		> span {
 			margin: var(--s-10) auto;

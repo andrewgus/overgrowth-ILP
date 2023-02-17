@@ -30,7 +30,6 @@ sections.forEach((s: HTMLElement, i: number) => {
 		isFeatureType:
 			s.classList.contains('feature') &&
 			useGetFeatureType(s.classList.toString()),
-		isVisible: true,
 		isLocked: true,
 	}
 
