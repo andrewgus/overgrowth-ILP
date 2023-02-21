@@ -15,8 +15,8 @@
     "@headlessui/vue": "^1.7.7",
     "@nanostores/vue": "^0.7.0",
     "@vueuse/core": "^9.11.0",
-    "astro": "^2.0.11",
-    "nanostores": "^0.7.3",
+    "astro": "^2.0.14",
+    "nanostores": "^0.7.4",
     "vue": "^3.2.47"
   },
   "devDependencies": {

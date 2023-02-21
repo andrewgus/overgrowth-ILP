@@ -43,21 +43,21 @@ const filteredSectionsComputed = computed(
 
 // Features locking mechanism
 // NOTE: See line 29 before progressing here
-const lockedContentComputed = computed(filteredSectionsComputed, (sections) => {
-	/* Need from sections:
-			isLocked
-			isFeatureType
-			orderNum
-	 */
-	const sectionsAsArray: [string, SectionDetails][] = Object.entries(sections)
-	const findFeature = sectionsAsArray.find(([_, details]) => {
-		if (details.isFeatureType !== false && details.isLocked === true)
-			return details.isFeatureType
-	})
-	// console.log(findFeature)
+// const lockedContentComputed = computed(filteredSectionsComputed, (sections) => {
+// 	/* Need from sections:
+// 			isLocked
+// 			isFeatureType
+// 			orderNum
+// 	 */
+// 	const sectionsAsArray: [string, SectionDetails][] = Object.entries(sections)
+// 	const findFeature = sectionsAsArray.find(([_, details]) => {
+// 		if (details.isFeatureType !== false && details.isLocked === true)
+// 			return details.isFeatureType
+// 	})
+// 	// console.log(findFeature)
 
-	return findFeature
-})
+// 	return findFeature
+// })
 
 // Used to determine whether user is on content vs header
 const isOnContentAtom = atom(false)
