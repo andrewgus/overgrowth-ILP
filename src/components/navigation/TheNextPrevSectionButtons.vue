@@ -33,14 +33,14 @@
 	import { computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import {
-		filteredSectionsMap,
+		filteredSectionsComputed,
 		isOnContentAtom,
 		currSectionIdAtom,
 		useSetCurrSection,
 	} from '../../store/NavigationStore'
 	import BaseButton from '../base/BaseButton.vue'
 
-	const filteredSections = useStore(filteredSectionsMap)
+	const filteredSections = useStore(filteredSectionsComputed)
 	const isOnContent = useStore(isOnContentAtom)
 	const currSectionId = useStore(currSectionIdAtom)
 

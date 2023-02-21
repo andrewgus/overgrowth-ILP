@@ -1,16 +1,11 @@
 <template>
-	<section v-show="features.choice" class="feature" :class="$style.choice">
-		<h2>{{ title }}</h2>
-		<p></p>
-	</section>
+	<FeatureSection feature-type="choice" :title="title">
+		<p>TEST</p>
+	</FeatureSection>
 </template>
 
 <script setup lang="ts">
-	import { useStore } from '@nanostores/vue'
-	import {
-		featuresMap,
-		useDoesFeatureExist,
-	} from '../store/FeatureSettingsStore'
+	import FeatureSection from '../components/features/FeatureSection.vue'
 
 	defineProps({
 		title: {
@@ -18,10 +13,6 @@
 			required: true,
 		},
 	})
-
-	const features = useStore(featuresMap)
-
-	useDoesFeatureExist('choice')
 </script>
 
 <style module lang="scss">

@@ -18,7 +18,7 @@ interface SectionsMap {
 
 const allSectionsMap = map<SectionsMap>()
 
-const filteredSectionsMap = computed(
+const filteredSectionsComputed = computed(
 	[allSectionsMap, featuresMap],
 	(sections, feature) => {
 		const sectionsAsArray: [string, SectionDetails][] = Object.entries(sections)
@@ -66,5 +66,5 @@ export {
 	useSetCurrSection,
 	useToggleNavShown,
 	allSectionsMap,
-	filteredSectionsMap,
+	filteredSectionsComputed,
 }

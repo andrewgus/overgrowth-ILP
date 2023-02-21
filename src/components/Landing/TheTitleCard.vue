@@ -39,7 +39,7 @@
 <script setup lang="ts">
 	import { useStore } from '@nanostores/vue'
 	import { computed } from 'vue'
-	import { filteredSectionsMap } from '../../store/NavigationStore'
+	import { filteredSectionsComputed } from '../../store/NavigationStore'
 	import {
 		featuresMap,
 		useFeatureExists,
@@ -57,7 +57,7 @@
 	})
 
 	const features = useStore(featuresMap)
-	const filteredSections = useStore(filteredSectionsMap)
+	const filteredSections = useStore(filteredSectionsComputed)
 
 	const featuresOn = computed(() => {
 		return (
