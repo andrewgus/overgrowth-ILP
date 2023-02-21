@@ -4,7 +4,7 @@
 	>
 		<a
 			:class="$style.indicatorLink"
-			:href="goToNextSection"
+			:href="goTo"
 			:aria-hidden="hidden"
 			:tabindex="hidden ? '-1' : '0'"
 		>
@@ -30,16 +30,12 @@
 </template>
 
 <script setup lang="ts">
-	import { computed } from 'vue'
-	import { useStore } from '@nanostores/vue'
-	import {
-		firstSectionComputed,
-		filteredSectionsComputed,
-		currSectionMap,
-	} from '../../store/NavigationStore'
-
-	const props = defineProps({
+defineProps({
 		text: {
+			type: String,
+			required: true,
+		},
+		goTo: {
 			type: String,
 			required: true,
 		},
@@ -49,29 +45,6 @@
 		isOnLanding: {
 			type: Boolean,
 		},
-	})
-
-	const filteredSections = useStore(filteredSectionsComputed)
-	const currSection = useStore(currSectionMap)
-	const firstSection = useStore(firstSectionComputed)
-
-	console.log(props.isOnLanding)
-
-	const goToNextSection = computed(() => {
-		if (props.isOnLanding) {
-			return `#${firstSection.value.id}`
-		} else {
-			const nextSectionOrderNum =
-				filteredSections.value[currSection.value.id].orderNum! + 1
-
-			const nextSectionId = Object.keys(filteredSections.value).at(
-				nextSectionOrderNum
-			)
-
-			if (nextSectionId === undefined) return '#'
-
-			return `#${nextSectionId}`
-		}
 	})
 </script>
 

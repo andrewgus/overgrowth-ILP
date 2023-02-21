@@ -13,10 +13,14 @@
 		<BaseButton
 			v-if="!complete"
 			text="Complete?"
-			:class="$style.featureComplete"
+			:class="$style.featureCompleteBtn"
 			@btnClick="setComplete"
 		></BaseButton>
-		<BaseIndicator v-else text="Scoll to continue"></BaseIndicator>
+		<BaseIndicator
+			v-else
+			text="Scoll to continue"
+			:goTo="nextSection()"
+		></BaseIndicator>
 	</transition>
 </template>
 
@@ -24,18 +28,38 @@
 	import { ref } from 'vue'
 	import BaseButton from '../base/BaseButton.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
-	import { currSectionMap } from '../../store/NavigationStore'
+	import {
+		currSectionMap,
+		filteredSectionsComputed,
+	} from '../../store/NavigationStore'
+	import { useStore } from '@nanostores/vue'
 
+	const filteredSections = useStore(filteredSectionsComputed)
+	const currSection = useStore(currSectionMap)
 	const complete = ref<boolean>(false)
 
-	const setComplete = () => {
+	const setComplete = (e) => {
+		console.log(e)
 		currSectionMap.setKey('isLocked', false)
 		complete.value = true
+	}
+
+	const nextSection = () => {
+		const nextSectionOrderNum =
+			filteredSections.value[currSection.value.id].orderNum! + 1
+
+		const nextSectionId = Object.keys(filteredSections.value).at(
+			nextSectionOrderNum
+		)
+
+		if (nextSectionId === undefined) return '#'
+
+		return `#${nextSectionId}`
 	}
 </script>
 
 <style module lang="scss">
-	.featureComplete {
+	.featureCompleteBtn {
 		display: block;
 		margin: var(--s0) auto 0;
 	}

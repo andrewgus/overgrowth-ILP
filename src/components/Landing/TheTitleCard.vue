@@ -39,7 +39,6 @@
 <script setup lang="ts">
 	import { useStore } from '@nanostores/vue'
 	import { computed } from 'vue'
-	import { lockedContentComputed } from '../../store/NavigationStore'
 	import {
 		featuresMap,
 		useFeatureExists,
@@ -57,7 +56,6 @@
 	})
 
 	const features = useStore(featuresMap)
-	const locked = useStore(lockedContentComputed)
 
 	const featuresOn = computed(() => {
 		return (

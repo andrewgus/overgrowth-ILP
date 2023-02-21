@@ -94,8 +94,10 @@ const lastSectionComputed = computed(filteredSectionsComputed, () => {
 })
 
 // TODO: refactor next and prev to live here in the NavStore. Currently being used in BaseIndicator and NextPrevSectionButtons
-// const nextSectionComputed = computed(allSectionsMap, () => {})
-// const prevSectionComputed = computed(allSectionsMap, () => {})
+const nextSectionComputed = computed(allSectionsMap, () => {
+	// console.log(allSectionsMap.get())
+})
+const prevSectionComputed = computed(allSectionsMap, () => {})
 
 export {
 	isOnContentAtom,
@@ -106,6 +108,7 @@ export {
 	filteredSectionsComputed,
 	firstSectionComputed,
 	lastSectionComputed,
-	lockedContentComputed,
+	nextSectionComputed,
+	prevSectionComputed,
 }
 export type { SectionDetails, SectionsMap }
