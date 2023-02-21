@@ -27,8 +27,8 @@ const filteredSectionsComputed = computed(
 			const featureValue = feature[details.isFeatureType as FeatureType]
 
 			// NOTE: perhaps filtered here includes anything that is locked to turn to display: none, rather than it a seperate computed.
-			const lockedFeature =
-				details.isLocked === true && details.isFeatureType !== false
+			// const lockedFeature =
+			// 	details.isLocked === true && details.isFeatureType !== false
 
 			// Must be either static content or feature must be true
 			return details.isFeatureType === false || featureValue === true
@@ -37,6 +37,7 @@ const filteredSectionsComputed = computed(
 		filteredSections.forEach(([_, details], i) => {
 			details.orderNum = i
 		})
+
 		return Object.fromEntries(filteredSections)
 	}
 )
