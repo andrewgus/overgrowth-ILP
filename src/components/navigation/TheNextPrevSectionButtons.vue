@@ -7,7 +7,7 @@
 			:isDisabled="isOnFirstSection"
 			:aria-hidden="isOnFirstSection"
 			:href="prevSection"
-			@click="useSetCurrSection(currSectionId)"
+			@click="useSetCurrSection(currSection.id)"
 			:class="$style.btn_prev"
 			title="Go to previous section"
 			aria-label="Go to previous section"
@@ -20,7 +20,7 @@
 			:isDisabled="isOnLastSection"
 			:aria-hidden="isOnLastSection"
 			:href="nextSection"
-			@click="useSetCurrSection(currSectionId)"
+			@click="useSetCurrSection(currSection.id)"
 			:class="$style.btn_next"
 			title="Go to next section"
 			aria-label="Go to next section"
@@ -35,18 +35,18 @@
 	import {
 		filteredSectionsComputed,
 		isOnContentAtom,
-		currSectionIdAtom,
+		currSectionMap,
 		useSetCurrSection,
 	} from '../../store/NavigationStore'
 	import BaseButton from '../base/BaseButton.vue'
 
 	const filteredSections = useStore(filteredSectionsComputed)
 	const isOnContent = useStore(isOnContentAtom)
-	const currSectionId = useStore(currSectionIdAtom)
+	const currSection = useStore(currSectionMap)
 
 	const prevSection = computed(() => {
 		const prevSectionOrderNum =
-			filteredSections.value[currSectionId.value].orderNum - 1
+			filteredSections.value[currSection.value.id].orderNum! - 1
 
 		const prevSectionId = Object.keys(filteredSections.value).at(
 			prevSectionOrderNum
@@ -57,7 +57,7 @@
 
 	const nextSection = computed(() => {
 		const nextSectionOrderNum =
-			filteredSections.value[currSectionId.value].orderNum + 1
+			filteredSections.value[currSection.value.id].orderNum! + 1
 
 		const nextSectionId = Object.keys(filteredSections.value).at(
 			nextSectionOrderNum
@@ -69,13 +69,13 @@
 	})
 
 	const isOnFirstSection = computed(() => {
-		return filteredSections.value[currSectionId.value].orderNum === 0
+		return filteredSections.value[currSection.value.id].orderNum === 0
 	})
 
 	const isOnLastSection = computed(() => {
 		const lastSection: string = Object.keys(filteredSections.value).at(-1)!
 		return (
-			filteredSections.value[currSectionId.value].orderNum ===
+			filteredSections.value[currSection.value.id].orderNum ===
 			filteredSections.value[lastSection].orderNum
 		)
 	})

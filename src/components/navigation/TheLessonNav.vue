@@ -8,7 +8,7 @@
 		<div :class="$style.navInfo">
 			<p v-show="isOnContent">
 				Currently on:
-				{{ currSectionTitle }}
+				{{ currSection.title }}
 			</p>
 			<TheNextPrevSectionButtons />
 			<TheNavToc />
@@ -22,7 +22,7 @@
 	import {
 		isOnContentAtom,
 		allSectionsMap,
-		currSectionTitleAtom,
+		currSectionMap,
 	} from '../../store/NavigationStore'
 	import TheNavToc from './TheNavTOC.vue'
 	import TheNextPrevSectionButtons from './TheNextPrevSectionButtons.vue'
@@ -30,7 +30,7 @@
 
 	const allSections = useStore(allSectionsMap)
 	const isOnContent = useStore(isOnContentAtom)
-	const currSectionTitle = useStore(currSectionTitleAtom)
+	const currSection = useStore(currSectionMap)
 
 	let areSectionsAvailable = ref<boolean>(false)
 

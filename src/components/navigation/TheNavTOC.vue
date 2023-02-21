@@ -41,19 +41,19 @@
 	import BaseButton from '../base/BaseButton.vue'
 	import {
 		filteredSectionsComputed,
-		currSectionIdAtom,
+		currSectionMap,
 		useSetCurrSection,
 	} from '../../store/NavigationStore'
 	import { useStore } from '@nanostores/vue'
 
 	const filteredSections = useStore(filteredSectionsComputed)
-	const currSectionId = useStore(currSectionIdAtom)
+	const currSection = useStore(currSectionMap)
 
 	const isMenuOpen = ref<boolean>(false)
 	const openMenu = () => (isMenuOpen.value = !isMenuOpen.value)
 
 	const isLocatedHere = (id: string) => {
-		if (id == currSectionId.value) {
+		if (id == currSection.value.id) {
 			return true
 		}
 	}
