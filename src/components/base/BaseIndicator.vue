@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
+	defineProps({
 		text: {
 			type: String,
 			required: true,

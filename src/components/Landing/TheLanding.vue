@@ -30,6 +30,8 @@
 	}
 	const props = defineProps<Props>()
 
+	const bgGradient = `linear-gradient(to bottom, white 0%, ${props.color} 40%, ${props.color} 60%, white 100%);`
+
 	const allSections = useStore(allSectionsMap)
 	const firstSection = useStore(firstSectionComputed)
 
@@ -37,8 +39,6 @@
 	onMounted(() => {
 		areSectionsAvailable.value = Object.keys(allSections.value).length > 0
 	})
-
-	const bgGradient = `linear-gradient(to bottom, white 0%, ${props.color} 40%, ${props.color} 60%, white 100%);`
 </script>
 
 <style module>
