@@ -42,6 +42,7 @@ const filteredSectionsComputed = computed(
 		filteredSections.forEach(([_, details], i) => {
 			details.orderNum = i
 		})
+
 		return Object.fromEntries(filteredSections)
 	}
 )
