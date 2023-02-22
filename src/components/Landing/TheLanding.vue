@@ -7,7 +7,7 @@
 			isOnLanding
 			hidden
 			text="Scroll to start"
-			:goTo="firstSection"
+			:goTo="`#${firstSection.id}`"
 		/>
 	</header>
 </template>
@@ -19,9 +19,9 @@
 	import { useStore } from '@nanostores/vue'
 	import {
 		allSectionsMap,
-		filteredSectionsComputed,
-	} from '../../store/NavigationStore'
-	import { onMounted, ref, computed } from 'vue'
+		firstSectionComputed,
+	} from '../../store/NavigationStore.js'
+	import { onMounted, ref, Ref } from 'vue'
 
 	interface Props {
 		title: string
@@ -31,18 +31,14 @@
 	const props = defineProps<Props>()
 
 	const allSections = useStore(allSectionsMap)
-	const filteredSections = useStore(filteredSectionsComputed)
 	let areSectionsAvailable = ref<boolean>(false)
 
-	const firstSection = computed(() => {
-		const first = Object.keys(filteredSections.value).at(0)
-		return `#${first}`
-	})
+	let firstSection: Readonly<Ref>
 
 	onMounted(() => {
+		firstSection = useStore(firstSectionComputed)
 		areSectionsAvailable.value = Object.keys(allSections.value).length > 0
 	})
-
 	const bgGradient = `linear-gradient(to bottom, white 0%, ${props.color} 40%, ${props.color} 60%, white 100%);`
 </script>
 

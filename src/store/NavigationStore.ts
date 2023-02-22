@@ -80,30 +80,29 @@ const filteredSectionsComputed = computed(
 	}
 )
 
-// BUG: Issue here where it attempts to set first/last values before filteredSectionsComputed is fully registered
-// Based on allSections/filteredSections
-const firstSectionComputed = computed(filteredSectionsComputed, (section) => {
-	console.log(section)
-	const id = Object.keys(filteredSectionsComputed.get()).at(0)!
-	const orderNum = filteredSectionsComputed.get()[id].orderNum
+//This only works if initialized within onMounted lifecycle hook within vue
+
+const firstSectionComputed = computed(filteredSectionsComputed, (sections) => {
+	const id = Object.keys(sections).at(0)!
+	const orderNum = sections[id].orderNum
 	return { id, orderNum }
 })
-const lastSectionComputed = computed(filteredSectionsComputed, () => {
-	const id = Object.keys(filteredSectionsComputed.get()).at(-1)!
-	const orderNum = filteredSectionsComputed.get()[id].orderNum
+const lastSectionComputed = computed(filteredSectionsComputed, (sections) => {
+	const id = Object.keys(sections).at(-1)!
+	const orderNum = sections[id].orderNum
 	return { id, orderNum }
 })
 
 export {
 	isOnContentAtom,
-	currSectionMap,
-	useSetCurrSection,
 	useToggleNavShown,
 	allSectionsMap,
+	currSectionMap,
+	useSetCurrSection,
+	nextSectionComputed,
+	prevSectionComputed,
 	filteredSectionsComputed,
 	firstSectionComputed,
 	lastSectionComputed,
-	nextSectionComputed,
-	prevSectionComputed,
 }
 export type { SectionDetails, SectionsMap }
