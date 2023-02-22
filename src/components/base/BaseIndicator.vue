@@ -2,7 +2,7 @@
 	<div
 		:class="[$style.indicator, { [$style.OnlandingIndicator]: isOnLanding }]"
 	>
-		<a :class="$style.indicatorLink" :href="firstSection" :aria-hidden="hidden">
+		<a :class="$style.indicatorLink" :href="goTo" :aria-hidden="hidden">
 			<p>{{ text }}</p>
 			<span :class="$style.scrollArrow">
 				<svg
@@ -25,12 +25,12 @@
 </template>
 
 <script setup lang="ts">
-	import { computed } from 'vue'
-	import { useStore } from '@nanostores/vue'
-	import { filteredSectionsComputed } from '../../store/NavigationStore'
-
 	defineProps({
 		text: {
+			type: String,
+			required: true,
+		},
+		goTo: {
 			type: String,
 			required: true,
 		},
@@ -41,13 +41,6 @@
 			type: Boolean,
 		},
 	})
-
-	const filteredSections = useStore(filteredSectionsComputed)
-
-	const firstSection = computed(() => {
-		const first = Object.keys(filteredSections.value).at(0)
-		return `#${first}`
-	})
 </script>
 
 <style module lang="scss">
@@ -57,22 +50,27 @@
 	}
 	.OnlandingIndicator {
 		grid-area: card-indicator/landing-top/indicator-end/landing-bottom;
+		p {
+			background-color: hsla(0deg, 0%, 98%, 0.5);
+			filter: drop-shadow(0 0 var(--s1) var(--white));
+			border-radius: var(--s10);
+		}
 	}
 	.indicatorLink {
-		all: unset;
-		display: flex;
-		flex-flow: column nowrap;
-		justify-content: center;
-		align-items: center;
-
+		&,
+		&:hover,
+		&:focus {
+			all: unset;
+			display: flex;
+			flex-flow: column nowrap;
+			justify-content: center;
+			align-items: center;
+		}
 		> p {
 			padding: var(--s-5);
 			display: block;
 			font-size: var(--s0);
-			margin: 0 auto;
-			background-color: hsla(0deg, 0%, 98%, 0.5);
-			filter: drop-shadow(0 0 var(--s1) var(--white));
-			border-radius: var(--s10);
+			margin: 0 auto var(--s-10);
 		}
 		> span {
 			margin: var(--s-10) auto;
@@ -80,7 +78,6 @@
 			animation: bounce 1s ease-in-out infinite alternate;
 		}
 	}
-
 	@keyframes bounce {
 		from {
 			transform: translateY(0);

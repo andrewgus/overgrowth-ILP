@@ -6,7 +6,7 @@
 			:tabindex="isOnFirstSection ? '-1' : '0'"
 			:isDisabled="isOnFirstSection"
 			:aria-hidden="isOnFirstSection"
-			:href="prevSection"
+			:href="`#${prevSection}`"
 			@click="useSetCurrSection(currSection.id)"
 			:class="$style.btn_prev"
 			title="Go to previous section"
@@ -19,7 +19,7 @@
 			:tabindex="isOnLastSection ? '-1' : '0'"
 			:isDisabled="isOnLastSection"
 			:aria-hidden="isOnLastSection"
-			:href="nextSection"
+			:href="`#${nextSection}`"
 			@click="useSetCurrSection(currSection.id)"
 			:class="$style.btn_next"
 			title="Go to next section"
@@ -30,53 +30,51 @@
 </template>
 
 <script setup lang="ts">
-	import { computed } from 'vue'
+	import { computed, onMounted, Ref, ref } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import {
 		filteredSectionsComputed,
 		isOnContentAtom,
 		currSectionMap,
 		useSetCurrSection,
+		allSectionsMap,
+		SectionsMap,
+		nextSectionComputed,
+		prevSectionComputed,
 	} from '../../store/NavigationStore'
 	import BaseButton from '../base/BaseButton.vue'
 
-	const filteredSections = useStore(filteredSectionsComputed)
 	const isOnContent = useStore(isOnContentAtom)
 	const currSection = useStore(currSectionMap)
+	const nextSection = useStore(nextSectionComputed)
+	const prevSection = useStore(prevSectionComputed)
 
-	const prevSection = computed(() => {
-		const prevSectionOrderNum =
-			filteredSections.value[currSection.value.id].orderNum! - 1
+	let filteredSections: Readonly<Ref<SectionsMap>>
+	let areSectionsAvailable = ref<boolean>(false)
+	let allSections = useStore(allSectionsMap)
+	let sections = useStore(allSectionsMap)
 
-		const prevSectionId = Object.keys(filteredSections.value).at(
-			prevSectionOrderNum
-		)
-
-		return `#${prevSectionId}`
-	})
-
-	const nextSection = computed(() => {
-		const nextSectionOrderNum =
-			filteredSections.value[currSection.value.id].orderNum! + 1
-
-		const nextSectionId = Object.keys(filteredSections.value).at(
-			nextSectionOrderNum
-		)
-
-		if (nextSectionId === undefined) return '#'
-
-		return `#${nextSectionId}`
+	// TODO: consider how to refactor this... this is to fix refresh errors, where, the whole app resets, and we need to wait a short time for the filtered list to reload so that the proper items are showing. Right now, this is making sure the filtered list equals the allSections list as, with a page refresh, this is would be the case. This would be used in a number of places, so best to see if this can be moved to the Store, but this is where it is for now. It would be ideal to figure out how to simply way for the filteredList to finish updating before using it, but cannot quite figure out async await with it just yet.
+	onMounted(() => {
+		filteredSections = useStore(filteredSectionsComputed)
+		const sectionKeys = Object.keys(allSections.value).length
+		let filteredKeys: number
+		setTimeout(() => {
+			sections = useStore(filteredSectionsComputed)
+			filteredKeys = Object.keys(filteredSections.value).length
+			areSectionsAvailable.value = filteredKeys === sectionKeys
+		}, 100)
 	})
 
 	const isOnFirstSection = computed(() => {
-		return filteredSections.value[currSection.value.id].orderNum === 0
+		return sections.value[currSection.value.id].orderNum === 0
 	})
 
 	const isOnLastSection = computed(() => {
-		const lastSection: string = Object.keys(filteredSections.value).at(-1)!
+		const lastSection: string = Object.keys(sections.value).at(-1)!
 		return (
-			filteredSections.value[currSection.value.id].orderNum ===
-			filteredSections.value[lastSection].orderNum
+			sections.value[currSection.value.id].orderNum ===
+			sections.value[lastSection].orderNum
 		)
 	})
 </script>

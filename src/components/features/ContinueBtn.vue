@@ -19,22 +19,22 @@
 		<BaseIndicator
 			v-else
 			text="Scoll to continue"
-			:goTo="nextSection"
+			:goTo="`#${nextSection}`"
 		></BaseIndicator>
 	</transition>
 </template>
 
 <script setup lang="ts">
-	import { ref, computed } from 'vue'
+	import { ref } from 'vue'
 	import BaseButton from '../base/BaseButton.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
 	import {
 		currSectionMap,
-		filteredSectionsComputed,
+		nextSectionComputed,
 	} from '../../store/NavigationStore'
 	import { useStore } from '@nanostores/vue'
 
-	const filteredSections = useStore(filteredSectionsComputed)
+	const nextSection = useStore(nextSectionComputed)
 	const complete = ref<boolean>(false)
 	const sectionUsed = ref<string>('')
 
@@ -44,19 +44,6 @@
 		currSectionMap.setKey('isLocked', false)
 		complete.value = true
 	}
-
-	const nextSection = computed(() => {
-		const nextSectionOrderNum =
-			filteredSections.value[sectionUsed.value].orderNum! + 1
-
-		const nextSectionId = Object.keys(filteredSections.value).at(
-			nextSectionOrderNum
-		)
-
-		if (nextSectionId === undefined) return '#'
-
-		return `#${nextSectionId}`
-	})
 </script>
 
 <style module lang="scss">

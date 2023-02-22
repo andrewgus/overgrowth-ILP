@@ -2,6 +2,13 @@ import { atom, map, computed } from 'nanostores'
 import { featuresMap } from './FeatureSettingsStore'
 import type { FeatureType } from './FeatureSettingsStore'
 
+// Used to determine whether user is on content vs header
+const isOnContentAtom = atom(false)
+
+const useToggleNavShown = () => {
+	isOnContentAtom.set(!isOnContentAtom.get())
+}
+
 // All sections
 interface SectionDetails {
 	title: string
@@ -16,6 +23,32 @@ interface SectionsMap {
 }
 
 const allSectionsMap = map<SectionsMap>()
+
+// Determining current section, and first & last sections
+const currSectionMap = map<SectionDetails>()
+
+const useSetCurrSection = (sectionKey: string) => {
+	if (sectionKey !== '') {
+		currSectionMap.set(allSectionsMap.get()[sectionKey])
+	} else {
+		currSectionMap.setKey('id', '')
+		currSectionMap.setKey('title', '')
+		currSectionMap.setKey('orderNum', null)
+		currSectionMap.setKey('isFeatureType', false)
+		currSectionMap.setKey('isLocked', false)
+	}
+}
+
+const nextSectionComputed = computed(currSectionMap, ({ orderNum }) => {
+	const sectionKeys = Object.keys(allSectionsMap.get())
+	const next = sectionKeys.at(orderNum! + 1)
+	return next
+})
+const prevSectionComputed = computed(currSectionMap, ({ orderNum }) => {
+	const sectionKeys = Object.keys(allSectionsMap.get())
+	const prev = sectionKeys.at(orderNum! - 1)
+	return prev
+})
 
 // filtered sections determined if features are turned on or off
 const filteredSectionsComputed = computed(
@@ -46,30 +79,11 @@ const filteredSectionsComputed = computed(
 		return Object.fromEntries(filteredSections)
 	}
 )
-// Used to determine whether user is on content vs header
-const isOnContentAtom = atom(false)
-
-const useToggleNavShown = () => {
-	isOnContentAtom.set(!isOnContentAtom.get())
-}
-
-// Determining current section, and first & last sections
-const currSectionMap = map<SectionDetails>()
-
-const useSetCurrSection = (sectionKey: string) => {
-	if (sectionKey !== '') {
-		currSectionMap.set(allSectionsMap.get()[sectionKey])
-	} else {
-		currSectionMap.setKey('id', '')
-		currSectionMap.setKey('title', '')
-		currSectionMap.setKey('orderNum', null)
-		currSectionMap.setKey('isFeatureType', false)
-		currSectionMap.setKey('isLocked', false)
-	}
-}
 
 // BUG: Issue here where it attempts to set first/last values before filteredSectionsComputed is fully registered
-const firstSectionComputed = computed(filteredSectionsComputed, () => {
+// Based on allSections/filteredSections
+const firstSectionComputed = computed(filteredSectionsComputed, (section) => {
+	console.log(section)
 	const id = Object.keys(filteredSectionsComputed.get()).at(0)!
 	const orderNum = filteredSectionsComputed.get()[id].orderNum
 	return { id, orderNum }
@@ -79,12 +93,6 @@ const lastSectionComputed = computed(filteredSectionsComputed, () => {
 	const orderNum = filteredSectionsComputed.get()[id].orderNum
 	return { id, orderNum }
 })
-
-// TODO: refactor next and prev to live here in the NavStore. Currently being used in BaseIndicator and NextPrevSectionButtons
-const nextSectionComputed = computed(allSectionsMap, () => {
-	// console.log(allSectionsMap.get())
-})
-const prevSectionComputed = computed(allSectionsMap, () => {})
 
 export {
 	isOnContentAtom,

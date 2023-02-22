@@ -7,6 +7,7 @@
 			isOnLanding
 			hidden
 			text="Scroll to start"
+			:goTo="firstSection"
 		/>
 	</header>
 </template>
@@ -16,8 +17,11 @@
 	import TheTitleCard from './TheTitleCard.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
 	import { useStore } from '@nanostores/vue'
-	import { allSectionsMap } from '../../store/NavigationStore'
-	import { onMounted, ref } from 'vue'
+	import {
+		allSectionsMap,
+		filteredSectionsComputed,
+	} from '../../store/NavigationStore'
+	import { onMounted, ref, computed } from 'vue'
 
 	interface Props {
 		title: string
@@ -27,7 +31,13 @@
 	const props = defineProps<Props>()
 
 	const allSections = useStore(allSectionsMap)
+	const filteredSections = useStore(filteredSectionsComputed)
 	let areSectionsAvailable = ref<boolean>(false)
+
+	const firstSection = computed(() => {
+		const first = Object.keys(filteredSections.value).at(0)
+		return `#${first}`
+	})
 
 	onMounted(() => {
 		areSectionsAvailable.value = Object.keys(allSections.value).length > 0
