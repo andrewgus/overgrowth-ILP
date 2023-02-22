@@ -12,6 +12,10 @@ const sectionHeadings: NodeListOf<HTMLElement> = document.querySelectorAll(
 )!
 let sections: Array<HTMLElement> = []
 
+for (const heading of sectionHeadings) {
+	sections.push(heading.closest('section')!)
+}
+
 const createID = (title: string) =>
 	`${title
 		.replaceAll(/[^\w\s]/g, '')
@@ -24,10 +28,6 @@ const getFeatureType = (featureClassName: string): boolean | FeatureType => {
 	if (featureClassName.includes('practice')) return 'practice'
 	if (featureClassName.includes('choice')) return 'choice'
 	return false
-}
-
-for (const heading of sectionHeadings) {
-	sections.push(heading.closest('section')!)
 }
 
 sections.forEach((s: HTMLElement, i: number) => {
