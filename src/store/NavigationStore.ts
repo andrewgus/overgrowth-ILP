@@ -74,7 +74,6 @@ const nextSectionComputed = computed(currSectionMap, ({ orderNum }) => {
 	let nextSection: string
 	if (orderNum !== null) {
 		nextSection = allFilteredSectionKeys.at(orderNum + 1)!
-		console.log(nextSection)
 	} else {
 		nextSection = allFilteredSectionKeys.at(0)!
 	}
