@@ -19,10 +19,10 @@ const createID = (title: string) =>
 		.substring(0, 25)
 		.toLowerCase()}`
 
-const getFeatureType = (feature: string): boolean | FeatureType => {
-	if (feature.includes('reflection')) return 'reflection'
-	if (feature.includes('practice')) return 'practice'
-	if (feature.includes('choice')) return 'choice'
+const getFeatureType = (featureClassName: string): boolean | FeatureType => {
+	if (featureClassName.includes('reflection')) return 'reflection'
+	if (featureClassName.includes('practice')) return 'practice'
+	if (featureClassName.includes('choice')) return 'choice'
 	return false
 }
 
