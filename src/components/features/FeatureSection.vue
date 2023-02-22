@@ -14,13 +14,13 @@
 </template>
 
 <script setup lang="ts">
-	import ContinueBtn from './ContinueBtn.vue'
 	import { useStore } from '@nanostores/vue'
 	import {
 		featuresMap,
 		useDoesFeatureExist,
 	} from '../../store/FeatureSettingsStore'
 	import type { FeatureType } from '../../store/FeatureSettingsStore'
+	import ContinueBtn from './ContinueBtn.vue'
 
 	interface Props {
 		featureType: FeatureType
