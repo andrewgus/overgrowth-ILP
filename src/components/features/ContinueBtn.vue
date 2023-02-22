@@ -1,12 +1,4 @@
-<!--
-  
-  TODO: This component...
-    — will be based off the BaseButton & BaseIndicator components.
-    — however, will have a few if/else situations tied to it.
-    — will be used at the end of any given feature component. As these featuresMap are also stopping points in the lesson. Users will not be able to continue with the lesson until they have completed the feature. Until they have completed the feature, the Btn will be disabled. Once complete, they will be able to click it and then show the indicator.
-
-    — Optionally, the complete btn will instead be a "Save & Complete" btn, where users will not only complete and continue, but also download a PDF of that activity, so that they can provide their finished results to their professor
--->
+<!-- TODO: Optionally, the complete btn can instead be a "Save & Complete" btn, where users will not only complete and continue, but also download a PDF of that activity, so that they can provide their finished results to their professor -->
 
 <template>
 	<transition mode="out-in">
@@ -26,21 +18,28 @@
 
 <script setup lang="ts">
 	import { ref } from 'vue'
-	import BaseButton from '../base/BaseButton.vue'
-	import BaseIndicator from '../base/BaseIndicator.vue'
+	import { useStore } from '@nanostores/vue'
 	import {
 		currSectionMap,
+		useSetCurrSection,
 		nextSectionComputed,
 	} from '../../store/NavigationStore'
-	import { useStore } from '@nanostores/vue'
+	import BaseButton from '../base/BaseButton.vue'
+	import BaseIndicator from '../base/BaseIndicator.vue'
 
-	const nextSection = useStore(nextSectionComputed)
 	const complete = ref<boolean>(false)
-	const sectionUsed = ref<string>('')
+	const nextSection = useStore(nextSectionComputed)
+	let completedFeature: string
 
 	const setComplete = ({ target }: Event) => {
-		const btn = target as HTMLElement
-		sectionUsed.value = btn.closest('section')!.id
+		const clicked = target as HTMLElement
+		if (!clicked) return
+
+		const thisSection = clicked.closest('section')
+		console.log(thisSection)
+		completedFeature = thisSection!.id
+		useSetCurrSection(completedFeature)
+
 		currSectionMap.setKey('isLocked', false)
 		complete.value = true
 	}

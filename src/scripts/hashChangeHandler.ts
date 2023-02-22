@@ -52,9 +52,7 @@ const observerCallbackHeader = function (
 	entries: Array<IntersectionObserverEntry>
 ) {
 	const [entry] = entries
-
 	if (!entry.isIntersecting) return
-
 	history.replaceState(null, '', `${baseURL}`)
 	// Updating store to toggle LessonNav & set current section id
 	if (isOnContentAtom.get()) useToggleNavShown()
@@ -65,9 +63,7 @@ const observerCallbackHeadings = function (
 	entries: Array<IntersectionObserverEntry>
 ) {
 	const [entry] = entries
-
 	if (!entry.isIntersecting) return
-
 	history.replaceState(
 		null,
 		'',
@@ -75,7 +71,6 @@ const observerCallbackHeadings = function (
 	)
 	// Updating store to toggle LessonNav & set current section id
 	if (!isOnContentAtom.get()) useToggleNavShown()
-
 	useSetCurrSection(entry.target.closest('section')!.id)
 }
 

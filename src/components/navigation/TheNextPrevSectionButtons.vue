@@ -30,53 +30,24 @@
 </template>
 
 <script setup lang="ts">
-	import { computed, onMounted, Ref, ref } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import {
-		filteredSectionsComputed,
 		isOnContentAtom,
 		currSectionMap,
 		useSetCurrSection,
-		allSectionsMap,
-		SectionsMap,
 		nextSectionComputed,
 		prevSectionComputed,
+		isOnFirstSectionComputed,
+		isOnLastSectionComputed,
 	} from '../../store/NavigationStore'
 	import BaseButton from '../base/BaseButton.vue'
 
 	const isOnContent = useStore(isOnContentAtom)
 	const currSection = useStore(currSectionMap)
+	const isOnFirstSection = useStore(isOnFirstSectionComputed)
 	const nextSection = useStore(nextSectionComputed)
+	const isOnLastSection = useStore(isOnLastSectionComputed)
 	const prevSection = useStore(prevSectionComputed)
-
-	let filteredSections: Readonly<Ref<SectionsMap>>
-	let areSectionsAvailable = ref<boolean>(false)
-	let allSections = useStore(allSectionsMap)
-	let sections = useStore(allSectionsMap)
-
-	// TODO: consider how to refactor this... this is to fix refresh errors, where, the whole app resets, and we need to wait a short time for the filtered list to reload so that the proper items are showing. Right now, this is making sure the filtered list equals the allSections list as, with a page refresh, this is would be the case. This would be used in a number of places, so best to see if this can be moved to the Store, but this is where it is for now. It would be ideal to figure out how to simply way for the filteredList to finish updating before using it, but cannot quite figure out async await with it just yet.
-	onMounted(() => {
-		filteredSections = useStore(filteredSectionsComputed)
-		const sectionKeys = Object.keys(allSections.value).length
-		let filteredKeys: number
-		setTimeout(() => {
-			sections = useStore(filteredSectionsComputed)
-			filteredKeys = Object.keys(filteredSections.value).length
-			areSectionsAvailable.value = filteredKeys === sectionKeys
-		}, 100)
-	})
-
-	const isOnFirstSection = computed(() => {
-		return sections.value[currSection.value.id].orderNum === 0
-	})
-
-	const isOnLastSection = computed(() => {
-		const lastSection: string = Object.keys(sections.value).at(-1)!
-		return (
-			sections.value[currSection.value.id].orderNum ===
-			sections.value[lastSection].orderNum
-		)
-	})
 </script>
 
 <style module lang="scss">

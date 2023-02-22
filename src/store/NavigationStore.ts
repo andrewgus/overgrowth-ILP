@@ -39,17 +39,6 @@ const useSetCurrSection = (sectionKey: string) => {
 	}
 }
 
-const nextSectionComputed = computed(currSectionMap, ({ orderNum }) => {
-	const sectionKeys = Object.keys(allSectionsMap.get())
-	const next = sectionKeys.at(orderNum! + 1)
-	return next
-})
-const prevSectionComputed = computed(currSectionMap, ({ orderNum }) => {
-	const sectionKeys = Object.keys(allSectionsMap.get())
-	const prev = sectionKeys.at(orderNum! - 1)
-	return prev
-})
-
 // filtered sections determined if features are turned on or off
 const filteredSectionsComputed = computed(
 	[allSectionsMap, featuresMap],
@@ -59,7 +48,7 @@ const filteredSectionsComputed = computed(
 		const filteredSections = sectionsAsArray.filter(([_, details]) => {
 			const featureValue = feature[details.isFeatureType as FeatureType]
 
-			// NOTE: perhaps filtered here includes anything that is locked to turn to display: none, rather than it a seperate computed.
+			// TODO:  filter out anything that matches isLocked: true. These will turn to display: none.
 			// 	/* Need from sections:
 			// 			isLocked
 			// 			isFeatureType
@@ -80,8 +69,29 @@ const filteredSectionsComputed = computed(
 	}
 )
 
-//This only works if initialized within onMounted lifecycle hook within vue
+const nextSectionComputed = computed(currSectionMap, ({ orderNum }) => {
+	const allFilteredSectionKeys = Object.keys(filteredSectionsComputed.get())
+	let nextSection: string
+	if (orderNum !== null) {
+		nextSection = allFilteredSectionKeys.at(orderNum + 1)!
+		console.log(nextSection)
+	} else {
+		nextSection = allFilteredSectionKeys.at(0)!
+	}
+	return nextSection
+})
+const prevSectionComputed = computed(currSectionMap, ({ orderNum }) => {
+	const allFilteredSectionKeys = Object.keys(filteredSectionsComputed.get())
+	let prevSection: string
+	if (orderNum !== null) {
+		prevSection = allFilteredSectionKeys.at(orderNum - 1)!
+	} else {
+		prevSection = allFilteredSectionKeys.at(0)!
+	}
+	return prevSection
+})
 
+//These only work if initialized within onMounted lifecycle hook within vue
 const firstSectionComputed = computed(filteredSectionsComputed, (sections) => {
 	const id = Object.keys(sections).at(0)!
 	const orderNum = sections[id].orderNum
@@ -93,6 +103,12 @@ const lastSectionComputed = computed(filteredSectionsComputed, (sections) => {
 	return { id, orderNum }
 })
 
+const isOnFirstSectionComputed = computed(currSectionMap, ({ id }) => {
+	return id === firstSectionComputed.get().id
+})
+const isOnLastSectionComputed = computed(currSectionMap, ({ id }) => {
+	return id === lastSectionComputed.get().id
+})
 export {
 	isOnContentAtom,
 	useToggleNavShown,
@@ -104,5 +120,7 @@ export {
 	filteredSectionsComputed,
 	firstSectionComputed,
 	lastSectionComputed,
+	isOnFirstSectionComputed,
+	isOnLastSectionComputed,
 }
 export type { SectionDetails, SectionsMap }

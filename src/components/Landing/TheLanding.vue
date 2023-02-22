@@ -13,15 +13,15 @@
 </template>
 
 <script setup lang="ts">
-	import TheScene from './TheScene.vue'
-	import TheTitleCard from './TheTitleCard.vue'
-	import BaseIndicator from '../base/BaseIndicator.vue'
+	import { onMounted, ref, Ref } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import {
 		allSectionsMap,
 		firstSectionComputed,
 	} from '../../store/NavigationStore.js'
-	import { onMounted, ref, Ref } from 'vue'
+	import TheScene from './TheScene.vue'
+	import TheTitleCard from './TheTitleCard.vue'
+	import BaseIndicator from '../base/BaseIndicator.vue'
 
 	interface Props {
 		title: string
@@ -39,6 +39,7 @@
 		firstSection = useStore(firstSectionComputed)
 		areSectionsAvailable.value = Object.keys(allSections.value).length > 0
 	})
+	
 	const bgGradient = `linear-gradient(to bottom, white 0%, ${props.color} 40%, ${props.color} 60%, white 100%);`
 </script>
 
