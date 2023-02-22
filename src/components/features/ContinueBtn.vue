@@ -36,7 +36,6 @@
 		if (!clicked) return
 
 		const thisSection = clicked.closest('section')
-		console.log(thisSection)
 		completedFeature = thisSection!.id
 		useSetCurrSection(completedFeature)
 

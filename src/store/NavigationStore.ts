@@ -56,6 +56,11 @@ const filteredSectionsComputed = computed(
 			// 	 */
 			// const lockedFeature =
 			// 	details.isLocked === true && details.isFeatureType !== false
+			/*  NOTE: 
+				If this works, will also need to consider what happens when a user starts the lesson, begins to unlock content, and then goes back to the top and switched features on/off. 
+					1. Should reset any completed features? Yes, but with a warning pop-up box first to confirm.
+					2. Should unlock any content trapped behind locked features? Yes. 
+			*/
 
 			// Must be either static content or feature must be true
 			return details.isFeatureType === false || featureValue === true
