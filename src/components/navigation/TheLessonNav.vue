@@ -21,7 +21,6 @@
 	import { useStore } from '@nanostores/vue'
 	import {
 		isOnContentAtom,
-		currSectionMap,
 		allSectionsMap,
 		currSectionMap,
 	} from '../../store/NavigationStore'

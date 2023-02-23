@@ -40,7 +40,6 @@
 		isOnFirstSectionComputed,
 		isOnLastSectionComputed,
 	} from '../../store/NavigationStore'
-	import type { SectionsMap } from '../../store/NavigationStore.js'
 	import BaseButton from '../base/BaseButton.vue'
 
 	const isOnContent = useStore(isOnContentAtom)

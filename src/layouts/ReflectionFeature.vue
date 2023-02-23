@@ -14,7 +14,6 @@
 
 <script setup lang="ts">
 	// TODO: When this is here, the activity is not complete, the completeBtn has not yet been selected, then all other content that comes after that is hidden. Need to figure out how to accomplish that. Think it will end up being a state management thing...
-	import FeatureSection from '../components/features/FeatureSection.vue'
 	import { ref } from 'vue'
 	import FeatureSection from '../components/features/FeatureSection.vue'
 
