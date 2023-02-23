@@ -7,14 +7,14 @@ interface Props {
 const { title, columnSet } = Astro.props
 ---
 
-<section class='staticContent'>
+<section class='section staticContent'>
 	<div class:list={['content', { columnSet: columnSet }]}>
 		<h2>{title}</h2>
 		<slot />
 	</div>
 </section>
 
-<style>
+<style lang='scss'>
 	.staticContent > div {
 		font-size: var(--s0);
 		margin: 0 auto;
@@ -23,5 +23,8 @@ const { title, columnSet } = Astro.props
 	}
 	.staticContent > div :global(p) {
 		max-width: 60ch;
+		&:last-of-type {
+			margin-bottom: 0;
+		}
 	}
 </style>

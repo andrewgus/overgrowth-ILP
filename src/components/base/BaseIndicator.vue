@@ -2,7 +2,12 @@
 	<div
 		:class="[$style.indicator, { [$style.OnlandingIndicator]: isOnLanding }]"
 	>
-		<a :class="$style.indicatorLink" :href="goTo" :aria-hidden="hidden">
+		<a
+			:class="$style.indicatorLink"
+			:href="goTo"
+			:aria-hidden="hidden"
+			:tabindex="hidden ? '-1' : '0'"
+		>
 			<p>{{ text }}</p>
 			<span :class="$style.scrollArrow">
 				<svg

@@ -41,16 +41,16 @@ const { title, scene, gradientColor = 'var(--white)' } = Astro.props
 	</body>
 </html>
 
-<style is:global>
-	.theLesson > section,
-	.theLesson > astro-island > section {
+<style is:global lang='scss'>
+	.theLesson .section {
 		min-height: 90vh;
-		padding: 0 var(--s-2);
+		padding: 0 var(--s-2) var(--s2);
+
+		&:not(.firstSection) {
+			border-top: 2px solid var(--darkGray);
+		}
 	}
-	.theLesson section:not([id='section1']) {
-		border-top: 2px solid var(--darkGray);
-	}
-	.theLesson section:not(.feature):nth-child(2n + 1) {
+	.theLesson .section:not(.feature):nth-child(2n + 1) {
 		background-color: var(--offWhite);
 	}
 	section.isLocked {

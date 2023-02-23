@@ -33,20 +33,18 @@ const observerCallbackHeadings = function (
 	history.replaceState(
 		null,
 		'',
-		`${baseURL}#${entry.target.closest('section')!.id}`
+		`${baseURL}#${entry.target.closest('.section')!.id}`
 	)
 	// Updating store to toggle LessonNav & set current section id
 	if (!isOnContentAtom.get()) useToggleNavShown()
-	useSetCurrSection(entry.target.closest('section')!.id)
+	useSetCurrSection(entry.target.closest('.section')!.id)
 }
 
 const observerCallbackSections = function (
 	entries: Array<IntersectionObserverEntry>
 ) {
 	const [entry] = entries
-
 	if (!entry.isIntersecting) return
-
 	// Only fires when scrolling up
 	if (entry.intersectionRect.top === 0) {
 		history.replaceState(null, '', `${baseURL}#${entry.target.id}`)

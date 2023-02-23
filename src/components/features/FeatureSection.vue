@@ -1,7 +1,7 @@
 <template>
 	<section
 		v-show="features[featureType]"
-		class="feature"
+		class="section feature"
 		:class="$style[featureType]"
 	>
 		<div>

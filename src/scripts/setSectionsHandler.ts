@@ -45,6 +45,8 @@ sections.forEach((s: HTMLElement, i: number) => {
 	s.id = allSectionsMap.get()[createID(s.querySelector('h2')!.textContent!)].id
 })
 
+sections[0].classList.add('firstSection')
+
 if (location.includes('#')) {
 	isOnContentAtom.set(true)
 	useSetCurrSection(location.split('#').at(-1)!)
