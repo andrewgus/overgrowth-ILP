@@ -1,5 +1,5 @@
 <template>
-	<div v-if="isOnContent && areSectionsAvailable" :class="$style.nextPrev">
+	<div v-if="isOnContent" :class="$style.nextPrev">
 		<BaseButton
 			link
 			isForNav
