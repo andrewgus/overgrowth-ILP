@@ -13,15 +13,15 @@
 </template>
 
 <script setup lang="ts">
-	import TheScene from './TheScene.vue'
-	import TheTitleCard from './TheTitleCard.vue'
-	import BaseIndicator from '../base/BaseIndicator.vue'
+	import { onMounted, ref, Ref } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import {
 		allSectionsMap,
 		firstSectionComputed,
-	} from '../../store/NavigationStore'
-	import { onMounted, ref } from 'vue'
+	} from '../../store/NavigationStore.js'
+	import TheScene from './TheScene.vue'
+	import TheTitleCard from './TheTitleCard.vue'
+	import BaseIndicator from '../base/BaseIndicator.vue'
 
 	interface Props {
 		title: string
@@ -35,8 +35,10 @@
 	const allSections = useStore(allSectionsMap)
 	const firstSection = useStore(firstSectionComputed)
 
-	let areSectionsAvailable = ref<boolean>(false)
+	let firstSection: Readonly<Ref>
+
 	onMounted(() => {
+		firstSection = useStore(firstSectionComputed)
 		areSectionsAvailable.value = Object.keys(allSections.value).length > 0
 	})
 </script>

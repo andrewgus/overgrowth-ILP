@@ -38,13 +38,13 @@
 
 <script setup lang="ts">
 	import { ref, useCssModule } from 'vue'
-	import BaseButton from '../base/BaseButton.vue'
+	import { useStore } from '@nanostores/vue'
 	import {
 		filteredSectionsComputed,
 		currSectionMap,
 		useSetCurrSection,
 	} from '../../store/NavigationStore'
-	import { useStore } from '@nanostores/vue'
+	import BaseButton from '../base/BaseButton.vue'
 
 	const filteredSections = useStore(filteredSectionsComputed)
 	const currSection = useStore(currSectionMap)

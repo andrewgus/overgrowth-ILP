@@ -2,12 +2,7 @@
 	<div
 		:class="[$style.indicator, { [$style.OnlandingIndicator]: isOnLanding }]"
 	>
-		<a
-			:class="$style.indicatorLink"
-			:href="goTo"
-			:aria-hidden="hidden"
-			:tabindex="hidden ? '-1' : '0'"
-		>
+		<a :class="$style.indicatorLink" :href="goTo" :aria-hidden="hidden">
 			<p>{{ text }}</p>
 			<span :class="$style.scrollArrow">
 				<svg
@@ -55,7 +50,6 @@
 	}
 	.OnlandingIndicator {
 		grid-area: card-indicator/landing-top/indicator-end/landing-bottom;
-
 		p {
 			background-color: hsla(0deg, 0%, 98%, 0.5);
 			filter: drop-shadow(0 0 var(--s1) var(--white));
@@ -72,7 +66,6 @@
 			justify-content: center;
 			align-items: center;
 		}
-
 		> p {
 			padding: var(--s-5);
 			display: block;
@@ -85,7 +78,6 @@
 			animation: bounce 1s ease-in-out infinite alternate;
 		}
 	}
-
 	@keyframes bounce {
 		from {
 			transform: translateY(0);

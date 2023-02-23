@@ -23,6 +23,7 @@
 		isOnContentAtom,
 		currSectionMap,
 		allSectionsMap,
+		currSectionMap,
 	} from '../../store/NavigationStore'
 	import TheNavToc from './TheNavTOC.vue'
 	import TheNextPrevSectionButtons from './TheNextPrevSectionButtons.vue'

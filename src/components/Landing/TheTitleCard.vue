@@ -37,8 +37,8 @@
 </template>
 
 <script setup lang="ts">
-	import { useStore } from '@nanostores/vue'
 	import { computed } from 'vue'
+	import { useStore } from '@nanostores/vue'
 	import {
 		featuresMap,
 		useFeatureExists,

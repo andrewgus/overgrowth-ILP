@@ -1,60 +1,24 @@
 import {
+	location,
+	sectionHeadings,
+	sections,
+} from '../scripts/setSectionsHandler.js'
+import {
 	isOnContentAtom,
-	allSectionsMap,
 	useSetCurrSection,
 	useToggleNavShown,
 } from '../store/NavigationStore'
-import type { SectionDetails } from '../store/NavigationStore'
-import useCreateID from '../composables/useCreateId'
-import useGetFeatureType from '../composables/useGetFeatureType'
 
-const location = window.location.toString()
 const baseURL = location.split('#')[0]
 
 const header: HTMLElement = document.querySelector('header')!
-const sectionHeadings: NodeListOf<HTMLElement> = document.querySelectorAll(
-	'article section  h2:first-of-type'
-)!
-let sections: Array<HTMLElement> = []
-
-// Setting all section ids and storing sections
-for (const heading of sectionHeadings) {
-	sections.push(heading.closest('section')!)
-}
-
-sections.forEach((s: HTMLElement, i: number) => {
-	const section: SectionDetails = {
-		title: s.querySelector('h2')!.textContent!,
-		id: useCreateID(s.querySelector('h2')!.textContent!),
-		orderNum: i,
-		isFeatureType:
-			s.classList.contains('feature') &&
-			useGetFeatureType(s.classList.toString()),
-		isLocked: true,
-	}
-
-	allSectionsMap.setKey(
-		useCreateID(s.querySelector('h2')!.textContent!),
-		section
-	)
-
-	s.id =
-		allSectionsMap.get()[useCreateID(s.querySelector('h2')!.textContent!)].id
-})
-
-if (location.includes('#')) {
-	isOnContentAtom.set(true)
-	useSetCurrSection(location.split('#').at(-1)!)
-}
 
 // Observer for header, sections, & headings to update URL hash value w/ scroll
 const observerCallbackHeader = function (
 	entries: Array<IntersectionObserverEntry>
 ) {
 	const [entry] = entries
-
 	if (!entry.isIntersecting) return
-
 	history.replaceState(null, '', `${baseURL}`)
 	// Updating store to toggle LessonNav & set current section id
 	if (isOnContentAtom.get()) useToggleNavShown()
@@ -65,9 +29,7 @@ const observerCallbackHeadings = function (
 	entries: Array<IntersectionObserverEntry>
 ) {
 	const [entry] = entries
-
 	if (!entry.isIntersecting) return
-
 	history.replaceState(
 		null,
 		'',
@@ -75,7 +37,6 @@ const observerCallbackHeadings = function (
 	)
 	// Updating store to toggle LessonNav & set current section id
 	if (!isOnContentAtom.get()) useToggleNavShown()
-
 	useSetCurrSection(entry.target.closest('section')!.id)
 }
 

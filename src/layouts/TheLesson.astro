@@ -20,6 +20,7 @@ const { title, scene, gradientColor = 'var(--white)' } = Astro.props
 		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
 		<meta name='generator' content={Astro.generator} />
 		<script>
+			import '../scripts/setSectionsHandler.js'
 			import '../scripts/hashChangeHandler.js'
 		</script>
 		<title>{title}</title>
