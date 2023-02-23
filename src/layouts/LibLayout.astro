@@ -26,12 +26,9 @@ const { title } = Astro.props
 				<slot />
 			</article>
 		</main>
-		<script>
-			import '../scripts/hashChangeHandler.js'
-		</script>
 	</body>
 </html>
-<style is:global>
+<style>
 	html {
 		font-family: 'Atkinson Hyperlegible', sans-serif;
 		background-color: var(--white);

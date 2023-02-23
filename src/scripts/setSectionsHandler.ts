@@ -5,6 +5,7 @@ import {
 } from '../store/NavigationStore'
 import type { SectionDetails } from '../store/NavigationStore'
 import type { FeatureType } from '../store/FeatureSettingsStore'
+import { useStore } from '@nanostores/vue'
 
 const location = window.location.toString()
 const sectionHeadings: NodeListOf<HTMLElement> = document.querySelectorAll(
@@ -30,6 +31,19 @@ const getFeatureType = (featureClassName: string): boolean | FeatureType => {
 	return false
 }
 
+const getFirstFeatureAndAllAfter = (i: number) => {
+	const firstFeatureIndex = sections.findIndex((s) =>
+		s.classList.contains('feature')
+	)
+	if (i >= firstFeatureIndex) {
+		return true
+	} else {
+		return false
+	}
+}
+
+if (sections) sections[0].classList.add('firstSection')
+
 sections.forEach((s: HTMLElement, i: number) => {
 	const section: SectionDetails = {
 		title: s.querySelector('h2')!.textContent!,
@@ -37,15 +51,19 @@ sections.forEach((s: HTMLElement, i: number) => {
 		orderNum: i,
 		isFeatureType:
 			s.classList.contains('feature') && getFeatureType(s.classList.toString()),
-		isLocked: true,
+		isLocked: getFirstFeatureAndAllAfter(i),
 	}
 
-	allSectionsMap.setKey(createID(s.querySelector('h2')!.textContent!), section)
+	if (sections[0])
+		allSectionsMap.setKey(
+			createID(s.querySelector('h2')!.textContent!),
+			section
+		)
 
 	s.id = allSectionsMap.get()[createID(s.querySelector('h2')!.textContent!)].id
 })
 
-sections[0].classList.add('firstSection')
+console.log(useStore(allSectionsMap).value)
 
 if (location.includes('#')) {
 	isOnContentAtom.set(true)
