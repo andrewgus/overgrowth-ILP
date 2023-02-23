@@ -31,11 +31,11 @@ const getFeatureType = (featureClassName: string): boolean | FeatureType => {
 	return false
 }
 
-const getFirstFeatureAndAllAfter = (i: number) => {
+const getFirstFeatureAndAllAfter = (sectionIndex: number) => {
 	const firstFeatureIndex = sections.findIndex((s) =>
 		s.classList.contains('feature')
 	)
-	if (i >= firstFeatureIndex) {
+	if (sectionIndex >= firstFeatureIndex) {
 		return true
 	} else {
 		return false
@@ -44,21 +44,17 @@ const getFirstFeatureAndAllAfter = (i: number) => {
 
 if (sections) sections[0].classList.add('firstSection')
 
-sections.forEach((s: HTMLElement, i: number) => {
+sections.forEach((s: HTMLElement, index: number) => {
 	const section: SectionDetails = {
 		title: s.querySelector('h2')!.textContent!,
 		id: createID(s.querySelector('h2')!.textContent!),
-		orderNum: i,
+		orderNum: index,
 		isFeatureType:
 			s.classList.contains('feature') && getFeatureType(s.classList.toString()),
-		isLocked: getFirstFeatureAndAllAfter(i),
+		isLocked: getFirstFeatureAndAllAfter(index),
 	}
 
-	if (sections[0])
-		allSectionsMap.setKey(
-			createID(s.querySelector('h2')!.textContent!),
-			section
-		)
+	allSectionsMap.setKey(createID(s.querySelector('h2')!.textContent!), section)
 
 	s.id = allSectionsMap.get()[createID(s.querySelector('h2')!.textContent!)].id
 })
