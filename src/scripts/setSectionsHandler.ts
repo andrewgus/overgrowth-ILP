@@ -35,7 +35,9 @@ const getFirstFeatureAndAllAfter = (sectionIndex: number) => {
 	const firstFeatureIndex = sections.findIndex((s) =>
 		s.classList.contains('feature')
 	)
-	if (sectionIndex >= firstFeatureIndex) {
+	if (firstFeatureIndex === -1) {
+		return false
+	} else if (sectionIndex >= firstFeatureIndex) {
 		return true
 	} else {
 		return false
