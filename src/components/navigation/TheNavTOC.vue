@@ -40,13 +40,13 @@
 	import { ref, useCssModule } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import {
-		filteredSectionsComputed,
+		filteredNavSectionsComputed,
 		currSectionMap,
 		useSetCurrSection,
 	} from '../../store/NavigationStore'
 	import BaseButton from '../base/BaseButton.vue'
 
-	const $filteredSections = useStore(filteredSectionsComputed)
+	const $filteredSections = useStore(filteredNavSectionsComputed)
 	const $currSection = useStore(currSectionMap)
 
 	const isMenuOpen = ref<boolean>(false)

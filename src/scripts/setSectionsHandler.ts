@@ -36,7 +36,8 @@ const getFirstFeatureAndAllAfter = (sectionIndex: number) => {
 	)
 	if (firstFeatureIndex === -1) {
 		return false
-	} else if (sectionIndex >= firstFeatureIndex) {
+	} else if (sectionIndex > firstFeatureIndex) {
+		// Any section that comes after the first feature to exist is locked
 		return true
 	} else {
 		return false
