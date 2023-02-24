@@ -7,7 +7,7 @@
 			isOnLanding
 			hidden
 			text="Scroll to start"
-			:goTo="`#${firstSection.id}`"
+			:goTo="`#${$firstSection.id}`"
 		/>
 	</header>
 </template>
@@ -30,17 +30,17 @@
 	}
 	const props = defineProps<Props>()
 
-	const bgGradient = `linear-gradient(to bottom, white 0%, ${props.color} 40%, ${props.color} 60%, white 100%);`
+	const $allSections = useStore(allSectionsMap)
 
-	const allSections = useStore(allSectionsMap)
 	let areSectionsAvailable = ref<boolean>(false)
-
-	let firstSection: Readonly<Ref>
+	let $firstSection: Readonly<Ref>
 
 	onMounted(() => {
-		firstSection = useStore(firstSectionComputed)
-		areSectionsAvailable.value = Object.keys(allSections.value).length > 0
+		$firstSection = useStore(firstSectionComputed)
+		areSectionsAvailable.value = Object.keys($allSections.value).length > 0
 	})
+
+	const bgGradient = `linear-gradient(to bottom, white 0%, ${props.color} 40%, ${props.color} 60%, white 100%);`
 </script>
 
 <style module>

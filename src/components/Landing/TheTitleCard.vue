@@ -55,7 +55,7 @@
 		},
 	})
 
-	const features = useStore(featuresMap)
+	const $features = useStore(featuresMap)
 
 	const featuresOn = computed(() => {
 		return (
@@ -79,7 +79,7 @@
 	})
 
 	const getFeatureValue = (feature: FeatureType) => {
-		return features.value[feature] as boolean
+		return $features.value[feature] as boolean
 	}
 </script>
 

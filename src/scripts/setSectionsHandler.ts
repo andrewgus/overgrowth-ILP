@@ -5,7 +5,6 @@ import {
 } from '../store/NavigationStore'
 import type { SectionDetails } from '../store/NavigationStore'
 import type { FeatureType } from '../store/FeatureSettingsStore'
-import { useStore } from '@nanostores/vue'
 
 const location = window.location.toString()
 const sectionHeadings: NodeListOf<HTMLElement> = document.querySelectorAll(
@@ -60,8 +59,6 @@ sections.forEach((s: HTMLElement, index: number) => {
 
 	s.id = allSectionsMap.get()[createID(s.querySelector('h2')!.textContent!)].id
 })
-
-console.log(useStore(allSectionsMap).value)
 
 if (location.includes('#')) {
 	isOnContentAtom.set(true)

@@ -1,13 +1,13 @@
 <template>
-	<div v-if="isOnContent" :class="$style.nextPrev">
+	<div v-if="$isOnContent" :class="$style.nextPrev">
 		<BaseButton
 			link
 			isForNav
-			:tabindex="isOnFirstSection ? '-1' : '0'"
-			:isDisabled="isOnFirstSection"
-			:aria-hidden="isOnFirstSection"
-			:href="`#${prevSection}`"
-			@click="useSetCurrSection(currSection.id)"
+			:tabindex="$isOnFirstSection ? '-1' : '0'"
+			:isDisabled="$isOnFirstSection"
+			:aria-hidden="$isOnFirstSection"
+			:href="`#${$prevSection}`"
+			@click="useSetCurrSection($currSection.id)"
 			:class="$style.btn_prev"
 			title="Go to previous section"
 			aria-label="Go to previous section"
@@ -16,11 +16,11 @@
 		<BaseButton
 			link
 			isForNav
-			:tabindex="isOnLastSection ? '-1' : '0'"
-			:isDisabled="isOnLastSection"
-			:aria-hidden="isOnLastSection"
-			:href="`#${nextSection}`"
-			@click="useSetCurrSection(currSection.id)"
+			:tabindex="$isOnLastSection ? '-1' : '0'"
+			:isDisabled="$isOnLastSection"
+			:aria-hidden="$isOnLastSection"
+			:href="`#${$nextSection}`"
+			@click="useSetCurrSection($currSection.id)"
 			:class="$style.btn_next"
 			title="Go to next section"
 			aria-label="Go to next section"
@@ -42,12 +42,12 @@
 	} from '../../store/NavigationStore'
 	import BaseButton from '../base/BaseButton.vue'
 
-	const isOnContent = useStore(isOnContentAtom)
-	const currSection = useStore(currSectionMap)
-	const isOnFirstSection = useStore(isOnFirstSectionComputed)
-	const nextSection = useStore(nextSectionComputed)
-	const isOnLastSection = useStore(isOnLastSectionComputed)
-	const prevSection = useStore(prevSectionComputed)
+	const $isOnContent = useStore(isOnContentAtom)
+	const $currSection = useStore(currSectionMap)
+	const $isOnFirstSection = useStore(isOnFirstSectionComputed)
+	const $nextSection = useStore(nextSectionComputed)
+	const $isOnLastSection = useStore(isOnLastSectionComputed)
+	const $prevSection = useStore(prevSectionComputed)
 </script>
 
 <style module lang="scss">

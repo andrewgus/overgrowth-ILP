@@ -3,7 +3,7 @@
 		<BaseButton
 			link
 			text="Skip to main content"
-			:url="`#${firstSection.id}`"
+			:url="`#${$firstSection.id}`"
 			color="red-1"
 		></BaseButton>
 	</div>
@@ -14,8 +14,7 @@
 	import { useStore } from '@nanostores/vue'
 	import { firstSectionComputed } from '../../store/NavigationStore'
 
-	const firstSection = useStore(firstSectionComputed)
-
+	const $firstSection = useStore(firstSectionComputed)
 </script>
 
 <style module lang="scss">

@@ -5,10 +5,12 @@ interface Props {
 }
 
 const { title, columnSet } = Astro.props
+// TODO: remove columnSets from here completely. Create modern layouts in components --> features --> staticContent, and create layout components to drop into this.
+// TODO: on section el, add dynamic class of isLocked, when isLocked is true for this item within the allSections store map
 ---
 
-<section class='section staticContent'>
-	<div class:list={['content', { columnSet: columnSet }]}>
+<section class:list={['section', 'staticContent']}>
+	<div class:list={[{ columnSet: columnSet }]}>
 		<h2>{title}</h2>
 		<slot />
 	</div>

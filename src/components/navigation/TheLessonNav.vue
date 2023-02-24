@@ -2,13 +2,13 @@
 	<nav
 		v-if="areSectionsAvailable"
 		id="lessonNav"
-		:class="[$style.lessonNav, { [$style.isInvisible]: !isOnContent }]"
+		:class="[$style.lessonNav, { [$style.isInvisible]: !$isOnContent }]"
 	>
-		<SkipToContent v-if="!isOnContent && areSectionsAvailable" />
+		<SkipToContent v-if="!$isOnContent && areSectionsAvailable" />
 		<div :class="$style.navInfo">
-			<p v-if="currSectionAvailable" v-show="isOnContent">
+			<p v-if="!!$currSection" v-show="$isOnContent">
 				Currently on:
-				{{ currSection.title }}
+				{{ $currSection.title }}
 			</p>
 			<TheNextPrevSectionButtons />
 			<TheNavToc />
@@ -28,16 +28,13 @@
 	import TheNextPrevSectionButtons from './TheNextPrevSectionButtons.vue'
 	import SkipToContent from './SkipToContent.vue'
 
-	const allSections = useStore(allSectionsMap)
-	const isOnContent = useStore(isOnContentAtom)
-	const currSection = useStore(currSectionMap)
+	const $isOnContent = useStore(isOnContentAtom)
+	const $allSections = useStore(allSectionsMap)
+	const $currSection = useStore(currSectionMap)
 
 	let areSectionsAvailable = ref<boolean>(false)
-	let currSectionAvailable = ref<boolean>(false)
-
 	onMounted(() => {
-		areSectionsAvailable.value = Object.keys(allSections.value).length > 0
-		currSectionAvailable.value = Object.values(currSection.value).length > 0
+		areSectionsAvailable.value = Object.keys($allSections.value).length > 0
 	})
 </script>
 

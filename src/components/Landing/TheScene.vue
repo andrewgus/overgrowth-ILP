@@ -8,19 +8,19 @@
 		<div
 			v-if="useFeatureExists('reflection')"
 			key="reflection"
-			v-show="features.reflection"
+			v-show="$features.reflection"
 			:class="{ [$style.reflectionBg]: isBgLoaded }"
 		></div>
 		<div
 			v-if="useFeatureExists('practice')"
 			key="practice"
-			v-show="features.practice"
+			v-show="$features.practice"
 			:class="{ [$style.practiceBg]: isBgLoaded }"
 		></div>
 		<div
 			v-if="useFeatureExists('choice')"
 			key="choice"
-			v-show="features.choice"
+			v-show="$features.choice"
 			:class="{ [$style.choiceBg]: isBgLoaded }"
 		></div>
 	</TransitionGroup>
@@ -41,7 +41,7 @@
 		},
 	})
 
-	const features = useStore(featuresMap)
+	const $features = useStore(featuresMap)
 	const isBgLoaded = ref(false)
 
 	watchEffect(() => {

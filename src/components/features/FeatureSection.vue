@@ -1,6 +1,6 @@
 <template>
 	<section
-		v-show="features[featureType]"
+		v-show="$features[featureType]"
 		class="section feature"
 		:class="$style[featureType]"
 	>
@@ -29,7 +29,7 @@
 	}
 
 	const props = defineProps<Props>()
-	const features = useStore(featuresMap)
+	const $features = useStore(featuresMap)
 
 	useDoesFeatureExist(props.featureType)
 </script>

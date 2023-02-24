@@ -11,7 +11,7 @@
 		<BaseIndicator
 			v-else
 			text="Scoll to continue"
-			:goTo="`#${nextSection}`"
+			:goTo="`#${$nextSection}`"
 		></BaseIndicator>
 	</transition>
 </template>
@@ -28,7 +28,7 @@
 	import BaseIndicator from '../base/BaseIndicator.vue'
 
 	const complete = ref<boolean>(false)
-	const nextSection = useStore(nextSectionComputed)
+	const $nextSection = useStore(nextSectionComputed)
 	let completedFeature: string
 
 	const setComplete = ({ target }: Event) => {
