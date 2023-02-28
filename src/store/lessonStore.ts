@@ -1,5 +1,4 @@
 import { atom, map, computed } from 'nanostores'
-import type { MapStore } from 'nanostores'
 import { useStore } from '@nanostores/vue'
 
 // Feature setup for any given lesson
