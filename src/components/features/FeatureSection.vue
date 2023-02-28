@@ -18,8 +18,8 @@
 	import {
 		featuresMap,
 		useDoesFeatureExist,
-	} from '../../store/FeatureSettingsStore'
-	import type { FeatureType } from '../../store/FeatureSettingsStore'
+	} from '../../store/lessonStore'
+	import type { FeatureType } from '../../store/lessonStore'
 	import ContinueBtn from './ContinueBtn.vue'
 
 	interface Props {

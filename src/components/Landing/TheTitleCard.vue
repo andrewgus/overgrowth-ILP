@@ -43,8 +43,8 @@
 		featuresMap,
 		useFeatureExists,
 		useToggleFeature,
-	} from '../../store/FeatureSettingsStore'
-	import type { FeatureType } from '../../store/FeatureSettingsStore'
+	} from '../../store/lessonStore'
+	import type { FeatureType } from '../../store/lessonStore'
 	import BaseSeparator from '../base/BaseSeparator.vue'
 	import BaseSwitch from '../base/BaseSwitch.vue'
 

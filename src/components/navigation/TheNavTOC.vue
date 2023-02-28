@@ -43,7 +43,7 @@
 		filteredNavSectionsComputed,
 		currSectionMap,
 		useSetCurrSection,
-	} from '../../store/NavigationStore'
+	} from '../../store/lessonStore'
 	import BaseButton from '../base/BaseButton.vue'
 
 	const $filteredSections = useStore(filteredNavSectionsComputed)

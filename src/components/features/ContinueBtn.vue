@@ -23,7 +23,7 @@
 		currSectionMap,
 		useSetCurrSection,
 		nextSectionComputed,
-	} from '../../store/NavigationStore'
+	} from '../../store/lessonStore'
 	import BaseButton from '../base/BaseButton.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
 
@@ -40,6 +40,7 @@
 		useSetCurrSection(completedFeature)
 
 		// This (👇) needs to be reworked. The current section does not need to be unlocked. It will be unlocked because it is shown. Clicking this btn unlocks all succeeding sections up until, and including, the next feature to exist.
+		
 		// This is the location to setKey on all sections up until the next feature as isLocked === false
 		currSectionMap.setKey('isLocked', false)
 

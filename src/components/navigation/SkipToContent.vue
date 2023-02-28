@@ -12,7 +12,7 @@
 <script setup lang="ts">
 	import BaseButton from '../base/BaseButton.vue'
 	import { useStore } from '@nanostores/vue'
-	import { firstSectionComputed } from '../../store/NavigationStore'
+	import { firstSectionComputed } from '../../store/lessonStore'
 
 	const $firstSection = useStore(firstSectionComputed)
 </script>

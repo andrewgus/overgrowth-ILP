@@ -39,7 +39,7 @@
 		prevSectionComputed,
 		isOnFirstSectionComputed,
 		isOnLastSectionComputed,
-	} from '../../store/NavigationStore'
+	} from '../../store/lessonStore'
 	import BaseButton from '../base/BaseButton.vue'
 
 	const $isOnContent = useStore(isOnContentAtom)

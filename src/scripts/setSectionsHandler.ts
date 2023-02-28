@@ -1,10 +1,10 @@
 import {
-	isOnContentAtom,
 	allSectionsMap,
+	isOnContentAtom,
 	useSetCurrSection,
-} from '../store/NavigationStore'
-import type { SectionDetails } from '../store/NavigationStore'
-import type { FeatureType } from '../store/FeatureSettingsStore'
+} from '../store/lessonStore'
+import type { SectionDetails } from '../store/lessonStore'
+import type { FeatureType } from '../store/lessonStore'
 
 const location = window.location.toString()
 const sectionHeadings: NodeListOf<HTMLElement> = document.querySelectorAll(

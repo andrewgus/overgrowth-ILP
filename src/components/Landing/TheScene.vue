@@ -29,10 +29,7 @@
 <script setup lang="ts">
 	import { ref, watchEffect } from 'vue'
 	import { useStore } from '@nanostores/vue'
-	import {
-		featuresMap,
-		useFeatureExists,
-	} from '../../store/FeatureSettingsStore'
+	import { featuresMap, useFeatureExists } from '../../store/lessonStore'
 
 	const props = defineProps({
 		scene: {

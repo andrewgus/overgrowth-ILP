@@ -18,7 +18,7 @@
 	import {
 		allSectionsMap,
 		firstSectionComputed,
-	} from '../../store/NavigationStore.js'
+	} from '../../store/lessonStore.js'
 	import TheScene from './TheScene.vue'
 	import TheTitleCard from './TheTitleCard.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'

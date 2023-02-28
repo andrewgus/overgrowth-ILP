@@ -1,12 +1,91 @@
 import { atom, map, computed } from 'nanostores'
-import { featuresMap } from './FeatureSettingsStore'
-import type { FeatureType } from './FeatureSettingsStore'
+import type { MapStore } from 'nanostores'
+import { useStore } from '@nanostores/vue'
+
+// Feature setup for any given lesson
+type FeatureType = 'reflection' | 'practice' | 'choice'
+
+interface FeatureMap {
+	reflection: boolean | undefined
+	practice: boolean | undefined
+	choice: boolean | undefined
+}
+
+const featuresMap = map<FeatureMap>({
+	reflection: undefined,
+	practice: undefined,
+	choice: undefined,
+})
+
+// if feature layout is used in lesson, activate it
+const useDoesFeatureExist = (feature: FeatureType) => {
+	featuresMap.setKey(feature, true)
+}
+// For v-ifs in vue components, if a given feature exists
+const useFeatureExists = (feature: FeatureType) => {
+	if (useStore(featuresMap).value[feature] !== undefined) {
+		return true
+	} else {
+		return false
+	}
+}
 
 // Used to determine whether user is on content vs header
 const isOnContentAtom = atom(false)
 
 const useToggleNavShown = () => {
 	isOnContentAtom.set(!isOnContentAtom.get())
+}
+
+const useToggleFeature = (feature: FeatureType) => {
+	// for any given Feature, toggle previous value
+	featuresMap.setKey(feature, !featuresMap.get()[feature])
+	// updating allSections isLocked
+	const isFeatureOn = featuresMap.get()[feature]
+	const allSectionsAsArray = Object.entries(allSectionsMap.get())
+	// find the next available active feature
+	const findNextActiveFeature = allSectionsAsArray.find(
+		([_, sectionDetails]) => {
+			return (
+				!!sectionDetails.isFeatureType &&
+				featuresMap.get()[sectionDetails.isFeatureType as FeatureType]
+			)
+		}
+	)
+
+	if (findNextActiveFeature === undefined) {
+		allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
+			if (sectionDetails.isFeatureType === false) {
+				allSectionsMap.setKey(sectionKey, {
+					...sectionDetails,
+					isLocked: false,
+				})
+			}
+		})
+	} else {
+		const [_, nextActiveSectionDetails] = findNextActiveFeature
+		// if given feature is deactivated, unlock next available feature
+		if (isFeatureOn === false) {
+			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
+				if (sectionDetails.orderNum! <= nextActiveSectionDetails.orderNum!) {
+					allSectionsMap.setKey(sectionKey, {
+						...sectionDetails,
+						isLocked: false,
+					})
+				}
+			})
+		} else if (isFeatureOn === true) {
+			// if given feature is reactivated, lock all future sections
+			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
+				if (sectionDetails.orderNum! > nextActiveSectionDetails.orderNum!) {
+					allSectionsMap.setKey(sectionKey, {
+						...sectionDetails,
+						isLocked: true,
+					})
+				}
+			})
+		}
+	}
 }
 
 // All sections
@@ -67,8 +146,8 @@ const filteredNavSectionsComputed = computed(
 
 // filtering for sections that should be locked & invisible
 const filteredLockedSectionsComputed = computed(
-	[allSectionsMap, featuresMap],
-	(allSections, features) => {
+	allSectionsMap,
+	(allSections) => {
 		const allSectionsAsArray: [string, SectionDetails][] =
 			Object.entries(allSections)
 
@@ -78,7 +157,6 @@ const filteredLockedSectionsComputed = computed(
 		return Object.fromEntries(filterForLocked)
 	}
 )
-
 // Finding the next & previous section based on the current section
 const nextSectionComputed = computed(currSectionMap, ({ orderNum }) => {
 	const allFilteredSectionKeys = Object.keys(filteredNavSectionsComputed.get())
@@ -102,7 +180,7 @@ const prevSectionComputed = computed(currSectionMap, ({ orderNum }) => {
 	return prevSection
 })
 
-// first/lastSectionsComputed only work if initialized within onMounted lifecycle hook within vue
+// first/lastSectionsComputed only work if initialized within onMounted lifecycle hook within vue components
 const firstSectionComputed = computed(
 	filteredNavSectionsComputed,
 	(sections) => {
@@ -126,7 +204,12 @@ const isOnFirstSectionComputed = computed(currSectionMap, ({ id }) => {
 const isOnLastSectionComputed = computed(currSectionMap, ({ id }) => {
 	return id === lastSectionComputed.get().id
 })
+
 export {
+	featuresMap,
+	useDoesFeatureExist,
+	useFeatureExists,
+	useToggleFeature,
 	isOnContentAtom,
 	useToggleNavShown,
 	allSectionsMap,
@@ -141,4 +224,4 @@ export {
 	isOnFirstSectionComputed,
 	isOnLastSectionComputed,
 }
-export type { SectionDetails, SectionsMap }
+export type { FeatureType, SectionDetails, SectionsMap }

@@ -7,7 +7,7 @@ import {
 	isOnContentAtom,
 	useSetCurrSection,
 	useToggleNavShown,
-} from '../store/NavigationStore'
+} from '../store/lessonStore'
 
 const baseURL = location.split('#')[0]
 
