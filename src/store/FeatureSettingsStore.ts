@@ -33,7 +33,6 @@ const useToggleFeature = (feature: FeatureType) => {
 	featuresMap.setKey(feature, !featuresMap.get()[feature])
 	// updating allSections isLocked
 	const isFeatureOn = featuresMap.get()[feature]
-
 	const allSectionsAsArray = Object.entries(allSectionsMap.get())
 
 	const findNextActiveFeature = allSectionsAsArray.find(
@@ -47,69 +46,29 @@ const useToggleFeature = (feature: FeatureType) => {
 
 	if (findNextActiveFeature === undefined) return
 
-	const [nextActiveSectionKey, nextActiveSectionDetails] = findNextActiveFeature
+	const [_, nextActiveSectionDetails] = findNextActiveFeature
 
-	const newValue = {
-		...nextActiveSectionDetails,
-		isLocked: !nextActiveSectionDetails.isLocked,
-	}
-	console.log(newValue)
-
-	// TODO: work on this. when feature is turned back on, nextActive feature, is now that feature that was turned off before. In its current state, this just switches it to locked. Not what is intended.
 	if (isFeatureOn === false) {
-		allSectionsMap.setKey(nextActiveSectionKey, newValue)
-		allSectionsAsArray.forEach(([_, sectionDetails]) => {
-			if (
-				sectionDetails.orderNum &&
-				sectionDetails.orderNum <= nextActiveSectionDetails.orderNum!
-			) {
-				sectionDetails.isLocked === false
+		allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
+			if (sectionDetails.orderNum! <= nextActiveSectionDetails.orderNum!) {
+				// if a section's orderNum is less than or equal to the nextActive's orderNum, unlock those sections
+				allSectionsMap.setKey(sectionKey, {
+					...sectionDetails,
+					isLocked: false,
+				})
 			}
 		})
 	} else if (isFeatureOn === true) {
-		allSectionsMap.setKey(nextActiveSectionKey, newValue)
-		console.log(allSectionsMap.get())
-		allSectionsAsArray.forEach(([_, sectionDetails]) => {
-			if (
-				sectionDetails.orderNum &&
-				sectionDetails.orderNum > nextActiveSectionDetails.orderNum!
-			) {
-				sectionDetails.isLocked === true
+		allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
+			if (sectionDetails.orderNum! > nextActiveSectionDetails.orderNum!) {
+				// if a section's orderNum is greater than the nextActive's orderNum, lock those sections
+				allSectionsMap.setKey(sectionKey, {
+					...sectionDetails,
+					isLocked: true,
+				})
 			}
 		})
 	}
-
-	// NOTE: OLD STUFF BELOW. STILL NEED IF STATEMENT
-	allSectionsMap.subscribe((allSections) => {
-		const allSectionsAsArray = Object.entries(allSections)
-
-		//Finding the next active feature...
-		const findNextActiveFeatureIndex = allSectionsAsArray.find(
-			([_, sectionDetails]) => {
-				return (
-					!!sectionDetails.isFeatureType &&
-					featuresMap.get()[sectionDetails.isFeatureType as FeatureType]
-				)
-			}
-		)
-
-		if (isFeatureOn === false) {
-			// If the feature is off, unlock any content that comes before it.
-			// allSectionsAsArray.forEach(([_, sectionDetails]) => {
-			// 	if (sectionDetails.orderNum! <= findNextActiveFeatureIndex) {
-			// 		sectionDetails.isLocked = false
-			// 	}
-			// })
-			allSections[findNextActiveFeatureIndex![0]]
-		} else if (isFeatureOn === true) {
-			// If the feature is on, lock any content that comes after it.
-			// allSectionsAsArray.forEach(([_, sectionDetails]) => {
-			// 	if (sectionDetails.orderNum! > findNextActiveFeatureIndex) {
-			// 		sectionDetails.isLocked = true
-			// 	}
-			// })
-		}
-	})
 }
 
 export { featuresMap, useDoesFeatureExist, useFeatureExists, useToggleFeature }

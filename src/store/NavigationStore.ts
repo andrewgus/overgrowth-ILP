@@ -40,8 +40,6 @@ const useSetCurrSection = (sectionKey: string) => {
 }
 
 // filtering for sections that should be visible and navigable
-// NOTE: This computed will be called on every `allSectionMap || featuresMap` changes. BUT, I only want to watch allSectionsMap, and currently, that's not functioning.
-
 const filteredNavSectionsComputed = computed(
 	[allSectionsMap, featuresMap],
 	(allSections, features) => {
