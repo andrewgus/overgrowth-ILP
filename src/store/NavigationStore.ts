@@ -24,7 +24,7 @@ interface SectionsMap {
 
 const allSectionsMap = map<SectionsMap>()
 
-// Determining current section, and first & last sections
+// Determining current section
 const currSectionMap = map<SectionDetails>()
 
 const useSetCurrSection = (sectionKey: string) => {
@@ -39,62 +39,35 @@ const useSetCurrSection = (sectionKey: string) => {
 	}
 }
 
-// filtered sections items that should be visible and navigable
+// filtering for sections that should be visible and navigable
+// NOTE: This computed will be called on every `allSectionMap || featuresMap` changes. BUT, I only want to watch allSectionsMap, and currently, that's not functioning.
+
 const filteredNavSectionsComputed = computed(
 	[allSectionsMap, featuresMap],
 	(allSections, features) => {
 		const allSectionsAsArray: [string, SectionDetails][] =
 			Object.entries(allSections)
 
-		const filterForUnlocked = allSectionsAsArray.filter(([_, details]) => {
-			const isFeatureOn = features[details.isFeatureType as FeatureType]
+		const filterForUnlocked = allSectionsAsArray.filter(
+			([_, sectionDetails]) => {
+				const isFeatureOn =
+					features[sectionDetails.isFeatureType as FeatureType]
 
-			//Finding the next active feature...
-			const findNextActiveFeatureIndex = allSectionsAsArray.findIndex(
-				([_, details]) => {
-					return (
-						!!details.isFeatureType &&
-						features[details.isFeatureType as FeatureType]
-					)
-				}
-			)
-
-			if (isFeatureOn === false) {
-				// If the feature is off, unlock any content that comes before it.
-				allSectionsAsArray.forEach(([_, details]) => {
-					if (details.orderNum! <= findNextActiveFeatureIndex) {
-						details.isLocked = false
-					}
-				})
-			} else if (isFeatureOn === true) {
-				// If the feature is on, lock any content that comes after it.
-				allSectionsAsArray.forEach(([_, details]) => {
-					if (details.orderNum! > findNextActiveFeatureIndex) {
-						details.isLocked = true
-					}
-				})
+				// Must be either 1) static content or feature must be true (on) AND 2) section is unlocked
+				return (
+					(sectionDetails.isFeatureType === false || isFeatureOn === true) &&
+					sectionDetails.isLocked === false
+				)
 			}
-
-			// NOTE: MAY NEED TO SOMEHOW UPDATE THE ORDER NUM HERE. MAYBE NOT?
-			if (
-				(details.isFeatureType === false || isFeatureOn === true) &&
-				details.isLocked === false
-			) {
-				console.log(details)
-			}
-
-			// Must be either 1) static content or feature must be true (on) AND 2) section is unlocked
-			return (
-				(details.isFeatureType === false || isFeatureOn === true) &&
-				details.isLocked === false
-			)
-		})
-
+		)
+		filterForUnlocked.forEach(
+			([_, sectionDetails], i) => (sectionDetails.orderNum = i)
+		)
 		return Object.fromEntries(filterForUnlocked)
 	}
 )
 
-// filtered section items that should be invisible
+// filtering for sections that should be locked & invisible
 const filteredLockedSectionsComputed = computed(
 	[allSectionsMap, featuresMap],
 	(allSections, features) => {
@@ -110,6 +83,7 @@ const filteredLockedSectionsComputed = computed(
 	}
 )
 
+// Finding the next & previous section based on the current section
 const nextSectionComputed = computed(currSectionMap, ({ orderNum }) => {
 	const allFilteredSectionKeys = Object.keys(filteredNavSectionsComputed.get())
 	let nextSection: string
@@ -120,6 +94,7 @@ const nextSectionComputed = computed(currSectionMap, ({ orderNum }) => {
 	}
 	return nextSection
 })
+
 const prevSectionComputed = computed(currSectionMap, ({ orderNum }) => {
 	const allFilteredSectionKeys = Object.keys(filteredNavSectionsComputed.get())
 	let prevSection: string

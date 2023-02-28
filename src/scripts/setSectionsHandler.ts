@@ -16,12 +16,13 @@ for (const heading of sectionHeadings) {
 	sections.push(heading.closest('section')!)
 }
 
-const createID = (title: string) =>
-	`${title
+const createID = (title: string) => {
+	return `${title
 		.replaceAll(/[^\w\s]/g, '')
 		.replaceAll(' ', '-')
 		.substring(0, 25)
 		.toLowerCase()}`
+}
 
 const getFeatureType = (featureClassName: string): boolean | FeatureType => {
 	if (featureClassName.includes('reflection')) return 'reflection'
@@ -44,7 +45,7 @@ const getFirstFeatureAndAllAfter = (sectionIndex: number) => {
 	}
 }
 
-if (sections) sections[0].classList.add('firstSection')
+if (sections.length > 0) sections[0].classList.add('firstSection')
 
 sections.forEach((s: HTMLElement, index: number) => {
 	const section: SectionDetails = {
