@@ -23,6 +23,7 @@
 		isOnContentAtom,
 		allSectionsMap,
 		currSectionMap,
+		filteredNavSectionsComputed,
 	} from '../../store/lessonStore'
 	import TheNavToc from './TheNavTOC.vue'
 	import TheNextPrevSectionButtons from './TheNextPrevSectionButtons.vue'

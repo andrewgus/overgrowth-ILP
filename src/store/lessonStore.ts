@@ -16,6 +16,21 @@ const featuresMap = map<FeatureMap>({
 	choice: undefined,
 })
 
+// All sections
+interface SectionDetails {
+	title: string
+	id: string
+	orderNum: number | null
+	isFeatureType: FeatureType | boolean
+	isLocked: boolean
+}
+
+interface SectionsMap {
+	[sectionKey: string]: SectionDetails
+}
+
+const allSectionsMap = map<SectionsMap>()
+
 // if feature layout is used in lesson, activate it
 const useDoesFeatureExist = (feature: FeatureType) => {
 	featuresMap.setKey(feature, true)
@@ -87,21 +102,6 @@ const useToggleFeature = (feature: FeatureType) => {
 	}
 }
 
-// All sections
-interface SectionDetails {
-	title: string
-	id: string
-	orderNum: number | null
-	isFeatureType: FeatureType | boolean
-	isLocked: boolean
-}
-
-interface SectionsMap {
-	[sectionKey: string]: SectionDetails
-}
-
-const allSectionsMap = map<SectionsMap>()
-
 // Determining current section
 const currSectionMap = map<SectionDetails>()
 
@@ -158,44 +158,56 @@ const filteredLockedSectionsComputed = computed(
 )
 // Finding the next & previous section based on the current section
 const nextSectionComputed = computed(currSectionMap, ({ orderNum }) => {
-	const allFilteredSectionKeys = Object.keys(filteredNavSectionsComputed.get())
+	const allFilteredNavSectionKeys = Object.keys(
+		filteredNavSectionsComputed.get()
+	)
+
 	let nextSection: string
 	if (orderNum !== null) {
-		nextSection = allFilteredSectionKeys.at(orderNum + 1)!
+		nextSection = allFilteredNavSectionKeys.at(orderNum + 1)!
 	} else {
-		nextSection = allFilteredSectionKeys.at(0)!
+		nextSection = allFilteredNavSectionKeys.at(0)!
 	}
 	return nextSection
 })
 
 const prevSectionComputed = computed(currSectionMap, ({ orderNum }) => {
-	const allFilteredSectionKeys = Object.keys(filteredNavSectionsComputed.get())
+	const allFilteredNavSectionKeys = Object.keys(
+		filteredNavSectionsComputed.get()
+	)
 	let prevSection: string
 	if (orderNum !== null) {
-		prevSection = allFilteredSectionKeys.at(orderNum - 1)!
+		prevSection = allFilteredNavSectionKeys.at(orderNum - 1)!
 	} else {
-		prevSection = allFilteredSectionKeys.at(0)!
+		prevSection = allFilteredNavSectionKeys.at(0)!
 	}
 	return prevSection
 })
 
 // first/lastSectionsComputed only work if initialized within onMounted lifecycle hook within vue components
-const firstSectionComputed = computed(
-	filteredNavSectionsComputed,
-	(sections) => {
-		const id = Object.keys(sections).at(0)!
-		const orderNum = sections[id].orderNum
-		return { id, orderNum }
-	}
-)
-const lastSectionComputed = computed(
-	filteredNavSectionsComputed,
-	(sections) => {
-		const id = Object.keys(sections).at(-1)!
-		const orderNum = sections[id].orderNum
-		return { id, orderNum }
-	}
-)
+
+// TODO: refactor this, but at least it works... -ish.
+const firstSectionComputed = computed(allSectionsMap, (sections) => {
+	let allSections = sections
+	setTimeout(() => {
+		allSections = filteredNavSectionsComputed.get()
+	}, 1)
+	const sectionKeysAsArray = Object.keys(allSections)
+	const id = sectionKeysAsArray.at(0)!
+	const orderNum = allSections[id].orderNum!
+	return { id, orderNum }
+})
+
+const lastSectionComputed = computed(allSectionsMap, (sections) => {
+	let allSections = sections
+	setTimeout(() => {
+		allSections = filteredNavSectionsComputed.get()
+	}, 1)
+	const sectionKeysAsArray = Object.keys(allSections)
+	const id = sectionKeysAsArray.at(-1)!
+	const orderNum = allSections[id].orderNum!
+	return { id, orderNum }
+})
 
 const isOnFirstSectionComputed = computed(currSectionMap, ({ id }) => {
 	return id === firstSectionComputed.get().id

@@ -13,10 +13,11 @@
 </template>
 
 <script setup lang="ts">
-	import { onMounted, ref, Ref } from 'vue'
+	import { onMounted, ref, type Ref } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import {
 		allSectionsMap,
+		filteredNavSectionsComputed,
 		firstSectionComputed,
 	} from '../../store/lessonStore.js'
 	import TheScene from './TheScene.vue'
