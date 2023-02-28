@@ -72,10 +72,8 @@ const filteredLockedSectionsComputed = computed(
 		const allSectionsAsArray: [string, SectionDetails][] =
 			Object.entries(allSections)
 
-		// TODO: Need to filter out any features or content that is beyond (higher orderNum than) any uncomplete, unlocked, active feature. If feature is turned off, then need to search for next active feature, and unlock (details.isLocked = false) that content that comes before it or equal to it (lower or equal orderNum than). That content would not be filtered out. Similar to filter above for Nav, but the inverse, essentially.
-
-		const filterForLocked = allSectionsAsArray.filter(([_, details]) => {
-			return details.isLocked === true
+		const filterForLocked = allSectionsAsArray.filter(([_, sectionDetails]) => {
+			return sectionDetails.isLocked === true
 		})
 		return Object.fromEntries(filterForLocked)
 	}

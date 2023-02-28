@@ -16,10 +16,11 @@ const featuresMap = map<FeatureMap>({
 	choice: undefined,
 })
 
+// For determining if a feature section is used in the lesson
 const useDoesFeatureExist = (feature: FeatureType) => {
 	featuresMap.setKey(feature, true)
 }
-
+// For v-ifs, if those features exists
 const useFeatureExists = (feature: FeatureType) => {
 	if (useStore(featuresMap).value[feature] !== undefined) {
 		return true
@@ -29,7 +30,7 @@ const useFeatureExists = (feature: FeatureType) => {
 }
 
 const useToggleFeature = (feature: FeatureType) => {
-	// for any given Feature
+	// for any given Feature, toggle previous value
 	featuresMap.setKey(feature, !featuresMap.get()[feature])
 	// updating allSections isLocked
 	const isFeatureOn = featuresMap.get()[feature]
