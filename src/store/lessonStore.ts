@@ -16,6 +16,19 @@ const featuresMap = map<FeatureMap>({
 	choice: undefined,
 })
 
+// if feature layout is used in lesson, activate it
+const useDoesFeatureExist = (feature: FeatureType) => {
+	featuresMap.setKey(feature, true)
+}
+// For v-ifs in vue components, if a given feature exists
+const useFeatureExists = (feature: FeatureType) => {
+	if (useStore(featuresMap).value[feature] !== undefined) {
+		return true
+	} else {
+		return false
+	}
+}
+
 // All sections
 interface SectionDetails {
 	title: string
@@ -31,19 +44,6 @@ interface SectionsMap {
 
 const allSectionsMap = map<SectionsMap>()
 
-// if feature layout is used in lesson, activate it
-const useDoesFeatureExist = (feature: FeatureType) => {
-	featuresMap.setKey(feature, true)
-}
-// For v-ifs in vue components, if a given feature exists
-const useFeatureExists = (feature: FeatureType) => {
-	if (useStore(featuresMap).value[feature] !== undefined) {
-		return true
-	} else {
-		return false
-	}
-}
-
 // Used to determine whether user is on content vs header
 const isOnContentAtom = atom(false)
 
@@ -51,8 +51,8 @@ const useToggleNavShown = () => {
 	isOnContentAtom.set(!isOnContentAtom.get())
 }
 
+// To toggle feature on/off
 const useToggleFeature = (feature: FeatureType) => {
-	// for any given Feature, toggle previous value
 	featuresMap.setKey(feature, !featuresMap.get()[feature])
 	// updating allSections isLocked
 	const isFeatureOn = featuresMap.get()[feature]
@@ -67,35 +67,38 @@ const useToggleFeature = (feature: FeatureType) => {
 		}
 	)
 
+	const setSectionLocks = (
+		sectionKey: string,
+		sectionDetails: SectionDetails,
+		onOff: boolean
+	) => {
+		allSectionsMap.setKey(sectionKey, {
+			...sectionDetails,
+			isLocked: onOff,
+		})
+	}
+
 	if (findNextActiveFeature === undefined) {
+		// if all features are turned off...
 		allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
 			if (sectionDetails.isFeatureType === false) {
-				allSectionsMap.setKey(sectionKey, {
-					...sectionDetails,
-					isLocked: false,
-				})
+				setSectionLocks(sectionKey, sectionDetails, false)
 			}
 		})
 	} else {
 		const [_, nextActiveSectionDetails] = findNextActiveFeature
-		// if given feature is deactivated, unlock next available feature
 		if (isFeatureOn === false) {
+			// if given feature is deactivated, unlock next available feature...
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
 				if (sectionDetails.orderNum! <= nextActiveSectionDetails.orderNum!) {
-					allSectionsMap.setKey(sectionKey, {
-						...sectionDetails,
-						isLocked: false,
-					})
+					setSectionLocks(sectionKey, sectionDetails, false)
 				}
 			})
 		} else if (isFeatureOn === true) {
-			// if given feature is reactivated, lock all future sections
+			// if given feature is reactivated, lock all future sections...
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
 				if (sectionDetails.orderNum! > nextActiveSectionDetails.orderNum!) {
-					allSectionsMap.setKey(sectionKey, {
-						...sectionDetails,
-						isLocked: true,
-					})
+					setSectionLocks(sectionKey, sectionDetails, true)
 				}
 			})
 		}
@@ -161,8 +164,8 @@ const nextSectionComputed = computed(currSectionMap, ({ orderNum }) => {
 	const allFilteredNavSectionKeys = Object.keys(
 		filteredNavSectionsComputed.get()
 	)
-
 	let nextSection: string
+
 	if (orderNum !== null) {
 		nextSection = allFilteredNavSectionKeys.at(orderNum + 1)!
 	} else {
@@ -184,54 +187,27 @@ const prevSectionComputed = computed(currSectionMap, ({ orderNum }) => {
 	return prevSection
 })
 
-// first/lastSectionsComputed only work if initialized within onMounted lifecycle hook within vue components
-
-// TODO: refactor this, but at least it works... -ish.
-const firstSectionComputed = computed(allSectionsMap, (sections) => {
-	let allSections = sections
-	setTimeout(() => {
-		allSections = filteredNavSectionsComputed.get()
-	}, 1)
-	const sectionKeysAsArray = Object.keys(allSections)
-	const id = sectionKeysAsArray.at(0)!
-	const orderNum = allSections[id].orderNum!
-	return { id, orderNum }
-})
-
-const lastSectionComputed = computed(allSectionsMap, (sections) => {
-	let allSections = sections
-	setTimeout(() => {
-		allSections = filteredNavSectionsComputed.get()
-	}, 1)
-	const sectionKeysAsArray = Object.keys(allSections)
-	const id = sectionKeysAsArray.at(-1)!
-	const orderNum = allSections[id].orderNum!
-	return { id, orderNum }
-})
-
 const isOnFirstSectionComputed = computed(currSectionMap, ({ id }) => {
-	return id === firstSectionComputed.get().id
+	return id === Object.keys(filteredNavSectionsComputed.get()).at(0)
 })
 const isOnLastSectionComputed = computed(currSectionMap, ({ id }) => {
-	return id === lastSectionComputed.get().id
+	return id === Object.keys(filteredNavSectionsComputed.get()).at(-1)
 })
 
 export {
 	featuresMap,
 	useDoesFeatureExist,
 	useFeatureExists,
-	useToggleFeature,
+	allSectionsMap,
 	isOnContentAtom,
 	useToggleNavShown,
-	allSectionsMap,
+	useToggleFeature,
 	currSectionMap,
 	useSetCurrSection,
-	nextSectionComputed,
-	prevSectionComputed,
 	filteredNavSectionsComputed,
 	filteredLockedSectionsComputed,
-	firstSectionComputed,
-	lastSectionComputed,
+	nextSectionComputed,
+	prevSectionComputed,
 	isOnFirstSectionComputed,
 	isOnLastSectionComputed,
 }

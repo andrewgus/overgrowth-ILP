@@ -7,19 +7,18 @@
 			isOnLanding
 			hidden
 			text="Scroll to start"
-			:goTo="`#${$firstSection.id}`"
+			:goTo="`#${Object.keys($allNavSections).at(0)}`"
 		/>
 	</header>
 </template>
 
 <script setup lang="ts">
-	import { onMounted, ref, type Ref } from 'vue'
+	import { onMounted, ref } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import {
 		allSectionsMap,
 		filteredNavSectionsComputed,
-		firstSectionComputed,
-	} from '../../store/lessonStore.js'
+	} from '../../store/lessonStore'
 	import TheScene from './TheScene.vue'
 	import TheTitleCard from './TheTitleCard.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
@@ -32,12 +31,10 @@
 	const props = defineProps<Props>()
 
 	const $allSections = useStore(allSectionsMap)
+	const $allNavSections = useStore(filteredNavSectionsComputed)
 
 	let areSectionsAvailable = ref<boolean>(false)
-	let $firstSection: Readonly<Ref>
-
 	onMounted(() => {
-		$firstSection = useStore(firstSectionComputed)
 		areSectionsAvailable.value = Object.keys($allSections.value).length > 0
 	})
 

@@ -3,18 +3,18 @@
 		<BaseButton
 			link
 			text="Skip to main content"
-			:url="`#${$firstSection.id}`"
+			:url="`#${Object.keys($allNavSections).at(0)}`"
 			color="red-1"
 		></BaseButton>
 	</div>
 </template>
 
 <script setup lang="ts">
-	import BaseButton from '../base/BaseButton.vue'
 	import { useStore } from '@nanostores/vue'
-	import { firstSectionComputed } from '../../store/lessonStore'
+	import { filteredNavSectionsComputed } from '../../store/lessonStore'
+	import BaseButton from '../base/BaseButton.vue'
 
-	const $firstSection = useStore(firstSectionComputed)
+	const $allNavSections = useStore(filteredNavSectionsComputed)
 </script>
 
 <style module lang="scss">
