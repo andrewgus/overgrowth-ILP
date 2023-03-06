@@ -61,6 +61,7 @@ const useToggleFeature = (feature: FeatureType) => {
 	const findNextActiveFeature = allSectionsAsArray.find(
 		([_, sectionDetails]) => {
 			return (
+				// it is a feature && the feature is on
 				!!sectionDetails.isFeatureType &&
 				featuresMap.get()[sectionDetails.isFeatureType as FeatureType]
 			)
@@ -86,18 +87,18 @@ const useToggleFeature = (feature: FeatureType) => {
 			}
 		})
 	} else {
-		const [_, nextActiveSectionDetails] = findNextActiveFeature
+		const [_, nextActiveFeatureDetails] = findNextActiveFeature
 		if (isFeatureOn === false) {
 			// if given feature is deactivated, unlock next available feature...
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
-				if (sectionDetails.orderNum! <= nextActiveSectionDetails.orderNum!) {
+				if (sectionDetails.orderNum! <= nextActiveFeatureDetails.orderNum!) {
 					setSectionLocks(sectionKey, sectionDetails, false)
 				}
 			})
 		} else if (isFeatureOn === true) {
 			// if given feature is reactivated, lock all future sections...
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
-				if (sectionDetails.orderNum! > nextActiveSectionDetails.orderNum!) {
+				if (sectionDetails.orderNum! > nextActiveFeatureDetails.orderNum!) {
 					setSectionLocks(sectionKey, sectionDetails, true)
 				}
 			})
