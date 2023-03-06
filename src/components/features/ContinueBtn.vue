@@ -62,8 +62,6 @@
 			// if there is a next active feature
 			const [_, nextActiveFeatureDetails] = findNextActiveFeature
 
-			console.log(nextActiveFeatureDetails.id)
-
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
 				if (sectionDetails.orderNum! <= nextActiveFeatureDetails.orderNum!) {
 					allSectionsMap.setKey(sectionKey, {
