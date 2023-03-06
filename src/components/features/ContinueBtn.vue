@@ -41,26 +41,25 @@
 		if (!clicked) return
 
 		const thisSection = clicked.closest('section')
+		// NOTE: Should this lock (isLocked: true) if the feature is turned off after it was completed? Does this coincide with the pop-up warning?
 		useSetCurrSection(thisSection!.id)
 
 		// TODO: BELOW FUNCTIONS, **but** must refactor. A lot of repeated code in useToggleFeature in lessonStore. See how much of this can be turned into a composable to be used both here and in lessonStore.
 		// Find next active feature
 		const allSectionsAsArray = Object.entries($allSections.value)
-		const findNextActiveFeature = allSectionsAsArray.find(
-			([_, sectionDetails]) => {
-				return (
-					// it is a feature && the feature is on && the feature is not the currentFeature
-					!!sectionDetails.isFeatureType &&
-					$features.value[sectionDetails.isFeatureType as FeatureType] &&
-					sectionDetails.id !== $currSection.value.id &&
-					sectionDetails.orderNum! > $currSection.value.orderNum!
-				)
-			}
-		)
-		// 2) forEach allSection, unlock all features up until, and including, the nextActiveFeature
-		if (findNextActiveFeature !== undefined) {
+		const nextActiveFeature = allSectionsAsArray.find(([_, sectionDetails]) => {
+			return (
+				// it is a feature && it is on && it is not the currentFeature && it has a higher orderNum than the currSection orderNum
+				!!sectionDetails.isFeatureType &&
+				$features.value[sectionDetails.isFeatureType as FeatureType] &&
+				sectionDetails.id !== $currSection.value.id &&
+				sectionDetails.orderNum! > $currSection.value.orderNum!
+			)
+		})
+		// Unlock all features up until, and including, the nextActiveFeature
+		if (nextActiveFeature !== undefined) {
 			// if there is a next active feature
-			const [_, nextActiveFeatureDetails] = findNextActiveFeature
+			const [_, nextActiveFeatureDetails] = nextActiveFeature
 
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
 				if (sectionDetails.orderNum! <= nextActiveFeatureDetails.orderNum!) {
