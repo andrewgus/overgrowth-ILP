@@ -161,32 +161,34 @@ const filteredLockedSectionsComputed = computed(
 	}
 )
 // Finding the next & previous section based on the current section
-const nextSectionComputed = computed(currSectionMap, ({ orderNum }) => {
-	const allFilteredNavSectionKeys = Object.keys(
-		filteredNavSectionsComputed.get()
-	)
-	let nextSection: string
+const nextSectionComputed = computed(
+	[currSectionMap, filteredNavSectionsComputed],
+	({ orderNum }, filteredNavSections) => {
+		const allFilteredNavSectionKeys = Object.keys(filteredNavSections)
+		let nextSection: string
 
-	if (orderNum !== null) {
-		nextSection = allFilteredNavSectionKeys.at(orderNum + 1)!
-	} else {
-		nextSection = allFilteredNavSectionKeys.at(0)!
+		if (orderNum !== null) {
+			nextSection = allFilteredNavSectionKeys.at(orderNum + 1)!
+		} else {
+			nextSection = allFilteredNavSectionKeys.at(0)!
+		}
+		return nextSection
 	}
-	return nextSection
-})
+)
 
-const prevSectionComputed = computed(currSectionMap, ({ orderNum }) => {
-	const allFilteredNavSectionKeys = Object.keys(
-		filteredNavSectionsComputed.get()
-	)
-	let prevSection: string
-	if (orderNum !== null) {
-		prevSection = allFilteredNavSectionKeys.at(orderNum - 1)!
-	} else {
-		prevSection = allFilteredNavSectionKeys.at(0)!
+const prevSectionComputed = computed(
+	[currSectionMap, filteredNavSectionsComputed],
+	({ orderNum }, filteredNavSections) => {
+		const allFilteredNavSectionKeys = Object.keys(filteredNavSections)
+		let prevSection: string
+		if (orderNum !== null) {
+			prevSection = allFilteredNavSectionKeys.at(orderNum - 1)!
+		} else {
+			prevSection = allFilteredNavSectionKeys.at(0)!
+		}
+		return prevSection
 	}
-	return prevSection
-})
+)
 
 const isOnFirstSectionComputed = computed(currSectionMap, ({ id }) => {
 	return id === Object.keys(filteredNavSectionsComputed.get()).at(0)
