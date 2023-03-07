@@ -1,10 +1,15 @@
 <template>
-	<FeatureSection feature-type="choice" :title="title">
+	<FeatureSection
+		feature-type="choice"
+		:title="title"
+		:canContinue="canContinue"
+	>
 		<p>TEST</p>
 	</FeatureSection>
 </template>
 
 <script setup lang="ts">
+	import { ref } from 'vue'
 	import FeatureSection from '../components/features/FeatureSection.vue'
 
 	defineProps({
@@ -13,6 +18,8 @@
 			required: true,
 		},
 	})
+
+	const canContinue = ref<boolean>(true)
 </script>
 
 <style module lang="scss">

@@ -2,9 +2,9 @@ import {
 	allSectionsMap,
 	isOnContentAtom,
 	useSetCurrSection,
+	type SectionDetails,
+	type FeatureType,
 } from '../store/lessonStore'
-import type { SectionDetails } from '../store/lessonStore'
-import type { FeatureType } from '../store/lessonStore'
 
 const location = window.location.toString()
 const sectionHeadings: NodeListOf<HTMLElement> = document.querySelectorAll(

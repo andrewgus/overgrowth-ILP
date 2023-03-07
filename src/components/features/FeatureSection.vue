@@ -8,7 +8,7 @@
 			<h2>{{ title }}</h2>
 			<p v-if="prompt">{{ prompt }}</p>
 			<slot></slot>
-			<ContinueBtn />
+			<ContinueBtn :canContinue="canContinue" />
 		</div>
 	</section>
 </template>
@@ -18,14 +18,15 @@
 	import {
 		featuresMap,
 		useDoesFeatureExist,
-	} from '../../store/lessonStore'
-	import type { FeatureType } from '../../store/lessonStore'
+		type FeatureType,
+	} from '../../store/lessonStore.js'
 	import ContinueBtn from './ContinueBtn.vue'
 
 	interface Props {
 		featureType: FeatureType
 		title: string
 		prompt?: string
+		canContinue: boolean
 	}
 
 	const props = defineProps<Props>()
