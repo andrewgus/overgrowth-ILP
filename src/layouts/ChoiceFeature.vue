@@ -1,9 +1,5 @@
 <template>
-	<FeatureSection
-		feature-type="choice"
-		:title="title"
-		:canContinue="canContinue"
-	>
+	<FeatureSection feature-type="choice" :title="title">
 		<slot></slot>
 	</FeatureSection>
 </template>

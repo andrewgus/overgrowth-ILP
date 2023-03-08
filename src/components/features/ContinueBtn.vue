@@ -3,8 +3,8 @@
 	<transition mode="out-in">
 		<BaseButton
 			:isDisabled="!canContinue"
-			v-if="!complete"
-			text="Complete?"
+			v-if="!featureComplete"
+			text="Continue?"
 			:class="$style.featureCompleteBtn"
 			@btnClick="setComplete"
 		></BaseButton>
@@ -30,13 +30,13 @@
 	import BaseButton from '../base/BaseButton.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
 
-	const complete = ref<boolean>(false)
 	const $allSections = useStore(allSectionsMap)
 	const $features = useStore(featuresMap)
 	const $currSection = useStore(currSectionMap)
 	const $nextSection = useStore(nextSectionComputed)
 
 	const canContinue = inject('isFeatureComplete')
+	const featureComplete = ref<boolean>(false)
 
 	const setComplete = ({ target }: Event) => {
 		const clicked = target as HTMLElement
@@ -82,7 +82,7 @@
 				}
 			})
 		}
-		complete.value = true
+		featureComplete.value = true
 	}
 </script>
 

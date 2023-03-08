@@ -1,9 +1,5 @@
 <template>
-	<FeatureSection
-		feature-type="practice"
-		:title="title"
-		:canContinue="canContinue"
-	>
+	<FeatureSection feature-type="practice" :title="title">
 		<slot></slot>
 	</FeatureSection>
 </template>
@@ -20,5 +16,5 @@
 	})
 
 	const canContinue = ref<boolean>(true)
-		provide('isFeatureComplete', canContinue)
+	provide('isFeatureComplete', canContinue)
 </script>

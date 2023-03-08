@@ -6,7 +6,6 @@
 	>
 		<div>
 			<h2>{{ title }}</h2>
-			<p v-if="prompt">{{ prompt }}</p>
 			<slot></slot>
 			<ContinueBtn />
 		</div>
@@ -25,7 +24,6 @@
 	interface Props {
 		featureType: FeatureType
 		title: string
-		prompt?: string
 	}
 
 	const props = defineProps<Props>()
