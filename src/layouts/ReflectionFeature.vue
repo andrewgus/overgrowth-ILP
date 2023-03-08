@@ -1,6 +1,10 @@
 <template>
 	<FeatureSection feature-type="reflection" :title="title">
-		<ReflectionInput :prompt="prompt" @userTyped="checkCompleted">
+		<ReflectionInput
+			:prompt="prompt"
+			@userTyped="checkCompleted"
+			:id="useCreateID(title)"
+		>
 			<slot></slot>
 		</ReflectionInput>
 	</FeatureSection>
@@ -10,6 +14,7 @@
 	import { ref, provide } from 'vue'
 	import FeatureSection from '../components/features/FeatureSection.vue'
 	import ReflectionInput from '../components/features/reflection/ReflectionInput.vue'
+	import useCreateID from '../composables/useCreateID'
 
 	defineProps({
 		title: {

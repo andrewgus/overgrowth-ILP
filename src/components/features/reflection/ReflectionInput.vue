@@ -1,10 +1,10 @@
 <template>
 	<div :class="$style.userInput">
-		<label for="reflectioninput">{{ prompt }}</label>
+		<label :for="`${id}-input`">{{ prompt }}</label>
 		<slot></slot>
 		<textarea
 			placeholder="I think&hellip;"
-			id="reflectioninput"
+			:id="`${id}-input`"
 			rows="7"
 			v-model="input"
 		></textarea>
@@ -15,6 +15,10 @@
 	import { ref, computed } from 'vue'
 
 	defineProps({
+		id: {
+			type: String,
+			required: true,
+		},
 		prompt: {
 			type: String,
 			required: true,

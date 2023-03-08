@@ -46,8 +46,6 @@
 		// NOTE: Should this lock (isLocked: true) if the feature is turned off after it was completed? Does this coincide with the pop-up warning?
 		useSetCurrSection(thisSection!.id)
 
-		// TODO: BELOW FUNCTIONS, **but** must refactor. A lot of repeated code in useToggleFeature in lessonStore. See how much of this can be turned into a composable to be used both here and in lessonStore.
-		// Find next active feature
 		const allSectionsAsArray = Object.entries($allSections.value)
 		const nextActiveFeature = allSectionsAsArray.find(([_, sectionDetails]) => {
 			return (

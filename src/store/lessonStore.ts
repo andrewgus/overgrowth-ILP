@@ -58,15 +58,13 @@ const useToggleFeature = (feature: FeatureType) => {
 	const isFeatureOn = featuresMap.get()[feature]
 	const allSectionsAsArray = Object.entries(allSectionsMap.get())
 	// find the next available active feature
-	const findNextActiveFeature = allSectionsAsArray.find(
-		([_, sectionDetails]) => {
-			return (
-				// it is a feature && the feature is on
-				!!sectionDetails.isFeatureType &&
-				featuresMap.get()[sectionDetails.isFeatureType as FeatureType]
-			)
-		}
-	)
+	const nextActiveFeature = allSectionsAsArray.find(([_, sectionDetails]) => {
+		return (
+			// it is a feature && the feature is on
+			!!sectionDetails.isFeatureType &&
+			featuresMap.get()[sectionDetails.isFeatureType as FeatureType]
+		)
+	})
 
 	const setSectionLocks = (
 		sectionKey: string,
@@ -79,7 +77,7 @@ const useToggleFeature = (feature: FeatureType) => {
 		})
 	}
 
-	if (findNextActiveFeature === undefined) {
+	if (nextActiveFeature === undefined) {
 		// if all features are turned off...
 		allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
 			if (sectionDetails.isFeatureType === false) {
@@ -87,7 +85,7 @@ const useToggleFeature = (feature: FeatureType) => {
 			}
 		})
 	} else {
-		const [_, nextActiveFeatureDetails] = findNextActiveFeature
+		const [_, nextActiveFeatureDetails] = nextActiveFeature
 		if (isFeatureOn === false) {
 			// if given feature is deactivated, unlock next available feature...
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {

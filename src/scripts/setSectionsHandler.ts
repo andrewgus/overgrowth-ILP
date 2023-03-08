@@ -5,6 +5,7 @@ import {
 	type SectionDetails,
 	type FeatureType,
 } from '../store/lessonStore'
+import useCreateID from '../composables/useCreateID'
 
 const location = window.location.toString()
 const sectionHeadings: NodeListOf<HTMLElement> = document.querySelectorAll(
@@ -14,14 +15,6 @@ let sections: Array<HTMLElement> = []
 
 for (const heading of sectionHeadings) {
 	sections.push(heading.closest('section')!)
-}
-
-const createID = (title: string) => {
-	return `${title
-		.replaceAll(/[^\w\s]/g, '')
-		.replaceAll(' ', '-')
-		.substring(0, 25)
-		.toLowerCase()}`
 }
 
 const getFeatureType = (featureClassName: string): boolean | FeatureType => {
@@ -50,16 +43,20 @@ if (sections.length > 0) sections[0].classList.add('firstSection')
 sections.forEach((s: HTMLElement, index: number) => {
 	const section: SectionDetails = {
 		title: s.querySelector('h2')!.textContent!,
-		id: createID(s.querySelector('h2')!.textContent!),
+		id: useCreateID(s.querySelector('h2')!.textContent!),
 		orderNum: index,
 		isFeatureType:
 			s.classList.contains('feature') && getFeatureType(s.classList.toString()),
 		isLocked: getFirstFeatureAndAllAfter(index),
 	}
 
-	allSectionsMap.setKey(createID(s.querySelector('h2')!.textContent!), section)
+	allSectionsMap.setKey(
+		useCreateID(s.querySelector('h2')!.textContent!),
+		section
+	)
 
-	s.id = allSectionsMap.get()[createID(s.querySelector('h2')!.textContent!)].id
+	s.id =
+		allSectionsMap.get()[useCreateID(s.querySelector('h2')!.textContent!)].id
 })
 
 if (location.includes('#')) {
