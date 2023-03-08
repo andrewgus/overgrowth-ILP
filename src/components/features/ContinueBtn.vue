@@ -43,8 +43,14 @@
 		if (!clicked) return
 
 		const thisSection = clicked.closest('section')
-		// NOTE: Should this lock (isLocked: true) if the feature is turned off after it was completed? Does this coincide with the pop-up warning?
+		// NOTE: Should this lock (isLocked: true) if the feature is turned off after it was completed? Does this coincide with the pop-up warning? Should NOT reset the feature. Don't want to lose completed work.
 		useSetCurrSection(thisSection!.id)
+
+		// marking feature as complete
+		allSectionsMap.setKey(thisSection!.id, {
+			...$currSection.value,
+			isFeatureComplete: true,
+		})
 
 		const allSectionsAsArray = Object.entries($allSections.value)
 		const nextActiveFeature = allSectionsAsArray.find(([_, sectionDetails]) => {
@@ -72,7 +78,7 @@
 		} else {
 			// if there is NOT a next available feature
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
-				if (sectionDetails.isFeatureType === false) {
+				if (sectionDetails.isFeatureType === null) {
 					allSectionsMap.setKey(sectionKey, {
 						...sectionDetails,
 						isLocked: false,

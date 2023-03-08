@@ -17,11 +17,11 @@ for (const heading of sectionHeadings) {
 	sections.push(heading.closest('section')!)
 }
 
-const getFeatureType = (featureClassName: string): boolean | FeatureType => {
+const getFeatureType = (featureClassName: string): FeatureType | null => {
 	if (featureClassName.includes('reflection')) return 'reflection'
 	if (featureClassName.includes('practice')) return 'practice'
 	if (featureClassName.includes('choice')) return 'choice'
-	return false
+	return null
 }
 
 const getFirstFeatureAndAllAfter = (sectionIndex: number) => {
@@ -45,9 +45,11 @@ sections.forEach((s: HTMLElement, index: number) => {
 		title: s.querySelector('h2')!.textContent!,
 		id: useCreateID(s.querySelector('h2')!.textContent!),
 		orderNum: index,
-		isFeatureType:
-			s.classList.contains('feature') && getFeatureType(s.classList.toString()),
+		isFeatureType: s.classList.contains('feature')
+			? getFeatureType(s.classList.toString())
+			: null,
 		isLocked: getFirstFeatureAndAllAfter(index),
+		isFeatureComplete: null,
 	}
 
 	allSectionsMap.setKey(
@@ -62,7 +64,6 @@ sections.forEach((s: HTMLElement, index: number) => {
 if (location.includes('#')) {
 	isOnContentAtom.set(true)
 	useSetCurrSection(location.split('#').at(-1)!)
-	// TODO: if user attempts to access # that is hidden because it is locked, send them to the landing page with alert that that content is locked.
 }
 
 export { location, sections, sectionHeadings }

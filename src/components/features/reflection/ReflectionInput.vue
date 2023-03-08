@@ -7,12 +7,15 @@
 			:id="`${id}-input`"
 			rows="7"
 			v-model="input"
+			autocomplete="off"
 		></textarea>
 	</div>
 </template>
 
 <script setup lang="ts">
 	import { ref, computed } from 'vue'
+	import { useStore } from '@nanostores/vue'
+	import { allSectionsMap } from '../../../store/lessonStore'
 
 	defineProps({
 		id: {
@@ -24,6 +27,10 @@
 			required: true,
 		},
 	})
+
+	const $allSections = useStore(allSectionsMap)
+	// TODO: Want to turn on the disabled attribute on the textarea when $allSections[prop.id].isFeatureCompleted === true. Otherwise, false. Having some difficulty with that.
+
 	const emit = defineEmits(['userTyped'])
 
 	const answer = ref<string>('')

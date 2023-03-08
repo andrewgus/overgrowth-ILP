@@ -34,8 +34,9 @@ interface SectionDetails {
 	title: string
 	id: string
 	orderNum: number | null
-	isFeatureType: FeatureType | boolean
+	isFeatureType: FeatureType | null
 	isLocked: boolean
+	isFeatureComplete: boolean | null
 }
 
 interface SectionsMap {
@@ -80,15 +81,21 @@ const useToggleFeature = (feature: FeatureType) => {
 	if (nextActiveFeature === undefined) {
 		// if all features are turned off...
 		allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
-			if (sectionDetails.isFeatureType === false) {
+			if (sectionDetails.isFeatureType === null) {
 				setSectionLocks(sectionKey, sectionDetails, false)
 			}
 		})
 	} else {
+		// if a nextActiveFeature exists...
 		const [_, nextActiveFeatureDetails] = nextActiveFeature
 		if (isFeatureOn === false) {
 			// if given feature is deactivated, unlock next available feature...
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
+				if (sectionDetails.isFeatureComplete === true) {
+					// First provide a warning if that section was completed...
+					// TODO: Figure out how to flesh this out with a pop-up. Is this even necessary if the content is not lost?
+					console.log(`WARNING ${sectionDetails.id} was completed.`)
+				}
 				if (sectionDetails.orderNum! <= nextActiveFeatureDetails.orderNum!) {
 					setSectionLocks(sectionKey, sectionDetails, false)
 				}
@@ -114,7 +121,7 @@ const useSetCurrSection = (sectionKey: string) => {
 		currSectionMap.setKey('id', '')
 		currSectionMap.setKey('title', '')
 		currSectionMap.setKey('orderNum', null)
-		currSectionMap.setKey('isFeatureType', false)
+		currSectionMap.setKey('isFeatureType', null)
 		currSectionMap.setKey('isLocked', false)
 	}
 }
@@ -133,7 +140,7 @@ const filteredNavSectionsComputed = computed(
 
 				// Must be either 1) static content or feature must be true (on) AND 2) section is unlocked
 				return (
-					(sectionDetails.isFeatureType === false || isFeatureOn === true) &&
+					(sectionDetails.isFeatureType === null || isFeatureOn === true) &&
 					sectionDetails.isLocked === false
 				)
 			}
