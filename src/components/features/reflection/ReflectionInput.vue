@@ -3,6 +3,7 @@
 		<label :for="`${id}-input`">{{ prompt }}</label>
 		<slot></slot>
 		<textarea
+			:disabled="!!$currSection.isFeatureComplete"
 			placeholder="I think&hellip;"
 			:id="`${id}-input`"
 			rows="7"
@@ -15,7 +16,9 @@
 <script setup lang="ts">
 	import { ref, computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
-	import { allSectionsMap } from '../../../store/lessonStore'
+	import { currSectionMap } from '../../../store/lessonStore'
+
+	const $currSection = useStore(currSectionMap)
 
 	defineProps({
 		id: {
@@ -28,13 +31,9 @@
 		},
 	})
 
-	const $allSections = useStore(allSectionsMap)
-	// TODO: Want to turn on the disabled attribute on the textarea when $allSections[prop.id].isFeatureCompleted === true. Otherwise, false. Having some difficulty with that.
-
 	const emit = defineEmits(['userTyped'])
 
 	const answer = ref<string>('')
-
 	const input = computed({
 		get() {
 			return answer.value

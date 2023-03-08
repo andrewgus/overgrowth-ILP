@@ -47,9 +47,9 @@
 		useSetCurrSection(thisSection!.id)
 
 		// marking feature as complete
+		currSectionMap.setKey('isFeatureComplete', true)
 		allSectionsMap.setKey(thisSection!.id, {
 			...$currSection.value,
-			isFeatureComplete: true,
 		})
 
 		const allSectionsAsArray = Object.entries($allSections.value)
