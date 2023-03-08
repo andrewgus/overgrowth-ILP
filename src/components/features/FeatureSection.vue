@@ -8,7 +8,7 @@
 			<h2>{{ title }}</h2>
 			<p v-if="prompt">{{ prompt }}</p>
 			<slot></slot>
-			<ContinueBtn :canContinue="canContinue" />
+			<ContinueBtn />
 		</div>
 	</section>
 </template>
@@ -26,7 +26,6 @@
 		featureType: FeatureType
 		title: string
 		prompt?: string
-		canContinue: boolean
 	}
 
 	const props = defineProps<Props>()
@@ -42,6 +41,6 @@
 		font-size: var(--s0);
 		margin: 0 auto;
 		max-width: 60ch;
-		widows: 100%;
+		width: 100%;
 	}
 </style>

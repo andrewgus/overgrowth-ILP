@@ -4,12 +4,12 @@
 		:title="title"
 		:canContinue="canContinue"
 	>
-		<p>TEST</p>
+		<slot></slot>
 	</FeatureSection>
 </template>
 
 <script setup lang="ts">
-	import { ref } from 'vue'
+	import { ref, provide } from 'vue'
 	import FeatureSection from '../components/features/FeatureSection.vue'
 
 	defineProps({
@@ -20,10 +20,5 @@
 	})
 
 	const canContinue = ref<boolean>(true)
+	provide('isFeatureComplete', canContinue)
 </script>
-
-<style module lang="scss">
-	.choice {
-		color: var(--black);
-	}
-</style>

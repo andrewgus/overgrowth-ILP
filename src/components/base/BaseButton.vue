@@ -1,5 +1,12 @@
 <template>
-	<button v-if="!link" :class="btnStyles" @click="$emit('btnClick', $event)">
+	<button
+		v-if="!link"
+		:class="btnStyles"
+		:disabled="isDisabled"
+		autocomplete="off"
+		:aria-label="isDisabled ? 'Complete the activity to continue' : ''"
+		@click="$emit('btnClick', $event)"
+	>
 		{{ text }}
 	</button>
 	<a v-else :href="url" :class="btnStyles">{{ text }}</a>

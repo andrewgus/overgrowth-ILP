@@ -16,8 +16,12 @@ import PracticeFeature from '../../layouts/PracticeFeature.vue'
 		title='What Do You Think?'
 		prompt='When you think about Astronomy, what is/are the first thing(s) that comes to mind?'
 	/>
-	<PracticeFeature client:load title='Practice Feature' />
-	<ChoiceFeature client:load title='Choice Feature' />
+	<PracticeFeature client:load title='Practice Feature'>
+		<p>This is a practice feature.</p>
+	</PracticeFeature>
+	<ChoiceFeature client:load title='Choice Feature'>
+		<p>This is a choice feature</p>
+	</ChoiceFeature>
 	<StaticContent title='Welcome to the Course'>
 		<p>In this course, we will&hellip;</p>
 		<p>

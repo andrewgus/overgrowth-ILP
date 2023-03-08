@@ -1,9 +1,5 @@
 <template>
-	<FeatureSection
-		feature-type="reflection"
-		:title="title"
-		:canContinue="canContinue"
-	>
+	<FeatureSection feature-type="reflection" :title="title">
 		<ReflectionInput :prompt="prompt" @userTyped="checkCompleted">
 			<slot></slot>
 		</ReflectionInput>
@@ -11,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-	import { ref } from 'vue'
+	import { ref, provide } from 'vue'
 	import FeatureSection from '../components/features/FeatureSection.vue'
 	import ReflectionInput from '../components/features/reflection/ReflectionInput.vue'
 
@@ -29,9 +25,11 @@
 	const canContinue = ref<boolean>(false)
 
 	const checkCompleted = (value: string) => {
-		if (value.length > 5) {
-			console.log('what?')
+		if (value.length > 15) {
 			canContinue.value = true
+		} else {
+			canContinue.value = false
 		}
 	}
+	provide('isFeatureComplete', canContinue)
 </script>

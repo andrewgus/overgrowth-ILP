@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-	import { ref } from 'vue'
+	import { ref, inject } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import {
 		featuresMap,
@@ -30,18 +30,13 @@
 	import BaseButton from '../base/BaseButton.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
 
-	defineProps({
-		canContinue: {
-			type: Boolean,
-			required: true,
-		},
-	})
-
 	const complete = ref<boolean>(false)
 	const $allSections = useStore(allSectionsMap)
 	const $features = useStore(featuresMap)
 	const $currSection = useStore(currSectionMap)
 	const $nextSection = useStore(nextSectionComputed)
+
+	const canContinue = inject('isFeatureComplete')
 
 	const setComplete = ({ target }: Event) => {
 		const clicked = target as HTMLElement
