@@ -49,7 +49,7 @@ sections.forEach((s: HTMLElement, index: number) => {
 			? getFeatureType(s.classList.toString())
 			: null,
 		isLocked: getFirstFeatureAndAllAfter(index),
-		isFeatureComplete: null,
+		isFeatureComplete: s.classList.contains('feature') ? false : null,
 	}
 
 	allSectionsMap.setKey(

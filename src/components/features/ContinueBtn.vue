@@ -43,7 +43,6 @@
 		if (!clicked) return
 
 		const thisSection = clicked.closest('section')
-		// NOTE: Should this lock (isLocked: true) if the feature is turned off after it was completed? Does this coincide with the pop-up warning? Should NOT reset the feature. Don't want to lose completed work.
 		useSetCurrSection(thisSection!.id)
 
 		// marking feature as complete

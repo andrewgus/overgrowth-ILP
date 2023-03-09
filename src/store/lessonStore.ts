@@ -60,12 +60,15 @@ const useToggleFeature = (feature: FeatureType) => {
 	const allSectionsAsArray = Object.entries(allSectionsMap.get())
 	// find the next available active feature
 	const nextActiveFeature = allSectionsAsArray.find(([_, sectionDetails]) => {
+		// TODO: update this to NOT include any sectionDetails.isFeatureComplete === true
 		return (
-			// it is a feature && the feature is on
+			// it is a feature && the feature is on && the feature is not complete
 			!!sectionDetails.isFeatureType &&
-			featuresMap.get()[sectionDetails.isFeatureType as FeatureType]
+			featuresMap.get()[sectionDetails.isFeatureType as FeatureType] &&
+			!!sectionDetails.isFeatureComplete !== true
 		)
 	})
+	console.log(nextActiveFeature)
 
 	const setSectionLocks = (
 		sectionKey: string,
