@@ -61,14 +61,13 @@ const useToggleFeature = (feature: FeatureType) => {
 	// find the next available active feature
 	const nextActiveFeature = allSectionsAsArray.find(([_, sectionDetails]) => {
 		// TODO: update this to NOT include any sectionDetails.isFeatureComplete === true
+		// BUG: seems to mess up if there is more than one of a given type. If feature of type (1) is complete and feature of same type (2) is incomplete, same type (2) is ignored too, but it should not be.
 		return (
 			// it is a feature && the feature is on && the feature is not complete
 			!!sectionDetails.isFeatureType &&
-			featuresMap.get()[sectionDetails.isFeatureType as FeatureType] &&
-			!!sectionDetails.isFeatureComplete !== true
+			featuresMap.get()[sectionDetails.isFeatureType as FeatureType]
 		)
 	})
-	console.log(nextActiveFeature)
 
 	const setSectionLocks = (
 		sectionKey: string,
@@ -95,11 +94,13 @@ const useToggleFeature = (feature: FeatureType) => {
 			// if given feature is deactivated, unlock next available feature...
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
 				if (sectionDetails.isFeatureComplete === true) {
-					// First provide a warning if that section was completed...
+					// First provide an alert if that section was completed...
 					// TODO: Figure out how to flesh this out with a pop-up. Is this even necessary if the content is not lost?
-					console.log(`WARNING ${sectionDetails.id} was completed.`)
+					// NOTE: alert for temp use. Maybe insert the warning beneath the toggle btns? Stating which completed features were not turned off?
+					// alert(`WARNING: ${sectionDetails.title} was completed.`)
 				}
 				if (sectionDetails.orderNum! <= nextActiveFeatureDetails.orderNum!) {
+					// BUG: will not turn off the first section if it is a feature, even when it needs to do so... (such as when the feature is incomplete)
 					setSectionLocks(sectionKey, sectionDetails, false)
 				}
 			})

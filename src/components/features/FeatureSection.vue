@@ -1,6 +1,5 @@
 <template>
 	<section
-		v-show="$features[featureType]"
 		class="section feature"
 		:class="$style[featureType]"
 	>
@@ -13,9 +12,7 @@
 </template>
 
 <script setup lang="ts">
-	import { useStore } from '@nanostores/vue'
 	import {
-		featuresMap,
 		useDoesFeatureExist,
 		type FeatureType,
 	} from '../../store/lessonStore.js'
@@ -27,7 +24,6 @@
 	}
 
 	const props = defineProps<Props>()
-	const $features = useStore(featuresMap)
 
 	useDoesFeatureExist(props.featureType)
 </script>

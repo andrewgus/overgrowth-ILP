@@ -1,5 +1,11 @@
 <!-- TODO: Optionally, the complete btn can instead be a "Save & Complete" btn, where users will not only complete and continue, but also download a PDF of that activity, so that they can provide their finished results to their professor -->
 <template>
+	<transition>
+		<!-- TODO: Style this. Also only have this show up on the first feature possible. -->
+		<p v-if="canContinue">
+			Heads up! Any feature, once completed, cannot be turned off later.
+		</p>
+	</transition>
 	<transition mode="out-in">
 		<BaseButton
 			:isDisabled="!canContinue"
