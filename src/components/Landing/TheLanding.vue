@@ -2,6 +2,7 @@
 	<header :class="$style.landing">
 		<TheScene v-if="areSectionsAvailable" :scene="scene" />
 		<TheTitleCard v-if="areSectionsAvailable" :title="title" />
+		<!-- TODO: remove isOnLanding prop complete. Add the class it provides here. -->
 		<BaseIndicator
 			v-if="areSectionsAvailable"
 			isOnLanding

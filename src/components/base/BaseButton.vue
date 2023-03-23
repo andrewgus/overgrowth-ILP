@@ -5,7 +5,7 @@
 		:disabled="isDisabled"
 		autocomplete="off"
 		:aria-label="isDisabled ? 'Complete the activity to continue' : ''"
-		@click="$emit('btnClick', $event)"
+		@click.once="$emit('btnClick', $event)"
 	>
 		{{ text }}
 	</button>

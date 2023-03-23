@@ -81,35 +81,44 @@ const useToggleFeature = (feature: FeatureType) => {
 	/*  TODO: 
 	Within this toggleFeature function, I'm also determining the nextActiveFeature and using that to set the isLocked prop all sections based on that, to respond to users desires for what feature(s) are active or not. Parts 1 and 2 below should properly fit into this function. Parts 3 and 4 should fit into their own named computed values.
 
-	 How below should function:
-	 1) If a feature is complete, it cannot be isLocked: true. It must be unlocked. 
-	 	1b) The only exception to 1 being when, for example, feature B is completed while feature A (which is situated before feature B in the section stack) is turned off. Then, the user decides to go back and turn feature A on. Feature A is now on, and incomplete, which would mean that all features after it must be locked and hidden until it is complete. This MUST include feature B. However, once feature A is completed, feature B will already also be completed and the user can progress past both as they are now both completed and unlocked.
+	How below should function:
+	✅ 1) nextActiveFeature must: 1) be a feature, 2) must be toggled on, 3) NOT be completed
 
-	2) nextActiveFeature must: 1) be a feature, 2) must be toggled on, 3) NOT be completed
+
+	 2) If a feature is complete, it cannot be isLocked: true. It must be unlocked. 
+
+	 	2b) The only exception to 1 being when, for example, feature B is completed while feature A (which is situated before feature B in the section stack) is turned off. Then, the user decides to go back and turn feature A on. Feature A is now on, and incomplete, which would mean that all features after it must be locked and hidden until it is complete. This MUST include feature B. However, once feature A is completed, feature B will already also be completed and the user can progress past both as they are now both completed and unlocked.
+
 
 	3) filterForNav will only ever contain: 1) all static content or any completed features preceding nextActiveFeature, and 2) the nextActiveFeature (if it exists)
+
+
 	4) filterForLocked will only ever contain: any static content or any feature (completed or not) that comes after the nextActiveFeature  
 	*/
 
+	console.log(allSectionsMap.get())
 	if (nextActiveFeature === undefined) {
-		// if all features are turned off...
+		// all features are turned off...
 		allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
 			if (sectionDetails.isFeatureType === null) {
 				setSectionLocks(sectionKey, sectionDetails, false)
 			}
 		})
 	} else {
-		// if a nextActiveFeature exists...
+		// a nextActiveFeature exists...
 		const [_, nextActiveFeatureDetails] = nextActiveFeature
 		if (isFeatureOn === false) {
-			// and if given feature is deactivated...
+			// and user deactivates selected feature...
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
+				// NOTE: Here, I want... the selected feature to be set isLocked: true, unless isFeatureComplete is true, AND any static content that comes after it and before the nextActiveFeature to set isLocked: false, AND the nextActiveFeature to be set to isLocked: false
+				// BUG: Somewhere, the orderNum of practice is being changed to zero. Need to stop that ASAP.
+				// CLUES: When Reflection is completed, practice orderNum becomes 0. When Reflection && Practice are turned OFF, practice orderNum becomes 0. So far, those are the only two cases. What do they have in common? Turning off all three, sets both practice and choice orderNum to 0. Turned off only practice and choice, does NOT set the orderNum to 0. Reflection must also be turned off. The common denom is Reflection. The first item. Turning off Reflection and Choice sets practice orderNum to 0.
+
 				// lock any matching feature that is not completed
 				if (
 					sectionDetails.isFeatureType === feature &&
-					sectionDetails.isFeatureComplete !== true
+					sectionDetails.isFeatureComplete === false
 				) {
-					console.log(sectionDetails)
 					setSectionLocks(sectionKey, sectionDetails, true)
 				}
 				// and also unlock next available feature...
@@ -121,8 +130,9 @@ const useToggleFeature = (feature: FeatureType) => {
 				}
 			})
 		} else if (isFeatureOn === true) {
-			// else if given feature is reactivated, lock all future sections...
+			// and user reactivates selected feature...
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
+				// lock all future sections
 				if (sectionDetails.orderNum! > nextActiveFeatureDetails.orderNum!) {
 					setSectionLocks(sectionKey, sectionDetails, true)
 				}

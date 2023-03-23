@@ -57,7 +57,7 @@
 			...$currSection.value,
 		})
 
-		const allSectionsAsArray = Object.entries($allSections.value)
+		const allSectionsAsArray = Object.entries(allSectionsMap.get())
 		const nextActiveFeature = allSectionsAsArray.find(([_, sectionDetails]) => {
 			return (
 				// it is a feature && it is on && it is not the currentFeature && it has a higher orderNum than the currSection orderNum
@@ -67,11 +67,12 @@
 				sectionDetails.orderNum! > $currSection.value.orderNum!
 			)
 		})
-		// Unlock all features up until, and including, the nextActiveFeature
+
 		if (nextActiveFeature !== undefined) {
 			// if there is a next active feature
 			const [_, nextActiveFeatureDetails] = nextActiveFeature
 
+			// Unlock all features up until, and including, the nextActiveFeature
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
 				if (sectionDetails.orderNum! <= nextActiveFeatureDetails.orderNum!) {
 					allSectionsMap.setKey(sectionKey, {

@@ -1,4 +1,11 @@
 {
-  "recommendations": ["astro-build.astro-vscode"],
-  "unwantedRecommendations": []
+	"recommendations": [
+		"astro-build.astro-vscode",
+		"vue.volar",
+		"esbenp.prettier-vscode",
+		"sibiraj-s.vscode-scss-formatter",
+		"christian-kohler.path-intellisense",
+		"dbaeumer.vscode-eslint"
+	],
+	"unwantedRecommendations": []
 }
