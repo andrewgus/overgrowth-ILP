@@ -1,6 +1,7 @@
 import {
 	allSectionsMap,
 	isOnContentAtom,
+	useSetNextActiveFeature,
 	useSetCurrSection,
 	type SectionDetails,
 	type FeatureType,
@@ -45,7 +46,7 @@ sections.forEach((s: HTMLElement, index: number) => {
 		title: s.querySelector('h2')!.textContent!,
 		id: useCreateID(s.querySelector('h2')!.textContent!),
 		orderNum: index,
-		isFeatureType: s.classList.contains('feature')
+		featureType: s.classList.contains('feature')
 			? getFeatureType(s.classList.toString())
 			: null,
 		isLocked: getFirstFeatureAndAllAfter(index),
@@ -60,6 +61,13 @@ sections.forEach((s: HTMLElement, index: number) => {
 	s.id =
 		allSectionsMap.get()[useCreateID(s.querySelector('h2')!.textContent!)].id
 })
+
+const firstAvailableFeature = sections.find((s) => {
+	return s.classList.contains('feature')
+})
+if (firstAvailableFeature) {
+	useSetNextActiveFeature(firstAvailableFeature.id)
+}
 
 if (location.includes('#')) {
 	isOnContentAtom.set(true)

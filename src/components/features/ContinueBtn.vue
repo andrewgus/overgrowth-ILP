@@ -61,8 +61,8 @@
 		const nextActiveFeature = allSectionsAsArray.find(([_, sectionDetails]) => {
 			return (
 				// it is a feature && it is on && it is not the currentFeature && it has a higher orderNum than the currSection orderNum
-				!!sectionDetails.isFeatureType &&
-				$features.value[sectionDetails.isFeatureType as FeatureType] &&
+				!!sectionDetails.featureType &&
+				$features.value[sectionDetails.featureType as FeatureType] &&
 				sectionDetails.id !== $currSection.value.id &&
 				sectionDetails.orderNum! > $currSection.value.orderNum!
 			)
@@ -84,7 +84,7 @@
 		} else {
 			// if there is NOT a next available feature
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
-				if (sectionDetails.isFeatureType === null) {
+				if (sectionDetails.featureType === null) {
 					allSectionsMap.setKey(sectionKey, {
 						...sectionDetails,
 						isLocked: false,
