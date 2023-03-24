@@ -203,44 +203,44 @@ const filteredLockedSectionsComputed = computed(
 	}
 )
 // Finding the next & previous section based on the current section
-const nextSectionComputed = computed(
-	[currSectionMap, filteredNavSectionsComputed],
-	(currSection, filteredNavSections) => {
-		const filteredNavAsArray = Object.entries(filteredNavSections)
-		const findNextSection = filteredNavAsArray.find(([_, sectionDetails]) => {
+const findSection = (
+	sections: SectionsMap,
+	currSection: SectionDetails,
+	isNext: boolean
+) => {
+	const filteredNavAsArray = Object.entries(sections)
+	const findSection = filteredNavAsArray.find(([_, sectionDetails]) => {
+		if (isNext) {
 			return (
 				sectionDetails.isLocked === false &&
 				sectionDetails.orderNum! > currSection.orderNum!
 			)
-		})
-		let nextSection: string
-		if (findNextSection) {
-			nextSection = findNextSection[0]
 		} else {
-			nextSection = ''
-		}
-		return nextSection
-	}
-)
-
-const prevSectionComputed = computed(
-	[currSectionMap, filteredNavSectionsComputed],
-	(currSection, filteredNavSections) => {
-		const filteredNavAsArray = Object.entries(filteredNavSections)
-		const findPrevSection = filteredNavAsArray.find(([_, sectionDetails]) => {
 			return (
 				sectionDetails.isLocked === false &&
 				sectionDetails.orderNum! < currSection.orderNum!
 			)
-		})
-		let prevSection: string
-		if (findPrevSection) {
-			prevSection = findPrevSection[0]
-		} else {
-			prevSection = ''
 		}
-		return prevSection
+	})
+	let foundSection: string
+	if (findSection) {
+		foundSection = findSection[0]
+	} else {
+		foundSection = ''
 	}
+	return foundSection
+}
+
+const nextSectionComputed = computed(
+	[currSectionMap, filteredNavSectionsComputed],
+	(currSection, filteredNavSections) =>
+		findSection(filteredNavSections, currSection, true)
+)
+
+const prevSectionComputed = computed(
+	[currSectionMap, filteredNavSectionsComputed],
+	(currSection, filteredNavSections) =>
+		findSection(filteredNavSections, currSection, false)
 )
 
 const isOnFirstSectionComputed = computed(currSectionMap, ({ id }) => {
