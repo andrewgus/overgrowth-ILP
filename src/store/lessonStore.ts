@@ -88,10 +88,11 @@ const useToggleFeature = (feature: FeatureType) => {
 				// it is a feature && the feature is on && the feature is not complete
 				!!sectionDetails.featureType &&
 				featuresMap.get()[sectionDetails.featureType as FeatureType] &&
-				sectionDetails.isFeatureComplete !== true
+				!sectionDetails.isFeatureComplete
 			)
 		}
 	)
+
 	if (findNextActiveFeature) {
 		useSetNextActiveFeature(findNextActiveFeature[0])
 	} else {
@@ -119,22 +120,21 @@ const useToggleFeature = (feature: FeatureType) => {
 			// make sure all uncomplete features are isLocked: true
 			if (
 				sectionDetails.featureType !== null &&
-				sectionDetails.isFeatureComplete === false
+				!sectionDetails.isFeatureComplete
 			) {
 				setSectionLocks(sectionKey, sectionDetails, true)
 			}
 		})
 	} else {
 		// a nextActiveFeature exists...
-		if (isFeatureOn === false) {
+		if (!isFeatureOn) {
 			// and user deactivates selected feature...
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
 				// lock any matching feature that is not completed
 				if (
 					sectionDetails.featureType === feature &&
-					sectionDetails.isFeatureComplete === false
+					!sectionDetails.isFeatureComplete
 				) {
-					console.log(sectionKey)
 					setSectionLocks(sectionKey, sectionDetails, true)
 				}
 				// and unlock any succeeding static content up until, and including, the nextActiveFeature..
@@ -146,12 +146,11 @@ const useToggleFeature = (feature: FeatureType) => {
 					setSectionLocks(sectionKey, sectionDetails, false)
 				}
 			})
-		} else if (isFeatureOn === true) {
+		} else if (isFeatureOn) {
 			// and user reactivates selected feature...
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
 				// lock all suceeding sections
 				if (sectionDetails.orderNum! > nextActiveFeatureMap.get().orderNum!) {
-					console.log(sectionKey, sectionDetails.featureType)
 					setSectionLocks(sectionKey, sectionDetails, true)
 				}
 			})
@@ -171,11 +170,10 @@ const filteredNavSectionsComputed = computed(
 				// Must be (unlocked AND static content) OR (an unlocked, completed feature that comes before nextActiveFeature) OR the nextActiveFeature
 				if (nextActiveFeatureMap.get().id !== '') {
 					return (
-						(sectionDetails.featureType === null &&
-							sectionDetails.isLocked === false) ||
+						(sectionDetails.featureType === null && !sectionDetails.isLocked) ||
 						(sectionDetails.featureType !== null &&
-							sectionDetails.isLocked === false &&
-							sectionDetails.isFeatureComplete === true &&
+							!sectionDetails.isLocked &&
+							sectionDetails.isFeatureComplete &&
 							sectionDetails.orderNum! <
 								nextActiveFeatureMap.get().orderNum!) ||
 						sectionDetails.orderNum! === nextActiveFeatureMap.get().orderNum!
@@ -197,7 +195,7 @@ const filteredLockedSectionsComputed = computed(
 			Object.entries(allSections)
 
 		const filterForLocked = allSectionsAsArray.filter(([_, sectionDetails]) => {
-			return sectionDetails.isLocked === true
+			return sectionDetails.isLocked
 		})
 		return Object.fromEntries(filterForLocked)
 	}
@@ -212,12 +210,12 @@ const findSection = (
 	const findSection = filteredNavAsArray.find(([_, sectionDetails]) => {
 		if (isNext) {
 			return (
-				sectionDetails.isLocked === false &&
+				!sectionDetails.isLocked &&
 				sectionDetails.orderNum! > currSection.orderNum!
 			)
 		} else {
 			return (
-				sectionDetails.isLocked === false &&
+				!sectionDetails.isLocked &&
 				sectionDetails.orderNum! < currSection.orderNum!
 			)
 		}
@@ -244,7 +242,6 @@ const prevSectionComputed = computed(
 )
 
 const isOnFirstSectionComputed = computed(currSectionMap, ({ id }) => {
-	console.log(Object.keys(filteredNavSectionsComputed.get()).at(0))
 	return id === Object.keys(filteredNavSectionsComputed.get()).at(0)
 })
 const isOnLastSectionComputed = computed(currSectionMap, ({ id }) => {

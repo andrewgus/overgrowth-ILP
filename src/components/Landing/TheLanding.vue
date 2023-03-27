@@ -2,10 +2,9 @@
 	<header :class="$style.landing">
 		<TheScene v-if="areSectionsAvailable" :scene="scene" />
 		<TheTitleCard v-if="areSectionsAvailable" :title="title" />
-		<!-- TODO: remove isOnLanding prop complete. Add the class it provides here. -->
 		<BaseIndicator
 			v-if="areSectionsAvailable"
-			isOnLanding
+			:class="$style.onLandingIndicator"
 			hidden
 			text="Scroll to start"
 			:goTo="`#${Object.keys($allNavSections).at(0)}`"
@@ -42,7 +41,7 @@
 	const bgGradient = `linear-gradient(to bottom, white 0%, ${props.color} 40%, ${props.color} 60%, white 100%);`
 </script>
 
-<style module>
+<style module lang="scss">
 	.landing {
 		background-image: v-bind(bgGradient);
 		min-height: 99vh;
@@ -50,5 +49,14 @@
 		display: grid;
 		grid-template-columns: [landing-top] 1fr [landing-bottom];
 		grid-template-rows: [card-start] 4fr [card-indicator] 20vh [indicator-end];
+	}
+	.onLandingIndicator {
+		grid-area: card-indicator/landing-top/indicator-end/landing-bottom;
+
+		p {
+			background-color: hsla(0deg, 0%, 98%, 0.5);
+			filter: drop-shadow(0 0 var(--s1) var(--white));
+			border-radius: var(--s10);
+		}
 	}
 </style>

@@ -1,7 +1,5 @@
 <template>
-	<div
-		:class="[$style.indicator, { [$style.OnlandingIndicator]: isOnLanding }]"
-	>
+	<div :class="$style.indicator">
 		<a
 			:class="$style.indicatorLink"
 			:href="goTo"
@@ -42,9 +40,6 @@
 		hidden: {
 			type: Boolean,
 		},
-		isOnLanding: {
-			type: Boolean,
-		},
 	})
 </script>
 
@@ -53,14 +48,7 @@
 		align-self: center;
 		margin: 0 auto;
 	}
-	.OnlandingIndicator {
-		grid-area: card-indicator/landing-top/indicator-end/landing-bottom;
-		p {
-			background-color: hsla(0deg, 0%, 98%, 0.5);
-			filter: drop-shadow(0 0 var(--s1) var(--white));
-			border-radius: var(--s10);
-		}
-	}
+
 	.indicatorLink {
 		&,
 		&:hover,
