@@ -1,6 +1,5 @@
 <template>
 	<div v-if="$isOnContent" :class="$style.nextPrev">
-		<!-- TODO: remove isForNav prop from BaseButton completely. Add the class it provides here. -->
 		<BaseButton
 			link
 			isForNav

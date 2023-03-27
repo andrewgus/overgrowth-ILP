@@ -2,8 +2,9 @@
 <template>
 	<transition>
 		<!-- TODO: Style this. Also only have this show up on the first feature possible. Move this to just below the heading, and show until user starts. -->
-		<p v-if="canContinue">
-			Heads up! Any feature, once completed, cannot be turned off later.
+		<p v-if="!canContinue" :class="$style.continueWarning">
+			Heads&nbsp;up!&nbsp;Any&nbsp;feature&nbsp;you&nbsp;complete
+			<strong>cannot</strong>&nbsp;be&nbsp;turned&nbsp;off&nbsp;later.
 		</p>
 	</transition>
 	<transition mode="out-in">
@@ -33,13 +34,11 @@
 		useSetNextActiveFeature,
 		nextActiveFeatureMap,
 		allSectionsMap,
-		type FeatureType,
 	} from '../../store/lessonStore'
 	import useFindNextActiveFeature from '../../composables/useFindNextActiveFeature'
 	import BaseButton from '../base/BaseButton.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
 
-	const $allSections = useStore(allSectionsMap)
 	const $features = useStore(featuresMap)
 	const $currSection = useStore(currSectionMap)
 	const $nextActiveFeature = useStore(nextActiveFeatureMap)
@@ -101,6 +100,20 @@
 	.featureCompleteBtn {
 		display: block;
 		margin: var(--s0) auto 0;
+	}
+	.continueWarning {
+		width: fit-content;
+		text-align: center;
+		padding: var(--s-4) var(--s-2);
+		margin: var(--s0) auto;
+		background-color: var(--yellow5);
+		border: 1px solid var(--darkGray);
+		border-radius: var(--s10);
+
+		&,
+		> strong {
+			font-size: var(--s-1);
+		}
 	}
 </style>
 <style scoped>

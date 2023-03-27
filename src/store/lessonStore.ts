@@ -202,19 +202,23 @@ const findSection = (
 	isNext: boolean
 ) => {
 	const filteredNavAsArray = Object.entries(sections)
-	const findSection = filteredNavAsArray.find(([_, sectionDetails]) => {
-		if (isNext) {
+	let findSection: [string, SectionDetails] | undefined
+	if (isNext) {
+		findSection = filteredNavAsArray.find(([_, sectionDetails]) => {
 			return (
 				!sectionDetails.isLocked &&
 				sectionDetails.orderNum! > currSection.orderNum!
 			)
-		} else {
+		})
+	} else {
+		findSection = filteredNavAsArray.findLast(([_, sectionDetails]) => {
 			return (
 				!sectionDetails.isLocked &&
 				sectionDetails.orderNum! < currSection.orderNum!
 			)
-		}
-	})
+		})
+	}
+
 	let foundSection: string
 	if (findSection) {
 		foundSection = findSection[0]
