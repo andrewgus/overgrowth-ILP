@@ -1,3 +1,8 @@
+/**
+ * To generate an ID from a section's title
+ * @param title H2 title for a section
+ * @returns ID version of title
+ */
 export default function createID(title: string) {
 	return `${title
 		.replaceAll(/[^\w\s]/g, '')

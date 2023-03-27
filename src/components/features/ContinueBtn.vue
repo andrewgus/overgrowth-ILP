@@ -30,17 +30,22 @@
 		currSectionMap,
 		useSetCurrSection,
 		nextSectionComputed,
+		useSetNextActiveFeature,
+		nextActiveFeatureMap,
 		allSectionsMap,
 		type FeatureType,
 	} from '../../store/lessonStore'
+	import useFindNextActiveFeature from '../../composables/useFindNextActiveFeature'
 	import BaseButton from '../base/BaseButton.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
 
 	const $allSections = useStore(allSectionsMap)
 	const $features = useStore(featuresMap)
 	const $currSection = useStore(currSectionMap)
+	const $nextActiveFeature = useStore(nextActiveFeatureMap)
 	const $nextSection = useStore(nextSectionComputed)
 
+	// canContinue is provided by each feature's layout SFC.
 	const canContinue = inject('isFeatureComplete')
 	const featureComplete = ref<boolean>(false)
 
@@ -58,23 +63,19 @@
 		})
 
 		const allSectionsAsArray = Object.entries(allSectionsMap.get())
-		const nextActiveFeature = allSectionsAsArray.find(([_, sectionDetails]) => {
-			return (
-				// it is a feature && it is on && it is not the currentFeature && it has a higher orderNum than the currSection orderNum
-				!!sectionDetails.featureType &&
-				$features.value[sectionDetails.featureType as FeatureType] &&
-				sectionDetails.id !== $currSection.value.id &&
-				sectionDetails.orderNum! > $currSection.value.orderNum!
-			)
-		})
+		const findNextActiveFeature = useFindNextActiveFeature(
+			allSectionsAsArray,
+			$features.value
+		)
+		if (findNextActiveFeature) {
+			useSetNextActiveFeature(findNextActiveFeature[0])
+		}
 
-		if (nextActiveFeature !== undefined) {
-			// if there is a next active feature
-			const [_, nextActiveFeatureDetails] = nextActiveFeature
-
+		// if there is a next active feature
+		if (findNextActiveFeature !== undefined) {
 			// Unlock all features up until, and including, the nextActiveFeature
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
-				if (sectionDetails.orderNum! <= nextActiveFeatureDetails.orderNum!) {
+				if (sectionDetails.orderNum! <= $nextActiveFeature.value.orderNum!) {
 					allSectionsMap.setKey(sectionKey, {
 						...sectionDetails,
 						isLocked: false,

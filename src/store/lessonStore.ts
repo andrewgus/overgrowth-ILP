@@ -1,5 +1,6 @@
 import { atom, map, computed, type MapStore } from 'nanostores'
 import { useStore } from '@nanostores/vue'
+import useFindNextActiveFeature from '../composables/useFindNextActiveFeature'
 
 // Feature setup for any given lesson
 type FeatureType = 'reflection' | 'practice' | 'choice'
@@ -82,15 +83,9 @@ const useToggleFeature = (feature: FeatureType) => {
 	const allSectionsAsArray = Object.entries(allSectionsMap.get())
 
 	// find the next available active feature
-	const findNextActiveFeature = allSectionsAsArray.find(
-		([_, sectionDetails]) => {
-			return (
-				// it is a feature && the feature is on && the feature is not complete
-				!!sectionDetails.featureType &&
-				featuresMap.get()[sectionDetails.featureType as FeatureType] &&
-				!sectionDetails.isFeatureComplete
-			)
-		}
+	const findNextActiveFeature = useFindNextActiveFeature(
+		allSectionsAsArray,
+		featuresMap.get()
 	)
 
 	if (findNextActiveFeature) {
@@ -267,4 +262,4 @@ export {
 	isOnFirstSectionComputed,
 	isOnLastSectionComputed,
 }
-export type { FeatureType, SectionDetails, SectionsMap }
+export type { SectionsMap, SectionDetails, FeatureMap, FeatureType }
