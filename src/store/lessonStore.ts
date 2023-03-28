@@ -240,12 +240,15 @@ const prevSectionComputed = computed(
 		findSection(filteredNavSections, currSection, false)
 )
 
-const isOnFirstSectionComputed = computed(currSectionMap, ({ id }) => {
-	return id === Object.keys(filteredNavSectionsComputed.get()).at(0)
-})
-const isOnLastSectionComputed = computed(currSectionMap, ({ id }) => {
-	return id === Object.keys(filteredNavSectionsComputed.get()).at(-1)
-})
+const isOnFirstSectionComputed = computed(
+	[currSectionMap, filteredNavSectionsComputed],
+	({ id }, filteredNavSections) => id === Object.keys(filteredNavSections).at(0)
+)
+const isOnLastSectionComputed = computed(
+	[currSectionMap, filteredNavSectionsComputed],
+	({ id }, filteredNavSections) =>
+		id === Object.keys(filteredNavSections).at(-1)
+)
 
 export {
 	featuresMap,
