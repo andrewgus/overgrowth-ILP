@@ -17,25 +17,16 @@
 </template>
 
 <script setup lang="ts">
-	import { ref, onMounted } from 'vue'
 	import { useStore } from '@nanostores/vue'
-	import {
-		isOnContentAtom,
-		allSectionsMap,
-		currSectionMap,
-	} from '../../store/lessonStore'
+	import { isOnContentAtom, currSectionMap } from '../../store/lessonStore'
+	import useAreSectionsAvailable from '../../composables/useAreSectionsAvailable'
 	import TheNavToc from './TheNavTOC.vue'
 	import TheNextPrevSectionButtons from './TheNextPrevSectionButtons.vue'
 	import SkipToContent from './SkipToContent.vue'
 
 	const $isOnContent = useStore(isOnContentAtom)
-	const $allSections = useStore(allSectionsMap)
 	const $currSection = useStore(currSectionMap)
-
-	let areSectionsAvailable = ref<boolean>(false)
-	onMounted(() => {
-		areSectionsAvailable.value = Object.keys($allSections.value).length > 0
-	})
+	const areSectionsAvailable = useAreSectionsAvailable()
 </script>
 
 <style module lang="scss">

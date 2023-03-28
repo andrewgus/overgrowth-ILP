@@ -1,6 +1,7 @@
 import { atom, map, computed, type MapStore } from 'nanostores'
 import { useStore } from '@nanostores/vue'
 import useFindNextActiveFeature from '../composables/useFindNextActiveFeature'
+import useSetSectionLocks from '../composables/useSetSectionLocks'
 
 // Feature setup for any given lesson
 type FeatureType = 'reflection' | 'practice' | 'choice'
@@ -94,30 +95,19 @@ const useToggleFeature = (feature: FeatureType) => {
 		useSetNextActiveFeature('')
 	}
 
-	const setSectionLocks = (
-		sectionKey: string,
-		sectionDetails: SectionDetails,
-		onOff: boolean
-	) => {
-		allSectionsMap.setKey(sectionKey, {
-			...sectionDetails,
-			isLocked: onOff,
-		})
-	}
-
 	if (nextActiveFeatureMap.get().id === '') {
 		// all features are turned off...
 		allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
 			// unlock all static content
 			if (sectionDetails.featureType === null) {
-				setSectionLocks(sectionKey, sectionDetails, false)
+				useSetSectionLocks(allSectionsMap, sectionKey, sectionDetails, false)
 			}
 			// make sure all uncomplete features are isLocked: true
 			if (
 				sectionDetails.featureType !== null &&
 				!sectionDetails.isFeatureComplete
 			) {
-				setSectionLocks(sectionKey, sectionDetails, true)
+				useSetSectionLocks(allSectionsMap, sectionKey, sectionDetails, true)
 			}
 		})
 	} else {
@@ -130,7 +120,7 @@ const useToggleFeature = (feature: FeatureType) => {
 					sectionDetails.featureType === feature &&
 					!sectionDetails.isFeatureComplete
 				) {
-					setSectionLocks(sectionKey, sectionDetails, true)
+					useSetSectionLocks(allSectionsMap, sectionKey, sectionDetails, true)
 				}
 				// and unlock any succeeding static content up until, and including, the nextActiveFeature..
 				if (
@@ -138,7 +128,7 @@ const useToggleFeature = (feature: FeatureType) => {
 						sectionDetails.orderNum! < nextActiveFeatureMap.get().orderNum!) ||
 					sectionDetails.orderNum === nextActiveFeatureMap.get().orderNum!
 				) {
-					setSectionLocks(sectionKey, sectionDetails, false)
+					useSetSectionLocks(allSectionsMap, sectionKey, sectionDetails, false)
 				}
 			})
 		} else if (isFeatureOn) {
@@ -146,7 +136,7 @@ const useToggleFeature = (feature: FeatureType) => {
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
 				// lock all suceeding sections
 				if (sectionDetails.orderNum! > nextActiveFeatureMap.get().orderNum!) {
-					setSectionLocks(sectionKey, sectionDetails, true)
+					useSetSectionLocks(allSectionsMap, sectionKey, sectionDetails, true)
 				}
 			})
 		}

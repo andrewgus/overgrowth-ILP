@@ -21,7 +21,7 @@
 			id="navItemsList"
 		>
 			<li
-				v-for="navItem in $filteredSections"
+				v-for="navItem in $allNavSections"
 				:key="navItem.id"
 				:class="{ [$style.greenDot]: isLocatedHere(navItem.id) }"
 			>
@@ -46,7 +46,7 @@
 	} from '../../store/lessonStore'
 	import BaseButton from '../base/BaseButton.vue'
 
-	const $filteredSections = useStore(filteredNavSectionsComputed)
+	const $allNavSections = useStore(filteredNavSectionsComputed)
 	const $currSection = useStore(currSectionMap)
 
 	const isMenuOpen = ref<boolean>(false)

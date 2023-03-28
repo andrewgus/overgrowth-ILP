@@ -14,7 +14,6 @@
 			required: true,
 		},
 	})
-
 	const canContinue = ref<boolean>(true)
 	provide('isFeatureComplete', canContinue)
 </script>

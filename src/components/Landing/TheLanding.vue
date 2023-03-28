@@ -13,12 +13,9 @@
 </template>
 
 <script setup lang="ts">
-	import { onMounted, ref } from 'vue'
 	import { useStore } from '@nanostores/vue'
-	import {
-		allSectionsMap,
-		filteredNavSectionsComputed,
-	} from '../../store/lessonStore'
+	import { filteredNavSectionsComputed } from '../../store/lessonStore'
+	import useAreSectionsAvailable from '../../composables/useAreSectionsAvailable'
 	import TheScene from './TheScene.vue'
 	import TheTitleCard from './TheTitleCard.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
@@ -30,13 +27,8 @@
 	}
 	const props = defineProps<Props>()
 
-	const $allSections = useStore(allSectionsMap)
 	const $allNavSections = useStore(filteredNavSectionsComputed)
-
-	let areSectionsAvailable = ref<boolean>(false)
-	onMounted(() => {
-		areSectionsAvailable.value = Object.keys($allSections.value).length > 0
-	})
+	const areSectionsAvailable = useAreSectionsAvailable()
 
 	const bgGradient = `linear-gradient(to bottom, white 0%, ${props.color} 40%, ${props.color} 60%, white 100%);`
 </script>

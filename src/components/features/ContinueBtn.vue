@@ -1,13 +1,12 @@
-<!-- TODO: Optionally, the complete btn can instead be a "Save & Complete" btn, where users will not only complete and continue, but also download a PDF of that activity, so that they can provide their finished results to their professor -->
 <template>
 	<transition>
-		<!-- TODO: Style this. Also only have this show up on the first feature possible. Move this to just below the heading, and show until user starts. -->
 		<p v-if="!canContinue" :class="$style.continueWarning">
-			Heads&nbsp;up!&nbsp;Any&nbsp;feature&nbsp;you&nbsp;complete
-			<strong>cannot</strong>&nbsp;be&nbsp;turned&nbsp;off&nbsp;later.
+			Heads&nbsp;up!&nbsp;Once&nbsp;completed,
+			this&nbsp;<strong>cannot</strong>&nbsp;be&nbsp;turned&nbsp;off&nbsp;later.
 		</p>
 	</transition>
 	<transition mode="out-in">
+		<!-- TODO: Optionally, the complete btn can instead be a "Save & Complete" btn, where users will not only complete and continue, but also download a PDF of that activity, so that they can provide their finished results to their professor -->
 		<BaseButton
 			:isDisabled="!canContinue"
 			v-if="!featureComplete"
@@ -35,9 +34,10 @@
 		nextActiveFeatureMap,
 		allSectionsMap,
 	} from '../../store/lessonStore'
-	import useFindNextActiveFeature from '../../composables/useFindNextActiveFeature'
 	import BaseButton from '../base/BaseButton.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
+	import useFindNextActiveFeature from '../../composables/useFindNextActiveFeature'
+	import useSetSectionLocks from '../../composables/useSetSectionLocks'
 
 	const $features = useStore(featuresMap)
 	const $currSection = useStore(currSectionMap)
@@ -75,20 +75,14 @@
 			// Unlock all features up until, and including, the nextActiveFeature
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
 				if (sectionDetails.orderNum! <= $nextActiveFeature.value.orderNum!) {
-					allSectionsMap.setKey(sectionKey, {
-						...sectionDetails,
-						isLocked: false,
-					})
+					useSetSectionLocks(allSectionsMap, sectionKey, sectionDetails, false)
 				}
 			})
 		} else {
 			// if there is NOT a next available feature
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
 				if (sectionDetails.featureType === null) {
-					allSectionsMap.setKey(sectionKey, {
-						...sectionDetails,
-						isLocked: false,
-					})
+					useSetSectionLocks(allSectionsMap, sectionKey, sectionDetails, false)
 				}
 			})
 		}

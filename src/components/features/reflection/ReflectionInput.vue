@@ -7,20 +7,20 @@
 			placeholder="I think&hellip;"
 			:id="`${id}-input`"
 			rows="7"
-			v-model="input"
+			v-model="userInput"
 			autocomplete="off"
 		></textarea>
 	</div>
 </template>
 
 <script setup lang="ts">
-	import { ref, computed } from 'vue'
+	import { ref, computed, toRefs } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import { currSectionMap } from '../../../store/lessonStore'
+	import { userReflectionsStore } from './userReflectionsStore'
 
 	const $currSection = useStore(currSectionMap)
-
-	defineProps({
+	const props = defineProps({
 		id: {
 			type: String,
 			required: true,
@@ -30,16 +30,19 @@
 			required: true,
 		},
 	})
-
 	const emit = defineEmits(['userTyped'])
 
-	const answer = ref<string>('')
-	const input = computed({
+	userReflectionsStore[props.id] = {
+		prompt: props.prompt,
+		answer: '',
+	}
+	const userInput = computed({
 		get() {
-			return answer.value
+			return userReflectionsStore[props.id].answer
 		},
 		set(value) {
-			answer.value = value
+			userReflectionsStore[props.id].answer = value
+			console.log(userReflectionsStore)
 			emit('userTyped', value)
 		},
 	})
