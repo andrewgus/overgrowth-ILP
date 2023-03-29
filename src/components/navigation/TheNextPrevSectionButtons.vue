@@ -44,10 +44,10 @@
 
 	const $isOnContent = useStore(isOnContentAtom)
 	const $currSection = useStore(currSectionMap)
-	const $isOnFirstSection = useStore(isOnFirstSectionComputed)
 	const $nextSection = useStore(nextSectionComputed)
-	const $isOnLastSection = useStore(isOnLastSectionComputed)
 	const $prevSection = useStore(prevSectionComputed)
+	const $isOnFirstSection = useStore(isOnFirstSectionComputed)
+	const $isOnLastSection = useStore(isOnLastSectionComputed)
 </script>
 
 <style module lang="scss">

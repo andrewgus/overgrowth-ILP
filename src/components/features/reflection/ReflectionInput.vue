@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-	import { ref, computed, toRefs } from 'vue'
+	import { computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import { currSectionMap } from '../../../store/lessonStore'
 	import { userReflectionsStore } from './userReflectionsStore'
@@ -42,7 +42,6 @@
 		},
 		set(value) {
 			userReflectionsStore[props.id].answer = value
-			console.log(userReflectionsStore)
 			emit('userTyped', value)
 		},
 	})

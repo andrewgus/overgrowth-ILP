@@ -14,7 +14,11 @@
 						@toggleSwitch="useToggleFeature('reflection')"
 					/>
 				</li>
-				<BaseSeparator hidden v-if="multiFeatures.reflectionAndOther" />
+				<BaseSeparator
+					orientation="vertical"
+					hidden
+					v-if="multiFeatures.reflectionAndOther"
+				/>
 				<li v-if="useFeatureExists('practice')">
 					<BaseSwitch
 						type="Practice"
@@ -22,7 +26,11 @@
 						@toggleSwitch="useToggleFeature('practice')"
 					/>
 				</li>
-				<BaseSeparator hidden v-if="multiFeatures.practiceAndChoice" />
+				<BaseSeparator
+					orientation="vertical"
+					hidden
+					v-if="multiFeatures.practiceAndChoice"
+				/>
 				<li v-if="useFeatureExists('choice')">
 					<BaseSwitch
 						type="Choice"

@@ -7,14 +7,22 @@
 				:key="id"
 				:class="$style.reflectionResponse"
 			>
-				<p>{{ response.prompt }}</p>
-				<p>{{ response.answer }}</p>
+				<div>
+					<p>You were asked:</p>
+					<p>{{ response.prompt }}</p>
+				</div>
+				<BaseSeparator orientation="horizontal" />
+				<div>
+					<p>You answered:</p>
+					<p>{{ response.answer }}</p>
+				</div>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
+	import BaseSeparator from '../../base/BaseSeparator.vue'
 	import { userReflectionsStore } from './userReflectionsStore'
 	defineProps({
 		prompt: {

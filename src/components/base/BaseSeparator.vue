@@ -2,17 +2,17 @@
 	<div
 		:class="$style.separator"
 		role="separator"
+		:aria-orientation="orientation"
 		:aria-hidden="hidden"
-		aria-orientation="vertical"
 	></div>
 </template>
 
 <script setup lang="ts">
-	defineProps({
-		hidden: {
-			type: Boolean,
-		},
-	})
+	interface props {
+		orientation: 'horizontal' | 'vertical'
+		hidden?: boolean
+	}
+	defineProps<props>()
 </script>
 
 <style module>
