@@ -6,20 +6,43 @@ import type { SectionDetails } from '../store/lessonStore'
  * @param sectionID currSectionMap
  */
 export default function generatePDF(currSection: SectionDetails) {
-	const doc = new jsPDF({
+	const newPDF = new jsPDF({
 		orientation: 'l',
-		unit: 'pt',
+		unit: 'px',
+		hotfixes: ['px_scaling'],
 		format: 'a4',
-		putOnlyUsedFonts: true,
 		floatPrecision: 'smart',
 	})
 
 	const pdfElement: HTMLElement = document.getElementById(currSection.id)!
+	const continueBtn: HTMLElement = pdfElement.querySelector('button')!
+	const lessonName: string = window.location
+		.toString()
+		.split('/')
+		.at(-1)!
+		.split('#')
+		.at(0)
+		?.replaceAll('-', ' ')!
 
-	doc.html(pdfElement, {
-		callback: (pdf) => {
-			pdf.save(`${currSection.title.replaceAll(' ', '-').trim()}.pdf'`)
+	newPDF.html(pdfElement, {
+		callback: (newPDF) => {
+			newPDF.setFontSize(18)
+			newPDF.text(`${lessonName} ${currSection.featureType}`, 20, 40, {
+				align: 'left',
+			})
+
+			newPDF.save(`${currSection.id}.pdf'`)
 		},
-		margin: 0, // optional: page margin
+		html2canvas: {
+			// TODO: figure out how to get ignoreElements function to work to remove the continueBtn.
+			// ignoreElements(continueBtn) {
+			// 	return true
+			// },
+			scale: 0.75,
+			width: 90,
+			height: 90,
+			x: 0,
+			y: 0,
+		},
 	})
 }
