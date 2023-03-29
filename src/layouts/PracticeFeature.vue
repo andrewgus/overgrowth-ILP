@@ -8,12 +8,14 @@
 	import { ref, provide } from 'vue'
 	import FeatureSection from '../components/features/FeatureSection.vue'
 
-	defineProps({
-		title: {
-			type: String,
-			required: true,
-		},
-	})
+	interface props {
+		title: string
+		toSave?: boolean
+	}
+
+	const props = defineProps<props>()
+
 	const canContinue = ref<boolean>(true)
 	provide('isFeatureComplete', canContinue)
+	provide('saveWorkAsPDF', props.toSave)
 </script>

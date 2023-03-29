@@ -6,10 +6,16 @@
 		</p>
 	</transition>
 	<transition mode="out-in">
-		<!-- TODO: Optionally, the complete btn can instead be a "Save & Complete" btn, where users will not only complete and continue, but also download a PDF of that activity, so that they can provide their finished results to their professor -->
 		<BaseButton
+			v-if="!featureComplete && saveWorkAsPDF"
 			:isDisabled="!canContinue"
-			v-if="!featureComplete"
+			text="Save work as PDF and continue?"
+			:class="$style.featureCompleteBtn"
+			@btnClick="setComplete"
+		/>
+		<BaseButton
+			v-else-if="!featureComplete && !saveWorkAsPDF"
+			:isDisabled="!canContinue"
 			text="Continue?"
 			:class="$style.featureCompleteBtn"
 			@btnClick="setComplete"
@@ -38,6 +44,7 @@
 	import BaseIndicator from '../base/BaseIndicator.vue'
 	import useFindNextActiveFeature from '../../composables/useFindNextActiveFeature'
 	import useSetSectionLocks from '../../composables/useSetSectionLocks'
+	import useSaveAsPDF from '../../composables/useSaveAsPDF'
 
 	const $features = useStore(featuresMap)
 	const $currSection = useStore(currSectionMap)
@@ -46,6 +53,7 @@
 
 	// canContinue is provided by each feature's layout SFC.
 	const canContinue = inject('isFeatureComplete')
+	const saveWorkAsPDF = inject('saveWorkAsPDF')
 	const featureComplete = ref<boolean>(false)
 
 	const setComplete = ({ target }: Event) => {
@@ -86,6 +94,13 @@
 				}
 			})
 		}
+
+		// if the section should be saved as a PDF as well
+		if (saveWorkAsPDF) {
+			console.log($currSection.value)
+			useSaveAsPDF($currSection.value)
+		}
+
 		featureComplete.value = true
 	}
 </script>

@@ -19,30 +19,28 @@
 	import FeatureSection from '../components/features/FeatureSection.vue'
 	import ReflectionInput from '../components/features/reflection/ReflectionInput.vue'
 
-	const props = defineProps({
-		isFinaleReveal: {
-			type: Boolean,
-			required: true,
-		},
-		title: {
-			type: String,
-			required: true,
-		},
-		prompt: {
-			type: String,
-			required: true,
-		},
-	})
+	// TODO: these provides are the same across the features. Figure out how to NOT repeat this. Do they belong in the FeatureSection component? How should I best go from a lesson layout directly to continueBtn component, without repeating?
+
+	interface props {
+		isFinaleReveal: boolean
+		title: string
+		prompt: string
+		toSave?: boolean
+	}
+
+	const props = defineProps<props>()
+	
 
 	const sectionID = useCreateID(props.title)
 	const canContinue = ref<boolean>(false)
 
 	const checkCompleted = (value: string) => {
-		if (value.length > 15) {
+		if (value.length > 25) {
 			canContinue.value = true
 		} else {
 			canContinue.value = false
 		}
 	}
 	provide('isFeatureComplete', canContinue)
+	provide('saveWorkAsPDF', props.toSave)
 </script>
