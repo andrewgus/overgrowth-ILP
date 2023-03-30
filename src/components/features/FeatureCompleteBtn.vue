@@ -1,25 +1,29 @@
 <template>
 	<transition>
-		<p v-if="!canContinue" :class="$style.continueWarning">
+		<p
+			v-if="
+				!canContinueFrom.isComplete && areSectionsAvailable && !isLastSection
+			"
+			:class="$style.continueWarning"
+		>
 			Heads&nbsp;up!&nbsp;Once&nbsp;completed,
 			this&nbsp;<strong>cannot</strong>&nbsp;be&nbsp;turned&nbsp;off&nbsp;later.
 		</p>
 	</transition>
 	<transition mode="out-in">
 		<BaseButton
-			v-if="!featureComplete && saveWorkAsPDF"
-			:isDisabled="!canContinue"
-			text="Save work as PDF and continue?"
+			v-if="!featureComplete && areSectionsAvailable && !isLastSection"
+			:isDisabled="!canContinueFrom.isComplete"
+			:text="willSaveAsPDF ? 'Save work as PDF and continue?' : 'Continue?'"
 			:class="$style.featureCompleteBtn"
 			@btnClick="setComplete"
 		/>
 		<BaseButton
-			v-else-if="!featureComplete && !saveWorkAsPDF"
-			:isDisabled="!canContinue"
-			text="Continue?"
+			v-else-if="areSectionsAvailable && isLastSection"
+			text="Save as PDF"
 			:class="$style.featureCompleteBtn"
-			@btnClick="setComplete"
-		></BaseButton>
+			@btnClick="saveAsPDF"
+		/>
 		<BaseIndicator
 			v-else
 			text="Scoll to continue"
@@ -29,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-	import { ref, inject } from 'vue'
+	import { ref, inject, computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import {
 		featuresMap,
@@ -39,10 +43,12 @@
 		useSetNextActiveFeature,
 		nextActiveFeatureMap,
 		allSectionsMap,
+		useIsLastSection,
 	} from '../../store/lessonStore'
 	import BaseButton from '../base/BaseButton.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
 	import useFindNextActiveFeature from '../../composables/useFindNextActiveFeature'
+	import useAreSectionsAvailable from '../../composables/useAreSectionsAvailable'
 	import useSetSectionLocks from '../../composables/useSetSectionLocks'
 	import useSaveAsPDF from '../../composables/useSaveAsPDF'
 
@@ -51,10 +57,21 @@
 	const $nextActiveFeature = useStore(nextActiveFeatureMap)
 	const $nextSection = useStore(nextSectionComputed)
 
-	// canContinue is provided by each feature's layout SFC.
-	const canContinue = inject('isFeatureComplete')
-	const saveWorkAsPDF = inject('saveWorkAsPDF')
+	// willSaveAsPDF & canContinueFrom  provided by each feature's layout SFC.
+	const willSaveAsPDF = inject('willSaveAsPDF') as boolean
+	const canContinueFrom = inject('isFeatureComplete') as {
+		id: string
+		isComplete: boolean
+	}
+	const areSectionsAvailable = useAreSectionsAvailable()
+	const isLastSection = useIsLastSection(canContinueFrom.id)
+
 	const featureComplete = ref<boolean>(false)
+
+	const saveAsPDF = () => {
+		useSaveAsPDF($currSection.value)
+		if (!featureComplete.value) featureComplete.value = true
+	}
 
 	const setComplete = ({ target }: Event) => {
 		const clicked = target as HTMLElement
@@ -94,11 +111,7 @@
 				}
 			})
 		}
-
-		// if the section should be saved as a PDF as well
-		if (saveWorkAsPDF) {
-			useSaveAsPDF($currSection.value)
-		}
+		if (willSaveAsPDF) saveAsPDF()
 
 		featureComplete.value = true
 	}

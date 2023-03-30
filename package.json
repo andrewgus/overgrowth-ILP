@@ -1,5 +1,5 @@
 {
-  "name": "@example/basics",
+  "name": "overgrowth-ilp",
   "type": "module",
   "version": "0.0.1",
   "private": true,
@@ -14,12 +14,12 @@
     "@astrojs/vue": "^2.1.0",
     "@nanostores/vue": "^0.7.0",
     "@vueuse/core": "^9.13.0",
-    "astro": "^2.1.5",
+    "astro": "^2.1.8",
     "jspdf": "^2.5.1",
     "nanostores": "^0.7.4",
     "vue": "^3.2.47"
   },
   "devDependencies": {
-    "sass": "^1.59.3"
+    "sass": "^1.60.0"
   }
 }

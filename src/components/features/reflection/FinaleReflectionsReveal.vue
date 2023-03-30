@@ -22,8 +22,9 @@
 </template>
 
 <script setup lang="ts">
-	import BaseSeparator from '../../base/BaseSeparator.vue'
 	import { userReflectionsStore } from './userReflectionsStore'
+	import BaseSeparator from '../../base/BaseSeparator.vue'
+
 	defineProps({
 		prompt: {
 			type: String,
@@ -41,7 +42,7 @@
 	}
 	.reflectionResponses {
 		display: flex;
-		flex-flow: row wrap;
+		flex-flow: column nowrap;
 		gap: var(--s2);
 		margin-top: var(--s2);
 		> .reflectionResponse {

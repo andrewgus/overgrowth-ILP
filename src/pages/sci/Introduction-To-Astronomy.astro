@@ -16,7 +16,6 @@ import PracticeFeature from '../../layouts/PracticeFeature.vue'
 		isFinaleReveal={false}
 		title='What Do You Think?'
 		prompt='When you think about Astronomy, what is/are the first thing(s) that comes to mind?'
-		toSave
 	/>
 	<PracticeFeature client:load title='Practice Feature'>
 		<p>This is a practice feature.</p>
@@ -313,6 +312,7 @@ import PracticeFeature from '../../layouts/PracticeFeature.vue'
 	/>
 	<ReflectionFeature
 		client:load
+		toSave
 		isFinaleReveal={true}
 		title='What Do You Think Now?'
 		prompt='Look at how your thoughts have changed over time.'

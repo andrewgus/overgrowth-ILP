@@ -8,18 +8,16 @@
 		>
 			<slot></slot>
 		</ReflectionInput>
-		<FinaleReveal v-else :prompt="prompt" />
+		<FinaleReflectionsReveal v-else :prompt="prompt" />
 	</FeatureSection>
 </template>
 
 <script setup lang="ts">
-	import { ref, provide } from 'vue'
-	import FinaleReveal from '../components/features/reflection/FinaleReveal.vue'
+	import { reactive, provide } from 'vue'
+	import FinaleReflectionsReveal from '../components/features/reflection/FinaleReflectionsReveal.vue'
 	import useCreateID from '../composables/useCreateID'
 	import FeatureSection from '../components/features/FeatureSection.vue'
 	import ReflectionInput from '../components/features/reflection/ReflectionInput.vue'
-
-	// TODO: these provides are the same across the features. Figure out how to NOT repeat this. Do they belong in the FeatureSection component? How should I best go from a lesson layout directly to continueBtn component, without repeating?
 
 	interface props {
 		isFinaleReveal: boolean
@@ -29,18 +27,21 @@
 	}
 
 	const props = defineProps<props>()
-	
 
 	const sectionID = useCreateID(props.title)
-	const canContinue = ref<boolean>(false)
+
+	const canContinueFrom = reactive({
+		id: sectionID,
+		isComplete: false,
+	})
 
 	const checkCompleted = (value: string) => {
 		if (value.length > 25) {
-			canContinue.value = true
+			canContinueFrom.isComplete = true
 		} else {
-			canContinue.value = false
+			canContinueFrom.isComplete = false
 		}
 	}
-	provide('isFeatureComplete', canContinue)
-	provide('saveWorkAsPDF', props.toSave)
+	provide('isFeatureComplete', canContinueFrom)
+	provide('willSaveAsPDF', props.toSave)
 </script>

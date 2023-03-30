@@ -25,15 +25,22 @@ export default function generatePDF(currSection: SectionDetails) {
 
 	newPDF.html(pdfElement, {
 		callback: (newPDF) => {
-			newPDF.setFontSize(12)
-			newPDF.text(`${lessonName} ${currSection.featureType}`, 20, 40, {
-				align: 'left',
-			})
+			const totalPages = newPDF.getNumberOfPages()
+
+			for (let i = 1; i <= totalPages; i++) {
+				newPDF.setPage(i)
+				newPDF.setFontSize(10)
+				newPDF.setTextColor(150)
+				newPDF.text(`${lessonName} ${currSection.featureType}`, 20, 40, {
+					align: 'left',
+					lineHeightFactor: 1,
+				})
+			}
+
 			newPDF.save(`${currSection.id}.pdf'`)
 		},
 		html2canvas: {
-			ignoreElements: (el) =>
-				el.classList.toString().includes('featureCompleteBtn'),
+			ignoreElements: (el) => el.classList.toString().includes('btn'),
 			scale: 0.7,
 			width: 700,
 			windowWidth: 700,

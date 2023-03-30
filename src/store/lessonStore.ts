@@ -239,6 +239,9 @@ const isOnLastSectionComputed = computed(
 	({ id }, filteredNavSections) =>
 		id === Object.keys(filteredNavSections).at(-1)
 )
+const useIsLastSection = (sectionID: string) => {
+	return Object.keys(allSectionsMap.get()).at(-1) === sectionID
+}
 
 export {
 	featuresMap,
@@ -258,5 +261,6 @@ export {
 	prevSectionComputed,
 	isOnFirstSectionComputed,
 	isOnLastSectionComputed,
+	useIsLastSection,
 }
 export type { SectionsMap, SectionDetails, FeatureMap, FeatureType }

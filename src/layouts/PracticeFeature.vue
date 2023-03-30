@@ -5,8 +5,9 @@
 </template>
 
 <script setup lang="ts">
-	import { ref, provide } from 'vue'
+	import { reactive, provide } from 'vue'
 	import FeatureSection from '../components/features/FeatureSection.vue'
+	import useCreateID from '../composables/useCreateID'
 
 	interface props {
 		title: string
@@ -15,7 +16,13 @@
 
 	const props = defineProps<props>()
 
-	const canContinue = ref<boolean>(true)
-	provide('isFeatureComplete', canContinue)
-	provide('saveWorkAsPDF', props.toSave)
+	const sectionID = useCreateID(props.title)
+
+	const canContinueFrom = reactive({
+		id: sectionID,
+		isComplete: true,
+	})
+
+	provide('isFeatureComplete', canContinueFrom)
+	provide('willSaveAsPDF', props.toSave)
 </script>
