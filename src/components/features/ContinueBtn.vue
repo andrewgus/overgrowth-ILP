@@ -97,7 +97,6 @@
 
 		// if the section should be saved as a PDF as well
 		if (saveWorkAsPDF) {
-			console.log($currSection.value)
 			useSaveAsPDF($currSection.value)
 		}
 
