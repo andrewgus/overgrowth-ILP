@@ -12,17 +12,17 @@
 	</transition>
 	<transition mode="out-in">
 		<BaseButton
-			v-if="!featureComplete && areSectionsAvailable && !isLastSection"
+			v-if="willSaveAsPDF && areSectionsAvailable && isLastSection"
+			:text="isDownloading ? 'Downloading&hellip;' : `Save as PDF`"
+			:class="$style.featureCompleteBtn"
+			@btnClick="saveAsPDF"
+		/>
+		<BaseButton
+			v-else-if="!featureComplete"
 			:isDisabled="!canContinueFrom.isComplete"
 			:text="willSaveAsPDF ? 'Save work as PDF and continue?' : 'Continue?'"
 			:class="$style.featureCompleteBtn"
 			@btnClick="setComplete"
-		/>
-		<BaseButton
-			v-else-if="areSectionsAvailable && isLastSection"
-			text="Save as PDF"
-			:class="$style.featureCompleteBtn"
-			@btnClick="saveAsPDF"
 		/>
 		<BaseIndicator
 			v-else
@@ -33,28 +33,20 @@
 </template>
 
 <script setup lang="ts">
-	import { ref, inject, computed } from 'vue'
+	import { ref, inject } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import {
-		featuresMap,
 		currSectionMap,
 		useSetCurrSection,
 		nextSectionComputed,
-		useSetNextActiveFeature,
-		nextActiveFeatureMap,
-		allSectionsMap,
 		useIsLastSection,
+		useSetFeatureComplete,
 	} from '../../store/lessonStore'
 	import BaseButton from '../base/BaseButton.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
-	import useFindNextActiveFeature from '../../composables/useFindNextActiveFeature'
 	import useAreSectionsAvailable from '../../composables/useAreSectionsAvailable'
-	import useSetSectionLocks from '../../composables/useSetSectionLocks'
-	import useSaveAsPDF from '../../composables/useSaveAsPDF'
 
-	const $features = useStore(featuresMap)
 	const $currSection = useStore(currSectionMap)
-	const $nextActiveFeature = useStore(nextActiveFeatureMap)
 	const $nextSection = useStore(nextSectionComputed)
 
 	// willSaveAsPDF & canContinueFrom  provided by each feature's layout SFC.
@@ -67,9 +59,16 @@
 	const isLastSection = useIsLastSection(canContinueFrom.id)
 
 	const featureComplete = ref<boolean>(false)
+	const isDownloading = ref<boolean>(false)
 
-	const saveAsPDF = () => {
-		useSaveAsPDF($currSection.value)
+	const saveAsPDF = async () => {
+		isDownloading.value = true
+		const { default: generatePDF } = await import(
+			'../../composables/useSaveAsPDF'
+		)
+		await generatePDF($currSection.value)
+		// TODO: figure out how to wait for finished rendering to occur before setting isDownloading back to false (shows in logger, so Is can find it...)
+		isDownloading.value = false
 		if (!featureComplete.value) featureComplete.value = true
 	}
 
@@ -80,40 +79,10 @@
 		const thisSection = clicked.closest('section')
 		useSetCurrSection(thisSection!.id)
 
-		// marking feature as complete
-		currSectionMap.setKey('isFeatureComplete', true)
-		allSectionsMap.setKey(thisSection!.id, {
-			...$currSection.value,
-		})
-
-		const allSectionsAsArray = Object.entries(allSectionsMap.get())
-		const findNextActiveFeature = useFindNextActiveFeature(
-			allSectionsAsArray,
-			$features.value
-		)
-		if (findNextActiveFeature) {
-			useSetNextActiveFeature(findNextActiveFeature[0])
-		}
-
-		// if there is a next active feature
-		if (findNextActiveFeature !== undefined) {
-			// Unlock all features up until, and including, the nextActiveFeature
-			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
-				if (sectionDetails.orderNum! <= $nextActiveFeature.value.orderNum!) {
-					useSetSectionLocks(allSectionsMap, sectionKey, sectionDetails, false)
-				}
-			})
-		} else {
-			// if there is NOT a next available feature
-			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
-				if (sectionDetails.featureType === null) {
-					useSetSectionLocks(allSectionsMap, sectionKey, sectionDetails, false)
-				}
-			})
-		}
-		if (willSaveAsPDF) saveAsPDF()
-
+		useSetFeatureComplete()
 		featureComplete.value = true
+
+		if (willSaveAsPDF) saveAsPDF()
 	}
 </script>
 

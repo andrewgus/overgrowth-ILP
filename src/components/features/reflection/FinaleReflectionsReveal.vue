@@ -1,7 +1,7 @@
 <template>
 	<div :class="$style.reflectionFinale">
 		<p>{{ prompt }}</p>
-		<div :class="$style.reflectionResponses">
+		<div :class="$style.reflectionResponses" v-if="userReflectionsStore">
 			<div
 				v-for="(response, id) in userReflectionsStore"
 				:key="id"
@@ -38,7 +38,7 @@
 		display: flex;
 		flex-flow: column nowrap;
 		justify-content: center;
-		align-items: center;
+		align-items: flex-start;
 	}
 	.reflectionResponses {
 		display: flex;

@@ -31,12 +31,12 @@ export default function generatePDF(currSection: SectionDetails) {
 				newPDF.setPage(i)
 				newPDF.setFontSize(10)
 				newPDF.setTextColor(150)
-				newPDF.text(`${lessonName} ${currSection.featureType}`, 20, 40, {
+				newPDF.setLineHeightFactor(1)
+				newPDF.text(`${lessonName} ${currSection.featureType}`, 16, 32, {
 					align: 'left',
 					lineHeightFactor: 1,
 				})
 			}
-
 			newPDF.save(`${currSection.id}.pdf'`)
 		},
 		html2canvas: {
@@ -47,6 +47,6 @@ export default function generatePDF(currSection: SectionDetails) {
 		},
 		width: 700,
 		windowWidth: 700,
-		margin: 24,
+		margin: [32, 16, 24, 16],
 	})
 }

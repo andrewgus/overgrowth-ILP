@@ -6,4 +6,14 @@ interface userAnswers {
 		answer: string
 	}
 }
-export const userReflectionsStore = reactive<userAnswers>({})
+
+const userReflectionsStore = reactive<userAnswers>({})
+
+function initUserReflectionsStore(id: string, prompt: string) {
+	userReflectionsStore[id] = {
+		prompt: prompt,
+		answer: '',
+	}
+}
+
+export { userReflectionsStore, initUserReflectionsStore }

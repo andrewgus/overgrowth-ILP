@@ -19,9 +19,7 @@
 		featureType: FeatureType
 		title: string
 	}
-
 	const props = defineProps<Props>()
-
 	useDoesFeatureExist(props.featureType)
 </script>
 

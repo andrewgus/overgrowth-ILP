@@ -17,7 +17,10 @@
 	import { computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import { currSectionMap } from '../../../store/lessonStore'
-	import { userReflectionsStore } from './userReflectionsStore'
+	import {
+		userReflectionsStore,
+		initUserReflectionsStore,
+	} from './userReflectionsStore'
 
 	const $currSection = useStore(currSectionMap)
 	const props = defineProps({
@@ -32,10 +35,8 @@
 	})
 	const emit = defineEmits(['userTyped'])
 
-	userReflectionsStore[props.id] = {
-		prompt: props.prompt,
-		answer: '',
-	}
+	initUserReflectionsStore(props.id, props.prompt)
+
 	const userInput = computed({
 		get() {
 			return userReflectionsStore[props.id].answer
