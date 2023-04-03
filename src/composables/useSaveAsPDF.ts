@@ -37,9 +37,12 @@ export default function generatePDF(currSection: SectionDetails) {
 					lineHeightFactor: 1,
 				})
 			}
+			// NOTE: Answer may be in the returnPromise option available on the save function here.
 			newPDF.save(`${currSection.id}.pdf'`)
 		},
 		html2canvas: {
+			// TODO: figure out how to make this async work so I can provide user feedback that the PDF generator is running until it is complete.
+			async: true,
 			ignoreElements: (el) => el.classList.toString().includes('btn'),
 			scale: 0.7,
 			width: 700,

@@ -19,14 +19,19 @@
 	import FeatureSection from '../components/features/FeatureSection.vue'
 	import ReflectionInput from '../components/features/reflection/ReflectionInput.vue'
 
+	// TODO: how much of the repeating code in each of these Feature layouts can be placed inside the FeatureSection component? Can I make one singe Feature layout with dynamic component based on prop (this includes all of this repeat code), and then that component (reflection, practice, or choice) has all the possible feature options. Would bring the featureComplete btn up a level and inject would no longer be required. Would create a big issue with the numerous props required (and different based on if the feature is of a specific type). That might make it not work. Need to think this through more. Some parts would be easier to go with a single feature layout and some parts would be easier with layouts for each feature type... need to weigh the pros and cons here...
+
 	interface props {
-		isFinaleReveal: boolean
 		title: string
 		prompt: string
 		toSave?: boolean
+		isFinaleReveal?: boolean
 	}
 
-	const props = defineProps<props>()
+	const props = withDefaults(defineProps<props>(), {
+		toSave: false,
+		isFinaleReveal: false,
+	})
 
 	const sectionID = useCreateID(props.title)
 

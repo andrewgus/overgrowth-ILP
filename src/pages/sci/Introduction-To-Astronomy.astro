@@ -13,7 +13,6 @@ import PracticeFeature from '../../layouts/PracticeFeature.vue'
 >
 	<ReflectionFeature
 		client:load
-		isFinaleReveal={false}
 		title='What Do You Think?'
 		prompt='When you think about Astronomy, what is/are the first thing(s) that comes to mind?'
 	/>
@@ -142,7 +141,6 @@ import PracticeFeature from '../../layouts/PracticeFeature.vue'
 	</StaticContent>
 	<ReflectionFeature
 		client:load
-		isFinaleReveal={false}
 		title='Part 2 Reflection'
 		prompt='And now what do you think?'
 	/>
@@ -304,15 +302,10 @@ import PracticeFeature from '../../layouts/PracticeFeature.vue'
 			deleniti?
 		</p>
 	</StaticContent>
+	<ReflectionFeature client:load title='One Last Time' prompt='Hello there?' />
 	<ReflectionFeature
 		client:load
-		isFinaleReveal={false}
-		title='One Last Time'
-		prompt='Hello there?'
-	/>
-	<ReflectionFeature
-		client:load
-		isFinaleReveal={true}
+		isFinaleReveal
 		title='What Do You Think Now?'
 		prompt='Look at how your thoughts have changed over time.'
 		toSave
