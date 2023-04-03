@@ -199,6 +199,7 @@ const useSetFeatureComplete = () => {
 				(sectionDetails.featureType !== null &&
 					sectionDetails.isFeatureComplete)
 			) {
+				// Unlock all static content & complete features
 				setSectionToLocked(sectionKey, sectionDetails, false)
 			}
 		})

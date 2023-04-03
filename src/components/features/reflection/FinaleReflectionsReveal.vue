@@ -1,7 +1,7 @@
 <template>
 	<div :class="$style.reflectionFinale">
 		<p>{{ prompt }}</p>
-		<div :class="$style.reflectionResponses" v-if="userReflectionsStore">
+		<div :class="$style.reflectionResponses">
 			<div
 				v-for="(response, id) in userReflectionsStore"
 				:key="id"
@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-	import { userReflectionsStore } from './userReflectionsStore'
+	import { userReflectionsStore } from '../featureOptionsStore'
 	import BaseSeparator from '../../base/BaseSeparator.vue'
 
 	defineProps({

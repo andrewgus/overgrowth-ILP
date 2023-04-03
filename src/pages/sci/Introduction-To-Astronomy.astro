@@ -13,8 +13,8 @@ import PracticeFeature from '../../layouts/PracticeFeature.vue'
 >
 	<ReflectionFeature
 		client:load
-		title='What Do You Think?'
-		prompt='When you think about Astronomy, what is/are the first thing(s) that comes to mind?'
+		title='Reflection 1'
+		prompt='This is the first reflection in this lesson'
 	/>
 	<PracticeFeature client:load title='Practice Feature'>
 		<p>This is a practice feature.</p>
@@ -141,8 +141,8 @@ import PracticeFeature from '../../layouts/PracticeFeature.vue'
 	</StaticContent>
 	<ReflectionFeature
 		client:load
-		title='Part 2 Reflection'
-		prompt='And now what do you think?'
+		title='Reflection 2'
+		prompt='This is the second reflection in this lesson'
 	/>
 	<StaticContent title='The middle'>
 		<p>
@@ -302,12 +302,16 @@ import PracticeFeature from '../../layouts/PracticeFeature.vue'
 			deleniti?
 		</p>
 	</StaticContent>
-	<ReflectionFeature client:load title='One Last Time' prompt='Hello there?' />
+	<ReflectionFeature
+		client:load
+		title='Reflection 3'
+		prompt='This is the third reflection in this lesson'
+	/>
 	<ReflectionFeature
 		client:load
 		isFinaleReveal
-		title='What Do You Think Now?'
-		prompt='Look at how your thoughts have changed over time.'
 		toSave
+		title='Reflection Finale'
+		prompt='Reflection Finale'
 	/>
 </TheLesson>

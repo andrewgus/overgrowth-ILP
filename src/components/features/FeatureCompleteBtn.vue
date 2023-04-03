@@ -13,9 +13,13 @@
 	<transition mode="out-in">
 		<BaseButton
 			v-if="willSaveAsPDF && areSectionsAvailable && isLastSection"
-			:text="isDownloading ? 'Downloading&hellip;' : `Save as PDF`"
+			:text="pdfStatusUpdate"
+			:isDisabled="
+				pdfGeneratorStatusStore.isDownloading ||
+				pdfGeneratorStatusStore.isComplete
+			"
 			:class="$style.featureCompleteBtn"
-			@btnClick="saveAsPDF"
+			@btnClick="setComplete"
 		/>
 		<BaseButton
 			v-else-if="!featureComplete"
@@ -33,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-	import { ref, inject } from 'vue'
+	import { ref, inject, computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import {
 		currSectionMap,
@@ -45,12 +49,14 @@
 	import BaseButton from '../base/BaseButton.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
 	import useAreSectionsAvailable from '../../composables/useAreSectionsAvailable'
+	import { pdfGeneratorStatusStore } from './featureOptionsStore'
 
 	const $currSection = useStore(currSectionMap)
 	const $nextSection = useStore(nextSectionComputed)
 
 	// willSaveAsPDF & canContinueFrom  provided by each feature's layout SFC.
 	const willSaveAsPDF = inject('willSaveAsPDF') as boolean
+	// NOTE: Should canContinueFrom actually be part of the featureStore?
 	const canContinueFrom = inject('isFeatureComplete') as {
 		id: string
 		isComplete: boolean
@@ -59,18 +65,23 @@
 	const isLastSection = useIsLastSection(canContinueFrom.id)
 
 	const featureComplete = ref<boolean>(false)
-	const isDownloading = ref<boolean>(false)
 
 	const saveAsPDF = async () => {
-		isDownloading.value = true
+		pdfGeneratorStatusStore.isDownloading = true
 		const { default: generatePDF } = await import(
 			'../../composables/useSaveAsPDF'
 		)
 		await generatePDF($currSection.value)
-		// TODO: figure out how to wait for finished rendering to occur before setting isDownloading back to false (shows in logger, so Is can find it...)
-		isDownloading.value = false
 		if (!featureComplete.value) featureComplete.value = true
 	}
+
+	const pdfStatusUpdate = computed(() => {
+		if (pdfGeneratorStatusStore.isFailed)
+			return 'Failed to download. Could not create PDF. Try again?'
+		if (pdfGeneratorStatusStore.isComplete) return 'PDF download complete!'
+		if (pdfGeneratorStatusStore.isDownloading) return 'Downloading PDF…'
+		return 'Save as PDF?'
+	})
 
 	const setComplete = ({ target }: Event) => {
 		const clicked = target as HTMLElement

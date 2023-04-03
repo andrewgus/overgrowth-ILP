@@ -1,14 +1,14 @@
 <template>
 	<FeatureSection feature-type="reflection" :title="title">
+		<FinaleReflectionsReveal v-if="isFinaleReveal" :prompt="prompt" />
 		<ReflectionInput
-			v-if="!isFinaleReveal"
+			v-else
 			:prompt="prompt"
 			@userTyped="checkCompleted"
 			:id="sectionID"
 		>
 			<slot></slot>
 		</ReflectionInput>
-		<FinaleReflectionsReveal v-else :prompt="prompt" />
 	</FeatureSection>
 </template>
 

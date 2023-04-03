@@ -20,7 +20,7 @@
 	import {
 		userReflectionsStore,
 		initUserReflectionsStore,
-	} from './userReflectionsStore'
+	} from '../featureOptionsStore'
 
 	const $currSection = useStore(currSectionMap)
 	const props = defineProps({

@@ -1,5 +1,6 @@
 import { jsPDF } from 'jspdf'
 import type { SectionDetails } from '../store/lessonStore'
+import { pdfGeneratorStatusStore } from '../components/features/featureOptionsStore'
 
 /**
  * To generate a PDF download of a learner's work they've completed (practice and/or reflection)
@@ -34,15 +35,15 @@ export default function generatePDF(currSection: SectionDetails) {
 				newPDF.setLineHeightFactor(1)
 				newPDF.text(`${lessonName} ${currSection.featureType}`, 16, 32, {
 					align: 'left',
-					lineHeightFactor: 1,
 				})
 			}
-			// NOTE: Answer may be in the returnPromise option available on the save function here.
-			newPDF.save(`${currSection.id}.pdf'`)
+			newPDF
+				.save(`${currSection.id}.pdf'`, { returnPromise: true })
+				.catch((_) => (pdfGeneratorStatusStore.isFailed = true))
+				.then((_) => (pdfGeneratorStatusStore.isDownloading = false))
+				.finally(() => (pdfGeneratorStatusStore.isComplete = true))
 		},
 		html2canvas: {
-			// TODO: figure out how to make this async work so I can provide user feedback that the PDF generator is running until it is complete.
-			async: true,
 			ignoreElements: (el) => el.classList.toString().includes('btn'),
 			scale: 0.7,
 			width: 700,
