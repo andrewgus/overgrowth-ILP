@@ -23,7 +23,7 @@ function initUserReflectionsStore(id: string, prompt: string) {
 	}
 }
 
-// TODO: make this for each possible toSave feature
+// TODO: make this for each possible toSave feature. use pdfGenStatus interface.
 const pdfGeneratorStatusStore = reactive({
 	isDownloading: false,
 	isComplete: false,
