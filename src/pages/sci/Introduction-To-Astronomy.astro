@@ -1,9 +1,7 @@
 ---
 import TheLesson from '../../layouts/TheLesson.astro'
 import StaticContent from '../../layouts/StaticContent.astro'
-import ReflectionFeature from '../../layouts/ReflectionFeature.vue'
-import ChoiceFeature from '../../layouts/ChoiceFeature.vue'
-import PracticeFeature from '../../layouts/PracticeFeature.vue'
+import FeatureInteractive from '../../layouts/FeatureInteractive.vue'
 ---
 
 <TheLesson
@@ -11,17 +9,24 @@ import PracticeFeature from '../../layouts/PracticeFeature.vue'
 	scene='setting'
 	gradientColor='var(--green)'
 >
-	<ReflectionFeature
+	<FeatureInteractive
 		client:load
+		featureType='reflection'
 		title='Reflection 1'
 		prompt='This is the first reflection in this lesson'
 	/>
-	<PracticeFeature client:load title='Practice Feature'>
-		<p>This is a practice feature.</p>
-	</PracticeFeature>
-	<ChoiceFeature client:load title='Choice Feature'>
-		<p>This is a choice feature</p>
-	</ChoiceFeature>
+	<FeatureInteractive
+		client:load
+		featureType='practice'
+		title='Practice Feature'
+		prompt='his is a practice feature test.'
+	/>
+	<FeatureInteractive
+		client:load
+		featureType='choice'
+		title='Choice Feature'
+		prompt='This is a Choice feature test.'
+	/>
 	<StaticContent title='Welcome to the Course'>
 		<p>In this course, we will&hellip;</p>
 		<p>
@@ -139,8 +144,9 @@ import PracticeFeature from '../../layouts/PracticeFeature.vue'
 			</section>
 		</section>
 	</StaticContent>
-	<ReflectionFeature
+	<FeatureInteractive
 		client:load
+		featureType='reflection'
 		title='Reflection 2'
 		prompt='This is the second reflection in this lesson'
 	/>
@@ -302,16 +308,18 @@ import PracticeFeature from '../../layouts/PracticeFeature.vue'
 			deleniti?
 		</p>
 	</StaticContent>
-	<ReflectionFeature
+	<FeatureInteractive
 		client:load
+		featureType='reflection'
 		title='Reflection 3'
 		prompt='This is the third reflection in this lesson'
 	/>
-	<ReflectionFeature
+	<FeatureInteractive
 		client:load
-		isFinaleReveal
-		toSave
+		featureType='reflection'
 		title='Reflection Finale'
 		prompt='Reflection Finale'
+		isFinaleReveal
+		toSave
 	/>
 </TheLesson>

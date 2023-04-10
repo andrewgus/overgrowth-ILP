@@ -5,6 +5,7 @@
  */
 export default function createID(title: string) {
 	return `${title
+		.trim()
 		.replaceAll(/[^\w\s]/g, '')
 		.replaceAll(' ', '-')
 		.substring(0, 25)

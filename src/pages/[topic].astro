@@ -12,6 +12,8 @@ export async function getStaticPaths() {
 		const filteredLessons = allLessons.filter((lesson) =>
 			lesson.url?.includes(topic!)
 		)
+		// TODO: Ask team which way would be better. Maintain a seperate map or have a longer url with full topic name for folder?
+		// const topicTitle = topic!.charAt(0).toUpperCase() + topic?.slice(1)
 		const topicTitle = TopicsLibrary.get(topic!)
 
 		return {

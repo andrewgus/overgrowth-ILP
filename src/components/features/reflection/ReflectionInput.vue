@@ -20,6 +20,7 @@
 	import {
 		userReflectionsStore,
 		initUserReflectionsStore,
+		canContinueStore,
 	} from '../featureOptionsStore'
 
 	const $currSection = useStore(currSectionMap)
@@ -33,7 +34,6 @@
 			required: true,
 		},
 	})
-	const emit = defineEmits(['userTyped'])
 
 	initUserReflectionsStore(props.id, props.prompt)
 
@@ -43,7 +43,11 @@
 		},
 		set(value) {
 			userReflectionsStore[props.id].answer = value
-			emit('userTyped', value)
+			if (value.length > 25) {
+				canContinueStore[props.id].attemptFinished = true
+			} else {
+				canContinueStore[props.id].attemptFinished = false
+			}
 		},
 	})
 </script>
