@@ -55,7 +55,7 @@
 		color: var(--black);
 		cursor: pointer;
 		border: 1px solid var(--darkGray);
-		padding: var(--s-5);
+		padding: var(--s-4) var(--s-2);
 		font-size: var(--s-1);
 		background-color: v-bind(btnColor);
 		border-radius: var(--s-8);

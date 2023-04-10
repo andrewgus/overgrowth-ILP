@@ -110,23 +110,30 @@
 </script>
 
 <style module lang="scss">
-	.featureCompleteBtn {
-		display: block;
-		margin: var(--s0) auto 0;
-	}
 	.continueWarning {
-		width: fit-content;
+		width: 100%;
 		text-align: center;
 		padding: var(--s-4) var(--s-2);
-		margin: var(--s0) auto;
+		margin: var(--s0) auto 0;
 		background-color: var(--yellow5);
-		border: 1px solid var(--darkGray);
-		border-radius: var(--s10);
+		border-width: 1px 1px 0 1px;
+		border-style: solid;
+		border-color: var(--darkGray);
+		border-radius: var(--s10) var(--s10) 0 0;
 
 		&,
 		> * {
 			font-size: var(--s-1);
 		}
+	}
+	.continueWarning + .featureCompleteBtn {
+		transition: border-radius var(--timeShort) ease-in-out;
+		border-radius: 0 0 var(--s-8) var(--s-8);
+	}
+	.featureCompleteBtn {
+		display: block;
+		width: 100%;
+		margin: 0 auto;
 	}
 </style>
 <style scoped>

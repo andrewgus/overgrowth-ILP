@@ -6,7 +6,9 @@
 				<slot></slot>
 			</component>
 		</div>
-		<FeatureCompleteBtn :id="sectionID" />
+		<div>
+			<FeatureCompleteBtn :id="sectionID" />
+		</div>
 	</section>
 </template>
 
@@ -72,6 +74,13 @@
 </script>
 
 <style lang="scss" module>
+	.reflection,
+	.choice,
+	.practice {
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: space-between;
+	}
 	.reflection > div,
 	.practice > div,
 	.choice > div {
