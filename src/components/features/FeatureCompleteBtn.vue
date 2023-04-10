@@ -8,8 +8,9 @@
 			"
 			:class="$style.continueWarning"
 		>
-			Heads&nbsp;up!&nbsp;Once&nbsp;completed,
-			this&nbsp;<strong>cannot</strong>&nbsp;be&nbsp;turned&nbsp;off&nbsp;later.
+			Heads&nbsp;up!&nbsp;Once&nbsp;completed, this&nbsp;{{
+				$currSection.featureType
+			}}&nbsp;<strong>cannot</strong>&nbsp;be&nbsp;turned&nbsp;off&nbsp;later.
 		</p>
 	</transition>
 	<transition mode="out-in">
@@ -39,6 +40,7 @@
 		<BaseIndicator
 			v-else
 			text="Scoll to continue"
+			:hidden="id !== $currSection.id"
 			:goTo="`#${$nextSection}`"
 		></BaseIndicator>
 	</transition>
@@ -122,7 +124,7 @@
 		border-radius: var(--s10);
 
 		&,
-		> strong {
+		> * {
 			font-size: var(--s-1);
 		}
 	}
