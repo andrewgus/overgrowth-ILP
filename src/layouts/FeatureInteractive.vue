@@ -14,7 +14,6 @@
 	import { defineAsyncComponent } from 'vue'
 	import { useDoesFeatureExist, type FeatureType } from '../store/lessonStore'
 	import {
-		canContinueStore,
 		initCanContinueStore,
 		initPdfGeneratorStatusStore,
 	} from '../components/features/featureOptionsStore'
@@ -39,41 +38,37 @@
 		import(
 			`../components/features/${props.featureType}/${
 				props.featureType.charAt(0).toUpperCase() + props.featureType.slice(1)
-			}Option.vue`
+			}Options.vue`
 		).finally(() => {
 			useDoesFeatureExist(props.featureType)
 		})
 	)
 
 	const conditionalProps = computed(() => {
+		const universalProps = {
+			id: sectionID,
+			prompt: props.prompt,
+		}
 		switch (props.featureType) {
 			case 'reflection':
 				return {
-					id: sectionID,
-					prompt: props.prompt,
+					...universalProps,
 					isFinaleReveal: props.isFinaleReveal,
-					toSave: props.toSave,
 				}
 			case 'practice':
 				return {
-					id: sectionID,
-					prompt: props.prompt,
+					...universalProps,
 				}
 
 			case 'choice':
 				return {
-					id: sectionID,
-					prompt: props.prompt,
+					...universalProps,
 				}
 		}
 	})
 
 	initCanContinueStore(sectionID)
 	if (props.toSave) initPdfGeneratorStatusStore(sectionID)
-
-	// FOR TESTING
-	if (props.featureType === 'choice' || props.featureType === 'practice')
-		canContinueStore[sectionID].attemptFinished = true
 </script>
 
 <style lang="scss" module>

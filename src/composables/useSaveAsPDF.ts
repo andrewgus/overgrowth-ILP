@@ -39,9 +39,13 @@ export default function generatePDF(currSection: SectionDetails) {
 			}
 			newPDF
 				.save(`${currSection.id}.pdf'`, { returnPromise: true })
-				.catch((_) => (pdfGeneratorStatusStore.isFailed = true))
-				.then((_) => (pdfGeneratorStatusStore.isDownloading = false))
-				.finally(() => (pdfGeneratorStatusStore.isComplete = true))
+				.catch((_) => (pdfGeneratorStatusStore[currSection.id].isFailed = true))
+				.then(
+					(_) => (pdfGeneratorStatusStore[currSection.id].isDownloading = false)
+				)
+				.finally(
+					() => (pdfGeneratorStatusStore[currSection.id].isComplete = true)
+				)
 		},
 		html2canvas: {
 			ignoreElements: (el) => el.classList.toString().includes('btn'),
