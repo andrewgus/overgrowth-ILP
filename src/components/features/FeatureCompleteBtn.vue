@@ -16,14 +16,20 @@
 	<transition mode="out-in">
 		<BaseButton
 			v-if="
-				!!pdfGeneratorStatusStore[id] && areSectionsAvailable && isLastSection
+				!!pdfGeneratorStatusStore[id] &&
+				areSectionsAvailable &&
+				isLastSection &&
+				!featureComplete
 			"
-			:text="pdfStatusUpdate"
+			text="Save as PDF?"
 			:isDisabled="
 				pdfGeneratorStatusStore[id].isDownloading ||
 				pdfGeneratorStatusStore[id].isComplete
 			"
-			:class="$style.featureCompleteBtn"
+			:class="[
+				$style.featureCompleteBtn,
+				{ [$style.pdfSaveFeedback]: displayFeedback },
+			]"
 			@btnClick="setComplete"
 		/>
 		<BaseButton
@@ -42,12 +48,17 @@
 			:class="$style.featureCompleteBtn"
 			@btnClick="setComplete"
 		/>
-		<BaseIndicator
-			v-else
-			text="Scoll to continue"
-			:hidden="id !== $currSection.id"
-			:goTo="`#${$nextSection}`"
-		></BaseIndicator>
+		<div v-else>
+			<p v-if="!!pdfGeneratorStatusStore[id]" :class="$style.pdfSaveFeedback">
+				{{ pdfStatusUpdate }}
+			</p>
+			<BaseIndicator
+				v-if="areSectionsAvailable && !isLastSection"
+				text="Scoll to continue"
+				:hidden="id !== $currSection.id"
+				:goTo="`#${$nextSection}`"
+			></BaseIndicator>
+		</div>
 	</transition>
 </template>
 
@@ -113,7 +124,13 @@
 			return 'PDF download complete!'
 		if (pdfGeneratorStatusStore[props.id].isDownloading)
 			return 'Downloading PDF…'
-		return 'Save as PDF?'
+	})
+	const displayFeedback = computed(() => {
+		const pdfStatusAsArray = Object.entries(pdfGeneratorStatusStore[props.id])
+		const isAttemptingDownload = pdfStatusAsArray.some(([_, isDownloading]) => {
+			return isDownloading === true
+		})
+		return isAttemptingDownload
 	})
 </script>
 
@@ -142,6 +159,17 @@
 		display: block;
 		width: 100%;
 		margin: 0 auto;
+	}
+	.pdfSaveFeedback {
+		margin: 0 auto;
+		padding: var(--s-4) var(--s-2);
+		text-align: center;
+		width: fit-content;
+		font-style: italic;
+		opacity: 1;
+		background-color: var(--green3);
+		border: 0;
+		border-radius: var(--s10);
 	}
 </style>
 <style scoped>
