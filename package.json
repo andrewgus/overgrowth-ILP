@@ -11,7 +11,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/vue": "^2.1.0",
+    "@astrojs/vue": "^2.1.1",
     "@nanostores/vue": "^0.7.0",
     "@vueuse/core": "^9.13.0",
     "astro": "^2.2.1",
@@ -20,6 +20,6 @@
     "vue": "^3.2.47"
   },
   "devDependencies": {
-    "sass": "^1.60.0"
+    "sass": "^1.61.0"
   }
 }
