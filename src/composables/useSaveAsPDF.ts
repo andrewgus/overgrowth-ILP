@@ -32,8 +32,7 @@ export default function generatePDF(currSection: SectionDetails) {
 				newPDF.setPage(i)
 				newPDF.setFontSize(10)
 				newPDF.setTextColor(150)
-				newPDF.setLineHeightFactor(1)
-				newPDF.text(`${lessonName} ${currSection.featureType}`, 16, 32, {
+				newPDF.text(`${lessonName} ${currSection.featureType}`, 16, 20, {
 					align: 'left',
 				})
 			}

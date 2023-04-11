@@ -9,8 +9,8 @@
 			:class="$style.continueWarning"
 		>
 			Heads&nbsp;up!&nbsp;Once&nbsp;completed, this&nbsp;{{
-				$currSection.featureType
-			}}&nbsp;<strong>cannot</strong>&nbsp;be&nbsp;turned&nbsp;off&nbsp;later.
+				$allSections[id].featureType
+			}}&nbsp;activity&nbsp;<strong>cannot</strong>&nbsp;be&nbsp;turned&nbsp;off&nbsp;later.
 		</p>
 	</transition>
 	<transition mode="out-in">
@@ -34,6 +34,11 @@
 					? 'Save work as PDF and continue?'
 					: 'Continue?'
 			"
+			:aria-label="
+				!canContinueStore[id].attemptFinished
+					? 'Complete the activity to continue'
+					: ''
+			"
 			:class="$style.featureCompleteBtn"
 			@btnClick="setComplete"
 		/>
@@ -50,6 +55,7 @@
 	import { ref, computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import {
+		allSectionsMap,
 		currSectionMap,
 		useSetCurrSection,
 		nextSectionComputed,
@@ -71,10 +77,12 @@
 		},
 	})
 
+	const $allSections = useStore(allSectionsMap)
 	const $currSection = useStore(currSectionMap)
 	const $nextSection = useStore(nextSectionComputed)
 	const areSectionsAvailable = useAreSectionsAvailable()
 	const isLastSection = useIsLastSection(canContinueStore[props.id].id)
+
 	const featureComplete = ref<boolean>(false)
 
 	const saveAsPDF = async () => {

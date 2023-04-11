@@ -4,7 +4,6 @@
 		:class="btnStyles"
 		:disabled="isDisabled"
 		autocomplete="off"
-		:aria-label="isDisabled ? 'Complete the activity to continue' : ''"
 		@click.once="$emit('btnClick', $event)"
 	>
 		{{ text }}
