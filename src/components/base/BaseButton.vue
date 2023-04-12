@@ -4,7 +4,7 @@
 		:class="btnStyles"
 		:disabled="isDisabled"
 		autocomplete="off"
-		@click.once="$emit('btnClick', $event)"
+		@click="$emit('btnClick', $event)"
 	>
 		{{ text }}
 	</button>
@@ -72,7 +72,6 @@
 		}
 		&.disabled {
 			cursor: not-allowed;
-			pointer-events: none;
 			opacity: 0.5;
 			background-color: var(--lightGray);
 		}

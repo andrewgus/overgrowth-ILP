@@ -249,22 +249,22 @@ const filteredLockedSectionsComputed = computed(
 	}
 )
 // Finding the next & previous section based on the current section
-const findSection = (
+const findSectionID = (
 	sections: SectionsMap,
 	currSection: SectionDetails,
 	isNext: boolean
 ) => {
 	const filteredNavAsArray = setSectionsToArray(sections)
-	let findSection: [string, SectionDetails] | undefined
+	let findSectionID: [string, SectionDetails] | undefined
 	if (isNext) {
-		findSection = filteredNavAsArray.find(([_, sectionDetails]) => {
+		findSectionID = filteredNavAsArray.find(([_, sectionDetails]) => {
 			return (
 				!sectionDetails.isLocked &&
 				sectionDetails.orderNum! > currSection.orderNum!
 			)
 		})
 	} else {
-		findSection = filteredNavAsArray.findLast(([_, sectionDetails]) => {
+		findSectionID = filteredNavAsArray.findLast(([_, sectionDetails]) => {
 			return (
 				!sectionDetails.isLocked &&
 				sectionDetails.orderNum! < currSection.orderNum!
@@ -272,25 +272,25 @@ const findSection = (
 		})
 	}
 
-	let foundSection: string
-	if (findSection) {
-		foundSection = findSection[0]
+	let foundSectionID: string
+	if (findSectionID) {
+		foundSectionID = findSectionID[0]
 	} else {
-		foundSection = ''
+		foundSectionID = ''
 	}
-	return foundSection
+	return foundSectionID
 }
 
 const nextSectionComputed = computed(
 	[currSectionMap, filteredNavSectionsComputed],
 	(currSection, filteredNavSections) =>
-		findSection(filteredNavSections, currSection, true)
+		findSectionID(filteredNavSections, currSection, true)
 )
 
 const prevSectionComputed = computed(
 	[currSectionMap, filteredNavSectionsComputed],
 	(currSection, filteredNavSections) =>
-		findSection(filteredNavSections, currSection, false)
+		findSectionID(filteredNavSections, currSection, false)
 )
 
 const isOnFirstSectionComputed = computed(
