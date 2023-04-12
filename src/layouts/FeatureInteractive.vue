@@ -34,7 +34,6 @@
 		toSave: false,
 		isFinaleReveal: false,
 	})
-	const sectionID = useCreateID(props.title)
 
 	const feature = defineAsyncComponent(() =>
 		import(
@@ -46,31 +45,31 @@
 		})
 	)
 
+	const sectionID = useCreateID(props.title)
+	initCanContinueStore(sectionID)
+	if (props.toSave) initPdfGeneratorStatusStore(sectionID)
+
 	const conditionalProps = computed(() => {
 		const universalProps = {
 			id: sectionID,
 			prompt: props.prompt,
 		}
+		let featureProps: {}
 		switch (props.featureType) {
 			case 'reflection':
-				return {
-					...universalProps,
+				featureProps = {
 					isFinaleReveal: props.isFinaleReveal,
 				}
+				break
 			case 'practice':
-				return {
-					...universalProps,
-				}
-
+				featureProps = {}
+				break
 			case 'choice':
-				return {
-					...universalProps,
-				}
+				featureProps = {}
+				break
 		}
+		return { ...universalProps, ...featureProps }
 	})
-
-	initCanContinueStore(sectionID)
-	if (props.toSave) initPdfGeneratorStatusStore(sectionID)
 </script>
 
 <style lang="scss" module>
