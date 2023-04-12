@@ -29,23 +29,14 @@
 			"
 			:class="[
 				$style.featureCompleteBtn,
-				{ [$style.pdfSaveFeedback]: displayFeedback },
+				{ [$style.pdfSaveFeedback]: shouldDisplayVisualFeedback },
 			]"
 			@btnClick="setComplete"
 		/>
 		<BaseButton
 			v-else-if="!featureComplete"
 			:isDisabled="!canContinueStore[id].attemptFinished"
-			:text="
-				!!pdfGeneratorStatusStore[id]
-					? 'Save work as PDF and continue?'
-					: 'Continue?'
-			"
-			:aria-label="
-				!canContinueStore[id].attemptFinished
-					? 'Complete the activity to continue'
-					: ''
-			"
+			:text="continueBtnText"
 			:class="$style.featureCompleteBtn"
 			@btnClick="setComplete"
 		/>
@@ -126,12 +117,24 @@
 		if (pdfGeneratorStatusStore[props.id].isDownloading)
 			return 'Downloading PDF…'
 	})
-	const displayFeedback = computed(() => {
+	const shouldDisplayVisualFeedback = computed(() => {
 		const pdfStatusAsArray = Object.entries(pdfGeneratorStatusStore[props.id])
 		const isAttemptingDownload = pdfStatusAsArray.some(([_, isDownloading]) => {
 			return isDownloading === true
 		})
 		return isAttemptingDownload
+	})
+	const continueBtnText = computed(() => {
+		if (!canContinueStore[props.id].attemptFinished) {
+			return 'Complete the activity to continue'
+		}
+		if (
+			!!pdfGeneratorStatusStore[props.id] &&
+			canContinueStore[props.id].attemptFinished
+		) {
+			return 'Save work as PDF and continue?'
+		}
+		return 'Continue?'
 	})
 </script>
 
