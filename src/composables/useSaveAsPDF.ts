@@ -37,7 +37,7 @@ export default function generatePDF(currSection: SectionDetails) {
 				})
 			}
 			newPDF
-				.save(`${currSection.id}.pdf'`, { returnPromise: true })
+				.save(`${currSection.id}.pdf`, { returnPromise: true })
 				.catch((_) => (pdfGeneratorStatusStore[currSection.id].isFailed = true))
 				.then(
 					(_) => (pdfGeneratorStatusStore[currSection.id].isDownloading = false)

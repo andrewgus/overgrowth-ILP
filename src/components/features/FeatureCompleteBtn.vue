@@ -8,7 +8,8 @@
 			"
 			:class="$style.continueWarning"
 		>
-			Heads&nbsp;up!&nbsp;Once&nbsp;completed, this&nbsp;{{
+			Heads&nbsp;up!&nbsp;Once&nbsp;completed,&nbsp;this
+			{{
 				$allSections[id].featureType
 			}}&nbsp;activity&nbsp;<strong>cannot</strong>&nbsp;be&nbsp;turned&nbsp;off&nbsp;later.
 		</p>
@@ -159,6 +160,7 @@
 		display: block;
 		width: 100%;
 		margin: 0 auto;
+		min-height: var(--s5);
 	}
 	.pdfSaveFeedback {
 		margin: 0 auto;

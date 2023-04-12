@@ -60,12 +60,12 @@
 			align-items: center;
 		}
 		> p {
-			padding: var(--s-5);
+			padding: var(--s-4) var(--s-2);
 			display: block;
 			font-size: var(--s0);
 			margin: 0 auto var(--s-10);
 		}
-		> span {
+		> .scrollArrow {
 			margin: var(--s-10) auto;
 			max-width: fit-content;
 			animation: bounce 1s ease-in-out infinite alternate;
