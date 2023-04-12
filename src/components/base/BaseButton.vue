@@ -1,6 +1,7 @@
 <template>
 	<button
 		v-if="!link"
+		type="button"
 		:class="btnStyles"
 		:disabled="isDisabled"
 		autocomplete="off"
@@ -72,8 +73,14 @@
 		}
 		&.disabled {
 			cursor: not-allowed;
-			opacity: 0.5;
 			background-color: var(--lightGray);
+			opacity: 0.75;
+
+			&:hover {
+				color: inherit;
+				background-color: var(--lightGray);
+				box-shadow: none;
+			}
 		}
 	}
 	.navBtn {

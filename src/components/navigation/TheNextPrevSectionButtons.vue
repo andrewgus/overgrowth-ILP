@@ -68,6 +68,12 @@
 			width: var(--s3);
 			border: none;
 		}
+		.btn_next,
+		.btn_prev {
+			&[aria-hidden='true'] {
+				pointer-events: none;
+			}
+		}
 		> .btn_prev {
 			border-radius: var(--s10) 0 0 var(--s10);
 		}
