@@ -11,13 +11,18 @@
 	interface props {
 		orientation: 'horizontal' | 'vertical'
 		hidden?: boolean
+		color?: string
 	}
-	defineProps<props>()
+	const props = withDefaults(defineProps<props>(), {
+		color: 'var(--lightGray)',
+	})
 </script>
 
 <style module>
 	.separator {
-		border: 1.25px solid var(--lightGray);
+		border-width: 1px;
+		border-style: solid;
+		border-color: v-bind('props.color');
 		border-radius: var(--s10);
 	}
 </style>

@@ -32,6 +32,11 @@
 				:class="$style.featureCompleteBtn"
 				@btnClick="setComplete($event, false)"
 			/>
+			<BaseSeparator
+				v-if="canContinueStore[id].attemptFinished"
+				orientation="vertical"
+				color="var(--darkGray)"
+			/>
 			<BaseButton
 				v-if="canContinueStore[id].attemptFinished"
 				:isDisabled="!canContinueStore[id].attemptFinished"
@@ -73,6 +78,7 @@
 	} from '../../store/lessonStore'
 	import BaseButton from '../base/BaseButton.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
+	import BaseSeparator from '../base/BaseSeparator.vue'
 	import useAreSectionsAvailable from '../../composables/useAreSectionsAvailable'
 	import {
 		pdfGeneratorStatusStore,
@@ -147,8 +153,7 @@
 			font-size: var(--s-1);
 		}
 	}
-	.continueWarning + .featureCompleteBtn {
-		transition: border-radius var(--timeShort) ease-in-out;
+	.continueWarning + .completeBtns > .featureCompleteBtn {
 		border-radius: 0 0 var(--s-8) var(--s-8);
 	}
 	.completeBtns {
@@ -156,31 +161,38 @@
 		flex-flow: row nowrap;
 		justify-content: center;
 		align-items: stretch;
-		gap: var(--s2);
 		.featureCompleteBtn {
 			flex: 1;
 			display: block;
-			width: 100%;
 			margin: 0 auto;
 			min-height: var(--s5);
+
+			&:first-child:not(:only-child) {
+				border-right: 0;
+				border-radius: var(--s10) 0 0 var(--s10);
+			}
+			&:last-child:not(:only-child) {
+				border-left: 0;
+				border-radius: 0 var(--s10) var(--s10) 0;
+			}
 		}
 	}
+	.pdfSaveFeedback,
 	.featureSaveOnlyBtn {
-		display: block;
-		width: fit-content;
-		padding: var(--s-4) var(--s2);
+		display: flex;
+		align-items: center;
+		font-size: var(--s-1);
 		margin: 0 auto var(--s-4);
-	}
-	.pdfSaveFeedback {
-		margin: 0 auto;
-		padding: var(--s-4) var(--s-2);
+		padding: var(--s-4) var(--s2);
 		text-align: center;
 		width: fit-content;
-		font-style: italic;
-		opacity: 1;
-		background-color: var(--green3);
-		border: 0;
 		border-radius: var(--s10);
+		max-height: var(--s4);
+	}
+	.pdfSaveFeedback {
+		font-style: italic;
+		background-color: var(--green3);
+		border-color: transparent;
 	}
 </style>
 <style scoped>
