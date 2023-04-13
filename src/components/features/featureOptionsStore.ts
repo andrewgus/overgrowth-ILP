@@ -48,6 +48,8 @@ function initPdfGeneratorStatusStore(id: string) {
 	}
 }
 
+// NOTE: When creating first practice activity component, will need to create a store for # of user attempts and how they performed in each attempt. NOTE: May have to create a persisent nanostore for that and refactor all of this to that nanostore.
+
 export {
 	userReflectionsStore,
 	initUserReflectionsStore,

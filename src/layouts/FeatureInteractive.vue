@@ -27,7 +27,6 @@
 		featureType: FeatureType
 		title: string
 		prompt: string
-		toSave?: boolean
 		isFinaleReveal?: boolean
 	}
 	const props = withDefaults(defineProps<Props>(), {
@@ -47,7 +46,7 @@
 
 	const sectionID = useCreateID(props.title)
 	initCanContinueStore(sectionID)
-	if (props.toSave) initPdfGeneratorStatusStore(sectionID)
+	initPdfGeneratorStatusStore(sectionID)
 
 	const conditionalProps = computed(() => {
 		const universalProps = {

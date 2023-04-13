@@ -15,33 +15,39 @@
 		</p>
 	</transition>
 	<transition mode="out-in">
-		<BaseButton
-			v-if="
-				!!pdfGeneratorStatusStore[id] &&
-				areSectionsAvailable &&
-				isLastSection &&
-				!featureComplete
-			"
-			text="Save as PDF?"
-			:isDisabled="
-				pdfGeneratorStatusStore[id].isDownloading ||
-				pdfGeneratorStatusStore[id].isComplete
-			"
-			:class="[
-				$style.featureCompleteBtn,
-				{ [$style.pdfSaveFeedback]: shouldDisplayVisualFeedback },
-			]"
-			@btnClick="setComplete"
-		/>
-		<BaseButton
-			v-else-if="!featureComplete"
-			:isDisabled="!canContinueStore[id].attemptFinished"
-			:text="continueBtnText"
-			:class="$style.featureCompleteBtn"
-			@btnClick="setComplete"
-		/>
+		<div
+			v-if="!featureComplete && areSectionsAvailable && !isLastSection"
+			aria-live="polite"
+			:class="$style.completeBtns"
+		>
+			<BaseButton
+				v-if="!canContinueStore[id].attemptFinished"
+				:isDisabled="true"
+				:class="$style.featureCompleteBtn"
+				text="Complete activity to&nbsp;continue"
+			/>
+			<BaseButton
+				v-if="canContinueStore[id].attemptFinished"
+				text="Continue?"
+				:class="$style.featureCompleteBtn"
+				@btnClick="setComplete($event, false)"
+			/>
+			<BaseButton
+				v-if="canContinueStore[id].attemptFinished"
+				:isDisabled="!canContinueStore[id].attemptFinished"
+				text="Save&nbsp;work&nbsp;as&nbsp;PDF and&nbsp;continue?"
+				:class="$style.featureCompleteBtn"
+				@btnClick="setComplete($event, true)"
+			/>
+		</div>
 		<div v-else>
-			<p v-if="!!pdfGeneratorStatusStore[id]" :class="$style.pdfSaveFeedback">
+			<BaseButton
+				v-if="!shouldDisplayVisualFeedback"
+				text="Save as PDF?"
+				:class="$style.featureSaveOnlyBtn"
+				@btnClick="setComplete($event, true)"
+			/>
+			<p v-if="shouldDisplayVisualFeedback" :class="$style.pdfSaveFeedback">
 				{{ pdfStatusUpdate }}
 			</p>
 			<BaseIndicator
@@ -79,7 +85,6 @@
 			required: true,
 		},
 	})
-
 	const $allSections = useStore(allSectionsMap)
 	const $currSection = useStore(currSectionMap)
 	const $nextSection = useStore(nextSectionComputed)
@@ -97,7 +102,7 @@
 		if (!featureComplete.value) featureComplete.value = true
 	}
 
-	const setComplete = ({ target }: Event) => {
+	const setComplete = ({ target }: Event, toSave: boolean) => {
 		const clicked = target as HTMLElement
 		if (!clicked) return
 
@@ -106,7 +111,7 @@
 
 		useSetFeatureComplete()
 		featureComplete.value = true
-		if (!!pdfGeneratorStatusStore[props.id]) saveAsPDF()
+		if (toSave) saveAsPDF()
 	}
 
 	const pdfStatusUpdate = computed(() => {
@@ -124,18 +129,6 @@
 		})
 		return isAttemptingDownload
 	})
-	const continueBtnText = computed(() => {
-		if (!canContinueStore[props.id].attemptFinished) {
-			return 'Complete the activity to continue'
-		}
-		if (
-			!!pdfGeneratorStatusStore[props.id] &&
-			canContinueStore[props.id].attemptFinished
-		) {
-			return 'Save work as PDF and continue?'
-		}
-		return 'Continue?'
-	})
 </script>
 
 <style module lang="scss">
@@ -149,7 +142,6 @@
 		border-style: solid;
 		border-color: var(--darkGray);
 		border-radius: var(--s10) var(--s10) 0 0;
-
 		&,
 		> * {
 			font-size: var(--s-1);
@@ -159,11 +151,25 @@
 		transition: border-radius var(--timeShort) ease-in-out;
 		border-radius: 0 0 var(--s-8) var(--s-8);
 	}
-	.featureCompleteBtn {
+	.completeBtns {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: center;
+		align-items: stretch;
+		gap: var(--s2);
+		.featureCompleteBtn {
+			flex: 1;
+			display: block;
+			width: 100%;
+			margin: 0 auto;
+			min-height: var(--s5);
+		}
+	}
+	.featureSaveOnlyBtn {
 		display: block;
-		width: 100%;
-		margin: 0 auto;
-		min-height: var(--s5);
+		width: fit-content;
+		padding: var(--s-4) var(--s2);
+		margin: 0 auto var(--s-4);
 	}
 	.pdfSaveFeedback {
 		margin: 0 auto;

@@ -66,7 +66,7 @@
 			margin: 0 auto var(--s-10);
 		}
 		> .scrollArrow {
-			margin: var(--s-10) auto;
+			margin: var(--s-10) auto var(--s-4);
 			max-width: fit-content;
 			animation: bounce 1s ease-in-out infinite alternate;
 		}
