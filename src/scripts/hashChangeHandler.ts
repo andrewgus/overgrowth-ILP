@@ -60,7 +60,7 @@ const observerOptionsHeader = {
 const observerOptionsHeadings = {
 	root: null,
 	threshold: 1,
-	rootMargin: '0px 0px -75% 0px',
+	rootMargin: '0px 0px -68% 0px',
 }
 const observerOptionsSections = {
 	root: null,

@@ -56,7 +56,10 @@
 	.userInput {
 		display: flex;
 		flex-flow: column nowrap;
-		gap: var(--s-2);
+
+		& > label {
+			margin-bottom: var(--s0);
+		}
 
 		& > textarea {
 			resize: none;

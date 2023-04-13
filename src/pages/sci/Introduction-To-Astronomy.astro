@@ -15,12 +15,31 @@ import FeatureInteractive from '../../layouts/FeatureInteractive.vue'
 		title='What do you think?'
 		prompt='When you hear the term Astronomy, what do you think about?'
 		toSave
-	/>
+	>
+		<p>Things to consider:</p>
+		<ul>
+			<li>
+				<p>&lbrace;Learning Outcome 1&rbrace;</p>
+			</li>
+			<li>
+				<p>&lbrace;Learning Outcome 2&rbrace;</p>
+			</li>
+			<li>
+				<p>&lbrace;Learning Outcome 3&rbrace;</p>
+			</li>
+		</ul>
+	</FeatureInteractive>
 	<FeatureInteractive
 		client:load
 		featureType='practice'
 		title='Practice Feature'
 		prompt='This is a practice feature test.'
+	/>
+	<FeatureInteractive
+		client:load
+		featureType='choice'
+		title='Choice Feature'
+		prompt='This is a choice feature test.'
 	/>
 	<StaticContent title='Welcome to the Course'>
 		<p>In this course, we will&hellip;</p>

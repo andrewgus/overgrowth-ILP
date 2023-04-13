@@ -18,6 +18,11 @@ h2 {
   margin-top: var(--s6);
   margin-bottom: var(--s2);
 }
+@media only screen and (max-width: 950px) {
+  h2 {
+    margin-top: var(--s3);
+  }
+}
 h3 {
   font-size: var(--s3);
   margin-top: var(--s5);
@@ -37,7 +42,13 @@ h5 {
 p {
   color: var(--black);
   line-height: 1.6;
+  margin: 0;
+
+  & + p {
+    margin-top: var(--s0);
+  }
 }
+
 a {
   &:hover,
   &:focus {
@@ -52,5 +63,14 @@ a {
     text-underline-offset: var(--s-8);
     text-decoration-skip-ink: none;
     text-decoration-thickness: var(--s-10);
+  }
+}
+
+ul,
+ol {
+  margin-top: var(--s-4);
+
+  li + li {
+    margin-top: var(--s-4);
   }
 }
