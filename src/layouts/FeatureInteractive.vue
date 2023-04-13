@@ -6,9 +6,7 @@
 				<slot></slot>
 			</component>
 		</div>
-		<div>
-			<FeatureCompleteBtn :id="sectionID" />
-		</div>
+		<FeatureCompleteBtns :id="sectionID" />
 	</section>
 </template>
 
@@ -20,7 +18,7 @@
 		initPdfGeneratorStatusStore,
 	} from '../components/features/featureOptionsStore'
 	import useCreateID from '../composables/useCreateID'
-	import FeatureCompleteBtn from '../components/features/FeatureCompleteBtn.vue'
+	import FeatureCompleteBtns from '../components/features/FeatureCompleteBtns.vue'
 	import { computed } from '@vue/reactivity'
 
 	interface Props {
@@ -78,13 +76,5 @@
 		display: flex;
 		flex-flow: column nowrap;
 		justify-content: space-between;
-	}
-	.reflection > div,
-	.practice > div,
-	.choice > div {
-		font-size: var(--s0);
-		margin: 0 auto;
-		max-width: 60ch;
-		width: 100%;
 	}
 </style>

@@ -1,68 +1,70 @@
 <template>
-	<transition>
-		<p
-			v-if="
-				!canContinueStore[id].attemptFinished &&
-				areSectionsAvailable &&
-				!isLastSection
-			"
-			:class="$style.continueWarning"
-		>
-			Heads&nbsp;up!&nbsp;Once&nbsp;completed,&nbsp;this
-			{{
-				$allSections[id].featureType
-			}}&nbsp;activity&nbsp;<strong>cannot</strong>&nbsp;be&nbsp;turned&nbsp;off&nbsp;later.
-		</p>
-	</transition>
-	<transition mode="out-in">
-		<div
-			v-if="!featureComplete && areSectionsAvailable && !isLastSection"
-			aria-live="polite"
-			:class="$style.completeBtns"
-		>
-			<BaseButton
-				v-if="!canContinueStore[id].attemptFinished"
-				:isDisabled="true"
-				:class="$style.featureCompleteBtn"
-				text="Complete activity to&nbsp;continue"
-			/>
-			<BaseButton
-				v-if="canContinueStore[id].attemptFinished"
-				text="Continue?"
-				:class="$style.featureCompleteBtn"
-				@btnClick="setComplete($event, false)"
-			/>
-			<BaseSeparator
-				v-if="canContinueStore[id].attemptFinished"
-				orientation="vertical"
-				color="var(--darkGray)"
-			/>
-			<BaseButton
-				v-if="canContinueStore[id].attemptFinished"
-				:isDisabled="!canContinueStore[id].attemptFinished"
-				text="Save&nbsp;work&nbsp;as&nbsp;PDF and&nbsp;continue?"
-				:class="$style.featureCompleteBtn"
-				@btnClick="setComplete($event, true)"
-			/>
-		</div>
-		<div :class="$style.continueIndicators" v-else>
-			<BaseButton
-				v-if="!shouldDisplayVisualFeedback"
-				text="Save as PDF?"
-				:class="$style.featureSaveOnlyBtn"
-				@btnClick="setComplete($event, true)"
-			/>
-			<p v-if="shouldDisplayVisualFeedback" :class="$style.pdfSaveFeedback">
-				{{ pdfStatusUpdate }}
+	<div :class="$style.featureCompleteOptions">
+		<transition>
+			<p
+				v-if="
+					!canContinueStore[id].attemptFinished &&
+					areSectionsAvailable &&
+					!isLastSection
+				"
+				:class="$style.continueWarning"
+			>
+				Heads&nbsp;up!&nbsp;Once&nbsp;completed, this&nbsp;{{
+					$allSections[id].featureType
+				}}&nbsp;activity
+				<strong>cannot</strong>&nbsp;be&nbsp;turned&nbsp;off&nbsp;later.
 			</p>
-			<BaseIndicator
-				v-if="areSectionsAvailable && !isLastSection"
-				text="Scoll to continue"
-				:hidden="id !== $currSection.id"
-				:goTo="`#${$nextSection}`"
-			></BaseIndicator>
-		</div>
-	</transition>
+		</transition>
+		<transition mode="out-in">
+			<div
+				v-if="!featureComplete && areSectionsAvailable && !isLastSection"
+				aria-live="polite"
+				:class="$style.completeBtns"
+			>
+				<BaseButton
+					v-if="!canContinueStore[id].attemptFinished"
+					:isDisabled="true"
+					:class="$style.featureCompleteBtn"
+					text="Complete activity to&nbsp;continue"
+				/>
+				<BaseButton
+					v-if="canContinueStore[id].attemptFinished"
+					text="Continue?"
+					:class="$style.featureCompleteBtn"
+					@btnClick="setComplete($event, false)"
+				/>
+				<BaseSeparator
+					v-if="canContinueStore[id].attemptFinished"
+					orientation="vertical"
+					color="var(--darkGray)"
+				/>
+				<BaseButton
+					v-if="canContinueStore[id].attemptFinished"
+					:isDisabled="!canContinueStore[id].attemptFinished"
+					text="Save&nbsp;work&nbsp;as&nbsp;PDF and&nbsp;continue?"
+					:class="$style.featureCompleteBtn"
+					@btnClick="setComplete($event, true)"
+				/>
+			</div>
+			<div :class="$style.continueIndicators" v-else>
+				<BaseButton
+					v-if="!shouldDisplayVisualFeedback"
+					text="Save as PDF?"
+					:class="$style.featureSaveOnlyBtn"
+					@btnClick="setComplete($event, true)"
+				/>
+				<p v-if="shouldDisplayVisualFeedback" :class="$style.pdfSaveFeedback">
+					{{ pdfStatusUpdate }}
+				</p>
+				<BaseIndicator
+					v-if="areSectionsAvailable && !isLastSection"
+					text="Scoll to continue"
+					:hidden="id !== $currSection.id"
+					:goTo="`#${$nextSection}`"
+				></BaseIndicator>
+			</div>
+		</transition>
+	</div>
 </template>
 
 <script setup lang="ts">
@@ -137,6 +139,12 @@
 </script>
 
 <style module lang="scss">
+	.featureCompleteOptions {
+		font-size: var(--s0);
+		max-width: 60ch;
+		width: 100%;
+		margin: var(--s4) auto 0;
+	}
 	.continueWarning {
 		width: 100%;
 		text-align: center;
@@ -170,10 +178,6 @@
 				border-radius: 0 var(--s10) var(--s10) 0;
 			}
 		}
-	}
-	.completeBtns,
-	.continueIndicators {
-		margin-top: var(--s4);
 	}
 	.pdfSaveFeedback,
 	.featureSaveOnlyBtn {
