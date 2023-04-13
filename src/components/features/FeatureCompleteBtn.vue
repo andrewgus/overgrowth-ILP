@@ -107,7 +107,6 @@
 		await generatePDF($currSection.value)
 		if (!featureComplete.value) featureComplete.value = true
 	}
-
 	const setComplete = ({ target }: Event, toSave: boolean) => {
 		const clicked = target as HTMLElement
 		if (!clicked) return
@@ -148,10 +147,6 @@
 		border-style: solid;
 		border-color: var(--darkGray);
 		border-radius: var(--s10) var(--s10) 0 0;
-		&,
-		> * {
-			font-size: var(--s-1);
-		}
 	}
 	.continueWarning + .completeBtns > .featureCompleteBtn {
 		border-radius: 0 0 var(--s-8) var(--s-8);
@@ -166,7 +161,6 @@
 			display: block;
 			margin: 0 auto;
 			min-height: var(--s5);
-
 			&:first-child:not(:only-child) {
 				border-right: 0;
 				border-radius: var(--s10) 0 0 var(--s10);

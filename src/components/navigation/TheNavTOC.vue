@@ -82,6 +82,7 @@
 
 <style module lang="scss">
 	.btnTOC {
+		font-size: var(--s-1);
 		grid-area: 1/3/2/4;
 		height: var(--s4);
 		justify-self: end;
