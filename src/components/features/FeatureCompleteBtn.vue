@@ -45,7 +45,7 @@
 				@btnClick="setComplete($event, true)"
 			/>
 		</div>
-		<div v-else>
+		<div :class="$style.continueIndicators" v-else>
 			<BaseButton
 				v-if="!shouldDisplayVisualFeedback"
 				text="Save as PDF?"
@@ -170,6 +170,10 @@
 				border-radius: 0 var(--s10) var(--s10) 0;
 			}
 		}
+	}
+	.completeBtns,
+	.continueIndicators {
+		margin-top: var(--s4);
 	}
 	.pdfSaveFeedback,
 	.featureSaveOnlyBtn {
