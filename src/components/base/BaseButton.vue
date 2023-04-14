@@ -61,8 +61,12 @@
 		padding: var(--s-4) var(--s-2);
 		background-color: v-bind(btnColor);
 		border-radius: var(--s-8);
-		-webkit-transition: var(--timeLong) all var(--transitionFlourish);
-		transition: var(--timeLong) all var(--transitionFlourish);
+		-webkit-transition: var(--timeLong) box-shadow var(--transitionFlourish),
+			var(--timeLong) background-color var(--transitionFlourish),
+			var(--timeLong) color var(--transitionFlourish);
+		transition: var(--timeLong) box-shadow var(--transitionFlourish),
+			var(--timeLong) background-color var(--transitionFlourish),
+			var(--timeLong) color var(--transitionFlourish);
 		text-decoration: none;
 
 		&:focus {
@@ -72,6 +76,12 @@
 		&:not(.navBtn):hover {
 			color: var(--blue);
 			background-color: var(--peach);
+			-webkit-box-shadow: inset var(--s-8) 0 0 var(--blue),
+				inset var(--s-10) var(--s-10) 0 var(--blue),
+				inset calc(-1 * var(--s-10)) calc(-1 * var(--s-10)) 0 var(--blue),
+				inset var(--s-10) calc(-1 * var(--s-10)) 0 var(--blue),
+				inset calc(-1 * var(--s-10)) var(--s-10) 0 var(--blue),
+				inset calc(-1 * var(--s-8)) 0 0 var(--blue);
 			box-shadow: inset var(--s-8) 0 0 var(--blue),
 				inset var(--s-10) var(--s-10) 0 var(--blue),
 				inset calc(-1 * var(--s-10)) calc(-1 * var(--s-10)) 0 var(--blue),

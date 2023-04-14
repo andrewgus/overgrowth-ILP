@@ -134,9 +134,9 @@
 
 	const pdfStatusUpdate = computed(() => {
 		if (featureProgressStore[props.id].pdfGenStatus.isFailed)
-			return 'Failed to download. Could not create PDF. Try again?'
+			return 'Failed to download. Try again?'
 		if (featureProgressStore[props.id].pdfGenStatus.isComplete)
-			return 'PDF download complete!'
+			return 'Download complete!'
 		if (featureProgressStore[props.id].pdfGenStatus.isDownloading)
 			return 'Downloading PDF…'
 
