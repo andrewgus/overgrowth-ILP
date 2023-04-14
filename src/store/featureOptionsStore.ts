@@ -1,4 +1,6 @@
 import { reactive } from 'vue'
+// NOTE: If this is switched to a persistent nanostore, will also need to track whether the feature is complete (featureComplete: boolean) here, rather than within the featureCompleteBtn component (currently as a ref). That way, if users already selecting continue, it will already be set as complete with their content inputted. Will still have the ability to save as PDF.
+
 // log user's reflection answers
 interface userAnswers {
 	[id: string]: {

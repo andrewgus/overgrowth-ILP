@@ -13,13 +13,13 @@
   "dependencies": {
     "@astrojs/vue": "^2.1.1",
     "@nanostores/vue": "^0.7.0",
-    "@vueuse/core": "^9.13.0",
-    "astro": "^2.2.1",
+    "@vueuse/core": "^10.0.0",
+    "astro": "^2.3.0",
     "jspdf": "^2.5.1",
-    "nanostores": "^0.7.4",
+    "nanostores": "^0.8.0",
     "vue": "^3.2.47"
   },
   "devDependencies": {
-    "sass": "^1.61.0"
+    "sass": "^1.62.0"
   }
 }

@@ -77,6 +77,10 @@
 			max-width: 60ch;
 			width: 100%;
 			margin: 0 auto;
+
+			&:last-child {
+				margin: var(--s4) auto 0;
+			}
 		}
 	}
 </style>

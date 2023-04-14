@@ -65,13 +65,19 @@
 		transition: var(--timeLong) all var(--transitionFlourish);
 		text-decoration: none;
 
+		&:focus {
+			z-index: 10;
+		}
+
 		&:not(.navBtn):hover {
 			color: var(--blue);
 			background-color: var(--peach);
-			box-shadow: inset var(--s-10) var(--s-10) 0 var(--blue),
+			box-shadow: inset var(--s-8) 0 0 var(--blue),
+				inset var(--s-10) var(--s-10) 0 var(--blue),
 				inset calc(-1 * var(--s-10)) calc(-1 * var(--s-10)) 0 var(--blue),
 				inset var(--s-10) calc(-1 * var(--s-10)) 0 var(--blue),
-				inset calc(-1 * var(--s-10)) var(--s-10) 0 var(--blue);
+				inset calc(-1 * var(--s-10)) var(--s-10) 0 var(--blue),
+				inset calc(-1 * var(--s-8)) 0 0 var(--blue);
 		}
 		&.disabled {
 			cursor: not-allowed;

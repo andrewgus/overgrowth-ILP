@@ -1,12 +1,8 @@
 <template>
-	<div :class="$style.featureCompleteOptions">
-		<transition>
+	<div :class="$style.featureCompleteOptions" aria-live="polite">
+		<opacityTransition>
 			<p
-				v-if="
-					!featureProgressStore[id].attemptsFinished &&
-					areSectionsAvailable &&
-					!isLastSection
-				"
+				v-if="!featureProgressStore[id].attemptsFinished && isNotOnLastSection"
 				:class="$style.continueWarning"
 			>
 				Heads&nbsp;up!&nbsp;Once&nbsp;completed, this&nbsp;{{
@@ -14,11 +10,10 @@
 				}}&nbsp;activity
 				<strong>cannot</strong>&nbsp;be&nbsp;turned&nbsp;off&nbsp;later.
 			</p>
-		</transition>
-		<transition mode="out-in">
+		</opacityTransition>
+		<opacityTransition mode="out-in">
 			<div
-				v-if="!featureComplete && areSectionsAvailable && !isLastSection"
-				aria-live="polite"
+				v-if="!featureComplete && isNotOnLastSection"
 				:class="$style.completeBtns"
 			>
 				<BaseButton
@@ -48,14 +43,14 @@
 			</div>
 			<div :class="$style.continueIndicators" v-else>
 				<BaseButton
-					v-if="!shouldDisplayVisualFeedback"
-					text="Save as PDF?"
-					:class="$style.featureSaveOnlyBtn"
+					:text="pdfStatusUpdate"
+					:isDisabled="shouldDisplayVisualFeedback"
+					:class="[
+						$style.featureSaveOnlyBtn,
+						{ [$style.pdfSaveFeedback]: shouldDisplayVisualFeedback },
+					]"
 					@btnClick="setComplete($event, true)"
 				/>
-				<p v-if="shouldDisplayVisualFeedback" :class="$style.pdfSaveFeedback">
-					{{ pdfStatusUpdate }}
-				</p>
 				<BaseIndicator
 					v-if="areSectionsAvailable && !isLastSection"
 					text="Scoll to continue"
@@ -63,7 +58,7 @@
 					:goTo="`#${$nextSection}`"
 				></BaseIndicator>
 			</div>
-		</transition>
+		</opacityTransition>
 	</div>
 </template>
 
@@ -83,6 +78,7 @@
 	import BaseIndicator from '../base/BaseIndicator.vue'
 	import BaseSeparator from '../base/BaseSeparator.vue'
 	import useAreSectionsAvailable from '../../composables/useAreSectionsAvailable'
+	import opacityTransition from '../../composables/opacityTransition.vue'
 
 	const props = defineProps({
 		id: {
@@ -118,6 +114,10 @@
 		if (toSave) saveAsPDF()
 	}
 
+	const isNotOnLastSection = computed(() => {
+		return areSectionsAvailable.value && !isLastSection
+	})
+
 	const pdfStatusUpdate = computed(() => {
 		if (featureProgressStore[props.id].pdfGenStatus.isFailed)
 			return 'Failed to download. Could not create PDF. Try again?'
@@ -125,6 +125,8 @@
 			return 'PDF download complete!'
 		if (featureProgressStore[props.id].pdfGenStatus.isDownloading)
 			return 'Downloading PDF…'
+
+		return 'Save as PDF'
 	})
 	const shouldDisplayVisualFeedback = computed(() => {
 		const pdfStatusAsArray = Object.entries(
@@ -138,9 +140,6 @@
 </script>
 
 <style module lang="scss">
-	.featureCompleteOptions {
-		margin: var(--s4) auto 0;
-	}
 	.continueWarning {
 		width: 100%;
 		text-align: center;
@@ -187,24 +186,11 @@
 		border-radius: var(--s10);
 		max-height: var(--s4);
 	}
-	.pdfSaveFeedback {
+	.pdfSaveFeedback:disabled {
+		opacity: 1;
+		pointer-events: none;
 		font-style: italic;
 		background-color: var(--green3);
 		border-color: transparent;
-	}
-</style>
-<style scoped>
-	/* transition styles */
-	.v-enter-from,
-	.v-leave-to {
-		opacity: 0;
-	}
-	.v-enter-active,
-	.v-leave-active {
-		transition: var(--timeShort) opacity ease-in-out;
-	}
-	.v-enter-to,
-	.v-leave-from {
-		opacity: 1;
 	}
 </style>
