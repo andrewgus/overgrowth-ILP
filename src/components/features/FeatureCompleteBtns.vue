@@ -41,7 +41,7 @@
 					@btnClick="setComplete($event, true)"
 				/>
 			</div>
-			<div :class="$style.continueIndicators" v-else>
+			<div class="continueAndFeedback" v-else>
 				<div :class="$style.pdfSave">
 					<p
 						v-if="shouldDisplayVisualFeedback"
@@ -104,7 +104,11 @@
 	const featureMarkedComplete = ref<boolean>(false)
 
 	const saveAsPDF = async () => {
-		featureProgressStore[props.id].pdfGenStatus.isDownloading = true
+		featureProgressStore[props.id].pdfGenStatus = {
+			isDownloading: true,
+			isComplete: false,
+			isFailed: false,
+		}
 		const { default: generatePDF } = await import(
 			'../../composables/useSaveAsPDF'
 		)
@@ -118,8 +122,9 @@
 		const thisSection = clicked.closest('section')
 		useSetCurrSection(thisSection!.id)
 
-		useSetFeatureComplete()
+		if (!featureMarkedComplete.value) useSetFeatureComplete()
 		featureMarkedComplete.value = true
+
 		if (toSave) saveAsPDF()
 	}
 

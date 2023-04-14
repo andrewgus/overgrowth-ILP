@@ -57,7 +57,6 @@
 			padding: var(--s-5);
 
 			> p {
-				font-size: var(--s-1);
 				max-width: 40ch;
 				overflow: hidden;
 				white-space: nowrap;
