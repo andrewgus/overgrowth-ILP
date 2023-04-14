@@ -1,6 +1,6 @@
 import { jsPDF } from 'jspdf'
 import type { SectionDetails } from '../store/lessonStore'
-import { featureProgressStore } from '../components/features/featureOptionsStore'
+import { featureProgressStore } from '../store/featureOptionsStore'
 
 /**
  * To generate a PDF download of a learner's work they've completed (practice and/or reflection)

@@ -21,7 +21,7 @@
 		userReflectionsStore,
 		initUserReflectionsStore,
 		featureProgressStore,
-	} from '../featureOptionsStore'
+	} from '../../../store/featureOptionsStore'
 
 	const $currSection = useStore(currSectionMap)
 	const props = defineProps({

@@ -11,12 +11,11 @@
 </template>
 
 <script setup lang="ts">
-	import { defineAsyncComponent } from 'vue'
+	import { computed, defineAsyncComponent } from 'vue'
 	import { useDoesFeatureExist, type FeatureType } from '../store/lessonStore'
-	import { initFeatureProgressStore } from '../components/features/featureOptionsStore'
+	import { initFeatureProgressStore } from '../store/featureOptionsStore'
 	import useCreateID from '../composables/useCreateID'
 	import FeatureCompleteBtns from '../components/features/FeatureCompleteBtns.vue'
-	import { computed } from '@vue/reactivity'
 
 	interface Props {
 		featureType: FeatureType

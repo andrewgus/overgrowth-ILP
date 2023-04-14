@@ -78,11 +78,11 @@
 		useIsLastSection,
 		useSetFeatureComplete,
 	} from '../../store/lessonStore'
+	import { featureProgressStore } from '../../store/featureOptionsStore'
 	import BaseButton from '../base/BaseButton.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
 	import BaseSeparator from '../base/BaseSeparator.vue'
 	import useAreSectionsAvailable from '../../composables/useAreSectionsAvailable'
-	import { featureProgressStore } from './featureOptionsStore'
 
 	const props = defineProps({
 		id: {
