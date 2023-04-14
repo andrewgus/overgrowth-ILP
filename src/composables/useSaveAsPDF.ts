@@ -1,6 +1,6 @@
 import { jsPDF } from 'jspdf'
 import type { SectionDetails } from '../store/lessonStore'
-import { pdfGeneratorStatusStore } from '../components/features/featureOptionsStore'
+import { featureProgressStore } from '../components/features/featureOptionsStore'
 
 /**
  * To generate a PDF download of a learner's work they've completed (practice and/or reflection)
@@ -38,12 +38,19 @@ export default function generatePDF(currSection: SectionDetails) {
 			}
 			newPDF
 				.save(`${currSection.id}.pdf`, { returnPromise: true })
-				.catch((_) => (pdfGeneratorStatusStore[currSection.id].isFailed = true))
+				.catch(
+					(_) =>
+						(featureProgressStore[currSection.id].pdfGenStatus.isFailed = true)
+				)
 				.then(
-					(_) => (pdfGeneratorStatusStore[currSection.id].isDownloading = false)
+					(_) =>
+						(featureProgressStore[currSection.id].pdfGenStatus.isDownloading =
+							false)
 				)
 				.finally(
-					() => (pdfGeneratorStatusStore[currSection.id].isComplete = true)
+					() =>
+						(featureProgressStore[currSection.id].pdfGenStatus.isComplete =
+							true)
 				)
 		},
 		html2canvas: {

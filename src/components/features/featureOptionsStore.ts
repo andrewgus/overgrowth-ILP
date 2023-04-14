@@ -1,5 +1,4 @@
 import { reactive } from 'vue'
-
 // log user's reflection answers
 interface userAnswers {
 	[id: string]: {
@@ -8,7 +7,6 @@ interface userAnswers {
 	}
 }
 const userReflectionsStore = reactive<userAnswers>({})
-
 function initUserReflectionsStore(id: string, prompt: string) {
 	userReflectionsStore[id] = {
 		prompt: prompt,
@@ -16,45 +14,48 @@ function initUserReflectionsStore(id: string, prompt: string) {
 	}
 }
 
-// log whether user has done the feature work of a given feature
-interface canContinue {
+/* TODO: A create a store for userPracticeAttempts with the following interface:
+
 	[id: string]: {
 		id: string
-		attemptFinished: boolean
+		attemptsTotal: number
+		[attemptNum: number]: {
+			...actions
+			[Need to figure this out later]
+		}
 	}
-}
-const canContinueStore = reactive<canContinue>({})
-function initCanContinueStore(id: string) {
-	canContinueStore[id] = {
-		id: id,
-		attemptFinished: false,
-	}
-}
+	
+	 NOTE: When creating first practice activity component, will need to create a store for # of user attempts and how they performed in each attempt. NOTE: May have to create a persisent nanostore for that and refactor all of this to that nanostore.
+*/
 
-// track status of PDF generation for user feedback
-interface pdfGenStatus {
+// Tracking user progress for completing features
+interface featureProgress {
 	[id: string]: {
-		isDownloading: boolean
-		isComplete: boolean
-		isFailed: boolean
+		id: string
+		attemptsFinished: boolean
+		pdfGenStatus: {
+			isDownloading: boolean
+			isComplete: boolean
+			isFailed: boolean
+		}
 	}
 }
-const pdfGeneratorStatusStore = reactive<pdfGenStatus>({})
-function initPdfGeneratorStatusStore(id: string) {
-	pdfGeneratorStatusStore[id] = {
-		isDownloading: false,
-		isComplete: false,
-		isFailed: false,
+const featureProgressStore = reactive<featureProgress>({})
+function initFeatureProgressStore(id: string) {
+	featureProgressStore[id] = {
+		id: id,
+		attemptsFinished: false,
+		pdfGenStatus: {
+			isDownloading: false,
+			isComplete: false,
+			isFailed: false,
+		},
 	}
 }
-
-// NOTE: When creating first practice activity component, will need to create a store for # of user attempts and how they performed in each attempt. NOTE: May have to create a persisent nanostore for that and refactor all of this to that nanostore.
 
 export {
 	userReflectionsStore,
 	initUserReflectionsStore,
-	canContinueStore,
-	initCanContinueStore,
-	pdfGeneratorStatusStore,
-	initPdfGeneratorStatusStore,
+	featureProgressStore,
+	initFeatureProgressStore,
 }

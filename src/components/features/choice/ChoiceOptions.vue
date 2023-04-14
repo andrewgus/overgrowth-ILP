@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-	import { canContinueStore } from '../featureOptionsStore'
+	import { featureProgressStore } from '../featureOptionsStore'
 	interface props {
 		id: string
 		prompt: string
@@ -13,5 +13,5 @@
 	const props = defineProps<props>()
 
 	// FOR TESTING. This below would actually exist within a given child component. See reflection for example.
-	canContinueStore[props.id].attemptFinished = true
+	featureProgressStore[props.id].attemptsFinished = true
 </script>

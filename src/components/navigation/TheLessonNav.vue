@@ -35,7 +35,7 @@
 		transition: var(--timeShort) all ease-in-out;
 		display: block;
 		background-color: hsla(0, 0%, 100%, 0.95);
-		padding: var(--s-5) 0 0;
+
 		width: 100%;
 		position: sticky;
 		top: 0;
@@ -54,7 +54,7 @@
 			display: grid;
 			align-items: center;
 			grid-template-columns: 2.5fr 1fr;
-			padding: 0 var(--s-5);
+			padding: var(--s-5);
 
 			> p {
 				font-size: var(--s-1);

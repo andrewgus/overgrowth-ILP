@@ -20,7 +20,7 @@
 	import {
 		userReflectionsStore,
 		initUserReflectionsStore,
-		canContinueStore,
+		featureProgressStore,
 	} from '../featureOptionsStore'
 
 	const $currSection = useStore(currSectionMap)
@@ -44,9 +44,9 @@
 		set(value) {
 			userReflectionsStore[props.id].answer = value
 			if (value.length > 25) {
-				canContinueStore[props.id].attemptFinished = true
+				featureProgressStore[props.id].attemptsFinished = true
 			} else {
-				canContinueStore[props.id].attemptFinished = false
+				featureProgressStore[props.id].attemptsFinished = false
 			}
 		},
 	})

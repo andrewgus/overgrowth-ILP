@@ -3,7 +3,7 @@
 		<transition>
 			<p
 				v-if="
-					!canContinueStore[id].attemptFinished &&
+					!featureProgressStore[id].attemptsFinished &&
 					areSectionsAvailable &&
 					!isLastSection
 				"
@@ -22,25 +22,25 @@
 				:class="$style.completeBtns"
 			>
 				<BaseButton
-					v-if="!canContinueStore[id].attemptFinished"
+					v-if="!featureProgressStore[id].attemptsFinished"
 					:isDisabled="true"
 					:class="$style.featureCompleteBtn"
 					text="Complete activity to&nbsp;continue"
 				/>
 				<BaseButton
-					v-if="canContinueStore[id].attemptFinished"
+					v-if="featureProgressStore[id].attemptsFinished"
 					text="Continue?"
 					:class="$style.featureCompleteBtn"
 					@btnClick="setComplete($event, false)"
 				/>
 				<BaseSeparator
-					v-if="canContinueStore[id].attemptFinished"
+					v-if="featureProgressStore[id].attemptsFinished"
 					orientation="vertical"
 					color="var(--darkGray)"
 				/>
 				<BaseButton
-					v-if="canContinueStore[id].attemptFinished"
-					:isDisabled="!canContinueStore[id].attemptFinished"
+					v-if="featureProgressStore[id].attemptsFinished"
+					:isDisabled="!featureProgressStore[id].attemptsFinished"
 					text="Save&nbsp;work&nbsp;as&nbsp;PDF and&nbsp;continue?"
 					:class="$style.featureCompleteBtn"
 					@btnClick="setComplete($event, true)"
@@ -82,10 +82,7 @@
 	import BaseIndicator from '../base/BaseIndicator.vue'
 	import BaseSeparator from '../base/BaseSeparator.vue'
 	import useAreSectionsAvailable from '../../composables/useAreSectionsAvailable'
-	import {
-		pdfGeneratorStatusStore,
-		canContinueStore,
-	} from './featureOptionsStore'
+	import { featureProgressStore } from './featureOptionsStore'
 
 	const props = defineProps({
 		id: {
@@ -97,12 +94,12 @@
 	const $currSection = useStore(currSectionMap)
 	const $nextSection = useStore(nextSectionComputed)
 	const areSectionsAvailable = useAreSectionsAvailable()
-	const isLastSection = useIsLastSection(canContinueStore[props.id].id)
+	const isLastSection = useIsLastSection(featureProgressStore[props.id].id)
 
 	const featureComplete = ref<boolean>(false)
 
 	const saveAsPDF = async () => {
-		pdfGeneratorStatusStore[props.id].isDownloading = true
+		featureProgressStore[props.id].pdfGenStatus.isDownloading = true
 		const { default: generatePDF } = await import(
 			'../../composables/useSaveAsPDF'
 		)
@@ -122,15 +119,17 @@
 	}
 
 	const pdfStatusUpdate = computed(() => {
-		if (pdfGeneratorStatusStore[props.id].isFailed)
+		if (featureProgressStore[props.id].pdfGenStatus.isFailed)
 			return 'Failed to download. Could not create PDF. Try again?'
-		if (pdfGeneratorStatusStore[props.id].isComplete)
+		if (featureProgressStore[props.id].pdfGenStatus.isComplete)
 			return 'PDF download complete!'
-		if (pdfGeneratorStatusStore[props.id].isDownloading)
+		if (featureProgressStore[props.id].pdfGenStatus.isDownloading)
 			return 'Downloading PDF…'
 	})
 	const shouldDisplayVisualFeedback = computed(() => {
-		const pdfStatusAsArray = Object.entries(pdfGeneratorStatusStore[props.id])
+		const pdfStatusAsArray = Object.entries(
+			featureProgressStore[props.id].pdfGenStatus
+		)
 		const isAttemptingDownload = pdfStatusAsArray.some(([_, isDownloading]) => {
 			return isDownloading === true
 		})
@@ -140,9 +139,6 @@
 
 <style module lang="scss">
 	.featureCompleteOptions {
-		font-size: var(--s0);
-		max-width: 60ch;
-		width: 100%;
 		margin: var(--s4) auto 0;
 	}
 	.continueWarning {

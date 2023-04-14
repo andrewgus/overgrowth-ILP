@@ -13,10 +13,7 @@
 <script setup lang="ts">
 	import { defineAsyncComponent } from 'vue'
 	import { useDoesFeatureExist, type FeatureType } from '../store/lessonStore'
-	import {
-		initCanContinueStore,
-		initPdfGeneratorStatusStore,
-	} from '../components/features/featureOptionsStore'
+	import { initFeatureProgressStore } from '../components/features/featureOptionsStore'
 	import useCreateID from '../composables/useCreateID'
 	import FeatureCompleteBtns from '../components/features/FeatureCompleteBtns.vue'
 	import { computed } from '@vue/reactivity'
@@ -43,8 +40,7 @@
 	)
 
 	const sectionID = useCreateID(props.title)
-	initCanContinueStore(sectionID)
-	initPdfGeneratorStatusStore(sectionID)
+	initFeatureProgressStore(sectionID)
 
 	const conditionalProps = computed(() => {
 		const universalProps = {
@@ -76,5 +72,12 @@
 		display: flex;
 		flex-flow: column nowrap;
 		justify-content: space-between;
+
+		> div {
+			font-size: var(--s0);
+			max-width: 60ch;
+			width: 100%;
+			margin: 0 auto;
+		}
 	}
 </style>
