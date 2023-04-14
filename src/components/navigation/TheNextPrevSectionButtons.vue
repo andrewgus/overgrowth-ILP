@@ -13,6 +13,7 @@
 			aria-label="Go to previous section"
 			text="&#9650;"
 		/>
+		<BaseSeparator orientation="vertical"></BaseSeparator>
 		<BaseButton
 			link
 			isForNav
@@ -41,6 +42,7 @@
 		isOnLastSectionComputed,
 	} from '../../store/lessonStore'
 	import BaseButton from '../base/BaseButton.vue'
+	import BaseSeparator from '../base/BaseSeparator.vue'
 
 	const $isOnContent = useStore(isOnContentAtom)
 	const $currSection = useStore(currSectionMap)
@@ -60,7 +62,7 @@
 		border-radius: var(--s10) 0 0 var(--s10);
 		background-color: var(--lightBlue);
 
-		> * {
+		> *:not(hr) {
 			border-radius: 0;
 			display: flex;
 			justify-content: center;

@@ -1,10 +1,9 @@
 <template>
-	<div
+	<hr
 		:class="$style.separator"
-		role="separator"
 		:aria-orientation="orientation"
 		:aria-hidden="hidden"
-	></div>
+	/>
 </template>
 
 <script setup lang="ts">
@@ -20,7 +19,9 @@
 
 <style module>
 	.separator {
-		border-width: 1px;
+		margin: 0;
+		align-self: stretch;
+		border-width: 0.5px;
 		border-style: solid;
 		border-color: v-bind('props.color');
 		border-radius: var(--s10);

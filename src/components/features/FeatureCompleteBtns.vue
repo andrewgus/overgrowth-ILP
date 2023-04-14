@@ -1,5 +1,5 @@
 <template>
-	<div :class="$style.featureCompleteOptions" aria-live="polite">
+	<div aria-live="polite">
 		<opacityTransition>
 			<p
 				v-if="!featureProgressStore[id].attemptsFinished && isNotOnLastSection"
@@ -13,19 +13,19 @@
 		</opacityTransition>
 		<opacityTransition mode="out-in">
 			<div
-				v-if="!featureComplete && isNotOnLastSection"
+				v-if="!featureMarkedComplete && isNotOnLastSection"
 				:class="$style.completeBtns"
 			>
 				<BaseButton
 					v-if="!featureProgressStore[id].attemptsFinished"
 					:isDisabled="true"
-					:class="$style.featureCompleteBtn"
+					:class="$style.featureComMarkedpleteBtn"
 					text="Complete activity to&nbsp;continue"
 				/>
 				<BaseButton
 					v-if="featureProgressStore[id].attemptsFinished"
 					text="Continue?"
-					:class="$style.featureCompleteBtn"
+					:class="$style.featureComMarkedpleteBtn"
 					@btnClick="setComplete($event, false)"
 				/>
 				<BaseSeparator
@@ -37,20 +37,29 @@
 					v-if="featureProgressStore[id].attemptsFinished"
 					:isDisabled="!featureProgressStore[id].attemptsFinished"
 					text="Save&nbsp;work&nbsp;as&nbsp;PDF and&nbsp;continue?"
-					:class="$style.featureCompleteBtn"
+					:class="$style.featureComMarkedpleteBtn"
 					@btnClick="setComplete($event, true)"
 				/>
 			</div>
 			<div :class="$style.continueIndicators" v-else>
-				<BaseButton
-					:text="pdfStatusUpdate"
-					:isDisabled="shouldDisplayVisualFeedback"
-					:class="[
-						$style.featureSaveOnlyBtn,
-						{ [$style.pdfSaveFeedback]: shouldDisplayVisualFeedback },
-					]"
-					@btnClick="setComplete($event, true)"
-				/>
+				<div :class="$style.pdfSave">
+					<p
+						v-if="shouldDisplayVisualFeedback"
+						:class="$style.pdfSave__feedback"
+					>
+						{{ pdfStatusUpdate }}
+					</p>
+					<BaseSeparator
+						v-if="shouldDisplayVisualFeedback"
+						orientation="vertical"
+						color="var(--darkGray)"
+					/>
+					<BaseButton
+						:text="shouldDisplayVisualFeedback ? 'Save again?' : 'Save as PDF'"
+						:class="$style.pdfSave__btn"
+						@btnClick="setComplete($event, true)"
+					/>
+				</div>
 				<BaseIndicator
 					v-if="areSectionsAvailable && !isLastSection"
 					text="Scoll to continue"
@@ -92,7 +101,7 @@
 	const areSectionsAvailable = useAreSectionsAvailable()
 	const isLastSection = useIsLastSection(featureProgressStore[props.id].id)
 
-	const featureComplete = ref<boolean>(false)
+	const featureMarkedComplete = ref<boolean>(false)
 
 	const saveAsPDF = async () => {
 		featureProgressStore[props.id].pdfGenStatus.isDownloading = true
@@ -100,7 +109,7 @@
 			'../../composables/useSaveAsPDF'
 		)
 		await generatePDF($currSection.value)
-		if (!featureComplete.value) featureComplete.value = true
+		if (!featureMarkedComplete.value) featureMarkedComplete.value = true
 	}
 	const setComplete = ({ target }: Event, toSave: boolean) => {
 		const clicked = target as HTMLElement
@@ -110,7 +119,7 @@
 		useSetCurrSection(thisSection!.id)
 
 		useSetFeatureComplete()
-		featureComplete.value = true
+		featureMarkedComplete.value = true
 		if (toSave) saveAsPDF()
 	}
 
@@ -140,6 +149,15 @@
 </script>
 
 <style module lang="scss">
+	@mixin btnLeft {
+		border-right: 0;
+		border-radius: var(--s10) 0 0 var(--s10);
+	}
+	@mixin btnRight {
+		border-left: 0;
+		border-radius: 0 var(--s10) var(--s10) 0;
+	}
+
 	.continueWarning {
 		width: 100%;
 		text-align: center;
@@ -151,7 +169,7 @@
 		border-color: var(--darkGray);
 		border-radius: var(--s10) var(--s10) 0 0;
 	}
-	.continueWarning + .completeBtns > .featureCompleteBtn {
+	.continueWarning + .completeBtns > .featureComMarkedpleteBtn {
 		border-radius: 0 0 var(--s-8) var(--s-8);
 	}
 	.completeBtns {
@@ -159,38 +177,44 @@
 		flex-flow: row nowrap;
 		justify-content: center;
 		align-items: stretch;
-		.featureCompleteBtn {
+		.featureComMarkedpleteBtn {
 			flex: 1;
 			display: block;
 			margin: 0 auto;
 			min-height: var(--s5);
 			&:first-child:not(:only-child) {
-				border-right: 0;
-				border-radius: var(--s10) 0 0 var(--s10);
+				@include btnLeft();
 			}
 			&:last-child:not(:only-child) {
-				border-left: 0;
-				border-radius: 0 var(--s10) var(--s10) 0;
+				@include btnRight();
 			}
 		}
 	}
-	.pdfSaveFeedback,
-	.featureSaveOnlyBtn {
+	.pdfSave {
 		display: flex;
+		flex-flow: row nowrap;
+		justify-content: center;
 		align-items: center;
-		font-size: var(--s-1);
-		margin: 0 auto var(--s-4);
-		padding: var(--s-4) var(--s2);
-		text-align: center;
-		width: fit-content;
-		border-radius: var(--s10);
-		max-height: var(--s4);
-	}
-	.pdfSaveFeedback:disabled {
-		opacity: 1;
-		pointer-events: none;
-		font-style: italic;
-		background-color: var(--green3);
-		border-color: transparent;
+		margin-bottom: var(--s-4);
+		&__feedback,
+		&__btn {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: var(--s-4) var(--s-2);
+			text-align: center;
+			border-radius: var(--s10);
+			max-height: var(--s4);
+		}
+		&__feedback {
+			opacity: 1;
+			font-style: italic;
+			background-color: var(--green4);
+			border: 1px solid var(--darkGray);
+			@include btnLeft();
+		}
+		&__btn:not(:only-child) {
+			@include btnRight();
+		}
 	}
 </style>
