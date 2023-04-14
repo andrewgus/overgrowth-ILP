@@ -1,9 +1,10 @@
 <template>
-	<hr
+	<div
+		role="separator"
 		:class="$style.separator"
 		:aria-orientation="orientation"
 		:aria-hidden="hidden"
-	/>
+	></div>
 </template>
 
 <script setup lang="ts">

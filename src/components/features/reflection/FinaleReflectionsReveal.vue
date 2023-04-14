@@ -13,6 +13,7 @@
 				</div>
 				<BaseSeparator
 					orientation="horizontal"
+					color="var(--darkGray)"
 					:class="$style.reflectionSeparator"
 				/>
 				<div>
@@ -80,8 +81,5 @@
 				}
 			}
 		}
-	}
-	.reflectionSeparator {
-		border-color: var(--darkGray);
 	}
 </style>
