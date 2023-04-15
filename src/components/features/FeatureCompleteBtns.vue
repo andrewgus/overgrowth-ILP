@@ -1,47 +1,31 @@
 <template>
 	<div aria-live="polite">
-		<opacityTransition>
-			<p
-				v-if="!featureProgressStore[id].attemptsFinished && isNotOnLastSection"
-				:class="$style.continueWarning"
-			>
-				Heads&nbsp;up!&nbsp;Once&nbsp;completed, this&nbsp;{{
-					$allSections[id].featureType
-				}}&nbsp;activity
-				<strong>cannot</strong>&nbsp;be&nbsp;turned&nbsp;off&nbsp;later.
-			</p>
-		</opacityTransition>
-		<opacityTransition mode="out-in">
-			<div
-				v-if="!featureMarkedComplete && isNotOnLastSection"
-				:class="$style.completeBtns"
-			>
-				<BaseButton
-					v-if="!featureProgressStore[id].attemptsFinished"
-					:isDisabled="true"
-					:class="$style.featureComMarkedpleteBtn"
-					text="Complete activity to&nbsp;continue"
-				/>
-				<BaseButton
-					v-if="featureProgressStore[id].attemptsFinished"
-					text="Continue?"
-					:class="$style.featureComMarkedpleteBtn"
-					@btnClick="setComplete($event, false)"
-				/>
-				<BaseSeparator
-					v-if="featureProgressStore[id].attemptsFinished"
-					orientation="vertical"
-					color="var(--darkGray)"
-				/>
-				<BaseButton
-					v-if="featureProgressStore[id].attemptsFinished"
-					:isDisabled="!featureProgressStore[id].attemptsFinished"
-					text="Save&nbsp;work&nbsp;as&nbsp;PDF and&nbsp;continue?"
-					:class="$style.featureComMarkedpleteBtn"
-					@btnClick="setComplete($event, true)"
-				/>
-			</div>
-			<div class="continueAndFeedback" v-else>
+		<transition name="opacity" mode="out-in">
+			<template v-if="!featureMarkedComplete && isNotOnLastSection">
+				<transition mode="out-in" name="flourish">
+					<BaseButton
+						v-if="!featureProgressStore[id].attemptsFinished"
+						:isDisabled="true"
+						:class="$style.featureIncompleteBtn"
+						text="Complete activity to&nbsp;continue"
+					/>
+					<div :class="$style.completeBtns" v-else>
+						<BaseButton
+							text="Continue?"
+							:class="$style.featureComMarkedpleteBtn"
+							@btnClick="setComplete($event, false)"
+						/>
+						<BaseSeparator orientation="vertical" color="var(--darkGray)" />
+						<BaseButton
+							:isDisabled="!featureProgressStore[id].attemptsFinished"
+							text="Save&nbsp;work&nbsp;as&nbsp;PDF and&nbsp;continue?"
+							:class="$style.featureComMarkedpleteBtn"
+							@btnClick="setComplete($event, true)"
+						/>
+					</div>
+				</transition>
+			</template>
+			<div v-else>
 				<div :class="$style.pdfSave">
 					<p
 						v-if="shouldDisplayVisualFeedback"
@@ -61,13 +45,13 @@
 					/>
 				</div>
 				<BaseIndicator
-					v-if="areSectionsAvailable && !isLastSection"
+					v-if="isNotOnLastSection"
 					text="Scoll to continue"
 					:hidden="id !== $currSection.id"
 					:goTo="`#${$nextSection}`"
 				></BaseIndicator>
 			</div>
-		</opacityTransition>
+		</transition>
 	</div>
 </template>
 
@@ -75,7 +59,6 @@
 	import { ref, computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import {
-		allSectionsMap,
 		currSectionMap,
 		useSetCurrSection,
 		nextSectionComputed,
@@ -87,7 +70,6 @@
 	import BaseIndicator from '../base/BaseIndicator.vue'
 	import BaseSeparator from '../base/BaseSeparator.vue'
 	import useAreSectionsAvailable from '../../composables/useAreSectionsAvailable'
-	import opacityTransition from '../../composables/opacityTransition.vue'
 
 	const props = defineProps({
 		id: {
@@ -95,7 +77,6 @@
 			required: true,
 		},
 	})
-	const $allSections = useStore(allSectionsMap)
 	const $currSection = useStore(currSectionMap)
 	const $nextSection = useStore(nextSectionComputed)
 	const areSectionsAvailable = useAreSectionsAvailable()
@@ -128,9 +109,9 @@
 		if (toSave) saveAsPDF()
 	}
 
-	const isNotOnLastSection = computed(() => {
-		return areSectionsAvailable.value && !isLastSection
-	})
+	const isNotOnLastSection = computed(
+		() => areSectionsAvailable.value && !isLastSection
+	)
 
 	const pdfStatusUpdate = computed(() => {
 		if (featureProgressStore[props.id].pdfGenStatus.isFailed)
@@ -162,31 +143,23 @@
 		border-left: 0;
 		border-radius: 0 var(--s10) var(--s10) 0;
 	}
-
-	.continueWarning {
-		width: 100%;
-		text-align: center;
-		padding: var(--s-4) var(--s-2);
-		margin: var(--s0) auto 0;
-		background-color: var(--yellow5);
-		border-width: 1px 1px 0 1px;
-		border-style: solid;
-		border-color: var(--darkGray);
-		border-radius: var(--s10) var(--s10) 0 0;
-	}
-	.continueWarning + .completeBtns > .featureComMarkedpleteBtn {
-		border-radius: 0 0 var(--s-8) var(--s-8);
-	}
+	.featureIncompleteBtn,
 	.completeBtns {
 		display: flex;
 		flex-flow: row nowrap;
 		justify-content: center;
 		align-items: stretch;
+		width: 100%;
+		border-radius: var(--s10);
+		min-height: var(--s5);
+	}
+
+	.completeBtns {
 		.featureComMarkedpleteBtn {
 			flex: 1;
 			display: block;
 			margin: 0 auto;
-			min-height: var(--s5);
+
 			&:first-child:not(:only-child) {
 				@include btnLeft();
 			}

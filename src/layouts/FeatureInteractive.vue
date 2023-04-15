@@ -2,6 +2,12 @@
 	<section class="section feature" :class="$style[featureType]">
 		<div>
 			<h2>{{ title }}</h2>
+			<BaseAlertText :show="!featureProgressStore[sectionID].attemptsFinished">
+				Heads&nbsp;up!&nbsp;Once&nbsp;completed, this&nbsp;{{
+					featureType
+				}}&nbsp;activity
+				<strong>cannot</strong>&nbsp;be&nbsp;turned&nbsp;off&nbsp;later.
+			</BaseAlertText>
 			<component :is="feature" v-bind="conditionalProps">
 				<slot></slot>
 			</component>
@@ -13,9 +19,13 @@
 <script setup lang="ts">
 	import { computed, defineAsyncComponent } from 'vue'
 	import { useDoesFeatureExist, type FeatureType } from '../store/lessonStore'
-	import { initFeatureProgressStore } from '../store/featureOptionsStore'
+	import {
+		initFeatureProgressStore,
+		featureProgressStore,
+	} from '../store/featureOptionsStore'
 	import useCreateID from '../composables/useCreateID'
 	import FeatureCompleteBtns from '../components/features/FeatureCompleteBtns.vue'
+	import BaseAlertText from '../components/base/BaseAlertText.vue'
 
 	interface Props {
 		featureType: FeatureType
@@ -27,6 +37,8 @@
 		toSave: false,
 		isFinaleReveal: false,
 	})
+	const sectionID = useCreateID(props.title)
+	initFeatureProgressStore(sectionID)
 
 	const feature = defineAsyncComponent(() =>
 		import(
@@ -37,9 +49,6 @@
 			useDoesFeatureExist(props.featureType)
 		})
 	)
-
-	const sectionID = useCreateID(props.title)
-	initFeatureProgressStore(sectionID)
 
 	const conditionalProps = computed(() => {
 		const universalProps = {
@@ -64,7 +73,7 @@
 	})
 </script>
 
-<style lang="scss" module>
+<style module lang="scss">
 	.reflection,
 	.choice,
 	.practice {

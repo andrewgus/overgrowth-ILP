@@ -1,8 +1,9 @@
 @use "sizing.scss";
 @use "typography.scss";
 @use "colors.scss";
+@use "transition.scss";
 
-:root {
+:root  {
   --fonts: "Atkinson Hyperlegible", sans-serif;
   --timeShort: 0.33s;
   --timeLong: 0.5s;

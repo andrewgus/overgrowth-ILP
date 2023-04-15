@@ -303,7 +303,7 @@ const isOnLastSectionComputed = computed(
 		id === Object.keys(filteredNavSections).at(-1)
 )
 
-// NOTE: May end up deleting this after moving setComplete to store from FeatureCompleteBtn.vue file
+
 const useIsLastSection = (sectionID: string) => {
 	return Object.keys(allSectionsMap.get()).at(-1) === sectionID
 }

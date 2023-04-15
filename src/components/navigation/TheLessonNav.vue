@@ -4,7 +4,7 @@
 		id="lessonNav"
 		:class="[$style.lessonNav, { [$style.isInvisible]: !$isOnContent }]"
 	>
-		<SkipToContent v-if="!$isOnContent && areSectionsAvailable" />
+		<SkipToContent v-if="areSectionsAvailable && !$isOnContent" />
 		<div :class="$style.navInfo">
 			<p v-if="!!$currSection" v-show="$isOnContent">
 				Currently on:
