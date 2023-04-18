@@ -3,8 +3,8 @@
 		<a
 			:class="$style.indicatorLink"
 			:href="goTo"
-			:aria-hidden="hidden"
-			:tabindex="hidden ? '-1' : '0'"
+			:aria-hidden="isHidden"
+			:tabindex="isHidden ? '-1' : '0'"
 		>
 			<p>{{ text }}</p>
 			<span :class="$style.scrollArrow">
@@ -37,7 +37,7 @@
 			type: String,
 			required: true,
 		},
-		hidden: {
+		isHidden: {
 			type: Boolean,
 		},
 	})

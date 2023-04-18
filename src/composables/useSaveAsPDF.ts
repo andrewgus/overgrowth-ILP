@@ -56,7 +56,7 @@ export default function generatePDF(currSection: SectionDetails) {
 		html2canvas: {
 			ignoreElements: (el) =>
 				el.classList.toString().includes('btn') ||
-				el.classList.toString().includes('continueAndFeedback'),
+				el.classList.toString().includes('continueBtns'),
 
 			scale: 0.7,
 			width: 700,

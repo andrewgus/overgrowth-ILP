@@ -1,31 +1,18 @@
 <template>
 	<div aria-live="polite">
-		<transition name="opacity" mode="out-in">
-			<template v-if="!featureMarkedComplete && isNotOnLastSection">
-				<transition mode="out-in" name="flourish">
-					<BaseButton
-						v-if="!featureProgressStore[id].attemptsFinished"
-						:isDisabled="true"
-						:class="$style.featureIncompleteBtn"
-						text="Complete activity to&nbsp;continue"
-					/>
-					<div :class="$style.completeBtns" v-else>
-						<BaseButton
-							text="Continue?"
-							:class="$style.featureComMarkedpleteBtn"
-							@btnClick="setComplete($event, false)"
-						/>
-						<BaseSeparator orientation="vertical" color="var(--darkGray)" />
-						<BaseButton
-							:isDisabled="!featureProgressStore[id].attemptsFinished"
-							text="Save&nbsp;work&nbsp;as&nbsp;PDF and&nbsp;continue?"
-							:class="$style.featureComMarkedpleteBtn"
-							@btnClick="setComplete($event, true)"
-						/>
-					</div>
-				</transition>
-			</template>
-			<div v-else>
+		<transition mode="out-in" name="opacity">
+			<BaseButton
+				v-if="!featureMarkedComplete && isNotOnLastSection"
+				:isDisabled="!featureProgressStore[id].attemptsFinished"
+				:class="$style.featureCompleteBtn"
+				:text="
+					!featureProgressStore[id].attemptsFinished
+						? 'Complete activity to&nbsp;continue'
+						: 'Ready to continue?'
+				"
+				@btnClick="setComplete($event, false)"
+			/>
+			<div :class="$style.continueBtns" v-else>
 				<div :class="$style.pdfSave">
 					<p
 						v-if="shouldDisplayVisualFeedback"
@@ -33,13 +20,10 @@
 					>
 						{{ pdfStatusUpdate }}
 					</p>
-					<BaseSeparator
-						v-if="shouldDisplayVisualFeedback"
-						orientation="vertical"
-						color="var(--darkGray)"
-					/>
+
 					<BaseButton
-						:text="shouldDisplayVisualFeedback ? 'Save again?' : 'Save as PDF'"
+						:text="shouldDisplayVisualFeedback ? 'Save again?' : 'Save as PDF?'"
+						:isHidden="id !== $currSection.id"
 						:class="$style.pdfSave__btn"
 						@btnClick="setComplete($event, true)"
 					/>
@@ -47,9 +31,9 @@
 				<BaseIndicator
 					v-if="isNotOnLastSection"
 					text="Scoll to continue"
-					:hidden="id !== $currSection.id"
+					:isHidden="id !== $currSection.id"
 					:goTo="`#${$nextSection}`"
-				></BaseIndicator>
+				/>
 			</div>
 		</transition>
 	</div>
@@ -68,7 +52,6 @@
 	import { featureProgressStore } from '../../store/featureOptionsStore'
 	import BaseButton from '../base/BaseButton.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
-	import BaseSeparator from '../base/BaseSeparator.vue'
 	import useAreSectionsAvailable from '../../composables/useAreSectionsAvailable'
 
 	const props = defineProps({
@@ -114,12 +97,12 @@
 	)
 
 	const pdfStatusUpdate = computed(() => {
-		if (featureProgressStore[props.id].pdfGenStatus.isFailed)
-			return 'Failed to download. Try again?'
+		if (featureProgressStore[props.id].pdfGenStatus.isDownloading)
+			return 'Downloading…'
 		if (featureProgressStore[props.id].pdfGenStatus.isComplete)
 			return 'Download complete!'
-		if (featureProgressStore[props.id].pdfGenStatus.isDownloading)
-			return 'Downloading PDF…'
+		if (featureProgressStore[props.id].pdfGenStatus.isFailed)
+			return 'Failed to download. Try again?'
 
 		return 'Save as PDF'
 	})
@@ -135,44 +118,19 @@
 </script>
 
 <style module lang="scss">
-	@mixin btnLeft {
-		border-right: 0;
-		border-radius: var(--s10) 0 0 var(--s10);
-	}
-	@mixin btnRight {
-		border-left: 0;
-		border-radius: 0 var(--s10) var(--s10) 0;
-	}
-	.featureIncompleteBtn,
-	.completeBtns {
-		display: flex;
-		flex-flow: row nowrap;
-		justify-content: center;
-		align-items: stretch;
-		width: 100%;
-		border-radius: var(--s10);
-		min-height: var(--s5);
-	}
-
-	.completeBtns {
-		.featureComMarkedpleteBtn {
-			flex: 1;
-			display: block;
-			margin: 0 auto;
-
-			&:first-child:not(:only-child) {
-				@include btnLeft();
-			}
-			&:last-child:not(:only-child) {
-				@include btnRight();
-			}
-		}
-	}
+	.featureCompleteBtn,
 	.pdfSave {
 		display: flex;
 		flex-flow: row nowrap;
 		justify-content: center;
 		align-items: center;
+		margin-top: var(--s4);
+	}
+	.featureCompleteBtn {
+		width: 100%;
+		border-radius: var(--s10);
+	}
+	.pdfSave {
 		margin-bottom: var(--s-4);
 		&__feedback,
 		&__btn {
@@ -189,10 +147,11 @@
 			font-style: italic;
 			background-color: var(--green4);
 			border: 1px solid var(--darkGray);
-			@include btnLeft();
+			border-right: 0;
+			border-radius: var(--s10) 0 0 var(--s10);
 		}
 		&__btn:not(:only-child) {
-			@include btnRight();
+			border-radius: 0 var(--s10) var(--s10) 0;
 		}
 	}
 </style>

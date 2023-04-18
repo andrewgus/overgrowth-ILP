@@ -5,7 +5,7 @@
 		<BaseIndicator
 			v-if="areSectionsAvailable"
 			:class="$style.onLandingIndicator"
-			hidden
+			isHidden
 			text="Scroll to start"
 			:goTo="`#${Object.keys($allNavSections).at(0)}`"
 		/>

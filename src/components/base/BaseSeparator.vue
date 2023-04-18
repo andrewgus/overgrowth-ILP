@@ -14,6 +14,7 @@
 		color?: string
 	}
 	const props = withDefaults(defineProps<props>(), {
+		hidden: false,
 		color: 'var(--lightGray)',
 	})
 </script>
