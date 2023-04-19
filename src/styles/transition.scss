@@ -3,6 +3,20 @@
   --timeLong: 0.5s;
   --transitionFlourish: cubic-bezier(0.68, -0.3, 0.32, 1.03);
 }
+@keyframes focusPulse {
+  0% {
+    outline-offset: 0;
+    outline-color: var(--blue1);
+  }
+  99% {
+    outline-color: var(--blue1);
+    outline-offset: var(--s-10);
+  }
+  100% {
+    outline-offset: 0;
+    outline: var(--s-10) solid var(--blue1);
+  }
+}
 // opacity-named transition
 .opacity-enter-from,
 .opacity-leave-to {

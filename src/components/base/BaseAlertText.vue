@@ -1,6 +1,6 @@
 <template>
 	<transition name="opacity">
-		<p v-show="show" :class="$style.alertText">
+		<p v-show="show" role="note" :class="$style.alertText">
 			<slot></slot>
 		</p>
 	</transition>

@@ -27,18 +27,3 @@ html {
 body {
   margin: 0;
 }
-
-@keyframes focusPulse {
-  0% {
-    outline-offset: 0;
-    outline-color: var(--blue1);
-  }
-  99% {
-    outline-color: var(--blue1);
-    outline-offset: var(--s-10);
-  }
-  100% {
-    outline-offset: 0;
-    outline: var(--s-10) solid var(--blue1);
-  }
-}

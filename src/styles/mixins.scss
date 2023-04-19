@@ -1,0 +1,22 @@
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin hoverBoxShadow {
+  -webkit-box-shadow: inset var(--s-8) 0 0 var(--blue), inset var(--s-10) var(--s-10) 0 var(--blue),
+    inset calc(-1 * var(--s-10)) calc(-1 * var(--s-10)) 0 var(--blue),
+    inset var(--s-10) calc(-1 * var(--s-10)) 0 var(--blue), inset calc(-1 * var(--s-10)) var(--s-10) 0 var(--blue),
+    inset calc(-1 * var(--s-8)) 0 0 var(--blue);
+  box-shadow: inset var(--s-8) 0 0 var(--blue), inset var(--s-10) var(--s-10) 0 var(--blue),
+    inset calc(-1 * var(--s-10)) calc(-1 * var(--s-10)) 0 var(--blue),
+    inset var(--s-10) calc(-1 * var(--s-10)) 0 var(--blue), inset calc(-1 * var(--s-10)) var(--s-10) 0 var(--blue),
+    inset calc(-1 * var(--s-8)) 0 0 var(--blue);
+}
+@mixin btnTransition {
+  -webkit-transition: var(--timeLong) box-shadow var(--transitionFlourish),
+    var(--timeLong) background-color var(--transitionFlourish), var(--timeLong) color var(--transitionFlourish);
+  transition: var(--timeLong) box-shadow var(--transitionFlourish),
+    var(--timeLong) background-color var(--transitionFlourish), var(--timeLong) color var(--transitionFlourish);
+}

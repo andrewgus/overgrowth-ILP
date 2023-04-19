@@ -20,7 +20,6 @@
 					>
 						{{ pdfStatusUpdate }}
 					</p>
-
 					<BaseButton
 						:text="shouldDisplayVisualFeedback ? 'Save again?' : 'Save as PDF?'"
 						:aria-label="

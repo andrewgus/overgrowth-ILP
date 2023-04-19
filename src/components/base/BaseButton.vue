@@ -15,6 +15,7 @@
 <script setup lang="ts">
 	import { computed } from 'vue'
 	import useComputedCssModule from '../../composables/useComputedCssModule'
+	import '../../styles/mixins.scss'
 
 	const props = defineProps({
 		text: {
@@ -51,23 +52,18 @@
 </script>
 
 <style module lang="scss">
+	@use '../../styles/mixins.scss';
+
 	.btn {
-		display: flex;
-		justify-content: center;
-		align-items: center;
+		@include mixins.flexCenter();
 		color: var(--black);
 		cursor: pointer;
 		border: 1px solid var(--darkGray);
 		padding: var(--s-4) var(--s-2);
 		background-color: v-bind(btnColor);
 		border-radius: var(--s-8);
-		-webkit-transition: var(--timeLong) box-shadow var(--transitionFlourish),
-			var(--timeLong) background-color var(--transitionFlourish),
-			var(--timeLong) color var(--transitionFlourish);
-		transition: var(--timeLong) box-shadow var(--transitionFlourish),
-			var(--timeLong) background-color var(--transitionFlourish),
-			var(--timeLong) color var(--transitionFlourish);
 		text-decoration: none;
+		@include mixins.btnTransition();
 
 		&:focus {
 			z-index: 10;
@@ -76,18 +72,7 @@
 		&:not(.navBtn):hover {
 			color: var(--blue);
 			background-color: var(--peach);
-			-webkit-box-shadow: inset var(--s-8) 0 0 var(--blue),
-				inset var(--s-10) var(--s-10) 0 var(--blue),
-				inset calc(-1 * var(--s-10)) calc(-1 * var(--s-10)) 0 var(--blue),
-				inset var(--s-10) calc(-1 * var(--s-10)) 0 var(--blue),
-				inset calc(-1 * var(--s-10)) var(--s-10) 0 var(--blue),
-				inset calc(-1 * var(--s-8)) 0 0 var(--blue);
-			box-shadow: inset var(--s-8) 0 0 var(--blue),
-				inset var(--s-10) var(--s-10) 0 var(--blue),
-				inset calc(-1 * var(--s-10)) calc(-1 * var(--s-10)) 0 var(--blue),
-				inset var(--s-10) calc(-1 * var(--s-10)) 0 var(--blue),
-				inset calc(-1 * var(--s-10)) var(--s-10) 0 var(--blue),
-				inset calc(-1 * var(--s-8)) 0 0 var(--blue);
+			@include mixins.hoverBoxShadow();
 		}
 		&.disabled {
 			cursor: not-allowed;
