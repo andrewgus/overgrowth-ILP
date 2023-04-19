@@ -63,7 +63,13 @@
 		background-color: v-bind(btnColor);
 		border-radius: var(--s-8);
 		text-decoration: none;
+		filter: drop-shadow(0px 3px 0 var(--blue));
 		@include mixins.btnTransition();
+
+		&:hover,
+		&:focus {
+			filter: drop-shadow(0px 0px 0 var(--blue));
+		}
 
 		&:focus {
 			z-index: 10;
@@ -77,6 +83,7 @@
 		&.disabled {
 			cursor: not-allowed;
 			background-color: var(--lightGray);
+			filter: drop-shadow(0px 0px 0 var(--blue));
 			opacity: 0.75;
 
 			&:hover {
