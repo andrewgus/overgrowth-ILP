@@ -4,6 +4,10 @@
 		name="opacity"
 		aria-live="polite"
 		v-if="areSectionsAvailable"
+		:class="{
+			[$style.attemptComplete]:
+				featureProgressStore[id].attemptsFinished && !featureMarkedComplete,
+		}"
 	>
 		<BaseButton
 			key="0"
@@ -127,6 +131,11 @@
 
 <style module lang="scss">
 	@use '../../styles/mixins.scss';
+
+	.attemptComplete {
+		position: sticky;
+		bottom: var(--s-4);
+	}
 
 	.featureCompleteBtn {
 		grid-area: pdfSave-indicator/topLine/indicator-end/bottomLine;
