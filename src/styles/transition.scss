@@ -17,31 +17,4 @@
     outline: var(--s-10) solid var(--blue1);
   }
 }
-// opacity-named transition
-.opacity-enter-from,
-.opacity-leave-to {
-  opacity: 0;
-}
-.opacity-enter-active,
-.opacity-leave-active {
-  transition: opacity var(--timeShort) ease-in-out;
-}
-.opacity-enter-to,
-.opacity-leave-from {
-  opacity: 1;
-}
 
-// flourish-named transition
-.flourish-enter-from,
-.flourish-leave-to {
-  opacity: 0;
-}
-.flourish-enter-active,
-.flourish-leave-active {
-  transition: opacity var(--timeShort) ease-in-out;
-}
-.flourish-enter-to,
-.flourish-leave-from {
-  animation: focusPulse 0.33s var(--transitionFlourish) forwards;
-  opacity: 1;
-}

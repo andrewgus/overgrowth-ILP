@@ -40,10 +40,16 @@
 </script>
 
 <style module lang="scss">
+	@use '../../styles/mixins.scss';
 	.switch {
 		display: grid;
 		grid-template: 1fr/ 1fr;
 		align-items: center;
+		@include mixins.btnTransition();
+
+		&:hover:not(:focus-within) {
+			@include mixins.blueDropShadow();
+		}
 		> * {
 			grid-area: 1/1/-1/-1;
 		}

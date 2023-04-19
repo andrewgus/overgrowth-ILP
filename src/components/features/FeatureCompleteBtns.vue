@@ -1,45 +1,53 @@
 <template>
-	<div aria-live="polite" v-if="areSectionsAvailable">
-		<transition mode="out-in" name="opacity">
-			<BaseButton
-				v-if="!featureMarkedComplete && !isLastSection"
-				:isDisabled="!featureProgressStore[id].attemptsFinished"
-				:class="$style.featureCompleteBtn"
-				:text="
-					!featureProgressStore[id].attemptsFinished
-						? 'Complete activity to&nbsp;continue'
-						: 'Ready to continue?'
-				"
-				@btnClick="setComplete"
-			/>
-			<div :class="$style.continueBtns" v-else>
-				<div :class="$style.pdfSave">
-					<p
-						v-if="shouldDisplayVisualFeedback"
-						:class="$style.pdfSave__feedback"
-					>
-						{{ pdfStatusUpdate }}
-					</p>
-					<BaseButton
-						:text="shouldDisplayVisualFeedback ? 'Save again?' : 'Save as PDF?'"
-						:aria-label="
-							shouldDisplayVisualFeedback
-								? `Save ${$allSections[id].title} as PDF again?`
-								: `Save ${$allSections[id].title} as PDF?`
-						"
-						:class="$style.pdfSave__btn"
-						@btnClick="saveAsPDF"
-					/>
-				</div>
-				<BaseIndicator
-					v-if="!isLastSection"
-					text="Scoll to continue"
-					:isHidden="id !== $currSection.id"
-					:goTo="`#${$nextSection}`"
+	<TransitionGroup
+		tag="div"
+		name="opacity"
+		aria-live="polite"
+		v-if="areSectionsAvailable"
+	>
+		<BaseButton
+			key="0"
+			v-if="!featureMarkedComplete && !isLastSection"
+			:isDisabled="!featureProgressStore[id].attemptsFinished"
+			:class="$style.featureCompleteBtn"
+			:text="
+				!featureProgressStore[id].attemptsFinished
+					? 'Complete activity to&nbsp;continue'
+					: 'Ready to continue?'
+			"
+			@btnClick="setComplete"
+		/>
+		<template key="1" v-else>
+			<div key="pdfSaveDiv" :class="$style.pdfSave">
+				<p
+					key="pdfFeedback"
+					v-if="shouldDisplayVisualFeedback"
+					:class="$style.pdfSave__feedback"
+				>
+					{{ pdfStatusUpdate }}
+				</p>
+				<BaseButton
+					key="pdfSaveBtn"
+					:text="shouldDisplayVisualFeedback ? 'Save again?' : 'Save as PDF?'"
+					:aria-label="
+						shouldDisplayVisualFeedback
+							? `Save ${$allSections[id].title} as PDF again?`
+							: `Save ${$allSections[id].title} as PDF?`
+					"
+					:class="$style.pdfSave__btn"
+					@btnClick="saveAsPDF"
 				/>
 			</div>
-		</transition>
-	</div>
+			<BaseIndicator
+				:class="$style.continueIndicator"
+				key="continueIndicator"
+				v-if="!isLastSection"
+				text="Scoll to continue"
+				:isHidden="id !== $currSection.id"
+				:goTo="`#${$nextSection}`"
+			/>
+		</template>
+	</TransitionGroup>
 </template>
 
 <script setup lang="ts">
@@ -119,18 +127,18 @@
 
 <style module lang="scss">
 	@use '../../styles/mixins.scss';
-	.featureCompleteBtn,
-	.pdfSave {
-		@include mixins.flexCenter;
-		flex-flow: row nowrap;
-		margin-top: var(--s4);
-	}
+
 	.featureCompleteBtn {
+		grid-area: pdfSave-indicator/topLine/indicator-end/bottomLine;
+		align-self: end;
 		width: 100%;
 		border-radius: var(--s10);
 	}
 	.pdfSave {
-		margin-bottom: var(--s-4);
+		grid-area: pdfSave-Start/topLine/pdfSave-indicator/bottomLine;
+		margin: 0 auto var(--s-4);
+		width: fit-content;
+		@include mixins.flexCenter;
 		&__feedback,
 		&__btn {
 			@include mixins.flexCenter;
@@ -150,5 +158,15 @@
 		&__btn:not(:only-child) {
 			border-radius: 0 var(--s10) var(--s10) 0;
 		}
+	}
+	.continueIndicator {
+		grid-area: pdfSave-indicator/topLine/indicator-end/bottomLine;
+	}
+</style>
+<style scoped lang="scss">
+	@use '../../styles/mixins.scss';
+	@include mixins.opacityTransition();
+	.opacity-enter-active {
+		transition-delay: var(--timeShort);
 	}
 </style>

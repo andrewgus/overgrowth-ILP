@@ -63,7 +63,7 @@
 		background-color: v-bind(btnColor);
 		border-radius: var(--s-8);
 		text-decoration: none;
-		filter: drop-shadow(0px 3px 0 var(--blue));
+		@include mixins.blueDropShadow();
 		@include mixins.btnTransition();
 
 		&:hover,

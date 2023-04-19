@@ -12,7 +12,7 @@
 				<slot></slot>
 			</component>
 		</div>
-		<FeatureCompleteBtns :id="sectionID" />
+		<FeatureCompleteBtns :class="$style.featureCompleteBtns" :id="sectionID" />
 	</section>
 </template>
 
@@ -86,6 +86,15 @@
 			max-width: 60ch;
 			width: 100%;
 			margin: 0 auto;
+
+			&.featureCompleteBtns {
+				display: grid;
+				grid-template-rows: [pdfSave-Start] min-content [pdfSave-indicator] min-content [indicator-end];
+				grid-template-columns: [topLine] 1fr [bottomLine];
+				align-items: end;
+				justify-content: center;
+				margin: var(--s2) auto;
+			}
 		}
 	}
 </style>

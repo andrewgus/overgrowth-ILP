@@ -42,3 +42,7 @@
 		}
 	}
 </style>
+<style scoped lang="scss">
+	@use '../../styles/mixins.scss';
+	@include mixins.opacityTransition();
+</style>
