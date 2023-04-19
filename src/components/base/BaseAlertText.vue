@@ -32,11 +32,11 @@
 			background-image: url(../info.svg);
 			background-repeat: no-repeat;
 			background-size: var(--s0);
-			background-position: 97% center;
+			background-position: center right var(--s0);
 			width: 100%;
 			height: var(--s0);
 			background-color: var(--yellow);
-			padding: var(--s-10) var(--s-8);
+			padding: var(--s-10) var(--s-7);
 			margin-bottom: var(--s-4);
 			border-bottom: 1px dashed var(--darkGray);
 		}
