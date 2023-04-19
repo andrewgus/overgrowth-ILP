@@ -1,8 +1,8 @@
 <template>
-	<div aria-live="polite">
+	<div aria-live="polite" v-if="areSectionsAvailable">
 		<transition mode="out-in" name="opacity">
 			<BaseButton
-				v-if="!featureMarkedComplete && isNotOnLastSection"
+				v-if="!featureMarkedComplete && !isLastSection"
 				:isDisabled="!featureProgressStore[id].attemptsFinished"
 				:class="$style.featureCompleteBtn"
 				:text="
@@ -23,13 +23,17 @@
 
 					<BaseButton
 						:text="shouldDisplayVisualFeedback ? 'Save again?' : 'Save as PDF?'"
-						:isHidden="id !== $currSection.id"
+						:aria-label="
+							shouldDisplayVisualFeedback
+								? `Save ${$allSections[id].title} as PDF again?`
+								: `Save ${$allSections[id].title} as PDF?`
+						"
 						:class="$style.pdfSave__btn"
 						@btnClick="setComplete($event, true)"
 					/>
 				</div>
 				<BaseIndicator
-					v-if="isNotOnLastSection"
+					v-if="!isLastSection"
 					text="Scoll to continue"
 					:isHidden="id !== $currSection.id"
 					:goTo="`#${$nextSection}`"
@@ -43,6 +47,7 @@
 	import { ref, computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import {
+		allSectionsMap,
 		currSectionMap,
 		useSetCurrSection,
 		nextSectionComputed,
@@ -60,6 +65,7 @@
 			required: true,
 		},
 	})
+	const $allSections = useStore(allSectionsMap)
 	const $currSection = useStore(currSectionMap)
 	const $nextSection = useStore(nextSectionComputed)
 	const areSectionsAvailable = useAreSectionsAvailable()
@@ -91,10 +97,6 @@
 
 		if (toSave) saveAsPDF()
 	}
-
-	const isNotOnLastSection = computed(
-		() => areSectionsAvailable.value && !isLastSection
-	)
 
 	const pdfStatusUpdate = computed(() => {
 		if (featureProgressStore[props.id].pdfGenStatus.isDownloading)

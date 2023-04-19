@@ -4,7 +4,6 @@
 		type="button"
 		:class="btnStyles"
 		:disabled="isDisabled"
-		:aria-hidden="isHidden"
 		autocomplete="off"
 		@click="$emit('btnClick', $event)"
 	>
@@ -23,10 +22,6 @@
 			required: true,
 		},
 		isDisabled: {
-			type: Boolean,
-			default: false,
-		},
-		isHidden: {
 			type: Boolean,
 			default: false,
 		},
