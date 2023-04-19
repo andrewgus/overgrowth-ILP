@@ -27,17 +27,18 @@
 			var(--s0) var(--s10) var(--s0);
 
 		&::before {
-			content: '\0024d8';
-			font-size: var(--s4);
-			width: 100%;
-			height: var(--s2);
+			content: '';
 			display: inline-flex;
-			justify-content: flex-end;
-			align-items: center;
+			background-image: url(../info.svg);
+			background-repeat: no-repeat;
+			background-size: var(--s0);
+			background-position: 97% center;
+			width: 100%;
+			height: var(--s0);
 			background-color: var(--yellow);
-			padding: var(--s-10) var(--s10) var(--s-10) 0;
+			padding: var(--s-10) var(--s-8);
 			margin-bottom: var(--s-4);
-			border-bottom: 1px dashed var(--lightGray);
+			border-bottom: 1px dashed var(--darkGray);
 		}
 	}
 </style>

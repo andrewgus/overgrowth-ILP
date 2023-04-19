@@ -35,7 +35,7 @@
 		transition: var(--timeShort) all ease-in-out;
 		display: block;
 		background-color: hsla(0, 0%, 100%, 0.95);
-
+		z-index: 1;
 		width: 100%;
 		position: sticky;
 		top: 0;

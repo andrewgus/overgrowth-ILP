@@ -10,7 +10,7 @@
 						? 'Complete activity to&nbsp;continue'
 						: 'Ready to continue?'
 				"
-				@btnClick="setComplete($event, false)"
+				@btnClick="setComplete"
 			/>
 			<div :class="$style.continueBtns" v-else>
 				<div :class="$style.pdfSave">
@@ -28,7 +28,7 @@
 								: `Save ${$allSections[id].title} as PDF?`
 						"
 						:class="$style.pdfSave__btn"
-						@btnClick="setComplete($event, true)"
+						@btnClick="saveAsPDF"
 					/>
 				</div>
 				<BaseIndicator
@@ -82,9 +82,9 @@
 			'../../composables/useSaveAsPDF'
 		)
 		await generatePDF($currSection.value)
-		if (!featureMarkedComplete.value) featureMarkedComplete.value = true
 	}
-	const setComplete = ({ target }: Event, toSave: boolean) => {
+
+	const setComplete = ({ target }: Event) => {
 		const clicked = target as HTMLElement
 		if (!clicked) return
 
@@ -93,8 +93,6 @@
 
 		if (!featureMarkedComplete.value) useSetFeatureComplete()
 		featureMarkedComplete.value = true
-
-		if (toSave) saveAsPDF()
 	}
 
 	const pdfStatusUpdate = computed(() => {
@@ -107,6 +105,7 @@
 
 		return 'Save as PDF'
 	})
+
 	const shouldDisplayVisualFeedback = computed(() => {
 		const pdfStatusAsArray = Object.entries(
 			featureProgressStore[props.id].pdfGenStatus
@@ -119,12 +118,11 @@
 </script>
 
 <style module lang="scss">
+	@use '../../styles/mixins.scss';
 	.featureCompleteBtn,
 	.pdfSave {
-		display: flex;
+		@include mixins.flexCenter;
 		flex-flow: row nowrap;
-		justify-content: center;
-		align-items: center;
 		margin-top: var(--s4);
 	}
 	.featureCompleteBtn {
@@ -135,9 +133,7 @@
 		margin-bottom: var(--s-4);
 		&__feedback,
 		&__btn {
-			display: flex;
-			justify-content: center;
-			align-items: center;
+			@include mixins.flexCenter;
 			padding: var(--s-4) var(--s-2);
 			text-align: center;
 			border-radius: var(--s10);
