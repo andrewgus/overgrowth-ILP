@@ -2,7 +2,11 @@
 	<section class="section feature" :class="$style[featureType]">
 		<div>
 			<h2>{{ title }}</h2>
-			<BaseAlertText :show="!featureProgressStore[sectionID].attemptsFinished">
+			<BaseAlertText
+				:show="
+					!isFinaleReveal && !featureProgressStore[sectionID].attemptsFinished
+				"
+			>
 				Heads&nbsp;up!&nbsp;Once&nbsp;completed, this&nbsp;{{
 					featureType
 				}}&nbsp;activity
@@ -42,9 +46,9 @@
 
 	const feature = defineAsyncComponent(() =>
 		import(
-			`../components/features/${props.featureType}/${
+			`../components/features/${
 				props.featureType.charAt(0).toUpperCase() + props.featureType.slice(1)
-			}Options.vue`
+			}Cart.vue`
 		).finally(() => {
 			useDoesFeatureExist(props.featureType)
 		})

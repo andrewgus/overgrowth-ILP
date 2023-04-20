@@ -1,21 +1,32 @@
 import { reactive } from 'vue'
-// NOTE: If this is switched to a persistent nanostore, will also need to track whether the feature is complete (featureComplete: boolean) here, rather than within the featureCompleteBtn component (currently as a ref). That way, if users already selecting continue, it will already be set as complete with their content inputted. Will still have the ability to save as PDF.
+// TODO: Need to track whether the feature is complete (featureComplete: boolean) with localStorage. That way, if users already selected continue, it will already be set as complete with their content inputted. Will still have the ability to save as PDF.
+// TODO: Need to create a "Reset this Lesson" btn. So users can reset a lesson's local storage and have a fresh lesson. Also need to figure out it's placement.
 
+// REFLECTION STORE
 // log user's reflection answers
-interface userAnswers {
+interface userReflectionResponses {
 	[id: string]: {
 		prompt: string
 		answer: string
 	}
 }
-const userReflectionsStore = reactive<userAnswers>({})
-function initUserReflectionsStore(id: string, prompt: string) {
+const userReflectionsStore = reactive<userReflectionResponses>({})
+function initUserReflectionsStore(id: string, prompt: string, answer?: string) {
 	userReflectionsStore[id] = {
 		prompt: prompt,
-		answer: '',
+		answer: answer ? answer : '',
 	}
 }
+// saving reflection answers in localStorage
+interface reflectionAnswersOnly {
+	[id: string]: string
+}
+const localStorageReflectionAnswers: reflectionAnswersOnly = {}
+function updatelocalStorageReflectionAnswers(id: string, answer?: string) {
+	localStorageReflectionAnswers[id] = answer ? answer : ''
+}
 
+// PRACTICE STORE
 /* TODO: A create a store for userPracticeAttempts with the following interface:
 
 	[id: string]: {
@@ -26,7 +37,6 @@ function initUserReflectionsStore(id: string, prompt: string) {
 			[Need to figure this out later]
 		}
 	}
-	
 	 NOTE: When creating first practice activity component, will need to create a store for # of user attempts and how they performed in each attempt. NOTE: May have to create a persisent nanostore for that and refactor all of this to that nanostore.
 */
 
@@ -60,4 +70,7 @@ export {
 	initUserReflectionsStore,
 	featureProgressStore,
 	initFeatureProgressStore,
+	localStorageReflectionAnswers,
+	updatelocalStorageReflectionAnswers,
 }
+export type { reflectionAnswersOnly }

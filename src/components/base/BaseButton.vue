@@ -61,7 +61,7 @@
 		border: 1px solid var(--darkGray);
 		padding: var(--s-4) var(--s-2);
 		background-color: v-bind(btnColor);
-		border-radius: var(--s-8);
+		border-radius: var(--s10);
 		text-decoration: none;
 		@include mixins.blueDropShadow();
 		@include mixins.btnTransition();

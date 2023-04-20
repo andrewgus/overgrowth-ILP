@@ -34,7 +34,7 @@
 		-webkit-transition: var(--timeShort) all ease-in-out;
 		transition: var(--timeShort) all ease-in-out;
 		display: block;
-		background-color: hsla(0, 0%, 100%, 0.95);
+		background-color: hsla(0, 0%, 100%, 0.98);
 		z-index: 1;
 		width: 100%;
 		position: sticky;

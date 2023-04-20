@@ -105,6 +105,14 @@
 
 		if (!featureMarkedComplete.value) useSetFeatureComplete()
 		featureMarkedComplete.value = true
+		/* TODO: save featureMarkedComplete to localStorage. Defaults to false.
+
+				interface featureIsComplete {
+					[id: string]: boolean // where boolean is whether the user marked as complete. 
+				}
+
+				To use, must also check for reflectionAnswers or practice's counterpart existence in localStorage. Even if marked as complete in localStorage, if not able to get user's work from storage, then featureMarkedComplete will go back to default of false.
+		 */
 	}
 
 	const pdfStatusUpdate = computed(() => {

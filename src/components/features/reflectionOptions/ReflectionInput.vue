@@ -1,26 +1,30 @@
 <template>
 	<div :class="$style.userInput">
-		<label :for="`${id}-input`">{{ prompt }}</label>
+		<label :for="`${id}-textInput`">{{ prompt }}</label>
 		<slot></slot>
 		<textarea
 			:disabled="!!$currSection.isFeatureComplete"
 			placeholder="I think&hellip;"
-			:id="`${id}-input`"
+			:id="`${id}-textInput`"
 			rows="7"
 			v-model="userInput"
 			autocomplete="off"
-		></textarea>
+			>{{ userReflectionsStore[id].answer }}</textarea
+		>
 	</div>
 </template>
 
 <script setup lang="ts">
-	import { computed } from 'vue'
+	import { computed, toRefs } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import { currSectionMap } from '../../../store/lessonStore'
 	import {
 		userReflectionsStore,
 		initUserReflectionsStore,
 		featureProgressStore,
+		localStorageReflectionAnswers,
+		updatelocalStorageReflectionAnswers,
+		type reflectionAnswersOnly,
 	} from '../../../store/featureOptionsStore'
 
 	const $currSection = useStore(currSectionMap)
@@ -35,19 +39,39 @@
 		},
 	})
 
-	initUserReflectionsStore(props.id, props.prompt)
+	if (!!localStorage.getItem('reflectionResponses')) {
+		const localStorageReflectionAnswers: reflectionAnswersOnly = JSON.parse(
+			localStorage.getItem('reflectionResponses')!
+		)
+		initUserReflectionsStore(
+			props.id,
+			props.prompt,
+			localStorageReflectionAnswers[props.id]
+		)
+	} else {
+		initUserReflectionsStore(props.id, props.prompt)
+	}
 
 	const userInput = computed({
 		get() {
-			return userReflectionsStore[props.id].answer
-		},
-		set(value) {
-			userReflectionsStore[props.id].answer = value
-			if (value.length > 25) {
+			if (userReflectionsStore[props.id].answer.length > 25) {
 				featureProgressStore[props.id].attemptsFinished = true
 			} else {
 				featureProgressStore[props.id].attemptsFinished = false
 			}
+
+			return userReflectionsStore[props.id].answer
+		},
+		set(value) {
+			userReflectionsStore[props.id].answer = value
+			updatelocalStorageReflectionAnswers(
+				props.id,
+				userReflectionsStore[props.id].answer.trim()
+			)
+			localStorage.setItem(
+				'reflectionResponses',
+				JSON.stringify(localStorageReflectionAnswers)
+			)
 		},
 	})
 </script>
@@ -72,7 +96,7 @@
 			padding: var(--s-2);
 
 			&:focus {
-				box-shadow: 12px 12px 12px var(--lightGray);
+				box-shadow: var(--s-4) var(--s-4) var(--s-8) var(--lightGray);
 			}
 		}
 	}

@@ -118,6 +118,7 @@
 			align-items: center;
 			justify-content: flex-start;
 			gap: var(--s-4);
+			margin-top: 0;
 
 			+ li {
 				border-top: 1px solid var(--darkGray);

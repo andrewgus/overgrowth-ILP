@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-	import { featureProgressStore } from '../../../store/featureOptionsStore'
+	import { featureProgressStore } from '../../store/featureOptionsStore'
 	interface props {
 		id: string
 		prompt: string
