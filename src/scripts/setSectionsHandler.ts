@@ -7,6 +7,8 @@ import {
 	type FeatureType,
 } from '../store/lessonStore'
 import useCreateID from '../composables/useCreateID'
+import useGetLocalStorage from '../composables/useGetLocalStorage'
+import getLocalStorage from '../composables/useGetLocalStorage'
 
 const location = window.location.toString()
 const sectionHeadings: NodeListOf<HTMLElement> = document.querySelectorAll(

@@ -6,16 +6,16 @@
 		v-if="areSectionsAvailable"
 		:class="{
 			[$style.attemptComplete]:
-				featureProgressStore[id].attemptsFinished && !featureMarkedComplete,
+				featureProgressStore[id].isAttemptsFinished && !featureMarkedComplete,
 		}"
 	>
 		<BaseButton
 			key="0"
 			v-if="!featureMarkedComplete && !isLastSection"
-			:isDisabled="!featureProgressStore[id].attemptsFinished"
+			:isDisabled="!featureProgressStore[id].isAttemptsFinished"
 			:class="$style.featureCompleteBtn"
 			:text="
-				!featureProgressStore[id].attemptsFinished
+				!featureProgressStore[id].isAttemptsFinished
 					? 'Complete activity to&nbsp;continue'
 					: 'Ready to continue?'
 			"
@@ -69,6 +69,7 @@
 	import BaseButton from '../base/BaseButton.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
 	import useAreSectionsAvailable from '../../composables/useAreSectionsAvailable'
+	import getLocalStorage from '../../composables/useGetLocalStorage'
 
 	const props = defineProps({
 		id: {
@@ -83,6 +84,13 @@
 	const isLastSection = useIsLastSection(featureProgressStore[props.id].id)
 
 	const featureMarkedComplete = ref<boolean>(false)
+	const localStorageCompletion = getLocalStorage(
+		props.id,
+		'isFeatureComplete'
+	) as boolean
+
+	if (localStorageCompletion)
+		featureMarkedComplete.value = localStorageCompletion
 
 	const saveAsPDF = async () => {
 		featureProgressStore[props.id].pdfGenStatus = {
@@ -103,16 +111,12 @@
 		const thisSection = clicked.closest('section')
 		useSetCurrSection(thisSection!.id)
 
-		if (!featureMarkedComplete.value) useSetFeatureComplete()
-		featureMarkedComplete.value = true
-		/* TODO: save featureMarkedComplete to localStorage. Defaults to false.
-
-				interface featureIsComplete {
-					[id: string]: boolean // where boolean is whether the user marked as complete. 
-				}
-
-				To use, must also check for reflectionAnswers or practice's counterpart existence in localStorage. Even if marked as complete in localStorage, if not able to get user's work from storage, then featureMarkedComplete will go back to default of false.
-		 */
+		if (!featureMarkedComplete.value) {
+			useSetFeatureComplete()
+			featureMarkedComplete.value = true
+			featureProgressStore[props.id].isFeatureComplete =
+				featureMarkedComplete.value
+		}
 	}
 
 	const pdfStatusUpdate = computed(() => {

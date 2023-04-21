@@ -4,7 +4,7 @@
 			<h2>{{ title }}</h2>
 			<BaseAlertText
 				:show="
-					!isFinaleReveal && !featureProgressStore[sectionID].attemptsFinished
+					!isFinaleReveal && !featureProgressStore[sectionID].isAttemptsFinished
 				"
 			>
 				Heads&nbsp;up!&nbsp;Once&nbsp;completed, this&nbsp;{{

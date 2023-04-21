@@ -36,7 +36,7 @@ const { title, scene, gradientColor = 'var(--white)' } = Astro.props
 					color={gradientColor}
 				/>
 				<TheLessonNav client:load />
-				<!-- TODO: Add div with id around this slot. Use that id for pdfGenerator when ALL features are turned off. v-if on button to download PDF of just the static content if all features are turned off. RATHER: just include the header and nav in the canvas2HTML ignoreElements function. As well, if all features are turned off and there is no static content, and therefore no sections at all, then a warning will appear in the same place as the PDF (just below the toggle switches) informing learners that there is nothing to do. v-if on the scroll to start, if there are no sections to scroll to. -->
+				<!-- TODO: Include header and nav elements in the canvas2HTML ignoreElements function. Include btn that will print all static content as PDF if all features are turned off. If all features are turned off and there is no static content, and therefore no sections at all, then a warning will appear in the same place as the PDF (just below the toggle switches) informing learners that there is nothing to do. v-if on the scroll to start, if there are no sections to scroll to. -->
 				<slot />
 			</article>
 		</main>

@@ -303,7 +303,6 @@ const isOnLastSectionComputed = computed(
 		id === Object.keys(filteredNavSections).at(-1)
 )
 
-
 const useIsLastSection = (sectionID: string) => {
 	return Object.keys(allSectionsMap.get()).at(-1) === sectionID
 }

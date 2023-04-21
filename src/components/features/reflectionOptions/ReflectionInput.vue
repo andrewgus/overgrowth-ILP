@@ -15,17 +15,15 @@
 </template>
 
 <script setup lang="ts">
-	import { computed, toRefs } from 'vue'
+	import { computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import { currSectionMap } from '../../../store/lessonStore'
 	import {
 		userReflectionsStore,
 		initUserReflectionsStore,
 		featureProgressStore,
-		localStorageReflectionAnswers,
-		updatelocalStorageReflectionAnswers,
-		type reflectionAnswersOnly,
 	} from '../../../store/featureOptionsStore'
+	import useGetLocalStorage from '../../../composables/useGetLocalStorage'
 
 	const $currSection = useStore(currSectionMap)
 	const props = defineProps({
@@ -39,15 +37,13 @@
 		},
 	})
 
-	if (!!localStorage.getItem('reflectionResponses')) {
-		const localStorageReflectionAnswers: reflectionAnswersOnly = JSON.parse(
-			localStorage.getItem('reflectionResponses')!
-		)
-		initUserReflectionsStore(
-			props.id,
-			props.prompt,
-			localStorageReflectionAnswers[props.id]
-		)
+	const localStorageAnswers = useGetLocalStorage(
+		props.id,
+		'reflectionAnswer'
+	) as string
+
+	if (localStorageAnswers) {
+		initUserReflectionsStore(props.id, props.prompt, localStorageAnswers)
 	} else {
 		initUserReflectionsStore(props.id, props.prompt)
 	}
@@ -55,23 +51,15 @@
 	const userInput = computed({
 		get() {
 			if (userReflectionsStore[props.id].answer.length > 25) {
-				featureProgressStore[props.id].attemptsFinished = true
+				featureProgressStore[props.id].isAttemptsFinished = true
 			} else {
-				featureProgressStore[props.id].attemptsFinished = false
+				featureProgressStore[props.id].isAttemptsFinished = false
 			}
 
 			return userReflectionsStore[props.id].answer
 		},
 		set(value) {
 			userReflectionsStore[props.id].answer = value
-			updatelocalStorageReflectionAnswers(
-				props.id,
-				userReflectionsStore[props.id].answer.trim()
-			)
-			localStorage.setItem(
-				'reflectionResponses',
-				JSON.stringify(localStorageReflectionAnswers)
-			)
 		},
 	})
 </script>

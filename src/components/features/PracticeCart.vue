@@ -13,5 +13,5 @@
 	const props = defineProps<props>()
 
 	// FOR TESTING. This below would actually exist within a given child component. See reflection for example.
-	featureProgressStore[props.id].attemptsFinished = true
+	featureProgressStore[props.id].isAttemptsFinished = true
 </script>
