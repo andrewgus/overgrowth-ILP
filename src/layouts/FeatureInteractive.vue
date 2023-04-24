@@ -27,7 +27,7 @@
 		initFeatureProgressStore,
 		featureProgressStore,
 	} from '../store/featureOptionsStore'
-	import useCreateID from '../composables/useCreateID'
+	import createID from '../composables/useCreateID'
 	import FeatureCompleteBtns from '../components/features/FeatureCompleteBtns.vue'
 	import BaseAlertText from '../components/base/BaseAlertText.vue'
 
@@ -41,7 +41,7 @@
 		toSave: false,
 		isFinaleReveal: false,
 	})
-	const sectionID = useCreateID(props.title)
+	const sectionID = createID(props.title)
 	initFeatureProgressStore(sectionID)
 
 	const feature = defineAsyncComponent(() =>

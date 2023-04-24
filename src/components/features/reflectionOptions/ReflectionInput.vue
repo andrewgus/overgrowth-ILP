@@ -23,7 +23,7 @@
 		initUserReflectionsStore,
 		featureProgressStore,
 	} from '../../../store/featureOptionsStore'
-	import useGetLocalStorage from '../../../composables/useGetLocalStorage'
+	import getLocalStorage from '../../../service/useGetLocalStorage'
 
 	const $currSection = useStore(currSectionMap)
 	const props = defineProps({
@@ -37,7 +37,7 @@
 		},
 	})
 
-	const localStorageAnswers = useGetLocalStorage(
+	const localStorageAnswers = getLocalStorage(
 		props.id,
 		'reflectionAnswer'
 	) as string

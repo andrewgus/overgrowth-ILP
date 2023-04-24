@@ -6,19 +6,23 @@ import {
 	type SectionDetails,
 	type FeatureType,
 } from '../store/lessonStore'
-import useCreateID from '../composables/useCreateID'
-import useGetLocalStorage from '../composables/useGetLocalStorage'
-import getLocalStorage from '../composables/useGetLocalStorage'
+import createID from '../composables/useCreateID'
+import getLocalStorage from '../service/useGetLocalStorage'
 
 const location = window.location.toString()
+
+const sections: Array<HTMLElement> = []
 const sectionHeadings: NodeListOf<HTMLElement> = document.querySelectorAll(
 	'article section  h2:first-of-type'
 )!
-let sections: Array<HTMLElement> = []
+const sectionIDs: string[] = []
 
 for (const heading of sectionHeadings) {
 	sections.push(heading.closest('section')!)
+	sectionIDs.push(createID(heading.textContent!))
 }
+
+console.log(getLocalStorage(sectionIDs[0], 'isFeatureComplete'))
 
 const getFeatureType = (featureClassName: string): FeatureType | null => {
 	if (featureClassName.includes('reflection')) return 'reflection'
@@ -45,8 +49,8 @@ if (sections.length > 0) sections[0].classList.add('firstSection')
 
 sections.forEach((s: HTMLElement, index: number) => {
 	const section: SectionDetails = {
-		title: s.querySelector('h2')!.textContent!,
-		id: useCreateID(s.querySelector('h2')!.textContent!),
+		title: sectionHeadings[index].textContent!,
+		id: sectionIDs[index],
 		orderNum: index,
 		featureType: s.classList.contains('feature')
 			? getFeatureType(s.classList.toString())
@@ -55,13 +59,9 @@ sections.forEach((s: HTMLElement, index: number) => {
 		isFeatureComplete: s.classList.contains('feature') ? false : null,
 	}
 
-	allSectionsMap.setKey(
-		useCreateID(s.querySelector('h2')!.textContent!),
-		section
-	)
+	allSectionsMap.setKey(sectionIDs[index], section)
 
-	s.id =
-		allSectionsMap.get()[useCreateID(s.querySelector('h2')!.textContent!)].id
+	s.id = sectionIDs[index]
 })
 
 const firstAvailableFeature = sections.find((s) => {

@@ -1,3 +1,4 @@
+// lessonStore maintains the state of the entire lesson and . This manages the state of a user's work within a feature.
 import { atom, map, computed, type MapStore } from 'nanostores'
 import { useStore } from '@nanostores/vue'
 
@@ -173,6 +174,8 @@ const useSetFeatureComplete = () => {
 	allSectionsMap.setKey(currSectionMap.get().id, {
 		...currSectionMap.get(),
 	})
+
+	// NOTE: Below this point, I think it make become it's own function. Then, it can be called here, instead of the setFeatureComplete && it can be called if there is localStorage stating that a feature is complete.
 
 	const allSectionsAsArray = setSectionsToArray(allSectionsMap.get())
 	const foundNextActiveFeature = findNextActiveFeature(allSectionsAsArray)

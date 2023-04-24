@@ -13,17 +13,17 @@ const toggleSectionDisplay = (
 		const el = document.getElementById(key)
 
 		if (shouldDisplay) {
-			el?.classList.add('isLocked')
-		} else {
 			el?.classList.remove('isLocked')
+		} else {
+			el?.classList.add('isLocked')
 		}
 	})
 }
 
-filteredLockedSectionsComputed.subscribe((sections) => {
+filteredNavSectionsComputed.subscribe((sections) => {
 	toggleSectionDisplay(sections, true)
 })
-filteredNavSectionsComputed.subscribe((sections) => {
+filteredLockedSectionsComputed.subscribe((sections) => {
 	toggleSectionDisplay(sections, false)
 })
 

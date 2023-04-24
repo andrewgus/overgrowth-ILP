@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 	import { computed } from 'vue'
-	import useComputedCssModule from '../../composables/useComputedCssModule'
+	import computedCssModule from '../../composables/useComputedCssModule'
 	import '../../styles/mixins.scss'
 
 	const props = defineProps({
@@ -48,7 +48,7 @@
 		[computed(() => props.isDisabled), 'disabled'],
 		[computed(() => props.isForNav), 'navBtn'],
 	])
-	const btnStyles = useComputedCssModule('btn', computedConditionalClasses)
+	const btnStyles = computedCssModule('btn', computedConditionalClasses)
 </script>
 
 <style module lang="scss">

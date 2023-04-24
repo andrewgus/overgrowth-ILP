@@ -69,7 +69,7 @@
 	import BaseButton from '../base/BaseButton.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
 	import useAreSectionsAvailable from '../../composables/useAreSectionsAvailable'
-	import getLocalStorage from '../../composables/useGetLocalStorage'
+	import getLocalStorage from '../../service/useGetLocalStorage'
 
 	const props = defineProps({
 		id: {
@@ -114,8 +114,9 @@
 		if (!featureMarkedComplete.value) {
 			useSetFeatureComplete()
 			featureMarkedComplete.value = true
-			featureProgressStore[props.id].isFeatureComplete =
-				featureMarkedComplete.value
+			// FIXME: the below prop should not be on featureProgress. It should come from allSections, but I believe that is already set with useSetFeatureComplete
+			// featureProgressStore[props.id].isFeatureComplete =
+			// 	featureMarkedComplete.value
 		}
 	}
 
