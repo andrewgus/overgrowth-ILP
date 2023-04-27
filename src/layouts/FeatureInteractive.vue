@@ -48,7 +48,7 @@
 		import(
 			`../components/features/${
 				props.featureType.charAt(0).toUpperCase() + props.featureType.slice(1)
-			}Cart.vue`
+			}SwitchBoard.vue`
 		).finally(() => {
 			useDoesFeatureExist(props.featureType)
 		})
