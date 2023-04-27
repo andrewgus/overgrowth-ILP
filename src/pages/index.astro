@@ -1,15 +1,21 @@
 ---
 import '../styles/libraryPages.scss'
 import LibLayout from '../layouts/LibLayout.astro'
-import TopicsLibrary from '../scripts/topicsLibrary.js'
 
 const allLessons = await Astro.glob('../pages/*/*.astro')
 
 const topicURLs = [
 	...new Set(allLessons.map((lesson) => lesson.url!.split('/').at(1))),
 ]
-
-const topicTitles = topicURLs.map((t) => TopicsLibrary.get(t!))
+console.log(allLessons)
+const topicTitles = topicURLs.map((title) => {
+	return title
+		?.split('-')
+		.map((word) => {
+			return word.charAt(0).toUpperCase() + word.slice(1)
+		})
+		.join(' ')
+})
 ---
 
 <LibLayout title='All Topics'>

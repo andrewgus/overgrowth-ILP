@@ -1,7 +1,6 @@
 ---
 import '../styles/libraryPages.scss'
 import LibLayout from '../layouts/LibLayout.astro'
-import TopicsLibrary from '../scripts/topicsLibrary.js'
 
 export async function getStaticPaths() {
 	const allLessons = await Astro.glob('../pages/*/*.astro')
@@ -12,9 +11,11 @@ export async function getStaticPaths() {
 		const filteredLessons = allLessons.filter((lesson) =>
 			lesson.url?.includes(topic!)
 		)
-		// TODO: Ask team which way would be better. Maintain a seperate map or have a longer url with full topic name for folder?
-		// const topicTitle = topic!.charAt(0).toUpperCase() + topic?.slice(1)
-		const topicTitle = TopicsLibrary.get(topic!)
+
+		const topicTitle = topic!
+			.split('-')
+			.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+			.join(' ')
 
 		return {
 			params: { topic },
@@ -23,7 +24,6 @@ export async function getStaticPaths() {
 	})
 }
 
-const { topic } = Astro.params
 const { filteredLessons, topicTitle } = Astro.props
 ---
 
