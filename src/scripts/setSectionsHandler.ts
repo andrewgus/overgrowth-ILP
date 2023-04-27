@@ -1,76 +1,102 @@
 import {
+	lessonID,
 	allSectionsMap,
 	isOnContentAtom,
-	useSetNextActiveFeature,
+	useSetNextIncompleteFeature,
 	useSetCurrSection,
+	unlockNextSectionsAfterCompletion,
 	type SectionDetails,
 	type FeatureType,
 } from '../store/lessonStore'
 import createID from '../composables/useCreateID'
-import getLocalStorage from '../service/useGetLocalStorage'
+import getLocalStorage from '../composables/useGetLocalStorage'
+
+// setting lessonID for localStorage
+lessonID.set(document.querySelector('main')!.id)
 
 const location = window.location.toString()
 
-const sections: Array<HTMLElement> = []
+const sections: HTMLElement[] = []
+const sectionIDs: string[] = []
 const sectionHeadings: NodeListOf<HTMLElement> = document.querySelectorAll(
 	'article section  h2:first-of-type'
 )!
-const sectionIDs: string[] = []
 
 for (const heading of sectionHeadings) {
 	sections.push(heading.closest('section')!)
 	sectionIDs.push(createID(heading.textContent!))
 }
 
-console.log(getLocalStorage(sectionIDs[0], 'isFeatureComplete'))
-
+// Functions to be used for creating allSectionsMap
+// To set featureType property
 const getFeatureType = (featureClassName: string): FeatureType | null => {
 	if (featureClassName.includes('reflection')) return 'reflection'
 	if (featureClassName.includes('practice')) return 'practice'
 	if (featureClassName.includes('choice')) return 'choice'
 	return null
 }
-
+// To set isLocked property
 const getFirstFeatureAndAllAfter = (sectionIndex: number) => {
 	const firstFeatureIndex = sections.findIndex((s) =>
 		s.classList.contains('feature')
 	)
 	if (firstFeatureIndex === -1) {
+		// No features in lesson
 		return false
 	} else if (sectionIndex > firstFeatureIndex) {
 		// Any section that comes after the first feature to exist is locked
 		return true
 	} else {
+		// Feature is first section
 		return false
+	}
+}
+// To set isFeatureComplete property
+const isPreviouslyComplete = (
+	id: string,
+	section: HTMLElement
+): boolean | null => {
+	if (!!getLocalStorage(id, 'isFeatureComplete')) {
+		return getLocalStorage(id, 'isFeatureComplete') as boolean
+	} else {
+		return section.classList.contains('feature') ? false : null
 	}
 }
 
 if (sections.length > 0) sections[0].classList.add('firstSection')
 
-sections.forEach((s: HTMLElement, index: number) => {
-	const section: SectionDetails = {
+sections.forEach((section: HTMLElement, index: number) => {
+	section.id = sectionIDs[index]
+
+	const sectionDetails: SectionDetails = {
 		title: sectionHeadings[index].textContent!,
 		id: sectionIDs[index],
 		orderNum: index,
-		featureType: s.classList.contains('feature')
-			? getFeatureType(s.classList.toString())
+		featureType: section.classList.contains('feature')
+			? getFeatureType(section.classList.toString())
 			: null,
 		isLocked: getFirstFeatureAndAllAfter(index),
-		isFeatureComplete: s.classList.contains('feature') ? false : null,
+		isFeatureComplete: isPreviouslyComplete(sectionIDs[index], section),
 	}
 
-	allSectionsMap.setKey(sectionIDs[index], section)
-
-	s.id = sectionIDs[index]
+	allSectionsMap.setKey(sectionIDs[index], sectionDetails)
 })
 
-const firstAvailableFeature = sections.find((s) => {
-	return s.classList.contains('feature')
+// Setting the next feature to complete, whether there is saved data or not
+const SectionDetailValues = Object.values(allSectionsMap.get())
+const findNextIncompleteFeature = SectionDetailValues.find((details) => {
+	return (
+		(!!!getLocalStorage(details.id, 'isFeatureComplete') as boolean) &&
+		details.featureType !== null
+	)
 })
-if (firstAvailableFeature) {
-	useSetNextActiveFeature(firstAvailableFeature.id)
+
+if (findNextIncompleteFeature) {
+	useSetNextIncompleteFeature(findNextIncompleteFeature.id)
+	unlockNextSectionsAfterCompletion(true)
 }
 
+// Setting whether on content or not && currSection
 if (location.includes('#')) {
 	isOnContentAtom.set(true)
 	useSetCurrSection(location.split('#').at(-1)!)

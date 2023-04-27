@@ -55,8 +55,8 @@
 </template>
 
 <script setup lang="ts">
-	import { ref, computed } from 'vue'
-	import { useStore } from '@nanostores/vue'
+	import { computed, ref } from 'vue'
+	import { mapStores } from '@nanostores/vue'
 	import {
 		allSectionsMap,
 		currSectionMap,
@@ -69,7 +69,7 @@
 	import BaseButton from '../base/BaseButton.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
 	import useAreSectionsAvailable from '../../composables/useAreSectionsAvailable'
-	import getLocalStorage from '../../service/useGetLocalStorage'
+	import getLocalStorage from '../../composables/useGetLocalStorage'
 
 	const props = defineProps({
 		id: {
@@ -77,20 +77,23 @@
 			required: true,
 		},
 	})
-	const $allSections = useStore(allSectionsMap)
-	const $currSection = useStore(currSectionMap)
-	const $nextSection = useStore(nextSectionComputed)
+
+	const {
+		allSectionsMap: $allSections,
+		currSectionMap: $currSection,
+		nextSectionComputed: $nextSection,
+	} = mapStores({ allSectionsMap, currSectionMap, nextSectionComputed })
 	const areSectionsAvailable = useAreSectionsAvailable()
 	const isLastSection = useIsLastSection(featureProgressStore[props.id].id)
 
 	const featureMarkedComplete = ref<boolean>(false)
+
 	const localStorageCompletion = getLocalStorage(
 		props.id,
 		'isFeatureComplete'
 	) as boolean
 
-	if (localStorageCompletion)
-		featureMarkedComplete.value = localStorageCompletion
+	if (localStorageCompletion) featureMarkedComplete.value = true
 
 	const saveAsPDF = async () => {
 		featureProgressStore[props.id].pdfGenStatus = {
@@ -108,16 +111,12 @@
 		const clicked = target as HTMLElement
 		if (!clicked) return
 
-		const thisSection = clicked.closest('section')
-		useSetCurrSection(thisSection!.id)
+		const thisSection = clicked.closest('section') as HTMLElement
+		useSetCurrSection(thisSection.id)
 
-		if (!featureMarkedComplete.value) {
-			useSetFeatureComplete()
-			featureMarkedComplete.value = true
-			// FIXME: the below prop should not be on featureProgress. It should come from allSections, but I believe that is already set with useSetFeatureComplete
-			// featureProgressStore[props.id].isFeatureComplete =
-			// 	featureMarkedComplete.value
-		}
+		if (!featureMarkedComplete.value) useSetFeatureComplete()
+
+		featureMarkedComplete.value = true
 	}
 
 	const pdfStatusUpdate = computed(() => {

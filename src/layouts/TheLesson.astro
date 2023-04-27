@@ -2,6 +2,7 @@
 import '../styles/root.scss'
 import TheLanding from '../components/landing/TheLanding.vue'
 import TheLessonNav from '../components/navigation/TheLessonNav.vue'
+import createID from '../composables/useCreateID'
 
 interface Props {
 	title: string
@@ -23,12 +24,12 @@ const { title, scene, gradientColor = 'var(--white)' } = Astro.props
 			import '../scripts/setSectionsHandler.js'
 			import '../scripts/hashChangeHandler.js'
 			import '../scripts/setLocksHandler.js'
-			import '../service/updateLocalStorage.js'
+			import '../scripts/updateLocalStorage.js'
 		</script>
 		<title>{title}</title>
 	</head>
 	<body>
-		<main>
+		<main id={`${createID(title)}-lesson`}>
 			<article class='theLesson'>
 				<TheLanding
 					client:load

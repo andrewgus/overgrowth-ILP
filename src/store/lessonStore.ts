@@ -1,6 +1,10 @@
-// lessonStore maintains the state of the entire lesson and . This manages the state of a user's work within a feature.
-import { atom, map, computed, type MapStore } from 'nanostores'
+// lessonStore maintains the state of the lesson interface.
+import { atom, map, deepMap, computed, type MapStore } from 'nanostores'
 import { useStore } from '@nanostores/vue'
+import getLocalStorage from '../composables/useGetLocalStorage'
+
+// ID for the whole lesson.
+const lessonID = atom('')
 
 // Feature setup for any given lesson
 type FeatureType = 'reflection' | 'practice' | 'choice'
@@ -41,7 +45,7 @@ interface SectionDetails {
 interface SectionsMap {
 	[sectionKey: string]: SectionDetails
 }
-const allSectionsMap = map<SectionsMap>()
+const allSectionsMap = deepMap<SectionsMap>()
 
 // To determine whether user is on content vs header
 const isOnContentAtom = atom(false)
@@ -49,15 +53,17 @@ const useToggleNavShown = () => {
 	isOnContentAtom.set(!isOnContentAtom.get())
 }
 
-// To determine current section & nextActiveFeature
+// currSectionMap contains the details of the section the user is currently viewing
 const currSectionMap = map<SectionDetails>()
-const nextActiveFeatureMap = map<SectionDetails>()
+// nextIncompleteFeatureMap contains the details of the next feature that is incomplete
+const nextIncompleteFeatureMap = map<SectionDetails>()
 
+// To determine current section & nextIncompleteFeature
 const useSetCurrSection = (sectionKey: string) => {
 	setSectionMap(currSectionMap, sectionKey)
 }
-const useSetNextActiveFeature = (sectionKey: string) => {
-	setSectionMap(nextActiveFeatureMap, sectionKey)
+const useSetNextIncompleteFeature = (sectionKey: string) => {
+	setSectionMap(nextIncompleteFeatureMap, sectionKey)
 }
 const setSectionMap = (map: MapStore<SectionDetails>, sectionKey: string) => {
 	if (sectionKey !== '') {
@@ -77,6 +83,7 @@ const setSectionsToArray = (
 ): [string, SectionDetails][] => {
 	return Object.entries(sectionMap)
 }
+
 const setSectionToLocked = (
 	sectionKey: string,
 	sectionDetails: SectionDetails,
@@ -87,9 +94,9 @@ const setSectionToLocked = (
 		isLocked: onOff,
 	})
 }
-const findNextActiveFeature = (
+const findNextIncompleteFeature = (
 	sectionsArray: [string, SectionDetails][]
-): [string, SectionDetails] | undefined => {
+) => {
 	const next = sectionsArray.find(([_, sectionDetails]) => {
 		return (
 			// it is a feature && the feature is on && the feature is not complete
@@ -98,7 +105,18 @@ const findNextActiveFeature = (
 			!sectionDetails.isFeatureComplete
 		)
 	})
+	setNextIncompleteFeatureIfFound(next)
+
 	return next
+}
+const setNextIncompleteFeatureIfFound = (
+	nextIncompleteSection: [string, SectionDetails] | undefined
+) => {
+	if (nextIncompleteSection) {
+		useSetNextIncompleteFeature(nextIncompleteSection[0])
+	} else {
+		useSetNextIncompleteFeature('')
+	}
 }
 
 // To toggle feature on/off
@@ -109,14 +127,9 @@ const useToggleFeature = (feature: FeatureType) => {
 	const allSectionsAsArray = setSectionsToArray(allSectionsMap.get())
 
 	// find the next available active feature
-	const foundNextActiveFeature = findNextActiveFeature(allSectionsAsArray)
-	if (foundNextActiveFeature) {
-		useSetNextActiveFeature(foundNextActiveFeature[0])
-	} else {
-		useSetNextActiveFeature('')
-	}
+	findNextIncompleteFeature(allSectionsAsArray)
 
-	if (nextActiveFeatureMap.get().id === '') {
+	if (nextIncompleteFeatureMap.get().id === '') {
 		// all features are turned off...
 		allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
 			// make sure all incomplete features are isLocked: true
@@ -132,7 +145,7 @@ const useToggleFeature = (feature: FeatureType) => {
 			}
 		})
 	} else {
-		// a nextActiveFeature exists...
+		// a nextIncompleteFeature exists...
 		if (!isFeatureOn) {
 			// and user deactivates selected feature...
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
@@ -143,11 +156,12 @@ const useToggleFeature = (feature: FeatureType) => {
 				) {
 					setSectionToLocked(sectionKey, sectionDetails, true)
 				}
-				// and unlock any succeeding static content up until, and including, the nextActiveFeature..
+				// and unlock any succeeding static content up until, and including, the nextIncompleteFeature..
 				if (
 					(sectionDetails.featureType === null &&
-						sectionDetails.orderNum! < nextActiveFeatureMap.get().orderNum!) ||
-					sectionDetails.orderNum === nextActiveFeatureMap.get().orderNum!
+						sectionDetails.orderNum! <
+							nextIncompleteFeatureMap.get().orderNum!) ||
+					sectionDetails.orderNum === nextIncompleteFeatureMap.get().orderNum!
 				) {
 					setSectionToLocked(sectionKey, sectionDetails, false)
 				}
@@ -156,41 +170,37 @@ const useToggleFeature = (feature: FeatureType) => {
 			// and user reactivates selected feature...
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
 				// lock all suceeding sections
-				if (sectionDetails.orderNum! > nextActiveFeatureMap.get().orderNum!) {
+				if (
+					sectionDetails.orderNum! > nextIncompleteFeatureMap.get().orderNum!
+				) {
 					setSectionToLocked(sectionKey, sectionDetails, true)
 				}
 				// unlock the selected feature
-				if (sectionDetails.orderNum === nextActiveFeatureMap.get().orderNum) {
+				if (
+					sectionDetails.orderNum === nextIncompleteFeatureMap.get().orderNum
+				) {
 					setSectionToLocked(sectionKey, sectionDetails, false)
 				}
 			})
 		}
 	}
 }
-// To set a feature as complete & unlock next sections up until nextActiveFeature
-const useSetFeatureComplete = () => {
-	// marking feature as complete
-	currSectionMap.setKey('isFeatureComplete', true)
-	allSectionsMap.setKey(currSectionMap.get().id, {
-		...currSectionMap.get(),
-	})
 
-	// NOTE: Below this point, I think it make become it's own function. Then, it can be called here, instead of the setFeatureComplete && it can be called if there is localStorage stating that a feature is complete.
-
+// To Determine what comes after a completed feature and revealing it
+const unlockNextSectionsAfterCompletion = (fromLocalStorage?: boolean) => {
 	const allSectionsAsArray = setSectionsToArray(allSectionsMap.get())
-	const foundNextActiveFeature = findNextActiveFeature(allSectionsAsArray)
 
-	if (foundNextActiveFeature) {
-		useSetNextActiveFeature(foundNextActiveFeature[0])
-	} else {
-		useSetNextActiveFeature('')
-	}
+	const foundNextIncompleteFeature = fromLocalStorage
+		? nextIncompleteFeatureMap.get()
+		: findNextIncompleteFeature(allSectionsAsArray)
 
 	// if there is a next active feature
-	if (foundNextActiveFeature !== undefined) {
-		// Unlock all features up until, and including, the nextActiveFeature
+	if (foundNextIncompleteFeature !== undefined) {
+		// Unlock all features up until, and including, the nextIncompleteFeature
 		allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
-			if (sectionDetails.orderNum! <= nextActiveFeatureMap.get().orderNum!) {
+			if (
+				sectionDetails.orderNum! <= nextIncompleteFeatureMap.get().orderNum!
+			) {
 				setSectionToLocked(sectionKey, sectionDetails, false)
 			}
 		})
@@ -209,6 +219,16 @@ const useSetFeatureComplete = () => {
 	}
 }
 
+// To set a feature as complete & unlock next sections up until nextIncompleteFeature
+const useSetFeatureComplete = () => {
+	// marking feature as complete
+	currSectionMap.setKey('isFeatureComplete', true)
+	allSectionsMap.setKey(currSectionMap.get().id, {
+		...currSectionMap.get(),
+	})
+	unlockNextSectionsAfterCompletion()
+}
+
 // filtering for sections that should be visible and navigable
 const filteredNavSectionsComputed = computed(
 	[allSectionsMap, featuresMap],
@@ -217,15 +237,16 @@ const filteredNavSectionsComputed = computed(
 
 		const filterForUnlocked = allSectionsAsArray.filter(
 			([_, sectionDetails]) => {
-				if (nextActiveFeatureMap.get().id !== '') {
-					// (unlocked AND static content) OR (an unlocked, completed feature that comes before nextActiveFeature) OR the nextActiveFeature
+				if (nextIncompleteFeatureMap.get().id !== '') {
+					// (unlocked AND static content) OR (an unlocked, completed feature that comes before nextIncompleteFeature) OR the nextIncompleteFeature
 					return (
 						(sectionDetails.featureType === null && !sectionDetails.isLocked) ||
 						(!sectionDetails.isLocked &&
 							sectionDetails.isFeatureComplete &&
 							sectionDetails.orderNum! <
-								nextActiveFeatureMap.get().orderNum!) ||
-						sectionDetails.orderNum! === nextActiveFeatureMap.get().orderNum!
+								nextIncompleteFeatureMap.get().orderNum!) ||
+						sectionDetails.orderNum! ===
+							nextIncompleteFeatureMap.get().orderNum!
 					)
 				} else {
 					// any static content OR (feature is complete and not locked)
@@ -311,6 +332,7 @@ const useIsLastSection = (sectionID: string) => {
 }
 
 export {
+	lessonID,
 	featuresMap,
 	useDoesFeatureExist,
 	useFeatureExists,
@@ -319,8 +341,8 @@ export {
 	useToggleNavShown,
 	currSectionMap,
 	useSetCurrSection,
-	nextActiveFeatureMap,
-	useSetNextActiveFeature,
+	nextIncompleteFeatureMap,
+	useSetNextIncompleteFeature,
 	useToggleFeature,
 	filteredNavSectionsComputed,
 	filteredLockedSectionsComputed,
@@ -330,5 +352,6 @@ export {
 	isOnLastSectionComputed,
 	useIsLastSection,
 	useSetFeatureComplete,
+	unlockNextSectionsAfterCompletion,
 }
 export type { SectionsMap, SectionDetails, FeatureMap, FeatureType }

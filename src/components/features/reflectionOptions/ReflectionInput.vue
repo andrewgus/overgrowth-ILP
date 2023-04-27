@@ -2,6 +2,7 @@
 	<div :class="$style.userInput">
 		<label :for="`${id}-textInput`">{{ prompt }}</label>
 		<slot></slot>
+		<!-- TODO: fix disabled attribute. Not currently working. -->
 		<textarea
 			:disabled="!!$currSection.isFeatureComplete"
 			placeholder="I think&hellip;"
@@ -23,7 +24,7 @@
 		initUserReflectionsStore,
 		featureProgressStore,
 	} from '../../../store/featureOptionsStore'
-	import getLocalStorage from '../../../service/useGetLocalStorage'
+	import getLocalStorage from '../../../composables/useGetLocalStorage'
 
 	const $currSection = useStore(currSectionMap)
 	const props = defineProps({
@@ -42,11 +43,9 @@
 		'reflectionAnswer'
 	) as string
 
-	if (localStorageAnswers) {
-		initUserReflectionsStore(props.id, props.prompt, localStorageAnswers)
-	} else {
-		initUserReflectionsStore(props.id, props.prompt)
-	}
+	localStorageAnswers
+		? initUserReflectionsStore(props.id, props.prompt, localStorageAnswers)
+		: initUserReflectionsStore(props.id, props.prompt)
 
 	const userInput = computed({
 		get() {

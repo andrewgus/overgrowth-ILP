@@ -1,9 +1,9 @@
 // saving to localStorage
 import { watch } from 'vue'
-import { allSectionsMap } from '../store/lessonStore'
+import { allSectionsMap, lessonID } from '../store/lessonStore'
 import { userReflectionsStore } from '../store/featureOptionsStore'
+import getLocalStorage from '../composables/useGetLocalStorage'
 
-// TODO: Need to track whether the feature is complete (featureComplete: boolean) with localStorage. That way, if users already selected continue, it will already be set as complete with their content inputted. Will still have the ability to save as PDF.
 // TODO: Need to create a "Reset this Lesson" btn. So users can reset a lesson's local storage and have a fresh lesson. Also need to figure out it's placement.
 
 interface localStorageFeatureComplete {
@@ -22,7 +22,10 @@ type localStorageDataTypes = ExtractLocalStorageKeys<
 interface localStorageDataObj {
 	[id: string]: localStorageFeatureComplete & localStorageReflectionAnswer
 }
-const localStorageUserData: localStorageDataObj = {}
+
+const localStorageUserData: localStorageDataObj = !!getLocalStorage()
+	? (getLocalStorage() as localStorageDataObj)
+	: {}
 
 // Updating local storage based on user's work
 watch(
@@ -34,7 +37,7 @@ watch(
 					...localStorageUserData[id],
 					reflectionAnswer: answer ? answer : '',
 				}
-				localStorage.setItem('lessonData', JSON.stringify(localStorageUserData))
+				localStorage.setItem(lessonID.get(), JSON.stringify(localStorageUserData))
 			}
 		})
 	},
@@ -49,7 +52,7 @@ allSectionsMap.subscribe((sections) => {
 				...localStorageUserData[id],
 				isFeatureComplete: isFeatureComplete ? isFeatureComplete : false,
 			}
-			localStorage.setItem('lessonData', JSON.stringify(localStorageUserData))
+			localStorage.setItem(lessonID.get(), JSON.stringify(localStorageUserData))
 		}
 	})
 })

@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-	import { useStore } from '@nanostores/vue'
+	import { mapStores } from '@nanostores/vue'
 	import {
 		isOnContentAtom,
 		currSectionMap,
@@ -42,12 +42,21 @@
 	} from '../../store/lessonStore'
 	import BaseButton from '../base/BaseButton.vue'
 
-	const $isOnContent = useStore(isOnContentAtom)
-	const $currSection = useStore(currSectionMap)
-	const $nextSection = useStore(nextSectionComputed)
-	const $prevSection = useStore(prevSectionComputed)
-	const $isOnFirstSection = useStore(isOnFirstSectionComputed)
-	const $isOnLastSection = useStore(isOnLastSectionComputed)
+	const {
+		isOnContentAtom: $isOnContent,
+		currSectionMap: $currSection,
+		nextSectionComputed: $nextSection,
+		prevSectionComputed: $prevSection,
+		isOnFirstSectionComputed: $isOnFirstSection,
+		isOnLastSectionComputed: $isOnLastSection,
+	} = mapStores({
+		isOnContentAtom,
+		currSectionMap,
+		nextSectionComputed,
+		prevSectionComputed,
+		isOnFirstSectionComputed,
+		isOnLastSectionComputed,
+	})
 </script>
 
 <style module lang="scss">

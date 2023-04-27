@@ -1,14 +1,46 @@
 ---
 import TheLesson from '../../layouts/TheLesson.astro'
 import StaticContent from '../../layouts/StaticContent.astro'
+import FeatureInteractive from '../../layouts/FeatureInteractive.vue'
 ---
 
 <TheLesson
-	title='Introduction to Biology'
+	title='Introduction To Biology'
 	scene='setting'
-	gradientColor='var(--green5)'
+	gradientColor={'var(--green)'}
 >
-	<StaticContent title='Welcome to Biology'>
+	<FeatureInteractive
+		client:load
+		featureType='reflection'
+		title='Thoughts on Biology?'
+		prompt='When you hear the term Astronomy, what do you think about?'
+	>
+		<p>Things to consider:</p>
+		<ul>
+			<li>
+				<p>&lbrace;Learning Outcome 1&rbrace;</p>
+			</li>
+			<li>
+				<p>&lbrace;Learning Outcome 2&rbrace;</p>
+			</li>
+			<li>
+				<p>&lbrace;Learning Outcome 3&rbrace;</p>
+			</li>
+		</ul>
+	</FeatureInteractive>
+	<FeatureInteractive
+		client:load
+		featureType='practice'
+		title='Practice Feature'
+		prompt='This is a practice feature test.'
+	/>
+	<FeatureInteractive
+		client:load
+		featureType='choice'
+		title='Choice Feature'
+		prompt='This is a choice feature test.'
+	/>
+	<StaticContent title='Welcome to the Course'>
 		<p>In this course, we will&hellip;</p>
 		<p>
 			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
@@ -82,44 +114,56 @@ import StaticContent from '../../layouts/StaticContent.astro'
 			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
 			deleniti?
 		</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
-			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis
-			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
-			deleniti?
-		</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
-			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis
-			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
-			deleniti?
-		</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
-			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis
-			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
-			deleniti?
-		</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
-			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis
-			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
-			deleniti?
-		</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
-			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis
-			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
-			deleniti?
-		</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
-			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis
-			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
-			deleniti?
-		</p>
+		<section>
+			<h3>Another Heading</h3>
+			<p>
+				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
+				fuga error repudiandae. Libero voluptatem impedit amet incidunt
+				blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum
+				quisquam, dolor deleniti?
+			</p>
+			<p>
+				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
+				fuga error repudiandae. Libero voluptatem impedit amet incidunt
+				blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum
+				quisquam, dolor deleniti?
+			</p>
+			<section>
+				<h4>A Third <sub>Sub</sub>Heading</h4>
+				<p>
+					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur
+					earum fuga error repudiandae. Libero voluptatem impedit amet incidunt
+					blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum
+					quisquam, dolor deleniti?
+				</p>
+				<p>
+					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur
+					earum fuga error repudiandae. Libero voluptatem impedit amet incidunt
+					blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum
+					quisquam, dolor deleniti?
+				</p>
+				<p>
+					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur
+					earum fuga error repudiandae. Libero voluptatem impedit amet incidunt
+					blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum
+					quisquam, dolor deleniti?
+				</p>
+				<p>
+					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur
+					earum fuga error repudiandae. Libero voluptatem impedit amet incidunt
+					blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum
+					quisquam, dolor deleniti?
+				</p>
+			</section>
+		</section>
 	</StaticContent>
-	<StaticContent title='The Human Body'>
+	<FeatureInteractive
+		client:load
+		featureType='reflection'
+		title='And Now What Do You Think?'
+		prompt='You’ve learned new information. What do you think about now when you hear the term Astronomy?'
+	/>
+	<StaticContent title='The middle'>
 		<p>
 			Spaceflight will never tolerate carelessness, incapacity, and neglect.
 			Somewhere, somehow, we screwed up. It could have been in design, build, or
@@ -166,7 +210,7 @@ import StaticContent from '../../layouts/StaticContent.astro'
 			deleniti?
 		</p>
 	</StaticContent>
-	<StaticContent title='As We Live'>
+	<StaticContent title='Let’s make an extra long title to see what happens'>
 		<p>Follow up... Let&rsquo;s make an extra long title to see what happens</p>
 		<p>
 			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
@@ -277,4 +321,17 @@ import StaticContent from '../../layouts/StaticContent.astro'
 			deleniti?
 		</p>
 	</StaticContent>
+	<FeatureInteractive
+		client:load
+		featureType='reflection'
+		title='One Last Time'
+		prompt='What’s changed in your thinking about Astronomy? Write it here.'
+	/>
+	<FeatureInteractive
+		client:load
+		featureType='reflection'
+		title="How You've Grown…"
+		prompt='Read how your thinking has progressed as you’ve learned more about Astronomy.'
+		isFinaleReveal
+	/>
 </TheLesson>
