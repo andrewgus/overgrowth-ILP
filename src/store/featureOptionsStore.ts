@@ -29,7 +29,7 @@ function initUserReflectionsStore(id: string, prompt: string, answer?: string) {
 			[Need to figure this out later]
 		}
 	}
-	 NOTE: When creating first practice activity component, will need to create a store for # of user attempts and how they performed in each attempt. NOTE: May have to create a persisent nanostore for that and refactor all of this to that nanostore.
+	 NOTE: When creating first practice activity component, will need to create a store for # of user attempts and how they performed in each attempt.
 */
 
 // Tracking user progress within feature interactions

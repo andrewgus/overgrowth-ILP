@@ -4,7 +4,13 @@ import { allSectionsMap, lessonID } from '../store/lessonStore'
 import { userReflectionsStore } from '../store/featureOptionsStore'
 import getLocalStorage from '../composables/useGetLocalStorage'
 
-// TODO: Need to create a "Reset this Lesson" btn. So users can reset a lesson's local storage and have a fresh lesson. Also need to figure out it's placement.
+// TODO: Need to store in localStorage whether features have been turned off or not. Default to on, if they exist.
+/* TODO: Need to create a "Reset this Lesson" btn. So users can reset a lesson's local storage and have a fresh lesson. Also need to figure out it's placement. 
+
+			use localStorage.removeItem('LESSONID')
+
+*/
+
 
 interface localStorageFeatureComplete {
 	isFeatureComplete: boolean
@@ -37,7 +43,10 @@ watch(
 					...localStorageUserData[id],
 					reflectionAnswer: answer ? answer : '',
 				}
-				localStorage.setItem(lessonID.get(), JSON.stringify(localStorageUserData))
+				localStorage.setItem(
+					lessonID.get(),
+					JSON.stringify(localStorageUserData)
+				)
 			}
 		})
 	},
