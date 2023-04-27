@@ -1,7 +1,6 @@
 // lessonStore maintains the state of the lesson interface.
 import { atom, map, deepMap, computed, type MapStore } from 'nanostores'
 import { useStore } from '@nanostores/vue'
-import getLocalStorage from '../composables/useGetLocalStorage'
 
 // ID for the whole lesson.
 const lessonID = atom('')
@@ -187,7 +186,7 @@ const useToggleFeature = (feature: FeatureType) => {
 }
 
 // To Determine what comes after a completed feature and revealing it
-const unlockNextSectionsAfterCompletion = (fromLocalStorage?: boolean) => {
+const useUnlockNextSectionsAfterCompletion = (fromLocalStorage?: boolean) => {
 	const allSectionsAsArray = setSectionsToArray(allSectionsMap.get())
 
 	const foundNextIncompleteFeature = fromLocalStorage
@@ -226,7 +225,7 @@ const useSetFeatureComplete = () => {
 	allSectionsMap.setKey(currSectionMap.get().id, {
 		...currSectionMap.get(),
 	})
-	unlockNextSectionsAfterCompletion()
+	useUnlockNextSectionsAfterCompletion()
 }
 
 // filtering for sections that should be visible and navigable
@@ -352,6 +351,6 @@ export {
 	isOnLastSectionComputed,
 	useIsLastSection,
 	useSetFeatureComplete,
-	unlockNextSectionsAfterCompletion,
+	useUnlockNextSectionsAfterCompletion,
 }
 export type { SectionsMap, SectionDetails, FeatureMap, FeatureType }

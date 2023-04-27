@@ -4,7 +4,7 @@ import {
 	isOnContentAtom,
 	useSetNextIncompleteFeature,
 	useSetCurrSection,
-	unlockNextSectionsAfterCompletion,
+	useUnlockNextSectionsAfterCompletion,
 	type SectionDetails,
 	type FeatureType,
 } from '../store/lessonStore'
@@ -90,10 +90,9 @@ const findNextIncompleteFeature = SectionDetailValues.find((details) => {
 		details.featureType !== null
 	)
 })
-
 if (findNextIncompleteFeature) {
 	useSetNextIncompleteFeature(findNextIncompleteFeature.id)
-	unlockNextSectionsAfterCompletion(true)
+	useUnlockNextSectionsAfterCompletion(true)
 }
 
 // Setting whether on content or not && currSection
