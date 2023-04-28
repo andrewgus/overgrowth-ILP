@@ -37,7 +37,6 @@
 			return typedContent.value
 		},
 		set(value) {
-			console.log(value)
 			typedContent.value = value
 			emits('userTyped', value)
 		},

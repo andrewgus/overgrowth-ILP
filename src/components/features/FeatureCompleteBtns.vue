@@ -108,7 +108,7 @@
 	}
 
 	const setComplete = ({ target }: Event) => {
-		const clicked = target as HTMLElement
+		const clicked = target as HTMLButtonElement
 		if (!clicked) return
 
 		const thisSection = clicked.closest('section') as HTMLElement

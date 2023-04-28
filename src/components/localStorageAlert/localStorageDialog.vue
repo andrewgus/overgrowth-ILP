@@ -1,9 +1,9 @@
 <template v-if="doesLocalStorageExist">
-	<dialog ref="dialogEl" :class="$style.dialog" :open="doesLocalStorageExist">
-		<h2>Hey there!</h2>
+	<dialog ref="dialogEl" :class="$style.dialog">
+		<h2>Hey there! &#128075;</h2>
 		<p>
 			Looks like you have some saved work on this lesson. Would you like to
-			continue where you left off or reset this lesson?
+			continue where you left off <strong>or</strong> reset this lesson?
 		</p>
 		<div :class="$style.dialog__btns">
 			<BaseButton
@@ -26,16 +26,23 @@
 	const lessonID = useStore(lessonIDAtom)
 
 	const dialogEl = ref()
-	const doesLocalStorageExist = ref<boolean>()
-	onMounted(() => (doesLocalStorageExist.value = !!getLocalStorage()))
 
-	const continueAndClose = () => {
-		dialogEl.value!.close() as HTMLDialogElement
+	onMounted(() => {
+		if (!!getLocalStorage()) dialogEl.value.showModal() as HTMLDialogElement
+	})
+
+	const continueAndClose = ({ target }: Event) => {
+		const clicked = target as HTMLButtonElement
+		if (!clicked) return
+
+		const dialog = clicked.closest('dialog') as HTMLDialogElement
+		dialog.close()
 	}
+
 	const resetAndClose = () => {
 		// FIXME: these actions below work as intended, but it is **NOT** reactive. Need to fix so the proper store items are also updated. Need to somehow watch the localStorage for changes too here.
 		localStorage.removeItem(lessonID.value)
-		continueAndClose()
+		// continueAndClose()
 	}
 </script>
 
@@ -43,6 +50,7 @@
 	@use '../../styles/mixins.scss';
 	.dialog {
 		position: fixed;
+		margin: 0;
 		display: flex;
 		flex-flow: column nowrap;
 		align-items: center;
@@ -56,7 +64,7 @@
 		@include mixins.alert();
 
 		&::backdrop {
-			background-color: hsla(0, 0%, 98%, 0.5);
+			background-color: hsla(0deg, 0%, 100%, 33%);
 		}
 		> h2 {
 			margin-top: 0;
