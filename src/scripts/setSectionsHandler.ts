@@ -1,5 +1,5 @@
 import {
-	lessonID,
+	lessonIDAtom,
 	allSectionsMap,
 	isOnContentAtom,
 	useSetNextIncompleteFeature,
@@ -12,7 +12,7 @@ import createID from '../composables/useCreateID'
 import getLocalStorage from '../composables/useGetLocalStorage'
 
 // setting lessonID for localStorage
-lessonID.set(document.querySelector('main')!.id)
+lessonIDAtom.set(document.querySelector('main')!.id)
 
 const location = window.location.toString()
 

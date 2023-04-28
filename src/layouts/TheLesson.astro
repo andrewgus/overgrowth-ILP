@@ -2,14 +2,14 @@
 import '../styles/root.scss'
 import TheLanding from '../components/landing/TheLanding.vue'
 import TheLessonNav from '../components/navigation/TheLessonNav.vue'
-import createID from '../composables/useCreateID'
+import LocalStorageDialog from '../components/localStorageAlert/localStorageDialog.vue'
+import { lessonIDAtom } from '../store/lessonStore'
 
 interface Props {
 	title: string
 	scene: string
 	gradientColor?: string
 }
-
 const { title, scene, gradientColor = 'var(--white)' } = Astro.props
 ---
 
@@ -29,7 +29,8 @@ const { title, scene, gradientColor = 'var(--white)' } = Astro.props
 		<title>{title}</title>
 	</head>
 	<body>
-		<main id={`${createID(title)}-lesson`}>
+		<LocalStorageDialog client:load />
+		<main id={lessonIDAtom.get()}>
 			<article class='theLesson'>
 				<TheLanding
 					client:load

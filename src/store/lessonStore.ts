@@ -3,7 +3,7 @@ import { atom, map, deepMap, computed, type MapStore } from 'nanostores'
 import { useStore } from '@nanostores/vue'
 
 // ID for the whole lesson.
-const lessonID = atom('')
+const lessonIDAtom = atom('')
 
 // Feature setup for any given lesson
 type FeatureType = 'reflection' | 'practice' | 'choice'
@@ -331,7 +331,7 @@ const useIsLastSection = (sectionID: string) => {
 }
 
 export {
-	lessonID,
+	lessonIDAtom,
 	featuresMap,
 	useDoesFeatureExist,
 	useFeatureExists,

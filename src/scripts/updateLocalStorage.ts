@@ -1,6 +1,6 @@
 // saving to localStorage
 import { watch } from 'vue'
-import { allSectionsMap, lessonID } from '../store/lessonStore'
+import { allSectionsMap, lessonIDAtom } from '../store/lessonStore'
 import { userReflectionsStore } from '../store/featureOptionsStore'
 import getLocalStorage from '../composables/useGetLocalStorage'
 
@@ -10,7 +10,6 @@ import getLocalStorage from '../composables/useGetLocalStorage'
 			use localStorage.removeItem('LESSONID')
 
 */
-
 
 interface localStorageFeatureComplete {
 	isFeatureComplete: boolean
@@ -44,7 +43,7 @@ watch(
 					reflectionAnswer: answer ? answer : '',
 				}
 				localStorage.setItem(
-					lessonID.get(),
+					lessonIDAtom.get(),
 					JSON.stringify(localStorageUserData)
 				)
 			}
@@ -61,7 +60,10 @@ allSectionsMap.subscribe((sections) => {
 				...localStorageUserData[id],
 				isFeatureComplete: isFeatureComplete ? isFeatureComplete : false,
 			}
-			localStorage.setItem(lessonID.get(), JSON.stringify(localStorageUserData))
+			localStorage.setItem(
+				lessonIDAtom.get(),
+				JSON.stringify(localStorageUserData)
+			)
 		}
 	})
 })

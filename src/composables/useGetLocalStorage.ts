@@ -1,4 +1,4 @@
-import { lessonID } from '../store/lessonStore'
+import { lessonIDAtom } from '../store/lessonStore'
 import type {
 	localStorageDataObj,
 	localStorageDataTypes,
@@ -14,9 +14,9 @@ export default function useGetLocalStorage(
 	id?: string,
 	dataType?: localStorageDataTypes
 ) {
-	if (!!localStorage.getItem(lessonID.get())) {
+	if (!!localStorage.getItem(lessonIDAtom.get())) {
 		const localStorageData: localStorageDataObj = JSON.parse(
-			localStorage.getItem(lessonID.get())!
+			localStorage.getItem(lessonIDAtom.get())!
 		)
 		if (id && dataType)
 			return localStorageData[id] && localStorageData[id][dataType]

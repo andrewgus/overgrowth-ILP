@@ -15,16 +15,14 @@
 </script>
 
 <style module lang="scss">
+	@use '../../styles/mixins.scss';
 	.alertText {
 		max-width: 60ch;
 		text-align: center;
 		padding: 0 var(--s-4) var(--s-4);
 		overflow-x: hidden;
 		margin: 0 auto var(--s2);
-		background-color: var(--yellow5);
-		border: 1px solid var(--darkGray);
-		border-radius: var(--s10) var(--s0) var(--s10) var(--s0) / var(--s10)
-			var(--s0) var(--s10) var(--s0);
+		@include mixins.alert();
 
 		&::before {
 			content: '';
