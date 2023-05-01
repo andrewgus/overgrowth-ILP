@@ -6,12 +6,13 @@
 		v-if="areSectionsAvailable"
 		:class="{
 			[$style.attemptComplete]:
-				featureProgressStore[id].isAttemptsFinished && !featureMarkedComplete,
+				featureProgressStore[id].isAttemptsFinished &&
+				!$allSections[id].isFeatureComplete,
 		}"
 	>
 		<BaseButton
 			key="0"
-			v-if="!featureMarkedComplete && !isLastSection"
+			v-if="!$allSections[id].isFeatureComplete && !isLastSection"
 			:isDisabled="!featureProgressStore[id].isAttemptsFinished"
 			:class="$style.featureCompleteBtn"
 			:text="
@@ -55,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-	import { computed, ref } from 'vue'
+	import { computed } from 'vue'
 	import { mapStores } from '@nanostores/vue'
 	import {
 		allSectionsMap,
@@ -69,7 +70,6 @@
 	import BaseButton from '../base/BaseButton.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
 	import useAreSectionsAvailable from '../../composables/useAreSectionsAvailable'
-	import getLocalStorage from '../../composables/useGetLocalStorage'
 
 	const props = defineProps({
 		id: {
@@ -85,15 +85,6 @@
 	} = mapStores({ allSectionsMap, currSectionMap, nextSectionComputed })
 	const areSectionsAvailable = useAreSectionsAvailable()
 	const isLastSection = useIsLastSection(featureProgressStore[props.id].id)
-
-	const featureMarkedComplete = ref<boolean>(false)
-
-	const localStorageCompletion = getLocalStorage(
-		props.id,
-		'isFeatureComplete'
-	) as boolean
-
-	if (localStorageCompletion) featureMarkedComplete.value = true
 
 	const saveAsPDF = async () => {
 		featureProgressStore[props.id].pdfGenStatus = {
@@ -114,9 +105,7 @@
 		const thisSection = clicked.closest('section') as HTMLElement
 		useSetCurrSection(thisSection.id)
 
-		if (!featureMarkedComplete.value) useSetFeatureComplete()
-
-		featureMarkedComplete.value = true
+		useSetFeatureComplete()
 	}
 
 	const pdfStatusUpdate = computed(() => {

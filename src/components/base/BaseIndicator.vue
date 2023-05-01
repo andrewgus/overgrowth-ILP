@@ -1,13 +1,13 @@
 <template>
 	<div :class="$style.indicator">
 		<a
-			:class="$style.indicatorLink"
+			:class="$style.indicator__link"
 			:href="goTo"
 			:aria-hidden="isHidden"
 			:tabindex="isHidden ? '-1' : '0'"
 		>
 			<p>{{ text }}</p>
-			<span :class="$style.scrollArrow">
+			<span :class="$style.indicator__arrow">
 				<svg
 					width="60"
 					height="38"
@@ -48,30 +48,31 @@
 		width: fit-content;
 		align-self: center;
 		margin: 0 auto;
-	}
 
-	.indicatorLink {
-		&,
-		&:hover,
-		&:focus {
-			all: unset;
-			display: flex;
-			flex-flow: column nowrap;
-			justify-content: center;
-			align-items: center;
+		&__link {
+			&,
+			&:hover,
+			&:focus {
+				all: unset;
+				display: flex;
+				flex-flow: column nowrap;
+				justify-content: center;
+				align-items: center;
+			}
+			> p {
+				padding: var(--s-4) var(--s-2);
+				display: block;
+				font-size: var(--s0);
+				margin: 0 auto var(--s-10);
+			}
 		}
-		> p {
-			padding: var(--s-4) var(--s-2);
-			display: block;
-			font-size: var(--s0);
-			margin: 0 auto var(--s-10);
-		}
-		> .scrollArrow {
+		&__arrow {
 			margin: var(--s-10) auto var(--s-4);
 			max-width: fit-content;
 			animation: bounce 1s ease-in-out infinite alternate;
 		}
 	}
+
 	@keyframes bounce {
 		from {
 			transform: translateY(0);

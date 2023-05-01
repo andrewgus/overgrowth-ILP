@@ -4,13 +4,13 @@
 		<input
 			@click="toggleSwitch"
 			:id="`${type.toLowerCase()}Switch`"
-			:class="[$style.input, { [$style.off]: !enabled }]"
+			:class="[$style.switch__input, { [$style.off]: !enabled }]"
 			type="button"
 			role="switch"
 			:aria-checked="enabled"
 			:value="enabled ? 'on' : 'off'"
 		/>
-		<span :class="$style.onOff" aria-hidden="true">{{
+		<span :class="$style.switch__toggleText" aria-hidden="true">{{
 			enabled ? 'On' : 'Off'
 		}}</span>
 	</div>
@@ -49,11 +49,15 @@
 
 		&:hover:not(:focus-within) {
 			@include mixins.blueDropShadow();
+
+			> .switch__toggleText {
+				animation: switchJiggle var(--timeLong) var(--transitionFlourish);
+			}
 		}
 		> * {
 			grid-area: 1/1/-1/-1;
 		}
-		> .input {
+		> &__input {
 			cursor: pointer;
 			padding: 0;
 			border-radius: var(--s10);
@@ -63,14 +67,14 @@
 			background: var(--white);
 			color: transparent;
 
-			&.off + .onOff {
+			&.off + .switch__toggleText {
 				transform: translateX(var(--s2));
 				margin: 0 0 0 2px;
 				color: #fff;
 				background: var(--red);
 			}
 		}
-		> .onOff {
+		> &__toggleText {
 			font-size: var(--s-1);
 			pointer-events: none;
 			display: flex;
@@ -84,6 +88,20 @@
 			-webkit-transition: var(--timeShort) all var(--transitionFlourish);
 			transition: var(--timeShort) all var(--transitionFlourish);
 			background-color: var(--green1);
+		}
+	}
+
+	@keyframes switchJiggle {
+		0% {
+			background-color: var(--yellow-1);
+			transform: translateX(0);
+		}
+		50% {
+			background-color: var(--yellow-1);
+			transform: translateX(var(--s-8));
+		}
+		100% {
+			transform: translateX(0);
 		}
 	}
 </style>

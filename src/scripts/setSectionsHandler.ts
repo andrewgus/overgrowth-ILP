@@ -86,10 +86,11 @@ sections.forEach((section: HTMLElement, index: number) => {
 const SectionDetailValues = Object.values(allSectionsMap.get())
 const findNextIncompleteFeature = SectionDetailValues.find((details) => {
 	return (
-		(!!!getLocalStorage(details.id, 'isFeatureComplete') as boolean) &&
-		details.featureType !== null
+		details.featureType !== null &&
+		!!!getLocalStorage(details.id, 'isFeatureComplete')
 	)
 })
+
 if (findNextIncompleteFeature) {
 	useSetNextIncompleteFeature(findNextIncompleteFeature.id)
 	useUnlockNextSectionsAfterCompletion(true)

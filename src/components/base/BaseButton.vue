@@ -46,7 +46,7 @@
 
 	const computedConditionalClasses = new Map([
 		[computed(() => props.isDisabled), 'disabled'],
-		[computed(() => props.isForNav), 'navBtn'],
+		[computed(() => props.isForNav), 'btn__nav'],
 	])
 	const btnStyles = computedCssModule('btn', computedConditionalClasses)
 </script>
@@ -66,20 +66,32 @@
 		@include mixins.blueDropShadow();
 		@include mixins.btnTransition();
 
-		&:hover,
-		&:focus {
-			filter: drop-shadow(0px 0px 0 var(--blue));
-		}
-
-		&:focus {
-			z-index: 10;
-		}
-
-		&:not(.navBtn):hover {
+		&:not(.btn__nav):hover {
 			color: var(--blue);
 			background-color: var(--peach);
 			@include mixins.hoverBoxShadow();
 		}
+		&:focus {
+			z-index: 10;
+			&,
+			&:hover {
+				filter: drop-shadow(0px 0px 0 var(--blue));
+			}
+		}
+
+		&__nav {
+			&:hover,
+			&:focus {
+				outline: none;
+				background-color: var(--blue);
+				color: var(--white);
+				z-index: 2;
+			}
+			&:visited:not(:hover):not(:focus) {
+				color: var(--black);
+			}
+		}
+
 		&.disabled {
 			cursor: not-allowed;
 			background-color: var(--lightGray);
@@ -91,18 +103,6 @@
 				background-color: var(--lightGray);
 				box-shadow: none;
 			}
-		}
-	}
-	.navBtn {
-		&:hover,
-		&:focus {
-			outline: none;
-			background-color: var(--blue);
-			color: var(--white);
-			z-index: 2;
-		}
-		&:visited:not(:hover):not(:focus) {
-			color: var(--black);
 		}
 	}
 </style>

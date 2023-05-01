@@ -7,8 +7,7 @@
 		:id="`${id}-textInput`"
 		v-model="userInput"
 	>
-    {{ savedData }}
-  </textarea>
+	</textarea>
 </template>
 
 <script setup lang="ts">
@@ -19,7 +18,7 @@
 
 	const typedContent = ref<string>()
 
-	defineProps({
+	const props = defineProps({
 		id: {
 			type: String,
 			required: true,
@@ -34,6 +33,7 @@
 
 	const userInput = computed({
 		get() {
+			if (props.savedData) return props.savedData
 			return typedContent.value
 		},
 		set(value) {
