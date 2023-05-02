@@ -12,18 +12,18 @@ import createID from '../composables/useCreateID'
 import getLocalStorage from '../composables/useGetLocalStorage'
 
 // setting lessonID for localStorage
-lessonIDAtom.set(document.querySelector('main')!.id)
+lessonIDAtom.set(document.querySelector('body')!.id)
 
 const location = window.location.toString()
 
 const sections: HTMLElement[] = []
 const sectionIDs: string[] = []
 const sectionHeadings: NodeListOf<HTMLElement> = document.querySelectorAll(
-	'article section  h2:first-of-type'
+	'article  h2:first-of-type'
 )!
 
 for (const heading of sectionHeadings) {
-	sections.push(heading.closest('section')!)
+	sections.push(heading.closest('article')!)
 	sectionIDs.push(createID(heading.textContent!))
 }
 

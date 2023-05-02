@@ -9,12 +9,12 @@ const { title, columnSet } = Astro.props
 // TODO: on section el, add dynamic class of isLocked, when isLocked is true for this item within the allSections store map
 ---
 
-<section class:list={['section', 'staticContent']}>
+<article class:list={['section', 'staticContent']}>
 	<div class:list={[{ columnSet: columnSet }]}>
 		<h2>{title}</h2>
 		<slot />
 	</div>
-</section>
+</article>
 
 <style lang='scss'>
 	.staticContent > div {

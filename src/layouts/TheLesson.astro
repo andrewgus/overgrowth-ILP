@@ -9,12 +9,18 @@ interface Props {
 	title: string
 	scene: string
 	gradientColor?: string
+	language?: string
 }
-const { title, scene, gradientColor = 'var(--white)' } = Astro.props
+const {
+	title,
+	scene,
+	gradientColor = 'var(--white)',
+	language = 'en',
+} = Astro.props
 ---
 
 <!DOCTYPE html>
-<html lang='en'>
+<html lang={language}>
 	<head>
 		<meta charset='UTF-8' />
 		<meta name='viewport' content='width=device-width' />
@@ -26,22 +32,15 @@ const { title, scene, gradientColor = 'var(--white)' } = Astro.props
 			import '../scripts/setLocksHandler.js'
 			import '../scripts/updateLocalStorage.js'
 		</script>
-		<title>{title}</title>
+		<title>{title} &vert; FSCJ</title>
 	</head>
-	<body>
+	<body id={`${createID(title)}-lesson`}>
 		<LocalStorageDialog client:load />
-		<main id={`${createID(title)}-lesson`}>
-			<article class='theLesson'>
-				<TheLanding
-					client:load
-					title={title}
-					scene={scene}
-					color={gradientColor}
-				/>
-				<TheLessonNav client:load />
-				<!-- TODO: Include header and nav elements in the canvas2HTML ignoreElements function. Include btn that will print all static content as PDF if all features are turned off. If all features are turned off and there is no static content, and therefore no sections at all, then a warning will appear in the same place as the PDF (just below the toggle switches) informing learners that there is nothing to do. v-if on the scroll to start, if there are no sections to scroll to. -->
-				<slot />
-			</article>
+		<TheLanding client:load title={title} scene={scene} color={gradientColor} />
+		<TheLessonNav client:load />
+		<main class='theLesson'>
+			<!-- TODO: Include header and nav elements in the canvas2HTML ignoreElements function. Include btn that will print all static content as PDF if all features are turned off. If all features are turned off and there is no static content, and therefore no sections at all, then a warning will appear in the same place as the PDF (just below the toggle switches) informing learners that there is nothing to do. v-if on the scroll to start, if there are no sections to scroll to. -->
+			<slot />
 		</main>
 	</body>
 </html>
@@ -54,11 +53,11 @@ const { title, scene, gradientColor = 'var(--white)' } = Astro.props
 		&:not(.firstSection) {
 			border-top: 2px solid var(--darkGray);
 		}
-	}
-	.theLesson .section:not(.feature):nth-child(2n + 1) {
-		background-color: var(--offWhite);
-	}
-	section.isLocked {
-		display: none;
+		&.isLocked {
+			display: none;
+		}
+		&:not(:first-child):not(.feature):nth-child(2n + 1) {
+			background-color: var(--offWhite);
+		}
 	}
 </style>

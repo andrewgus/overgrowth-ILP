@@ -102,9 +102,9 @@
 		const clicked = target as HTMLButtonElement
 		if (!clicked) return
 
-		const thisSection = clicked.closest('section') as HTMLElement
-		useSetCurrSection(thisSection.id)
+		const thisSection = clicked.closest('article') as HTMLElement
 
+		useSetCurrSection(thisSection.id)
 		useSetFeatureComplete()
 	}
 

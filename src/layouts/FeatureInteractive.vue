@@ -1,5 +1,5 @@
 <template>
-	<section class="section feature" :class="$style[featureType]">
+	<article class="section feature" :class="$style[featureType]">
 		<div>
 			<h2>{{ title }}</h2>
 			<BaseAlertText
@@ -17,7 +17,7 @@
 			</component>
 		</div>
 		<FeatureCompleteBtns :class="$style.featureCompleteBtns" :id="sectionID" />
-	</section>
+	</article>
 </template>
 
 <script setup lang="ts">

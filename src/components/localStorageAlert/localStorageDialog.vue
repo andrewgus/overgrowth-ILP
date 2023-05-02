@@ -29,14 +29,11 @@
 	})
 
 	const resetAndClose = () => {
-		// BUG: local storage removeItem NOT WORKING
-		// console.log(lessonIDAtom.get())
-		console.log(localStorage.getItem(lessonIDAtom.get()))
-		// localStorage.removeItem(lessonIDAtom.get())
-		localStorage.clear()
-		console.log(localStorage.getItem(lessonIDAtom.get()))
-
 		useResetLocalStorageUserData()
+		localStorage.removeItem(lessonIDAtom.get())
+		// BUG: localStorage.removeItem only works if I console log afterward? Why? NOTE: now seems to be functioning properly. Not sure what happened.
+		// BUG: removeItem now seems to work, but only the first feature data is being saved to localStorage on refresh, even though other data is being properly sent to localStorage.
+		// console.log(localStorage.getItem(lessonIDAtom.get()))
 		dialogEl.value?.close()
 	}
 </script>

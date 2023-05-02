@@ -27,9 +27,9 @@ export async function getStaticPaths() {
 const { filteredLessons, topicTitle } = Astro.props
 ---
 
-<LibLayout title={topicTitle!}>
+<LibLayout title={`${topicTitle!} Interactive Lessons`}>
 	<nav>
-		<a href='/'>Back to Programs</a>
+		<a href='/'>Back to all topics</a>
 	</nav>
 	<p>Hello</p>
 	<p>
