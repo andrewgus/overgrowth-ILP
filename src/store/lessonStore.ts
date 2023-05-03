@@ -3,18 +3,13 @@ import { atom, map, deepMap, computed, type MapStore } from 'nanostores'
 import { useStore } from '@nanostores/vue'
 
 // ID for the whole lesson.
-const lessonIDAtom = atom('')
+const lessonIDAtom = atom<string>('')
 
 // Feature setup for any given lesson
 type FeatureType = 'reflection' | 'practice' | 'choice'
 
-interface FeatureMap {
-	reflection: boolean | null
-	practice: boolean | null
-	choice: boolean | null
-}
 // init to null because the given feature does not yet exist.
-const featuresMap = map<FeatureMap>({
+const featuresMap = map<Record<FeatureType, boolean | null>>({
 	reflection: null,
 	practice: null,
 	choice: null,
@@ -353,4 +348,4 @@ export {
 	useSetFeatureComplete,
 	useUnlockNextSectionsAfterCompletion,
 }
-export type { SectionsMap, SectionDetails, FeatureMap, FeatureType }
+export type { SectionsMap, SectionDetails, FeatureType }

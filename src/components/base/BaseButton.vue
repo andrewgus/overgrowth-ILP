@@ -35,18 +35,15 @@
 		isForNav: {
 			type: Boolean,
 		},
-		color: {
-			type: String,
+		isWarning: {
+			type: Boolean,
 		},
-	})
-
-	const btnColor = computed(() => {
-		return `var(--${props.color ? props.color : 'lightBlue'})`
 	})
 
 	const computedConditionalClasses = new Map([
 		[computed(() => props.isDisabled), 'disabled'],
 		[computed(() => props.isForNav), 'btn__nav'],
+		[computed(() => props.isWarning), 'btn__warning'],
 	])
 	const btnStyles = computedCssModule('btn', computedConditionalClasses)
 </script>
@@ -60,13 +57,17 @@
 		cursor: pointer;
 		border: 1px solid var(--darkGray);
 		padding: var(--s-4) var(--s-2);
-		background-color: v-bind(btnColor);
+		background-color: var(--lightBlue);
 		border-radius: var(--s10);
 		text-decoration: none;
 		@include mixins.blueDropShadow();
 		@include mixins.btnTransition();
 
-		&:not(.btn__nav):hover {
+		&:hover {
+			filter: none;
+			@include mixins.hoverBoxShadow();
+		}
+		&:not(.btn__nav):not(.btn__warning):hover {
 			color: var(--blue);
 			background-color: var(--peach);
 			@include mixins.hoverBoxShadow();
@@ -89,6 +90,15 @@
 			}
 			&:visited:not(:hover):not(:focus) {
 				color: var(--black);
+			}
+		}
+		&__warning {
+			background-color: var(--red);
+			color: var(--white);
+			&:hover {
+				color: var(--red-3);
+				background-color: var(--peach);
+				@include mixins.hoverBoxShadowWarning();
 			}
 		}
 

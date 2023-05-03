@@ -28,7 +28,7 @@
 				<a
 					:href="`#${navItem.id}`"
 					@click="navToSection(navItem.id)"
-					:title="isLocatedHere(navItem.id) ? 'You are here' : ''"
+					:aria-current="isLocatedHere(navItem.id) ? 'page' : false"
 					>{{ navItem!.title }}</a
 				>
 			</li>
@@ -65,17 +65,17 @@
 	// transition enter only
 	const styles = useCssModule()
 
-	const onBeforeEnter = (el: HTMLElement) => {
+	const onBeforeEnter = (el: Element) => {
 		el.classList.remove(styles.listShown)
 	}
-	const onEnter = (el: HTMLElement, done: Function) => {
+	const onEnter = (el: Element, done: Function) => {
 		const interval = setInterval(function () {
 			el.classList.toggle(styles.listShown)
 			clearInterval(interval)
 		}, 20)
 		done()
 	}
-	const onBeforeLeave = (el: HTMLElement) => {
+	const onBeforeLeave = (el: Element) => {
 		el.classList.remove(styles.listShown)
 	}
 </script>

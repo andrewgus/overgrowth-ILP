@@ -1,14 +1,39 @@
 <template v-if="doesLocalStorageExist">
-	<dialog ref="dialogEl" :class="$style.dialog">
-		<h2>Hey there! &#128075;</h2>
-		<p>
-			Looks like you have some saved work on this lesson. Would you like to
-			continue where you left off <strong>or</strong> reset this lesson?
+	<dialog aria-live="polite" ref="dialogEl" :class="$style.dialog">
+		<h1>{{ !confirmDelete ? 'Hey there! &#128075;' : 'Are You Sure?' }}</h1>
+		<p v-if="!confirmDelete">
+			<span :class="$style.visuallyHidden">Important: </span> Looks like you
+			have some saved work on this lesson. Would you like to continue where you
+			left off <strong>or</strong> reset this lesson?
+		</p>
+		<p v-else>
+			<span :class="$style.visuallyHidden">Warning: </span> Resetting this
+			lesson <strong>cannot</strong> be undone. All saved data will be lost
+			forever.
 		</p>
 		<div :class="$style.dialog__btns">
-			<BaseButton text="Continue lesson?" @btnClick="dialogEl?.close()" />
-			<!-- TODO: create a warning button prop to change the styles of this and any other warning btn. Consider primary, secondary, tert buttons instead? -->
-			<BaseButton text="Reset lesson?" @btnClick="resetAndClose" />
+			<BaseButton
+				v-show="!confirmDelete"
+				text="Continue lesson?"
+				@btnClick="dialogEl?.close()"
+			/>
+			<BaseButton
+				v-show="!confirmDelete"
+				text="Reset lesson?"
+				isWarning
+				@btnClick="confirmDelete = true"
+			/>
+			<BaseButton
+				v-show="confirmDelete"
+				text="Nevermind. Let&rsquo;s continue."
+				@btnClick="dialogEl?.close()"
+			/>
+			<BaseButton
+				v-show="confirmDelete"
+				text="Yes. Reset this lesson"
+				isWarning
+				@btnClick="resetAndClose"
+			/>
 		</div>
 	</dialog>
 </template>
@@ -22,6 +47,7 @@
 
 	const doesLocalStorageExist = ref<boolean>(false)
 	const dialogEl = ref<HTMLDialogElement>()
+	const confirmDelete = ref<boolean>(false)
 
 	onMounted(() => {
 		doesLocalStorageExist.value = !!getLocalStorage()
@@ -31,9 +57,6 @@
 	const resetAndClose = () => {
 		useResetLocalStorageUserData()
 		localStorage.removeItem(lessonIDAtom.get())
-		// BUG: localStorage.removeItem only works if I console log afterward? Why? NOTE: now seems to be functioning properly. Not sure what happened.
-		// BUG: removeItem now seems to work, but only the first feature data is being saved to localStorage on refresh, even though other data is being properly sent to localStorage.
-		// console.log(localStorage.getItem(lessonIDAtom.get()))
 		dialogEl.value?.close()
 	}
 </script>
@@ -61,7 +84,8 @@
 		&::backdrop {
 			background-color: hsla(0deg, 0%, 100%, 60%);
 		}
-		> h2 {
+		> h1 {
+			font-size: var(--s4);
 			margin-top: 0;
 		}
 
@@ -71,5 +95,8 @@
 			flex-flow: row nowrap;
 			gap: var(--s-2);
 		}
+	}
+	.visuallyHidden {
+		@include mixins.visuallyHidden();
 	}
 </style>

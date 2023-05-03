@@ -7,7 +7,7 @@
 			:tabindex="isHidden ? '-1' : '0'"
 		>
 			<p>{{ text }}</p>
-			<span :class="$style.indicator__arrow">
+			<span :class="$style.scrollArrow">
 				<svg
 					width="60"
 					height="38"
@@ -66,7 +66,7 @@
 				margin: 0 auto var(--s-10);
 			}
 		}
-		&__arrow {
+		.scrollArrow {
 			margin: var(--s-10) auto var(--s-4);
 			max-width: fit-content;
 			animation: bounce 1s ease-in-out infinite alternate;

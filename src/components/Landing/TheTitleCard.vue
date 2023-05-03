@@ -62,8 +62,14 @@
 			required: true,
 		},
 	})
-
 	const $features = useStore(featuresMap)
+
+	const twoFeatures = (feature1: FeatureType, feature2: FeatureType) => {
+		return useFeatureExists(feature1) && useFeatureExists(feature2)
+	}
+	const getFeatureValue = (feature: FeatureType) => {
+		return $features.value[feature] as boolean
+	}
 
 	const featuresOn = computed(() => {
 		return (
@@ -72,10 +78,6 @@
 			useFeatureExists('choice')
 		)
 	})
-
-	const twoFeatures = (feature1: FeatureType, feature2: FeatureType) => {
-		return useFeatureExists(feature1) && useFeatureExists(feature2)
-	}
 	const multiFeatures = computed(() => {
 		const reflectionAndOther =
 			twoFeatures('reflection', 'practice') ||
@@ -85,10 +87,6 @@
 
 		return { reflectionAndOther, practiceAndChoice }
 	})
-
-	const getFeatureValue = (feature: FeatureType) => {
-		return $features.value[feature] as boolean
-	}
 </script>
 
 <style module lang="scss">

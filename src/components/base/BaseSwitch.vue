@@ -10,7 +10,7 @@
 			:aria-checked="enabled"
 			:value="enabled ? 'on' : 'off'"
 		/>
-		<span :class="$style.switch__toggleText" aria-hidden="true">{{
+		<span :class="$style.toggleText" aria-hidden="true">{{
 			enabled ? 'On' : 'Off'
 		}}</span>
 	</div>
@@ -50,7 +50,7 @@
 		&:hover:not(:focus-within) {
 			@include mixins.blueDropShadow();
 
-			> .switch__toggleText {
+			> :not(.off) + .switch__toggleText {
 				animation: switchJiggle var(--timeLong) var(--transitionFlourish);
 			}
 		}
@@ -67,28 +67,28 @@
 			background: var(--white);
 			color: transparent;
 
-			&.off + .switch__toggleText {
+			&.off + .toggleText {
 				transform: translateX(var(--s2));
 				margin: 0 0 0 2px;
 				color: #fff;
 				background: var(--red);
 			}
 		}
-		> &__toggleText {
-			font-size: var(--s-1);
-			pointer-events: none;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			width: var(--s0);
-			height: var(--s0);
-			padding: var(--s-2);
-			border-radius: 50%;
-			margin: 0 0 0 1px;
-			-webkit-transition: var(--timeShort) all var(--transitionFlourish);
-			transition: var(--timeShort) all var(--transitionFlourish);
-			background-color: var(--green1);
-		}
+	}
+	.toggleText {
+		font-size: var(--s-1);
+		pointer-events: none;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: var(--s0);
+		height: var(--s0);
+		padding: var(--s-2);
+		border-radius: 50%;
+		margin: 0 0 0 1px;
+		-webkit-transition: var(--timeShort) all var(--transitionFlourish);
+		transition: var(--timeShort) all var(--transitionFlourish);
+		background-color: var(--green1);
 	}
 
 	@keyframes switchJiggle {

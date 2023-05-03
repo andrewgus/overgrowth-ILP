@@ -1,6 +1,7 @@
 <template>
 	<transition name="opacity">
 		<p v-show="show" role="note" :class="$style.alertText">
+			<span :class="$style.visuallyHidden">Important: </span>
 			<slot></slot>
 		</p>
 	</transition>
@@ -38,6 +39,9 @@
 			margin-bottom: var(--s-4);
 			border-bottom: 1px dashed var(--darkGray);
 		}
+	}
+	.visuallyHidden {
+		@include mixins.visuallyHidden();
 	}
 </style>
 <style scoped lang="scss">

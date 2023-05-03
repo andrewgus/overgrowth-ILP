@@ -1,27 +1,20 @@
 // saving to localStorage
 import { watch } from 'vue'
-import { allSectionsMap, lessonIDAtom } from '../store/lessonStore'
+import { allSectionsMap, featuresMap, lessonIDAtom } from '../store/lessonStore'
 import { userReflectionsStore } from '../store/featureOptionsStore'
 import getLocalStorage from '../composables/useGetLocalStorage'
 
-// TODO: Need to store in localStorage whether features have been turned off or not. Default to on, if they exist.
+interface localStorageDataObjProps {
+	isFeatureComplete?: boolean
+	reflectionAnswer?: string
+	isReflectionOff?: boolean
+	isPracticeOff?: boolean
+	isChoiceOff?: boolean
+}
+type localStorageDataTypes = keyof localStorageDataObjProps
 
-// Interfaces: whether feature is complete, reflection answers, practice data, etc...
-interface localStorageFeatureComplete {
-	isFeatureComplete: boolean
-}
-interface localStorageReflectionAnswer {
-	reflectionAnswer: string
-}
-// Extracting interface keys to...
-type ExtractLocalStorageKeys<T> = { [K in keyof T]: K }[keyof T]
-// ...create a type of those keys for the getLocalStorage composable
-type localStorageDataTypes = ExtractLocalStorageKeys<
-	localStorageFeatureComplete & localStorageReflectionAnswer
->
-// interface for localStorage use
 interface localStorageDataObj {
-	[id: string]: localStorageFeatureComplete & localStorageReflectionAnswer
+	[id: string]: localStorageDataObjProps
 }
 
 let localStorageUserData: localStorageDataObj = !!getLocalStorage()
@@ -34,6 +27,7 @@ const useResetLocalStorageUserData = () => {
 	Object.values(userReflectionsStore).forEach(
 		(reflection) => (reflection.answer = '')
 	)
+
 	// Clearing all feature progress
 	const allSectionsAsArray = Object.entries(allSectionsMap.get())
 	// finding first available feature
@@ -49,41 +43,68 @@ const useResetLocalStorageUserData = () => {
 	})
 }
 
+const updateLocalStorageUserData = (
+	id: string,
+	data: Partial<localStorageDataObjProps>
+) => {
+	localStorageUserData[id] = {
+		...localStorageUserData[id],
+		...data,
+	}
+	localStorage.setItem(lessonIDAtom.get(), JSON.stringify(localStorageUserData))
+}
+
 // Updating local storage based on user's work
 watch(
 	() => userReflectionsStore,
 	(updatedReflections) => {
 		Object.entries(updatedReflections).forEach(([id, { answer }]) => {
-			if (!!answer) {
-				localStorageUserData[id] = {
-					...localStorageUserData[id],
+			if (answer !== '') {
+				updateLocalStorageUserData(id, {
 					reflectionAnswer: answer ? answer : '',
-				}
-				localStorage.setItem(
-					lessonIDAtom.get(),
-					JSON.stringify(localStorageUserData)
-				)
+				})
 			}
 		})
 	},
 	{ deep: true }
 )
-
 // Updating local storage based on user's progress
-allSectionsMap.subscribe((sections) => {
+allSectionsMap.listen((sections) => {
 	Object.entries(sections).forEach(([id, { isFeatureComplete }]) => {
 		if (isFeatureComplete) {
-			localStorageUserData[id] = {
-				...localStorageUserData[id],
+			updateLocalStorageUserData(id, {
 				isFeatureComplete: isFeatureComplete ? isFeatureComplete : false,
+			})
+		}
+	})
+})
+featuresMap.listen((feature) => {
+	Object.entries(feature).forEach(([featureType, isOn]) => {
+		if (isOn !== null && !isOn) {
+			switch (featureType) {
+				case 'reflection':
+					updateLocalStorageUserData('featureToggle', {
+						isReflectionOff: isOn,
+					})
+					break
+				case 'practice':
+					updateLocalStorageUserData('featureToggle', {
+						isPracticeOff: isOn,
+					})
+					break
+				case 'choice':
+					updateLocalStorageUserData('featureToggle', {
+						isChoiceOff: isOn,
+					})
+					break
 			}
-			localStorage.setItem(
-				lessonIDAtom.get(),
-				JSON.stringify(localStorageUserData)
-			)
 		}
 	})
 })
 
 export { useResetLocalStorageUserData }
-export type { localStorageDataObj, localStorageDataTypes }
+export type {
+	localStorageDataObj,
+	localStorageDataObjProps,
+	localStorageDataTypes,
+}

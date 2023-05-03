@@ -2,19 +2,15 @@
 	<div :class="$style.skipBtn" id="skipToContent">
 		<BaseButton
 			link
+			isWarning
 			text="Skip to main content"
-			:url="`#${Object.keys($allNavSections).at(0)}`"
-			color="red-1"
+			url="#theLessonContent"
 		></BaseButton>
 	</div>
 </template>
 
 <script setup lang="ts">
-	import { useStore } from '@nanostores/vue'
-	import { filteredNavSectionsComputed } from '../../store/lessonStore'
 	import BaseButton from '../base/BaseButton.vue'
-
-	const $allNavSections = useStore(filteredNavSectionsComputed)
 </script>
 
 <style module lang="scss">
