@@ -51,7 +51,8 @@
 			}SwitchBoard.vue`
 		).finally(() => {
 			useDoesFeatureExist(props.featureType)
-			// only need to updateLocalStorage if features are being used in the lesson
+			// only need setLocksHandler && updateLocalStorage scripts if features are being used within a given lesson
+			import('../scripts/setLocksHandler.js')
 			import('../scripts/updateLocalStorage.js')
 		})
 	)

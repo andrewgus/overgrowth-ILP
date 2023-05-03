@@ -1,8 +1,8 @@
 ---
 import '../styles/root.scss'
+import LocalStorageDialog from '../components/localStorageAlert/LocalStorageDialog.vue'
 import TheLanding from '../components/landing/TheLanding.vue'
 import TheLessonNav from '../components/navigation/TheLessonNav.vue'
-import LocalStorageDialog from '../components/localStorageAlert/localStorageDialog.vue'
 import createID from '../composables/useCreateID'
 
 interface Props {
@@ -29,7 +29,6 @@ const {
 		<script>
 			import '../scripts/setSectionsHandler.js'
 			import '../scripts/hashChangeHandler.js'
-			import '../scripts/setLocksHandler.js'
 		</script>
 		<title>{title} &vert; FSCJ</title>
 	</head>
