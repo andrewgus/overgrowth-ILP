@@ -26,8 +26,8 @@
 	import getLocalStorage from '../../../composables/useGetLocalStorage'
 	import BaseTextInput from '../../base/BaseTextInput.vue'
 
-	const areSectionsAvailable = useAreSectionsAvailable()
 	const $allSections = useStore(allSectionsMap)
+	const { areSectionsAvailable } = useAreSectionsAvailable()
 
 	const props = defineProps({
 		id: {

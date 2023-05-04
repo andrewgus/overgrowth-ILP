@@ -83,7 +83,8 @@
 		currSectionMap: $currSection,
 		nextSectionComputed: $nextSection,
 	} = mapStores({ allSectionsMap, currSectionMap, nextSectionComputed })
-	const areSectionsAvailable = useAreSectionsAvailable()
+
+	const { areSectionsAvailable } = useAreSectionsAvailable()
 	const isLastSection = useIsLastSection(featureProgressStore[props.id].id)
 
 	const saveAsPDF = async () => {

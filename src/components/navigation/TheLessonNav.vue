@@ -24,7 +24,7 @@
 
 	const $isOnContent = useStore(isOnContentAtom)
 	const $currSection = useStore(currSectionMap)
-	const areSectionsAvailable = useAreSectionsAvailable()
+	const { areSectionsAvailable } = useAreSectionsAvailable()
 </script>
 
 <style module lang="scss">

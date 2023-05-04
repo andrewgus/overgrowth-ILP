@@ -24,7 +24,7 @@
 	}
 	const props = defineProps<Props>()
 
-	const areSectionsAvailable = useAreSectionsAvailable()
+	const { areSectionsAvailable } = useAreSectionsAvailable()
 
 	const bgGradient = `linear-gradient(to bottom, white 0%, ${props.color} 40%, ${props.color} 60%, white 100%);`
 </script>
