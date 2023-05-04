@@ -1,6 +1,5 @@
 <template>
 	<BaseButton
-		isForNav
 		:class="$style.btnTOC"
 		:text="!isMenuOpen ? 'Go to&hellip;' : 'Close'"
 		aria-haspopup="menu"

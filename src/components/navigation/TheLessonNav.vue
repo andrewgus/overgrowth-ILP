@@ -4,7 +4,6 @@
 		id="lessonNav"
 		:class="[$style.lessonNav, { [$style.isInvisible]: !$isOnContent }]"
 	>
-		<SkipToContent v-if="areSectionsAvailable && !$isOnContent" />
 		<div :class="$style.navInfo">
 			<p v-if="!!$currSection" v-show="$isOnContent">
 				Currently on:
@@ -22,7 +21,6 @@
 	import useAreSectionsAvailable from '../../composables/useAreSectionsAvailable'
 	import TheNavToc from './TheNavTOC.vue'
 	import TheNextPrevSectionButtons from './TheNextPrevSectionButtons.vue'
-	import SkipToContent from './SkipToContent.vue'
 
 	const $isOnContent = useStore(isOnContentAtom)
 	const $currSection = useStore(currSectionMap)

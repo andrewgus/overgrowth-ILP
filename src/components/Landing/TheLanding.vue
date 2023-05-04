@@ -3,18 +3,15 @@
 		<TheScene v-if="areSectionsAvailable" :scene="scene" />
 		<TheTitleCard v-if="areSectionsAvailable" :title="title" />
 		<BaseIndicator
-			v-if="areSectionsAvailable"
 			:class="$style.onLandingIndicator"
 			isHidden
 			text="Scroll to start"
-			:goTo="`#${Object.keys($allNavSections).at(0)}`"
+			goTo="#theLessonContent"
 		/>
 	</header>
 </template>
 
 <script setup lang="ts">
-	import { useStore } from '@nanostores/vue'
-	import { filteredNavSectionsComputed } from '../../store/lessonStore'
 	import useAreSectionsAvailable from '../../composables/useAreSectionsAvailable'
 	import TheScene from './TheScene.vue'
 	import TheTitleCard from './TheTitleCard.vue'
@@ -27,7 +24,6 @@
 	}
 	const props = defineProps<Props>()
 
-	const $allNavSections = useStore(filteredNavSectionsComputed)
 	const areSectionsAvailable = useAreSectionsAvailable()
 
 	const bgGradient = `linear-gradient(to bottom, white 0%, ${props.color} 40%, ${props.color} 60%, white 100%);`

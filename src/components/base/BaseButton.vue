@@ -26,24 +26,20 @@
 			type: Boolean,
 			default: false,
 		},
+		isWarning: {
+			type: Boolean,
+		},
 		link: {
 			type: Boolean,
 		},
 		url: {
 			type: String,
 		},
-		isForNav: {
-			type: Boolean,
-		},
-		isWarning: {
-			type: Boolean,
-		},
 	})
 
 	const computedConditionalClasses = new Map([
 		[computed(() => props.isDisabled), 'disabled'],
-		[computed(() => props.isForNav), 'btn__nav'],
-		[computed(() => props.isWarning), 'btn__warning'],
+		[computed(() => props.isWarning), 'warning'],
 	])
 	const btnStyles = computedCssModule('btn', computedConditionalClasses)
 </script>
@@ -67,32 +63,20 @@
 			filter: none;
 			@include mixins.hoverBoxShadow();
 		}
-		&:not(.btn__nav):not(.btn__warning):hover {
+		&:hover {
 			color: var(--blue);
-			background-color: var(--peach);
 			@include mixins.hoverBoxShadow();
 		}
 		&:focus {
 			z-index: 10;
 			&,
 			&:hover {
+				background-color: var(--peach);
 				filter: drop-shadow(0px 0px 0 var(--blue));
 			}
 		}
 
-		&__nav {
-			&:hover,
-			&:focus {
-				outline: none;
-				background-color: var(--blue);
-				color: var(--white);
-				z-index: 2;
-			}
-			&:visited:not(:hover):not(:focus) {
-				color: var(--black);
-			}
-		}
-		&__warning {
+		&.warning {
 			background-color: var(--red);
 			color: var(--white);
 			&:hover {

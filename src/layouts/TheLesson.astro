@@ -1,6 +1,7 @@
 ---
 import '../styles/root.scss'
 import LocalStorageDialog from '../components/localStorageAlert/LocalStorageDialog.vue'
+import SkipToContent from '../components/navigation/SkipToContent.astro'
 import TheLanding from '../components/landing/TheLanding.vue'
 import TheLessonNav from '../components/navigation/TheLessonNav.vue'
 import createID from '../composables/useCreateID'
@@ -34,11 +35,12 @@ const {
 	</head>
 	<body id={`${createID(title)}-lesson`}>
 		<LocalStorageDialog client:load />
+		<SkipToContent />
 		<TheLanding client:load title={title} scene={scene} color={gradientColor} />
 		<TheLessonNav client:load />
 		<main id='theLessonContent'>
-			<!-- TODO: Include header and nav elements in the canvas2HTML ignoreElements function. Include btn that will print all static content as PDF if all features are turned off. If all features are turned off and there is no static content, and therefore no sections at all, then a warning will appear in the same place as the PDF (just below the toggle switches) informing learners that there is nothing to do. v-if on the scroll to start, if there are no sections to scroll to. -->
 			<slot />
+			<!-- TODO: Include header and nav elements in the canvas2HTML ignoreElements function. Include btn that will print all static content as PDF if all features are turned off. If all features are turned off and there is no static content, and therefore no sections at all, then a warning will appear in the same place as the PDF (just below the toggle switches) informing learners that there is nothing to do. v-if on the scroll to start, if there are no sections to scroll to. -->
 		</main>
 	</body>
 </html>

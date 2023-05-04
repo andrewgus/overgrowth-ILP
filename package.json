@@ -1,5 +1,15 @@
 {
   "name": "overgrowth-ilp",
+  "description": "An interactive learning platform (ILP) for building asynchronous, self-paced learning experiences grounded in providing opportunities for reflection, practice, and choice",
+  "keywords": [
+    "astro",
+    "vue",
+    "education",
+    "learning",
+    "online learning",
+    "asynchronous",
+    "self-paced"
+  ],
   "type": "module",
   "version": "0.0.1",
   "private": true,
@@ -13,13 +23,13 @@
   "dependencies": {
     "@astrojs/vue": "^2.1.1",
     "@nanostores/vue": "^0.7.0",
-    "@vueuse/core": "^10.0.0",
-    "astro": "^2.3.0",
+    "@vueuse/core": "^10.1.2",
+    "astro": "^2.3.4",
     "jspdf": "^2.5.1",
-    "nanostores": "^0.8.0",
+    "nanostores": "^0.8.1",
     "vue": "^3.2.47"
   },
   "devDependencies": {
-    "sass": "^1.62.0"
+    "sass": "^1.62.1"
   }
 }

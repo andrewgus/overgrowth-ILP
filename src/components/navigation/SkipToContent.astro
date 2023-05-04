@@ -1,0 +1,33 @@
+---
+import BaseButton from '../base/BaseButton.vue'
+---
+
+<div class='skipBtn' id='skipToContent'>
+	<BaseButton
+		link
+		isWarning
+		isDisabled={false}
+		text='Skip to main content'
+		url='#theLessonContent'
+	/>
+</div>
+
+<style lang='scss'>
+	.skipBtn {
+		position: absolute;
+		top: -5vh;
+		max-width: max-content;
+		border: 1px solid var(--white);
+		transition: top var(--timeShort) ease-in-out;
+
+		&:focus-within {
+			top: 0;
+		}
+		> a {
+			border-radius: 0 0 var(--s0) var(--s0);
+			display: block;
+			padding: var(--s-5);
+			color: var(--white);
+		}
+	}
+</style>

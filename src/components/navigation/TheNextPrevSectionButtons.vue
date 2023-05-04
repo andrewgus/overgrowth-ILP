@@ -2,7 +2,6 @@
 	<div v-if="$isOnContent" :class="$style.nextPrev">
 		<BaseButton
 			link
-			isForNav
 			:tabindex="$isOnFirstSection ? '-1' : '0'"
 			:isDisabled="$isOnFirstSection"
 			:aria-hidden="$isOnFirstSection"
@@ -15,7 +14,6 @@
 		/>
 		<BaseButton
 			link
-			isForNav
 			:tabindex="$isOnLastSection ? '-1' : '0'"
 			:isDisabled="$isOnLastSection"
 			:aria-hidden="$isOnLastSection"

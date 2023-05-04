@@ -4,7 +4,7 @@
 		<input
 			@click="toggleSwitch"
 			:id="`${type.toLowerCase()}Switch`"
-			:class="[$style.switch__input, { [$style.off]: !enabled }]"
+			:class="[$style.input, { [$style.off]: !enabled }]"
 			type="button"
 			role="switch"
 			:aria-checked="enabled"
@@ -57,7 +57,7 @@
 		> * {
 			grid-area: 1/1/-1/-1;
 		}
-		> &__input {
+		> .input {
 			cursor: pointer;
 			padding: 0;
 			border-radius: var(--s10);

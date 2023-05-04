@@ -53,6 +53,8 @@
 		useToggleFeature,
 		type FeatureType,
 	} from '../../store/lessonStore'
+	import type { localStorageDataObjProps } from '../../scripts/updateLocalStorage'
+	import getLocalStorage from '../../composables/useGetLocalStorage'
 	import BaseSeparator from '../base/BaseSeparator.vue'
 	import BaseSwitch from '../base/BaseSwitch.vue'
 
@@ -87,6 +89,26 @@
 
 		return { reflectionAndOther, practiceAndChoice }
 	})
+
+	// // FIXME: This is not the correct placement for this, I think...
+	// if (!!getLocalStorage('featureToggle')) {
+	// 	const { isReflectionOff, isPracticeOff, isChoiceOff } = getLocalStorage(
+	// 		'featureToggle'
+	// 	) as localStorageDataObjProps
+
+	// 	if (isReflectionOff === false && $features.value['reflection'] === true) {
+	// 		console.log(isReflectionOff)
+	// 		useToggleFeature('reflection')
+	// 	}
+	// 	if (isPracticeOff === false && $features.value['practice'] === true) {
+	// 		console.log(isPracticeOff)
+	// 		useToggleFeature('practice')
+	// 	}
+	// 	if (isChoiceOff === false && $features.value['choice'] === true) {
+	// 		console.log(isChoiceOff)
+	// 		useToggleFeature('choice')
+	// 	}
+	// }
 </script>
 
 <style module lang="scss">
