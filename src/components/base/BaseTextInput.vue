@@ -6,20 +6,26 @@
 		autocomplete="off"
 		:id="`${id}-textInput`"
 		v-model="userInput"
+		:placeholder="placeholderText"
 	>
 	</textarea>
 </template>
 
 <script setup lang="ts">
 	import { ref, computed } from 'vue'
+
 	const emits = defineEmits(['userTyped'])
-
-	// FIXME: savedData not properly showing.
-
-	const typedContent = ref<string>()
 
 	const props = defineProps({
 		id: {
+			type: String,
+			required: true,
+		},
+		placeholderText: {
+			type: String,
+			required: true,
+		},
+		storeProp: {
 			type: String,
 			required: true,
 		},
@@ -31,13 +37,15 @@
 		},
 	})
 
+	const typedInput = ref<string>('')
+
 	const userInput = computed({
 		get() {
-			if (props.savedData) return props.savedData
-			return typedContent.value
+			if (props.savedData) typedInput.value = props.savedData
+			typedInput.value = props.storeProp
+			return typedInput.value
 		},
 		set(value) {
-			typedContent.value = value
 			emits('userTyped', value)
 		},
 	})

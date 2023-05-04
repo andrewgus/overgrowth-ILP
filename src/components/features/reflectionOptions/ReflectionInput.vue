@@ -1,32 +1,34 @@
 <template>
 	<div :class="$style.userInput">
-		<label :for="`${id}-textInput`">{{ prompt }}</label>
 		<slot></slot>
-		<!-- TODO: fix disabled attribute. Not currently working. -->
-		<textarea
-			:disabled="!!$currSection.isFeatureComplete"
-			placeholder="I think&hellip;"
-			:id="`${id}-textInput`"
-			rows="7"
-			v-model="userInput"
-			autocomplete="off"
-			>{{ userReflectionsStore[id].answer }}</textarea
-		>
+		<label :for="`${id}-textInput`">{{ prompt }}</label>
+		<BaseTextInput
+			v-if="areSectionsAvailable"
+			:id="id"
+			:storeProp="userReflectionsStore[id].answer"
+			placeholderText="I think&hellip;"
+			:savedData="localStorageAnswers"
+			:isDisabled="!!$allSections[id].isFeatureComplete"
+			@userTyped="updateReflectionStore"
+		/>
 	</div>
 </template>
 
 <script setup lang="ts">
-	import { computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
-	import { currSectionMap } from '../../../store/lessonStore'
+	import { allSectionsMap } from '../../../store/lessonStore'
 	import {
 		userReflectionsStore,
 		initUserReflectionsStore,
 		featureProgressStore,
 	} from '../../../store/featureOptionsStore'
+	import useAreSectionsAvailable from '../../../composables/useAreSectionsAvailable'
 	import getLocalStorage from '../../../composables/useGetLocalStorage'
+	import BaseTextInput from '../../base/BaseTextInput.vue'
 
-	const $currSection = useStore(currSectionMap)
+	const areSectionsAvailable = useAreSectionsAvailable()
+	const $allSections = useStore(allSectionsMap)
+
 	const props = defineProps({
 		id: {
 			type: String,
@@ -47,20 +49,20 @@
 		? initUserReflectionsStore(props.id, props.prompt, localStorageAnswers)
 		: initUserReflectionsStore(props.id, props.prompt)
 
-	const userInput = computed({
-		get() {
-			if (userReflectionsStore[props.id].answer.length > 25) {
-				featureProgressStore[props.id].isAttemptsFinished = true
-			} else {
-				featureProgressStore[props.id].isAttemptsFinished = false
-			}
+	const checkForCompletion = () => {
+		if (userReflectionsStore[props.id].answer.length > 25) {
+			featureProgressStore[props.id].isAttemptsFinished = true
+		} else {
+			featureProgressStore[props.id].isAttemptsFinished = false
+		}
+	}
 
-			return userReflectionsStore[props.id].answer
-		},
-		set(value) {
-			userReflectionsStore[props.id].answer = value
-		},
-	})
+	if (localStorageAnswers) checkForCompletion()
+
+	const updateReflectionStore = (emittedValue: string) => {
+		userReflectionsStore[props.id].answer = emittedValue
+		checkForCompletion()
+	}
 </script>
 
 <style module lang="scss">
@@ -70,21 +72,6 @@
 
 		& > label {
 			margin-bottom: var(--s0);
-		}
-
-		& > textarea {
-			resize: none;
-			font-size: var(--s0);
-			font-family: var(--fonts);
-			line-height: 1.6;
-			border-radius: var(--s-2);
-			border: 1px solid var(--darkGray);
-			transition: var(--timeShort) box-shadow var(--transitionFlourish);
-			padding: var(--s-2);
-
-			&:focus {
-				box-shadow: var(--s-4) var(--s-4) var(--s-8) var(--lightGray);
-			}
 		}
 	}
 </style>
