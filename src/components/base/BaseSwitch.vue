@@ -50,7 +50,7 @@
 		&:hover:not(:focus-within) {
 			@include mixins.blueDropShadow();
 
-			> :not(.off) + .switch__toggleText {
+			> :not(.off) + .toggleText {
 				animation: switchJiggle var(--timeLong) var(--transitionFlourish);
 			}
 		}

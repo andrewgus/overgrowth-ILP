@@ -8,12 +8,12 @@
 </template>
 
 <script setup lang="ts">
-	interface props {
+	type Props = {
 		orientation: 'horizontal' | 'vertical'
 		hidden?: boolean
 		color?: string
 	}
-	const props = withDefaults(defineProps<props>(), {
+	const props = withDefaults(defineProps<Props>(), {
 		hidden: false,
 		color: 'var(--lightGray)',
 	})

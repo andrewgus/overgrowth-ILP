@@ -49,7 +49,7 @@
 				v-if="!isLastSection"
 				text="Scoll to continue"
 				:isHidden="id !== $currSection.id"
-				:goTo="`#${$nextSection}`"
+				:goTo="`#${nextSection}`"
 			/>
 		</template>
 	</TransitionGroup>
@@ -62,7 +62,7 @@
 		allSectionsMap,
 		currSectionMap,
 		useSetCurrSection,
-		nextSectionComputed,
+		nextSectionAfterID,
 		useIsLastSection,
 		useSetFeatureComplete,
 	} from '../../store/lessonStore'
@@ -78,13 +78,11 @@
 		},
 	})
 
-	const {
-		allSectionsMap: $allSections,
-		currSectionMap: $currSection,
-		nextSectionComputed: $nextSection,
-	} = mapStores({ allSectionsMap, currSectionMap, nextSectionComputed })
+	const { allSectionsMap: $allSections, currSectionMap: $currSection } =
+		mapStores({ allSectionsMap, currSectionMap })
 
 	const { areSectionsAvailable } = useAreSectionsAvailable()
+	const nextSection = nextSectionAfterID(props.id)
 	const isLastSection = useIsLastSection(featureProgressStore[props.id].id)
 
 	const saveAsPDF = async () => {

@@ -7,20 +7,15 @@ const lessonIDAtom = atom<string>('')
 
 // Feature setup for any given lesson
 type FeatureType = 'reflection' | 'practice' | 'choice'
-
-// init to null because the given feature does not yet exist.
-const featuresMap = map<Record<FeatureType, boolean | null>>({
-	reflection: null,
-	practice: null,
-	choice: null,
-})
+type FeaturesMap = Partial<{ [K in FeatureType]: boolean }>
+const featuresMap = map<FeaturesMap>({})
 // if feature layout is used in lesson, activate it
 const useDoesFeatureExist = (feature: FeatureType) => {
 	featuresMap.setKey(feature, true)
 }
-// For v-ifs in vue components, if a given feature exists
+// Vue only: For v-ifs, if a given feature exists
 const useFeatureExists = (feature: FeatureType) => {
-	if (useStore(featuresMap).value[feature] !== null) {
+	if (useStore(featuresMap).value[feature] !== undefined) {
 		return true
 	} else {
 		return false
@@ -28,7 +23,7 @@ const useFeatureExists = (feature: FeatureType) => {
 }
 
 // All sections
-interface SectionDetails {
+type SectionDetails = {
 	title: string
 	id: string
 	orderNum: number | null
@@ -36,7 +31,7 @@ interface SectionDetails {
 	isLocked: boolean
 	isFeatureComplete: boolean | null
 }
-interface SectionsMap {
+type SectionsMap = {
 	[sectionKey: string]: SectionDetails
 }
 const allSectionsMap = deepMap<SectionsMap>()
@@ -321,6 +316,15 @@ const isOnLastSectionComputed = computed(
 		id === Object.keys(filteredNavSections).at(-1)
 )
 
+const nextSectionAfterID = (id: string) => {
+	const currOrderNum =
+		allSectionsMap.get()[id] && (allSectionsMap.get()[id].orderNum as number)
+
+	return Object.keys(allSectionsMap.get()).find((key) => {
+		return allSectionsMap.get()[key].orderNum === currOrderNum + 1
+	})
+}
+
 const useIsLastSection = (sectionID: string) => {
 	return Object.keys(allSectionsMap.get()).at(-1) === sectionID
 }
@@ -344,6 +348,7 @@ export {
 	prevSectionComputed,
 	isOnFirstSectionComputed,
 	isOnLastSectionComputed,
+	nextSectionAfterID,
 	useIsLastSection,
 	useSetFeatureComplete,
 	useUnlockNextSectionsAfterCompletion,

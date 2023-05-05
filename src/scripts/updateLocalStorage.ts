@@ -1,10 +1,13 @@
 // saving to localStorage
 import { watch } from 'vue'
 import { allSectionsMap, featuresMap, lessonIDAtom } from '../store/lessonStore'
-import { userReflectionsStore } from '../store/featureOptionsStore'
+import {
+	featureProgressStore,
+	userReflectionsStore,
+} from '../store/featureOptionsStore'
 import getLocalStorage from '../composables/useGetLocalStorage'
 
-interface localStorageDataObjProps {
+type localStorageDataObjProps = {
 	isFeatureComplete?: boolean
 	reflectionAnswer?: string
 	isReflectionOff?: boolean
@@ -13,7 +16,7 @@ interface localStorageDataObjProps {
 }
 type localStorageDataTypes = keyof localStorageDataObjProps
 
-interface localStorageDataObj {
+type localStorageDataObj = {
 	[id: string]: localStorageDataObjProps
 }
 
@@ -27,9 +30,13 @@ const useResetLocalStorageUserData = () => {
 	Object.values(userReflectionsStore).forEach(
 		(reflection) => (reflection.answer = '')
 	)
+	// Clearing all finished attempts
+	Object.values(featureProgressStore).forEach(
+		({ isAttemptsFinished }) => (isAttemptsFinished = false)
+	)
 	// Clearing all feature progress
 	const allSectionsAsArray = Object.entries(allSectionsMap.get())
-	// finding first available feature
+	// finding first available feature to lock sections all after it
 	const firstFeature = allSectionsAsArray.findIndex(
 		([_, details]) => details.featureType !== null
 	)
@@ -49,7 +56,15 @@ const updateLocalStorageUserData = (
 	deleteWhat?: localStorageDataTypes
 ) => {
 	if (shouldDelete) {
-		delete localStorageUserData[id][deleteWhat!]
+		// FIXME: Figure out best way to delete
+		if (Object.values(localStorageUserData[id]).length === 0) {
+			delete localStorageUserData[id]
+			if (Object.values(localStorageUserData).length === 0) {
+				localStorage.removeItem(lessonIDAtom.get())
+			}
+		} else {
+			delete localStorageUserData[id][deleteWhat!]
+		}
 	} else {
 		localStorageUserData[id] = {
 			...localStorageUserData[id],
@@ -108,20 +123,38 @@ featuresMap.listen((feature) => {
 		// NOTE: Want to remove the prop all together from the store if feature is turned on. Get this functioning where it deletes the prop from the object. Probably need to update the updateLocalStorageUserData for an optional param to delete and still send to localStorage.
 		// TODO: THEN work on getting that over to the TitleCard
 		// BUG: This will run immediately when it is set from null to true... that's bad.
-		// if (isOn !== null && isOn === true) {
-		// 	switch (featureType) {
-		// 		case 'reflection':
-		// 			console.log(featureType, isOn)
-
-		// 			break
-		// 		case 'practice':
-		// 			console.log(featureType, isOn)
-		// 			break
-		// 		case 'choice':
-		// 			console.log(featureType, isOn)
-		// 			break
-		// 	}
-		// }
+		// FIXME: toggle data will save, but not properly return on refresh... I think it has to do with this before. It starts as null and then changes to true, and that triggers this...
+		if (!!getLocalStorage('featureToggle')) {
+			if (isOn !== null && isOn === true) {
+				console.log(featureType, isOn)
+				// switch (featureType) {
+				// 	case 'reflection':
+				// 		updateLocalStorageUserData(
+				// 			'featureToggle',
+				// 			undefined,
+				// 			true,
+				// 			'isReflectionOff'
+				// 		)
+				// 		break
+				// 	case 'practice':
+				// 		updateLocalStorageUserData(
+				// 			'featureToggle',
+				// 			undefined,
+				// 			true,
+				// 			'isPracticeOff'
+				// 		)
+				// 		break
+				// 	case 'choice':
+				// 		updateLocalStorageUserData(
+				// 			'featureToggle',
+				// 			undefined,
+				// 			true,
+				// 			'isChoiceOff'
+				// 		)
+				// 		break
+				// }
+			}
+		}
 	})
 })
 

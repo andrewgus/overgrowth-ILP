@@ -31,7 +31,7 @@
 	import FeatureCompleteBtns from '../components/features/FeatureCompleteBtns.vue'
 	import BaseAlertText from '../components/base/BaseAlertText.vue'
 
-	interface Props {
+	type Props = {
 		featureType: FeatureType
 		title: string
 		prompt: string

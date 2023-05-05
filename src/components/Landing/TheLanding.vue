@@ -17,7 +17,7 @@
 	import TheTitleCard from './TheTitleCard.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
 
-	interface Props {
+	type Props = {
 		title: string
 		scene: string
 		color?: string

@@ -7,12 +7,12 @@
 <script setup lang="ts">
 	import { defineAsyncComponent, computed } from 'vue'
 
-	interface props {
+	type Props = {
 		id: string
 		prompt: string
 		isFinaleReveal: boolean
 	}
-	const props = defineProps<props>()
+	const props = defineProps<Props>()
 
 	const reflectionFeature = defineAsyncComponent(
 		() =>

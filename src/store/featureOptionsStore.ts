@@ -3,7 +3,7 @@ import { reactive } from 'vue'
 
 // REFLECTION
 // log user's reflection answers
-interface userReflectionResponses {
+type userReflectionResponses = {
 	[id: string]: {
 		prompt: string
 		answer: string

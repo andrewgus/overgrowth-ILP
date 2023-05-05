@@ -6,11 +6,11 @@
 
 <script setup lang="ts">
 	import { featureProgressStore } from '../../store/featureOptionsStore'
-	interface props {
+	type Props = {
 		id: string
 		prompt: string
 	}
-	const props = defineProps<props>()
+	const props = defineProps<Props>()
 
 	// FOR TESTING. This below would actually exist within a given child component. See reflection for example.
 	featureProgressStore[props.id].isAttemptsFinished = true
