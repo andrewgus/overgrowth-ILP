@@ -2,18 +2,6 @@
 // TODO: organize this mixins file better.
 // TODO: consider multiple mixin files that funnel into this one.
 
-@mixin visuallyHidden {
-  position: absolute;
-  clip: rect(0 0 0 0);
-  border: 0;
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  width: 1px;
-  white-space: nowrap;
-}
-
 @mixin flexCenter {
   display: flex;
   justify-content: center;

@@ -1,0 +1,27 @@
+---
+type Props = {
+	src: string
+	title: string
+}
+const { src, title } = Astro.props
+---
+
+<a class='extLink' href={src} target='_blank' rel='noreferrer'>
+	<span class='visuallyHidden'>External Link&nbsp;</span>
+	{title}
+	<img aria-hidden='true' alt='' src='../extLink.svg' />
+</a>
+
+<style lang='scss'>
+	.extLink {
+		display: inline-flex;
+		flex-flow: row nowrap;
+		gap: 0 var(--s-10);
+		align-items: center;
+
+		> img {
+			height: var(--s-3);
+			width: var(--s-3);
+		}
+	}
+</style>

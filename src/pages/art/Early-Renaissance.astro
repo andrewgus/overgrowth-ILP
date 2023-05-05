@@ -1,4 +1,5 @@
 ---
+import ExternalLink from '../../components/base/ExternalLink.astro'
 import StickyImage from '../../components/contentLayouts/StickyImage.astro'
 import StaticContent from '../../layouts/StaticContent.astro'
 import TheLesson from '../../layouts/TheLesson.astro'
@@ -10,20 +11,20 @@ import TheLesson from '../../layouts/TheLesson.astro'
 	gradientColor={'var(--yellow-5)'}
 >
 	<StaticContent title='Welcome to the Course'>
-		<StickyImage
-			text={[
-				'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor deleniti?',
-				'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor deleniti?',
-				'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor deleniti?',
-				'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor deleniti?',
-				'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor deleniti?',
-				'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor deleniti?',
-				'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor deleniti?',
-				'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor deleniti?',
-			]}
-			altText='Astronaut'
-			imageSrc='cel-website/construction.svg'
-		/>
+		<StickyImage altText='Astronaut' imageSrc='cel-website/construction.svg'>
+			<p>
+				Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ex placeat
+				mollitia officiis fuga perspiciatis cupiditate similique aliquid rerum
+				doloremque tempore? Nostrum sequi voluptate necessitatibus et
+				praesentium quae qui iure est.
+			</p>
+			<p>
+				Lorem ipsum dolor sit amet consectetur adipisicing elit.
+				<ExternalLink src='https://www.google.com' title='Google' />
+				Minima delectus consectetur reprehenderit laboriosam ullam magni fuga inventore
+				iure, ea cum, eos aliquam ex beatae quae fugit!
+			</p>
+		</StickyImage>
 	</StaticContent>
 	<StaticContent title='The Second Section'>
 		<p>In this course, we will&hellip;</p>

@@ -2,14 +2,13 @@
 	<dialog aria-live="polite" ref="dialogEl" :class="$style.dialog">
 		<h1>{{ !confirmDelete ? 'Hey there! &#128075;' : 'Are You Sure?' }}</h1>
 		<p v-if="!confirmDelete">
-			<span :class="$style.visuallyHidden">Important: </span> Looks like you
-			have some saved work on this lesson. Would you like to continue where you
-			left off <strong>or</strong> reset this lesson?
+			<span class="visuallyHidden">Important: </span> Looks like you have some
+			saved work on this lesson. Would you like to continue where you left off
+			<strong>or</strong> reset this lesson?
 		</p>
 		<p v-else>
-			<span :class="$style.visuallyHidden">Warning: </span> Resetting this
-			lesson <strong>cannot</strong> be undone. All saved data will be lost
-			forever.
+			<span class="visuallyHidden">Warning: </span> Resetting this lesson
+			<strong>cannot</strong> be undone. All saved data will be lost forever.
 		</p>
 		<div :class="$style.dialog__btns">
 			<BaseButton
@@ -95,8 +94,5 @@
 			flex-flow: row nowrap;
 			gap: var(--s-2);
 		}
-	}
-	.visuallyHidden {
-		@include mixins.visuallyHidden();
 	}
 </style>

@@ -2,6 +2,7 @@
 @use "typography.scss";
 @use "colors.scss";
 @use "transition.scss";
+@use "accessibility.scss";
 
 * {
   font-size: var(--s0);

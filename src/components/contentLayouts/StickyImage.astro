@@ -1,10 +1,9 @@
 ---
 type Props = {
-	text: string[]
 	imageSrc: string
 	altText: string
 }
-const { text, imageSrc, altText } = Astro.props
+const { imageSrc, altText } = Astro.props
 
 // TODO: Art direction. Vertical vs Horizontal images. Vertical images would be side by side. Horizontal images would be at the top. Both would be sticky to the text. With vertical images, text would scroll by as image stays in view to the left or right of it. With horizontal images, text would scroll as image is at the stickied to the top and z-indexed to be atop the text.
 ---
@@ -17,7 +16,7 @@ const { text, imageSrc, altText } = Astro.props
 		/>
 	</div>
 	<div class='correspondingText'>
-		{text.map((t) => <p>{t}</p>)}
+		<slot />
 	</div>
 </div>
 
