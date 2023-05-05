@@ -1,32 +1,39 @@
 ---
 type Props = {
 	title: string
-	columnSet?: '6040' | '4060' | '50' | '7525' | '2575' | '30' | '25'
 }
 
-const { title, columnSet } = Astro.props
-// TODO: remove columnSets from here completely. Create modern layouts in components --> features --> staticContent, and create layout components to drop into this.
-// TODO: on section el, add dynamic class of isLocked, when isLocked is true for this item within the allSections store map
+const { title } = Astro.props
 ---
 
 <article class:list={['section', 'staticContent']}>
-	<div class:list={[{ columnSet: columnSet }]}>
+	<div>
 		<h2>{title}</h2>
 		<slot />
 	</div>
 </article>
 
 <style lang='scss'>
-	.staticContent > div {
-		font-size: var(--s0);
-		margin: 0 auto;
-		max-width: 60ch;
-		width: 100%;
-	}
-	.staticContent > div :global(p) {
-		max-width: 60ch;
-		&:last-of-type {
-			margin-bottom: 0;
+	.staticContent {
+		> div {
+			font-size: var(--s0);
+			margin: 0 auto;
+			max-width: 80ch;
+			width: 100%;
+			> h2 {
+				max-width: 60ch;
+			}
+			> :global(p) {
+				max-width: 60ch;
+				margin-left: auto;
+				margin-right: auto;
+				&:last-of-type {
+					margin-bottom: 0;
+				}
+			}
+			> img {
+				max-width: 80ch;
+			}
 		}
 	}
 </style>

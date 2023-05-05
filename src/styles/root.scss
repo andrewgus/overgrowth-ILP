@@ -16,14 +16,15 @@
 }
 
 html {
+  font-size: var(--s0);
   font-family: var(--fonts);
   background-color: var(--white);
   overflow: scroll;
   scroll-behavior: smooth;
   scroll-padding-top: var(--s7);
   color: var(--black);
-  font-size: var(--s0);
 }
+
 body {
   margin: 0;
 }

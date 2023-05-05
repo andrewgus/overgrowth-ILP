@@ -1,7 +1,7 @@
 ---
 import TheLesson from '../../layouts/TheLesson.astro'
 import StaticContent from '../../layouts/StaticContent.astro'
-import FeatureInteractive from '../../layouts/FeatureInteractive.vue'
+import InteractiveFeature from '../../layouts/InteractiveFeature.vue'
 ---
 
 <TheLesson
@@ -9,7 +9,7 @@ import FeatureInteractive from '../../layouts/FeatureInteractive.vue'
 	scene='setting'
 	gradientColor={'var(--green)'}
 >
-	<FeatureInteractive
+	<InteractiveFeature
 		client:load
 		featureType='reflection'
 		title='What do you think?'
@@ -27,14 +27,14 @@ import FeatureInteractive from '../../layouts/FeatureInteractive.vue'
 				<p>&lbrace;Learning Outcome 3&rbrace;</p>
 			</li>
 		</ul>
-	</FeatureInteractive>
-	<FeatureInteractive
+	</InteractiveFeature>
+	<InteractiveFeature
 		client:load
 		featureType='practice'
 		title='Practice Feature'
 		prompt='This is a practice feature test.'
 	/>
-	<FeatureInteractive
+	<InteractiveFeature
 		client:load
 		featureType='choice'
 		title='Choice Feature'
@@ -157,7 +157,7 @@ import FeatureInteractive from '../../layouts/FeatureInteractive.vue'
 			</section>
 		</section>
 	</StaticContent>
-	<FeatureInteractive
+	<InteractiveFeature
 		client:load
 		featureType='reflection'
 		title='And Now What Do You Think?'
@@ -321,13 +321,13 @@ import FeatureInteractive from '../../layouts/FeatureInteractive.vue'
 			deleniti?
 		</p>
 	</StaticContent>
-	<FeatureInteractive
+	<InteractiveFeature
 		client:load
 		featureType='reflection'
 		title='One Last Time'
 		prompt='What’s changed in your thinking about Astronomy? Write it here.'
 	/>
-	<FeatureInteractive
+	<InteractiveFeature
 		client:load
 		featureType='reflection'
 		title="How You've Grown…"
