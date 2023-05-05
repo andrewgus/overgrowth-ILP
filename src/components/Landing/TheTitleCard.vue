@@ -41,7 +41,6 @@
 			</ul>
 		</div>
 	</div>
-	<!-- /.info -->
 </template>
 
 <script setup lang="ts">

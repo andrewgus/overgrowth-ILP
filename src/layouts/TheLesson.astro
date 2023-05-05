@@ -30,6 +30,7 @@ const {
 		<script>
 			import '../scripts/setSectionsHandler.js'
 			import '../scripts/hashChangeHandler.js'
+			// TODO: Include header and nav elements in the canvas2HTML ignoreElements function. Include btn that will print all static content as PDF if all features are turned off. If all features are turned off and there is no static content, and therefore no sections at all, then a warning will appear in the same place as the PDF (just below the toggle switches) informing learners that there is nothing to do. v-if on the scroll to start, if there are no sections to scroll to.
 		</script>
 		<title>{title} &vert; FSCJ</title>
 	</head>
@@ -40,7 +41,6 @@ const {
 		<TheLessonNav client:load />
 		<main id='theLessonContent'>
 			<slot />
-			<!-- TODO: Include header and nav elements in the canvas2HTML ignoreElements function. Include btn that will print all static content as PDF if all features are turned off. If all features are turned off and there is no static content, and therefore no sections at all, then a warning will appear in the same place as the PDF (just below the toggle switches) informing learners that there is nothing to do. v-if on the scroll to start, if there are no sections to scroll to. -->
 		</main>
 	</body>
 </html>
