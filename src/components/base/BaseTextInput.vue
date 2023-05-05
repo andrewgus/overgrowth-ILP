@@ -1,4 +1,5 @@
 <template>
+	<label :for="`${id}-textInput`">{{ prompt }}</label>
 	<textarea
 		:class="$style.textarea"
 		:disabled="isDisabled"
@@ -18,6 +19,10 @@
 
 	const props = defineProps({
 		id: {
+			type: String,
+			required: true,
+		},
+		prompt: {
 			type: String,
 			required: true,
 		},

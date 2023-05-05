@@ -1,10 +1,10 @@
 <template>
 	<div :class="$style.userInput">
 		<slot></slot>
-		<label :for="`${id}-textInput`">{{ prompt }}</label>
 		<BaseTextInput
 			v-if="areSectionsAvailable"
 			:id="id"
+			:prompt="prompt"
 			:storeProp="userReflectionsStore[id].answer"
 			placeholderText="I think&hellip;"
 			:savedData="localStorageAnswers"
