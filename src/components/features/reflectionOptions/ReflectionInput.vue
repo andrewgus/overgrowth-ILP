@@ -1,8 +1,11 @@
 <template>
 	<div :class="$style.userInput">
-		<slot></slot>
+		<div :id="`${id}-description`">
+			<slot></slot>
+		</div>
 		<BaseTextInput
 			v-if="areSectionsAvailable"
+			:describedBy="`${id}-description`"
 			:id="id"
 			:prompt="prompt"
 			:storeProp="userReflectionsStore[id].answer"

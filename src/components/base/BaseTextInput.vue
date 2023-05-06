@@ -1,6 +1,7 @@
 <template>
 	<label :for="`${id}-textInput`">{{ prompt }}</label>
 	<textarea
+		:aria-describedby="describedBy"
 		:class="$style.textarea"
 		:disabled="isDisabled"
 		rows="7"
@@ -39,6 +40,9 @@
 		},
 		isDisabled: {
 			type: Boolean,
+		},
+		describedBy: {
+			type: String,
 		},
 	})
 
