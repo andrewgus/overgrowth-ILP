@@ -29,6 +29,8 @@
 	import getLocalStorage from '../../../composables/useGetLocalStorage'
 	import BaseTextInput from '../../base/BaseTextInput.vue'
 
+	// TODO: set up so the div id around the slot and the aria-describedby are dynamic to if content was actually passed into the slot or not...
+
 	const $allSections = useStore(allSectionsMap)
 	const { areSectionsAvailable } = useAreSectionsAvailable()
 

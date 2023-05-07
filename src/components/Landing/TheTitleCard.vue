@@ -1,50 +1,50 @@
 <template>
 	<div :class="$style.titleCard">
 		<h1>{{ title }}</h1>
-		<div v-if="featuresOn">
-			<p>Included in this lesson are&hellip;</p>
-			<ul
-				aria-label="each item can be toggled on and off for this lesson"
-				:class="$style.options"
-			>
-				<li v-if="useFeatureExists('reflection')">
-					<BaseSwitch
-						type="Reflection"
-						:set="getFeatureValue('reflection')"
-						@toggleSwitch="useToggleFeature('reflection')"
-					/>
-				</li>
-				<BaseSeparator
-					orientation="vertical"
-					hidden
-					v-if="multiFeatures.reflectionAndOther"
+		<fieldset :class="$style.options" v-if="featuresOn">
+			<legend aria-describedby="featureToggleInstructions">
+				Included in this lesson are&hellip;
+				<span :class="$style.instructions"
+					>You can toggle activities on/off</span
+				>
+			</legend>
+			<div v-if="useFeatureExists('reflection')">
+				<BaseSwitch
+					type="Reflection"
+					:set="getFeatureValue('reflection')"
+					@toggleSwitch="useToggleFeature('reflection')"
 				/>
-				<li v-if="useFeatureExists('practice')">
-					<BaseSwitch
-						type="Practice"
-						:set="getFeatureValue('practice')"
-						@toggleSwitch="useToggleFeature('practice')"
-					/>
-				</li>
-				<BaseSeparator
-					orientation="vertical"
-					hidden
-					v-if="multiFeatures.practiceAndChoice"
+			</div>
+			<BaseSeparator
+				orientation="vertical"
+				hidden
+				v-if="multiFeatures.reflectionAndOther"
+			/>
+			<div v-if="useFeatureExists('practice')">
+				<BaseSwitch
+					type="Practice"
+					:set="getFeatureValue('practice')"
+					@toggleSwitch="useToggleFeature('practice')"
 				/>
-				<li v-if="useFeatureExists('choice')">
-					<BaseSwitch
-						type="Choice"
-						:set="getFeatureValue('choice')"
-						@toggleSwitch="useToggleFeature('choice')"
-					/>
-				</li>
-			</ul>
-		</div>
+			</div>
+			<BaseSeparator
+				orientation="vertical"
+				hidden
+				v-if="multiFeatures.practiceAndChoice"
+			/>
+			<div v-if="useFeatureExists('choice')">
+				<BaseSwitch
+					type="Choice"
+					:set="getFeatureValue('choice')"
+					@toggleSwitch="useToggleFeature('choice')"
+				/>
+			</div>
+		</fieldset>
 	</div>
 </template>
 
 <script setup lang="ts">
-	import { computed } from 'vue'
+	import { ref, computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import {
 		featuresMap,
@@ -52,8 +52,6 @@
 		useToggleFeature,
 		type FeatureType,
 	} from '../../store/lessonStore'
-	import type { localStorageDataObjProps } from '../../scripts/updateLocalStorage'
-	import getLocalStorage from '../../composables/useGetLocalStorage'
 	import BaseSeparator from '../base/BaseSeparator.vue'
 	import BaseSwitch from '../base/BaseSwitch.vue'
 
@@ -63,6 +61,7 @@
 			required: true,
 		},
 	})
+
 	const $features = useStore(featuresMap)
 
 	const twoFeatures = (feature1: FeatureType, feature2: FeatureType) => {
@@ -91,14 +90,15 @@
 </script>
 
 <style module lang="scss">
+	@use '../../styles/mixins.scss';
 	.titleCard {
 		grid-area: card-start/landing-top/card-indicator/landing-bottom;
 		justify-self: center;
 		align-self: start;
 		display: flex;
+		align-items: center;
 		flex-flow: column nowrap;
 		justify-content: space-between;
-		align-items: center;
 		border-radius: var(--s5);
 		background-color: hsla(0deg, 0%, 98%, 0.5);
 		filter: drop-shadow(0 0 var(--s1) var(--white));
@@ -115,14 +115,35 @@
 		}
 	}
 	.options {
-		padding-left: 0;
-		margin: 0;
+		border: 0;
+		padding: 0 0 0 0;
+		margin: var(--s-2) 0 0 0;
 		display: flex;
 		justify-content: center;
 		flex-flow: row nowrap;
 		gap: var(--s-5);
-		> li {
-			list-style: none;
+
+		&:hover .instructions,
+		&:focus-within .instructions {
+			all: unset;
+			transition: all var(--timeShort) ease-in-out;
+			display: block;
+			font-size: var(--s-1);
+			margin-top: var(--s-6);
+			background-color: var(--yellow5);
+			border: 1px solid var(--darkGray);
+			border-radius: var(--s-10);
+		}
+		> legend {
+			text-align: center;
+			margin: 0 auto var(--s-6);
+			> .instructions {
+				font-size: var(--s-1);
+				transition: all var(--timeShort) ease-in-out;
+				@include mixins.visuallyHidden();
+			}
+		}
+		> div {
 			display: flex;
 			flex-flow: column nowrap;
 			align-items: center;

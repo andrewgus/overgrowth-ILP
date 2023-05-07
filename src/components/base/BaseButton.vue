@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 	import { computed } from 'vue'
-	import computedCssModule from '../../composables/useComputedCssModule'
+	import computedCssModule from '../../composables/UseComputedCssModule'
 	import '../../styles/mixins.scss'
 
 	const props = defineProps({
