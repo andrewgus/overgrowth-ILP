@@ -2,6 +2,7 @@
 	<article class="section feature" :class="$style[featureType]" tabindex="-1">
 		<div>
 			<h2>{{ title }}</h2>
+			<p>{{ featureProgressStore[sectionID].isAttemptsFinished }}</p>
 			<BaseAlertText
 				:show="
 					!isFinaleReveal && !featureProgressStore[sectionID].isAttemptsFinished

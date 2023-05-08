@@ -44,6 +44,9 @@
 		describedBy: {
 			type: String,
 		},
+		completeCondition: {
+			type: Function,
+		},
 	})
 
 	const typedInput = ref<string>('')
@@ -52,6 +55,9 @@
 		get() {
 			if (props.savedData) typedInput.value = props.savedData
 			typedInput.value = props.storeProp
+
+			if (props.completeCondition) props.completeCondition()
+
 			return typedInput.value
 		},
 		set(value) {

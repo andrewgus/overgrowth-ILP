@@ -30,10 +30,6 @@ const useResetLocalStorageUserData = () => {
 	Object.values(userReflectionsStore).forEach(
 		(reflection) => (reflection.answer = '')
 	)
-	// Clearing all finished attempts
-	Object.values(featureProgressStore).forEach(
-		({ isAttemptsFinished }) => (isAttemptsFinished = false)
-	)
 	// Clearing all feature progress
 	const allSectionsAsArray = Object.entries(allSectionsMap.get())
 	// finding first available feature to lock sections all after it

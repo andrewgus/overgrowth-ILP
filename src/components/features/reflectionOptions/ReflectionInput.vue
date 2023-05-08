@@ -8,10 +8,11 @@
 			:describedBy="`${id}-description`"
 			:id="id"
 			:prompt="prompt"
-			:storeProp="userReflectionsStore[id].answer"
-			placeholderText="I think&hellip;"
 			:savedData="localStorageAnswers"
+			:storeProp="userReflectionsStore[id].answer"
 			:isDisabled="!!$allSections[id].isFeatureComplete"
+			:completeCondition="checkForCompletion"
+			placeholderText="I think&hellip;"
 			@userTyped="updateReflectionStore"
 		/>
 	</div>
@@ -29,7 +30,7 @@
 	import getLocalStorage from '../../../composables/useGetLocalStorage'
 	import BaseTextInput from '../../base/BaseTextInput.vue'
 
-	// TODO: set up so the div id around the slot and the aria-describedby are dynamic to if content was actually passed into the slot or not...
+	// FIXME: set up so the div id around the slot and the aria-describedby are dynamic to if content was actually passed into the slot or not...
 
 	const $allSections = useStore(allSectionsMap)
 	const { areSectionsAvailable } = useAreSectionsAvailable()
@@ -64,10 +65,8 @@
 
 	if (localStorageAnswers) checkForCompletion()
 
-	const updateReflectionStore = (emittedValue: string) => {
-		userReflectionsStore[props.id].answer = emittedValue
-		checkForCompletion()
-	}
+	const updateReflectionStore = (emittedValue: string) =>
+		(userReflectionsStore[props.id].answer = emittedValue)
 </script>
 
 <style module lang="scss">
