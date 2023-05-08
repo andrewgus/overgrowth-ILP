@@ -5,7 +5,7 @@
 		aria-haspopup="menu"
 		:aria-expanded="isMenuOpen"
 		aria-controls="navItemsList"
-		@click="openMenu"
+		@click="toggleMenu"
 	/>
 	<transition
 		:css="false"
@@ -13,25 +13,23 @@
 		@enter="onEnter"
 		@before-leave="onBeforeLeave"
 	>
-		<ol
-			:class="$style.listTOC"
-			v-show="isMenuOpen"
-			aria-label="table of contents links"
-			id="navItemsList"
-		>
-			<li
-				v-for="navItem in $allNavSections"
-				:key="navItem.id"
-				:class="{ [$style.greenDot]: isLocatedHere(navItem.id) }"
-			>
-				<a
-					:href="`#${navItem.id}`"
-					@click="navToSection(navItem.id)"
-					:aria-current="isLocatedHere(navItem.id) ? 'page' : false"
-					>{{ navItem!.title }}</a
+		<div id="navItemsList" v-show="isMenuOpen" :class="$style.lessonTOC">
+			<h2 class="visuallyHidden">Navigation Links</h2>
+			<ol>
+				<li
+					v-for="navItem in $allNavSections"
+					:key="navItem.id"
+					:class="{ [$style.greenDot]: isLocatedHere(navItem.id) }"
 				>
-			</li>
-		</ol>
+					<a
+						:href="`#${navItem.id}`"
+						@click="navToSection(navItem.id)"
+						:aria-current="isLocatedHere(navItem.id) ? 'page' : false"
+						>{{ navItem!.title }}</a
+					>
+				</li>
+			</ol>
+		</div>
 	</transition>
 </template>
 
@@ -45,20 +43,18 @@
 	} from '../../store/lessonStore'
 	import BaseButton from '../base/BaseButton.vue'
 
-	const $allNavSections = useStore(filteredNavSectionsComputed)
 	const $currSection = useStore(currSectionMap)
+	const $allNavSections = useStore(filteredNavSectionsComputed)
 
 	const isMenuOpen = ref<boolean>(false)
-	const openMenu = () => (isMenuOpen.value = !isMenuOpen.value)
 
-	const isLocatedHere = (id: string) => {
-		if (id == $currSection.value.id) {
-			return true
-		}
-	}
+	const toggleMenu = () => (isMenuOpen.value = !isMenuOpen.value)
+
+	const isLocatedHere = (id: string) => id == $currSection.value.id
+
 	const navToSection = (section: string) => {
 		useSetCurrSection(section)
-		isMenuOpen.value = !isMenuOpen.value
+		toggleMenu()
 	}
 
 	// transition enter only
@@ -80,7 +76,8 @@
 </script>
 
 <style module lang="scss">
-	.btnTOC {
+	button.btnTOC {
+		min-height: 48px;
 		font-size: var(--s-1);
 		grid-area: 1/3/2/4;
 		height: var(--s4);
@@ -88,8 +85,9 @@
 		border: 1px solid var(--darkGray);
 		border-radius: 0px var(--s10) var(--s10) 0px;
 		margin-left: var(--s-3);
+		padding: var(--s-2);
 	}
-	.listTOC {
+	.lessonTOC {
 		grid-area: 2/1/3/4;
 		justify-self: center;
 		list-style: none;
@@ -110,47 +108,51 @@
 			opacity: 1;
 			transform: translateY(0px);
 		}
+		> ol {
+			padding-left: 0;
+			margin: 0;
+			> li {
+				display: flex;
+				flex-flow: row nowrap;
+				align-items: center;
+				justify-content: flex-start;
+				gap: var(--s-4);
+				margin-top: 0;
 
-		> li {
-			display: flex;
-			flex-flow: row nowrap;
-			align-items: center;
-			justify-content: flex-start;
-			gap: var(--s-4);
-			margin-top: 0;
-
-			+ li {
-				border-top: 1px solid var(--darkGray);
-			}
-
-			&::before {
-				-webkit-transition: var(--timeShort) background-color
-					var(--transitionFlourish);
-				transition: var(--timeShort) background-color var(--transitionFlourish);
-				content: '';
-				display: inline-block;
-				height: var(--s-2);
-				width: var(--s-2);
-				border-radius: 50%;
-			}
-			&.greenDot::before {
-				background-color: var(--green);
-			}
-
-			> a {
-				padding: var(--s-2) var(--s-4);
-				width: 100%;
-				text-decoration: none;
-
-				&:hover,
-				&:focus {
-					background-color: var(--peach);
-					font-weight: 700;
-					outline: none;
-					text-decoration: underline;
+				+ li {
+					border-top: 1px solid var(--darkGray);
 				}
-				&:visited {
-					color: var(--purple);
+
+				&::before {
+					-webkit-transition: var(--timeShort) background-color
+						var(--transitionFlourish);
+					transition: var(--timeShort) background-color
+						var(--transitionFlourish);
+					content: '';
+					display: inline-block;
+					height: var(--s-2);
+					width: var(--s-2);
+					border-radius: 50%;
+				}
+				&.greenDot::before {
+					background-color: var(--green);
+				}
+
+				> a {
+					padding: var(--s-2) var(--s-4);
+					width: 100%;
+					text-decoration: none;
+
+					&:hover,
+					&:focus {
+						background-color: var(--peach);
+						font-weight: 700;
+						outline: none;
+						text-decoration: underline;
+					}
+					&:visited {
+						color: var(--purple);
+					}
 				}
 			}
 		}

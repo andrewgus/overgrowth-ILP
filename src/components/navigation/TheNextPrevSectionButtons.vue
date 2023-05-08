@@ -58,26 +58,24 @@
 </script>
 
 <style module lang="scss">
+	@use '../../styles/mixins.scss';
 	.nextPrev {
+		min-height: 48px;
 		grid-area: 1/2/2/3;
-		justify-self: end;
 		display: flex;
+		justify-self: end;
 		height: var(--s4);
-		border: 1px solid var(--darkGray);
 		border-radius: var(--s10) 0 0 var(--s10);
 		background-color: var(--lightBlue);
+		@include mixins.darkBorder();
 
-		> * {
-			border-radius: 0;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			width: var(--s3);
-			border: none;
-		}
-		.btn_next,
-		.btn_prev {
+		> a.btn_next,
+		> a.btn_prev {
+			@include mixins.flexCenter();
 			color: var(--black);
+			border-radius: 0;
+			padding: var(--s-2);
+			border: none;
 			transition: all var(--timeShort) ease-in-out;
 			&:visited {
 				color: var(--black);
@@ -87,7 +85,7 @@
 				pointer-events: none;
 			}
 		}
-		> .btn_prev {
+		> a.btn_prev {
 			border-radius: var(--s10) 0 0 var(--s10);
 		}
 	}

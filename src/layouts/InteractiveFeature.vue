@@ -1,5 +1,5 @@
 <template>
-	<article class="section feature" :class="$style[featureType]">
+	<article class="section feature" :class="$style[featureType]" tabindex="-1">
 		<div>
 			<h2>{{ title }}</h2>
 			<BaseAlertText

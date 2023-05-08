@@ -1,6 +1,6 @@
 <template v-if="doesLocalStorageExist">
 	<dialog ref="dialogEl" :class="$style.dialog">
-		<h1 tabindex="-1" ref="heading">
+		<h1 tabindex="-1" ref="dialogHeadingEl">
 			{{ !confirmDelete ? 'Hey there! &#128075;' : 'Are You Sure?' }}
 		</h1>
 		<p v-if="!confirmDelete">
@@ -44,9 +44,8 @@
 
 	const doesLocalStorageExist = ref<boolean>(false)
 	const dialogEl = ref<HTMLDialogElement | null>(null)
-	const heading = ref<HTMLHeadingElement | null>(null)
+	const dialogHeadingEl = ref<HTMLHeadingElement | null>(null)
 
-	// FIXME: use nextTick() and watch(confirmDelete) to get dialogEl functioning with v-if
 	const confirmDelete = ref<boolean>(false)
 
 	onMounted(() => {
@@ -55,7 +54,7 @@
 	})
 
 	const doubleCheckDelete = () => {
-		heading.value?.focus()
+		dialogHeadingEl.value?.focus()
 		confirmDelete.value = true
 	}
 

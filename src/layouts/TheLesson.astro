@@ -39,7 +39,7 @@ const {
 		<SkipToContent />
 		<TheLanding client:load title={title} scene={scene} color={gradientColor} />
 		<TheLessonNav client:load />
-		<main id='theLessonContent'>
+		<main id='theLessonContent' tabindex='-1'>
 			<slot />
 		</main>
 	</body>

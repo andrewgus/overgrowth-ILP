@@ -6,8 +6,7 @@
 	>
 		<div :class="$style.navInfo">
 			<p v-if="!!$currSection" v-show="$isOnContent">
-				Currently on:
-				{{ $currSection.title }}
+				Currently on: {{ $currSection.title }}
 			</p>
 			<TheNextPrevSectionButtons />
 			<TheNavToc />
@@ -48,6 +47,7 @@
 
 		> .navInfo {
 			max-width: 72ch;
+			width: 100%;
 			margin: 0 auto;
 			display: grid;
 			align-items: center;
