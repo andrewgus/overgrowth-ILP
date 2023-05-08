@@ -59,21 +59,19 @@
 		@include mixins.blueDropShadow();
 		@include mixins.btnTransition();
 
-		&:hover {
+		&:hover,
+		&:focus {
+			background-color: var(--peach);
 			filter: none;
-			@include mixins.hoverBoxShadow();
 		}
+
 		&:hover {
 			color: var(--blue);
 			@include mixins.hoverBoxShadow();
 		}
+
 		&:focus {
 			z-index: 10;
-			&,
-			&:hover {
-				background-color: var(--peach);
-				filter: drop-shadow(0px 0px 0 var(--blue));
-			}
 		}
 
 		&.warning {

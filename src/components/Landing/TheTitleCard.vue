@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-	import { ref, computed } from 'vue'
+	import { computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import {
 		featuresMap,
@@ -123,25 +123,24 @@
 		flex-flow: row nowrap;
 		gap: var(--s-5);
 
+		> legend {
+			text-align: center;
+			margin: 0 auto var(--s-4);
+			> .instructions {
+				@include mixins.visuallyHidden();
+			}
+		}
 		&:hover .instructions,
 		&:focus-within .instructions {
 			all: unset;
+			-webkit-transition: all var(--timeShort) ease-in-out;
 			transition: all var(--timeShort) ease-in-out;
 			display: block;
-			font-size: var(--s-1);
+			padding: 0 var(--s-8);
 			margin-top: var(--s-6);
 			background-color: var(--yellow5);
-			border: 1px solid var(--darkGray);
 			border-radius: var(--s-10);
-		}
-		> legend {
-			text-align: center;
-			margin: 0 auto var(--s-6);
-			> .instructions {
-				font-size: var(--s-1);
-				transition: all var(--timeShort) ease-in-out;
-				@include mixins.visuallyHidden();
-			}
+			@include mixins.darkBorder();
 		}
 		> div {
 			display: flex;

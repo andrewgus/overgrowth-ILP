@@ -50,14 +50,18 @@
 		margin: 0 auto;
 
 		&__link {
+			text-decoration: none;
 			&,
 			&:hover,
 			&:focus {
-				all: unset;
 				display: flex;
 				flex-flow: column nowrap;
 				justify-content: center;
 				align-items: center;
+			}
+			&:hover,
+			&:focus {
+				background-color: var(--peach);
 			}
 			> p {
 				padding: var(--s-4) var(--s-2);
@@ -65,7 +69,17 @@
 				font-size: var(--s0);
 				margin: 0 auto var(--s-10);
 			}
+			&[aria-hidden='true'] {
+				cursor: pointer;
+				&:hover,
+				&:focus {
+					background-color: transparent;
+					border-color: transparent;
+					font-weight: 500;
+				}
+			}
 		}
+
 		.scrollArrow {
 			margin: var(--s-10) auto var(--s-4);
 			max-width: fit-content;

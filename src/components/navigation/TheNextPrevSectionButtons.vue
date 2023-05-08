@@ -67,7 +67,7 @@
 		border-radius: var(--s10) 0 0 var(--s10);
 		background-color: var(--lightBlue);
 
-		> *:not(hr) {
+		> * {
 			border-radius: 0;
 			display: flex;
 			justify-content: center;
@@ -77,7 +77,13 @@
 		}
 		.btn_next,
 		.btn_prev {
+			color: var(--black);
+			transition: all var(--timeShort) ease-in-out;
+			&:visited {
+				color: var(--black);
+			}
 			&[aria-hidden='true'] {
+				color: var(--darkGray);
 				pointer-events: none;
 			}
 		}

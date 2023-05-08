@@ -1,6 +1,5 @@
-// TODO: find all reuseable style patterns and flesh this out.
-// TODO: organize this mixins file better.
-// TODO: consider multiple mixin files that funnel into this one.
+// TODO: Organize this mixins file better: Create multiple mixin files that funnel into this one.
+// TODO: Find all reuseable style patterns and flesh this out.
 
 @mixin visuallyHidden {
   position: absolute;
@@ -66,7 +65,7 @@
     var(--timeLong) filter var(--transitionFlourish);
 }
 
-// VUE TRANSITIONS
+// NOTE: VUE TRANSITION COMPONENTS
 // opacity-named transition
 @mixin opacityTransition {
   .opacity-enter-from,

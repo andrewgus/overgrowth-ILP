@@ -33,11 +33,15 @@
 				</p>
 				<BaseButton
 					key="pdfSaveBtn"
-					:text="shouldDisplayVisualFeedback ? 'Save again?' : 'Save as PDF?'"
+					:text="
+						shouldDisplayVisualFeedback
+							? 'Save again?'
+							: 'Want to save your work as a PDF?'
+					"
 					:aria-label="
 						shouldDisplayVisualFeedback
 							? `Save ${$allSections[id].title} as PDF again?`
-							: `Save ${$allSections[id].title} as PDF?`
+							: `Want to save ${$allSections[id].title} as a PDF?`
 					"
 					:class="$style.pdfSave__btn"
 					@btnClick="saveAsPDF"
@@ -56,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-	import { computed } from 'vue'
+	import { computed, nextTick } from 'vue'
 	import { mapStores } from '@nanostores/vue'
 	import {
 		allSectionsMap,
@@ -97,7 +101,7 @@
 		await generatePDF($currSection.value)
 	}
 
-	const setComplete = ({ target }: Event) => {
+	const setComplete = async ({ target }: Event) => {
 		const clicked = target as HTMLButtonElement
 		if (!clicked) return
 
@@ -105,6 +109,11 @@
 
 		useSetCurrSection(thisSection.id)
 		useSetFeatureComplete()
+		await nextTick()
+		const saveBtnEl = thisSection.querySelector(
+			'button[class*="pdfSave__btn"]'
+		) as HTMLButtonElement
+		saveBtnEl.focus()
 	}
 
 	const pdfStatusUpdate = computed(() => {
@@ -145,11 +154,12 @@
 	}
 	.pdfSave {
 		grid-area: pdfSave-Start/topLine/pdfSave-indicator/bottomLine;
-		margin: 0 auto var(--s-4);
+		margin: 0 auto var(--s-2);
 		width: fit-content;
 		@include mixins.flexCenter;
 		&__feedback,
 		&__btn {
+			animation-delay: var(--timeShort);
 			@include mixins.flexCenter;
 			padding: var(--s-4) var(--s-2);
 			text-align: center;
@@ -169,6 +179,7 @@
 		}
 	}
 	.continueIndicator {
+		background-color: var(--white);
 		grid-area: pdfSave-indicator/topLine/indicator-end/bottomLine;
 	}
 </style>

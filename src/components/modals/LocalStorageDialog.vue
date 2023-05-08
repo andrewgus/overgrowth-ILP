@@ -1,38 +1,36 @@
 <template v-if="doesLocalStorageExist">
-	<dialog aria-live="polite" ref="dialogEl" :class="$style.dialog">
-		<h1>{{ !confirmDelete ? 'Hey there! &#128075;' : 'Are You Sure?' }}</h1>
+	<dialog ref="dialogEl" :class="$style.dialog">
+		<h1 tabindex="-1" ref="heading">
+			{{ !confirmDelete ? 'Hey there! &#128075;' : 'Are You Sure?' }}
+		</h1>
 		<p v-if="!confirmDelete">
 			<span class="visuallyHidden">Important: </span> Looks like you have some
 			saved work on this lesson. Would you like to continue where you left off
 			<strong>or</strong> reset this lesson?
 		</p>
-		<p v-else>
+		<p v-else id="doubleCheck">
 			<span class="visuallyHidden">Warning: </span> Resetting this lesson
 			<strong>cannot</strong> be undone. All saved data will be lost forever.
 		</p>
 		<div :class="$style.dialog__btns">
-			<BaseButton
-				v-show="!confirmDelete"
-				text="Continue lesson?"
-				@btnClick="dialogEl?.close()"
-			/>
-			<BaseButton
-				v-show="!confirmDelete"
-				text="Reset lesson?"
-				isWarning
-				@btnClick="confirmDelete = true"
-			/>
-			<BaseButton
-				v-show="confirmDelete"
-				text="Nevermind. Let&rsquo;s continue."
-				@btnClick="dialogEl?.close()"
-			/>
-			<BaseButton
-				v-show="confirmDelete"
-				text="Yes. Reset this lesson"
-				isWarning
-				@btnClick="resetAndClose"
-			/>
+			<template v-if="!confirmDelete">
+				<BaseButton text="Continue lesson?" @btnClick="dialogEl?.close()" />
+				<BaseButton
+					text="Reset lesson?"
+					isWarning
+					@btnClick="doubleCheckDelete"
+				/>
+			</template>
+			<template v-else>
+				<BaseButton
+					text="Nevermind. Let&rsquo;s continue."
+					@btnClick="dialogEl?.close()" />
+				<BaseButton
+					text="Yes. Reset this lesson."
+					aria-describedby="doubleCheck"
+					isWarning
+					@btnClick="resetAndClose"
+			/></template>
 		</div>
 	</dialog>
 </template>
@@ -45,13 +43,21 @@
 	import getLocalStorage from '../../composables/useGetLocalStorage'
 
 	const doesLocalStorageExist = ref<boolean>(false)
-	const dialogEl = ref<HTMLDialogElement>()
+	const dialogEl = ref<HTMLDialogElement | null>(null)
+	const heading = ref<HTMLHeadingElement | null>(null)
+
+	// FIXME: use nextTick() and watch(confirmDelete) to get dialogEl functioning with v-if
 	const confirmDelete = ref<boolean>(false)
 
 	onMounted(() => {
 		doesLocalStorageExist.value = !!getLocalStorage()
 		doesLocalStorageExist.value && dialogEl.value!.showModal()
 	})
+
+	const doubleCheckDelete = () => {
+		heading.value?.focus()
+		confirmDelete.value = true
+	}
 
 	const resetAndClose = () => {
 		useResetLocalStorageUserData()

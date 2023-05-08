@@ -9,7 +9,7 @@
   box-sizing: border-box;
 
   &:focus {
-    animation: focusPulse var(--timeShort) var(--transitionFlourish) forwards !important;
+    animation: focusPulse var(--timeShort) var(--transitionFlourish) forwards;
   }
   &:visited {
     color: var(--purple);
