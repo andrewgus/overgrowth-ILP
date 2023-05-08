@@ -75,11 +75,10 @@
 			display: flex;
 			flex-flow: column nowrap;
 			align-items: center;
-			width: clamp(340px, 96vw, 800px);
+			width: clamp(360px, 96vw, 800px);
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
-			z-index: 999;
 			box-shadow: var(--s-6) var(--s-6) var(--s10) var(--yellow-5),
 				calc(-1 * var(--s-6)) calc(-1 * var(--s-6)) var(--s10) var(--yellow-5);
 			@include mixins.alert();
@@ -98,6 +97,11 @@
 			display: flex;
 			flex-flow: row nowrap;
 			gap: var(--s-2);
+		}
+	}
+	@media only screen and (max-width: 520px) {
+		.dialog[open] {
+			padding: var(--s4);
 		}
 	}
 </style>
