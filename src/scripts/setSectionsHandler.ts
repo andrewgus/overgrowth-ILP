@@ -29,10 +29,10 @@ for (const heading of sectionHeadings) {
 
 // Functions to be used for creating allSectionsMap
 // To set featureType property
-const getFeatureType = (featureClassName: string): FeatureType | null => {
-	if (featureClassName.includes('reflection')) return 'reflection'
-	if (featureClassName.includes('practice')) return 'practice'
-	if (featureClassName.includes('choice')) return 'choice'
+const getFeatureType = (featureClasses: DOMTokenList): FeatureType | null => {
+	if (featureClasses.contains('reflection')) return 'reflection'
+	if (featureClasses.contains('practice')) return 'practice'
+	if (featureClasses.contains('choice')) return 'choice'
 	return null
 }
 // To set isLocked property
@@ -73,7 +73,7 @@ sections.forEach((section: HTMLElement, index: number) => {
 		id: sectionIDs[index],
 		orderNum: index,
 		featureType: section.classList.contains('feature')
-			? getFeatureType(section.classList.toString())
+			? getFeatureType(section.classList)
 			: null,
 		isLocked: getFirstFeatureAndAllAfter(index),
 		isFeatureComplete: isPreviouslyComplete(sectionIDs[index], section),

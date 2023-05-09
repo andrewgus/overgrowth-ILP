@@ -87,6 +87,7 @@
 		}
 		> a.btn_prev {
 			border-radius: var(--s10) 0 0 var(--s10);
+			border-right: 1px solid var(--darkGray);
 		}
 	}
 </style>

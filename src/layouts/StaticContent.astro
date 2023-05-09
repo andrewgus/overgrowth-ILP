@@ -7,33 +7,6 @@ const { title } = Astro.props
 ---
 
 <article class:list={['section', 'staticContent']} tabindex='-1'>
-	<div>
-		<h2>{title}</h2>
-		<slot />
-	</div>
+	<h2>{title}</h2>
+	<slot />
 </article>
-
-<style lang='scss'>
-	.staticContent {
-		> div {
-			font-size: var(--s0);
-			margin: 0 auto;
-			max-width: 80ch;
-			width: 100%;
-			> h2 {
-				max-width: 60ch;
-			}
-			> :global(p) {
-				max-width: 60ch;
-				margin-left: auto;
-				margin-right: auto;
-				&:last-of-type {
-					margin-bottom: 0;
-				}
-			}
-			> img {
-				max-width: 80ch;
-			}
-		}
-	}
-</style>

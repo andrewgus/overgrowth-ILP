@@ -20,7 +20,7 @@
 	.alertText {
 		max-width: 60ch;
 		text-align: center;
-		padding: 0 var(--s-4) var(--s-4);
+		padding: 0 var(--s-2) var(--s-4);
 		overflow-x: hidden;
 		margin: 0 auto var(--s2);
 		@include mixins.alert();
@@ -35,7 +35,7 @@
 			width: 100%;
 			height: var(--s0);
 			background-color: var(--yellow);
-			padding: var(--s-10) var(--s-7);
+			padding: var(--s-10) var(--s-4);
 			margin-bottom: var(--s-4);
 			border-bottom: 1px dashed var(--darkGray);
 		}

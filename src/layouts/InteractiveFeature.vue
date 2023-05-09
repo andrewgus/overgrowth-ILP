@@ -1,21 +1,19 @@
 <template>
-	<article class="section feature" :class="$style[featureType]" tabindex="-1">
-		<div>
-			<h2>{{ title }}</h2>
-			<BaseAlertText
-				:show="
-					!isFinaleReveal && !featureProgressStore[sectionID].isAttemptsFinished
-				"
-			>
-				Heads&nbsp;up!&nbsp;Once&nbsp;completed, this&nbsp;{{
-					featureType
-				}}&nbsp;activity
-				<strong>cannot</strong>&nbsp;be&nbsp;turned&nbsp;off&nbsp;later.
-			</BaseAlertText>
-			<component :is="feature" v-bind="conditionalProps">
-				<slot></slot>
-			</component>
-		</div>
+	<article class="section feature" :class="featureType" tabindex="-1">
+		<h2>{{ title }}</h2>
+		<BaseAlertText
+			:show="
+				!isFinaleReveal && !featureProgressStore[sectionID].isAttemptsFinished
+			"
+		>
+			Heads&nbsp;up!&nbsp;Once&nbsp;completed, this&nbsp;{{
+				featureType
+			}}&nbsp;activity
+			<strong>cannot</strong>&nbsp;be&nbsp;turned&nbsp;off&nbsp;later.
+		</BaseAlertText>
+		<component :is="feature" v-bind="conditionalProps">
+			<slot></slot>
+		</component>
 		<FeatureCompleteBtns :class="$style.featureCompleteBtns" :id="sectionID" />
 	</article>
 </template>
@@ -81,27 +79,17 @@
 </script>
 
 <style module lang="scss">
-	.reflection,
-	.choice,
-	.practice {
-		display: flex;
-		flex-flow: column nowrap;
-		justify-content: space-between;
-
-		> div {
-			font-size: var(--s0);
-			max-width: 60ch;
-			width: 100%;
-			margin: 0 auto;
-
-			&.featureCompleteBtns {
-				display: grid;
-				grid-template-rows: [pdfSave-Start] min-content [pdfSave-indicator] min-content [indicator-end];
-				grid-template-columns: [topLine] 1fr [bottomLine];
-				align-items: end;
-				justify-content: center;
-				margin: var(--s2) auto;
-			}
-		}
+	p[class*='alertText'] {
+		align-self: start;
+	}
+	
+	.featureCompleteBtns {
+		align-self: end;
+		display: grid;
+		grid-template-rows: [pdfSave-Start] min-content [pdfSave-indicator] min-content [indicator-end];
+		grid-template-columns: [topLine] 1fr [bottomLine];
+		align-items: end;
+		justify-content: center;
+		margin: var(--s2) auto;
 	}
 </style>
