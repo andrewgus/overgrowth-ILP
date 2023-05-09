@@ -76,7 +76,7 @@
 			border-radius: 0;
 			padding: var(--s-2);
 			border: none;
-			transition: all var(--timeShort) ease-in-out;
+			@include mixins.basicTransition();
 			&:visited {
 				color: var(--black);
 			}

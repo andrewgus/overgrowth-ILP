@@ -2,7 +2,6 @@
 	<TransitionGroup
 		tag="div"
 		name="opacity"
-		aria-live="polite"
 		v-if="areSectionsAvailable"
 		:class="{
 			[$style.attemptComplete]:
@@ -17,8 +16,8 @@
 			:class="$style.featureCompleteBtn"
 			:text="
 				!featureProgressStore[id].isAttemptsFinished
-					? 'Complete activity to&nbsp;continue'
-					: 'Ready to continue?'
+					? `Complete ${$allSections[id].featureType} activity&nbsp;to&nbsp;continue`
+					: `Lock in ${$allSections[id].featureType} &amp; continue?`
 			"
 			@btnClick="setComplete"
 		/>
@@ -36,12 +35,13 @@
 					:text="
 						shouldDisplayVisualFeedback
 							? 'Save again?'
-							: 'Want to save your work as a PDF?'
+							: 'Save your work as a PDF?'
 					"
+					srText="Optional"
 					:aria-label="
 						shouldDisplayVisualFeedback
-							? `Save ${$allSections[id].title} as PDF again?`
-							: `Want to save ${$allSections[id].title} as a PDF?`
+							? `Save ${$allSections[id].title} as a PDF again?`
+							: `Save ${$allSections[id].title} as a PDF?`
 					"
 					:class="$style.pdfSave__btn"
 					@btnClick="saveAsPDF"
@@ -51,7 +51,7 @@
 				:class="$style.continueIndicator"
 				key="continueIndicator"
 				v-if="!isLastSection"
-				text="Scoll to continue"
+				text="Continue to next section"
 				:isHidden="id !== $currSection.id"
 				:goTo="`#${nextSection}`"
 			/>

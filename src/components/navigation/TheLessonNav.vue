@@ -1,17 +1,17 @@
 <template>
-	<nav
-		v-if="areSectionsAvailable"
-		id="lessonNav"
-		:class="[$style.lessonNav, { [$style.isInvisible]: !$isOnContent }]"
-	>
-		<div :class="$style.navInfo">
-			<p v-if="!!$currSection" v-show="$isOnContent">
-				Currently on: {{ $currSection.title }}
-			</p>
-			<TheNextPrevSectionButtons />
-			<TheNavToc />
-		</div>
-	</nav>
+	<transition name="opacity">
+		<nav
+			v-if="areSectionsAvailable"
+			id="lessonNav"
+			:class="[$style.lessonNav, { [$style.isInvisible]: !$isOnContent }]"
+		>
+			<div :class="$style.navInfo">
+				<p v-show="$isOnContent">Currently on: {{ $currSection.title }}</p>
+				<TheNextPrevSectionButtons />
+				<TheNavToc />
+			</div>
+		</nav>
+	</transition>
 </template>
 
 <script setup lang="ts">
@@ -27,9 +27,8 @@
 </script>
 
 <style module lang="scss">
+	@use '../../styles/mixins.scss';
 	.lessonNav {
-		-webkit-transition: var(--timeShort) all ease-in-out;
-		transition: var(--timeShort) all ease-in-out;
 		display: block;
 		background-color: hsla(0, 0%, 100%, 0.98);
 		z-index: 1;
@@ -37,12 +36,17 @@
 		position: sticky;
 		top: 0;
 		border-bottom: 1px dotted var(--lightGray);
+		@include mixins.basicTransition();
 
 		&.isInvisible {
 			opacity: 0;
+			transform: translateY(-10vh);
+			height: 1px;
 		}
 		&.isInvisible:focus-within {
 			opacity: 1;
+			transform: translateY(0vh);
+			height: auto;
 		}
 
 		> .navInfo {
@@ -62,4 +66,8 @@
 			}
 		}
 	}
+</style>
+<style scoped lang="scss">
+	@use '../../styles/mixins.scss';
+	@include mixins.opacityTransition();
 </style>

@@ -82,8 +82,4 @@
 			}
 		}
 	}
-	div[class*='featureCompleteBtns'] {
-		position: sticky;
-		bottom: 0;
-	}
 </style>

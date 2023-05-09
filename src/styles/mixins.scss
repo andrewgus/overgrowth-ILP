@@ -3,7 +3,7 @@
 
 @mixin visuallyHidden {
   position: absolute;
-  clip: rect(0 0 0 0);
+  clip-path: rect(0 0 0 0);
   border: 0;
   height: 1px;
   margin: -1px;
@@ -63,6 +63,11 @@
   transition: var(--timeLong) box-shadow var(--transitionFlourish),
     var(--timeLong) background-color var(--transitionFlourish), var(--timeLong) color var(--transitionFlourish),
     var(--timeLong) filter var(--transitionFlourish);
+}
+
+@mixin basicTransition {
+  -webkit-transition: all var(--timeShort) ease-in-out;
+  transition: all var(--timeShort) ease-in-out;
 }
 
 // NOTE: VUE TRANSITION COMPONENTS

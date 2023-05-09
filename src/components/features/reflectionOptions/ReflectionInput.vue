@@ -1,11 +1,8 @@
 <template>
 	<div :class="$style.userInput">
-		<div :id="`${id}-description`">
-			<slot></slot>
-		</div>
+		<slot></slot>
 		<BaseTextInput
 			v-if="areSectionsAvailable"
-			:describedBy="`${id}-description`"
 			:id="id"
 			:prompt="prompt"
 			:savedData="localStorageAnswers"
@@ -29,8 +26,6 @@
 	import useAreSectionsAvailable from '../../../composables/useAreSectionsAvailable'
 	import getLocalStorage from '../../../composables/useGetLocalStorage'
 	import BaseTextInput from '../../base/BaseTextInput.vue'
-
-	// FIXME: set up so the div id around the slot and the aria-describedby are dynamic to if content was actually passed into the slot or not...
 
 	const $allSections = useStore(allSectionsMap)
 	const { areSectionsAvailable } = useAreSectionsAvailable()

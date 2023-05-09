@@ -37,9 +37,9 @@ const {
 	<body id={`${createID(title)}-lesson`}>
 		<LocalStorageDialog client:load />
 		<SkipToContent />
-		<TheLanding client:load title={title} scene={scene} color={gradientColor} />
 		<TheLessonNav client:load />
-		<main id='theLessonContent' tabindex='-1'>
+		<TheLanding client:load title={title} scene={scene} color={gradientColor} />
+		<main id='theLessonContent'>
 			<slot />
 		</main>
 	</body>

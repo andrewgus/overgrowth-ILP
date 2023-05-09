@@ -1,11 +1,11 @@
 <template>
 	<div :class="$style.titleCard">
-		<h1>{{ title }}</h1>
+		<h1 id="lessonHeading" tabindex="-1">{{ title }}</h1>
 		<fieldset :class="$style.options" v-if="featuresOn">
 			<legend aria-describedby="featureToggleInstructions">
 				Included in this lesson are&hellip;
 				<span :class="$style.instructions"
-					>You can toggle activities on/off</span
+					>(You&nbsp;can toggle&nbsp;activities on/off)</span
 				>
 			</legend>
 			<div v-if="useFeatureExists('reflection')">
@@ -133,11 +133,10 @@
 		&:hover .instructions,
 		&:focus-within .instructions {
 			all: unset;
-			-webkit-transition: all var(--timeShort) ease-in-out;
-			transition: all var(--timeShort) ease-in-out;
+			@include mixins.basicTransition();
 			display: block;
-			padding: 0 var(--s-8);
-			margin-top: var(--s-6);
+			padding: 0 var(--s-10);
+			margin-top: var(--s-4);
 			background-color: var(--yellow5);
 			border-radius: var(--s-10);
 			@include mixins.darkBorder();

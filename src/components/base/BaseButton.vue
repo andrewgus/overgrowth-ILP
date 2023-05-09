@@ -7,9 +7,13 @@
 		autocomplete="off"
 		@click="$emit('btnClick', $event)"
 	>
-		{{ text }}
+		<span v-if="!!srText" class="visuallyHidden">{{ srText }}:&nbsp;</span
+		>{{ text }}
 	</button>
-	<a v-else :href="url" :class="btnStyles">{{ text }}</a>
+	<a v-else :href="url" :class="btnStyles"
+		><span v-if="!!srText" class="visuallyHidden">{{ srText }}:&nbsp;</span>
+		{{ text }}</a
+	>
 </template>
 
 <script setup lang="ts">
@@ -25,6 +29,9 @@
 		isDisabled: {
 			type: Boolean,
 			default: false,
+		},
+		srText: {
+			type: String,
 		},
 		isWarning: {
 			type: Boolean,
@@ -56,6 +63,7 @@
 		background-color: var(--lightBlue);
 		border-radius: var(--s10);
 		text-decoration: none;
+		line-height: 1.6;
 		@include mixins.blueDropShadow();
 		@include mixins.btnTransition();
 
