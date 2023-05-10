@@ -16,14 +16,14 @@
 </script>
 
 <style module lang="scss">
-	@use '../../styles/mixins.scss';
+	@use '../../styles/mixins/containerStyles.scss';
 	.alertText {
 		max-width: 60ch;
 		text-align: center;
 		padding: 0 var(--s-2) var(--s-4);
 		overflow-x: hidden;
 		margin: 0 auto var(--s2);
-		@include mixins.alert();
+		@include containerStyles.alert();
 
 		&::before {
 			content: '';
@@ -42,6 +42,6 @@
 	}
 </style>
 <style scoped lang="scss">
-	@use '../../styles/mixins.scss';
-	@include mixins.opacityTransition();
+	@use '../../styles/mixins/transitions.scss';
+	@include transitions.vueOpacity();
 </style>

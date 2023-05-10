@@ -19,7 +19,6 @@
 <script setup lang="ts">
 	import { computed } from 'vue'
 	import computedCssModule from '../../composables/UseComputedCssModule'
-	import '../../styles/mixins.scss'
 
 	const props = defineProps({
 		text: {
@@ -52,10 +51,12 @@
 </script>
 
 <style module lang="scss">
-	@use '../../styles/mixins.scss';
+	@use '../../styles/mixins/containerStyles.scss';
+	@use '../../styles/mixins/shadows.scss';
+	@use '../../styles/mixins/transitions.scss';
 
 	.btn {
-		@include mixins.flexCenter();
+		@include containerStyles.flexCenter();
 		color: var(--black);
 		cursor: pointer;
 		border: 1px solid var(--darkGray);
@@ -64,8 +65,8 @@
 		border-radius: var(--s10);
 		text-decoration: none;
 		line-height: 1.6;
-		@include mixins.blueDropShadow();
-		@include mixins.btnTransition();
+		@include shadows.blueDropShadow();
+		@include transitions.button();
 
 		&:hover,
 		&:focus {
@@ -75,7 +76,7 @@
 
 		&:hover {
 			color: var(--blue);
-			@include mixins.hoverBoxShadow();
+			@include shadows.hoverBoxShadow();
 		}
 
 		&:focus {
@@ -88,7 +89,7 @@
 			&:hover {
 				color: var(--red-3);
 				background-color: var(--peach);
-				@include mixins.hoverBoxShadowWarning();
+				@include shadows.hoverBoxShadowWarning();
 			}
 		}
 

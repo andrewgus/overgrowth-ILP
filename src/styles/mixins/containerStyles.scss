@@ -1,0 +1,18 @@
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin darkBorder {
+  border: 1px solid var(--darkGray);
+}
+@mixin lightBorder {
+  border: 1px solid var(--lightGray);
+}
+
+@mixin alert {
+  background-color: var(--yellow5);
+  border: 1px solid var(--darkGray);
+  border-radius: var(--s10) var(--s0) var(--s10) var(--s0) / var(--s10) var(--s0) var(--s10) var(--s0);
+}

@@ -66,7 +66,7 @@
 </script>
 
 <style module lang="scss">
-	@use '../../styles/mixins.scss';
+	@use '../../styles/mixins/containerStyles.scss';
 
 	.dialog {
 		&[open] {
@@ -81,7 +81,7 @@
 			transform: translate(-50%, -50%);
 			box-shadow: var(--s-6) var(--s-6) var(--s10) var(--yellow-5),
 				calc(-1 * var(--s-6)) calc(-1 * var(--s-6)) var(--s10) var(--yellow-5);
-			@include mixins.alert();
+			@include containerStyles.alert();
 		}
 
 		&::backdrop {

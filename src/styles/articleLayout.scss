@@ -1,1 +1,42 @@
+#theLessonContent article.section {
+  display: grid;
+  grid-template-columns:
+    auto [content-start] minmax(auto, 10ch) [innerContent-start] minmax(auto, 60ch)
+    [innerContent-end] minmax(auto, 10ch) [content-end] auto;
+  align-content: start;
+  min-height: 90vh;
+  padding: 0 var(--s-4);
 
+  &.isLocked {
+    display: none;
+  }
+  &:not(.firstSection) {
+    border-top: 2px solid var(--darkGray);
+  }
+  &.staticContent {
+    padding-bottom: var(--s2);
+  }
+  &.feature {
+    padding-bottom: var(--s-2);
+    grid-template-rows:
+      repeat(3, minmax(10vh, max-content))
+      [completeBtnBtn-start] 1fr [completeBtn-end];
+
+    > div[class*="featureCompleteBtns"] {
+      grid-row: completeBtn-start/completeBtn-end;
+      align-self: end;
+    }
+  }
+
+  > *:not(.fullWidth) {
+    grid-column: innerContent-start / innerContent-end;
+  }
+  > *.fullWidth {
+    grid-column: content-start / content-end;
+  }
+}
+@media only screen and (max-width: 75ch) {
+  #theLessonContent article.section > *:not(.fullWidth) {
+    grid-column: content-start / content-end;
+  }
+}

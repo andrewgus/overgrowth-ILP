@@ -14,7 +14,7 @@
 		<component :is="feature" v-bind="conditionalProps">
 			<slot></slot>
 		</component>
-		<FeatureCompleteBtns :class="$style.featureCompleteBtns" :id="sectionID" />
+		<FeatureCompleteBtns :id="sectionID" />
 	</article>
 </template>
 
@@ -77,19 +77,3 @@
 		return { ...universalProps, ...featureProps }
 	})
 </script>
-
-<style module lang="scss">
-	p[class*='alertText'] {
-		align-self: start;
-	}
-	
-	.featureCompleteBtns {
-		align-self: end;
-		display: grid;
-		grid-template-rows: [pdfSave-Start] min-content [pdfSave-indicator] min-content [indicator-end];
-		grid-template-columns: [topLine] 1fr [bottomLine];
-		align-items: end;
-		justify-content: center;
-		margin: var(--s2) auto;
-	}
-</style>

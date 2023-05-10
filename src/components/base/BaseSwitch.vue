@@ -40,15 +40,16 @@
 </script>
 
 <style module lang="scss">
-	@use '../../styles/mixins.scss';
+	@use '../../styles/mixins/transitions.scss';
+	@use '../../styles/mixins/shadows.scss';
 	.switch {
 		display: grid;
 		grid-template: 1fr/ 1fr;
 		align-items: center;
-		@include mixins.btnTransition();
+		@include transitions.button();
 
 		&:hover:not(:focus-within) {
-			@include mixins.blueDropShadow();
+			@include shadows.blueDropShadow();
 
 			> :not(.off) + .toggleText {
 				animation: switchJiggle var(--timeLong) var(--transitionFlourish);

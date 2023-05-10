@@ -1,0 +1,26 @@
+// drop shadow for buttons/switches
+@mixin blueDropShadow {
+  filter: drop-shadow(0px 3px 0 var(--blue));
+}
+
+// box-shadow for hoving elements
+@mixin hoverBoxShadow {
+  -webkit-box-shadow: inset var(--s-8) 0 0 var(--blue), inset var(--s-10) var(--s-10) 0 var(--blue),
+    inset calc(-1 * var(--s-10)) calc(-1 * var(--s-10)) 0 var(--blue),
+    inset var(--s-10) calc(-1 * var(--s-10)) 0 var(--blue), inset calc(-1 * var(--s-10)) var(--s-10) 0 var(--blue),
+    inset calc(-1 * var(--s-8)) 0 0 var(--blue);
+  box-shadow: inset var(--s-8) 0 0 var(--blue), inset var(--s-10) var(--s-10) 0 var(--blue),
+    inset calc(-1 * var(--s-10)) calc(-1 * var(--s-10)) 0 var(--blue),
+    inset var(--s-10) calc(-1 * var(--s-10)) 0 var(--blue), inset calc(-1 * var(--s-10)) var(--s-10) 0 var(--blue),
+    inset calc(-1 * var(--s-8)) 0 0 var(--blue);
+}
+@mixin hoverBoxShadowWarning {
+  -webkit-box-shadow: inset var(--s-8) 0 0 var(--red), inset var(--s-10) var(--s-10) 0 var(--red),
+    inset calc(-1 * var(--s-10)) calc(-1 * var(--s-10)) 0 var(--red),
+    inset var(--s-10) calc(-1 * var(--s-10)) 0 var(--red), inset calc(-1 * var(--s-10)) var(--s-10) 0 var(--red),
+    inset calc(-1 * var(--s-8)) 0 0 var(--red);
+  box-shadow: inset var(--s-8) 0 0 var(--red), inset var(--s-10) var(--s-10) 0 var(--red),
+    inset calc(-1 * var(--s-10)) calc(-1 * var(--s-10)) 0 var(--red),
+    inset var(--s-10) calc(-1 * var(--s-10)) 0 var(--red), inset calc(-1 * var(--s-10)) var(--s-10) 0 var(--red),
+    inset calc(-1 * var(--s-8)) 0 0 var(--red);
+}

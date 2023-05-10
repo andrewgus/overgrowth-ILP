@@ -6,7 +6,7 @@
 			:class="[$style.lessonNav, { [$style.isInvisible]: !$isOnContent }]"
 		>
 			<div :class="$style.navInfo">
-				<p v-show="$isOnContent">Currently on: {{ $currSection.title }}</p>
+				<p v-show="$isOnContent">{{ $currSection.title }}</p>
 				<TheNextPrevSectionButtons />
 				<TheNavToc />
 			</div>
@@ -27,7 +27,7 @@
 </script>
 
 <style module lang="scss">
-	@use '../../styles/mixins.scss';
+	@use '../../styles/mixins/transitions.scss';
 	.lessonNav {
 		display: block;
 		background-color: hsla(0, 0%, 100%, 0.98);
@@ -36,7 +36,7 @@
 		position: sticky;
 		top: 0;
 		border-bottom: 1px dotted var(--lightGray);
-		@include mixins.basicTransition();
+		@include transitions.short();
 
 		&.isInvisible {
 			opacity: 0;
@@ -68,6 +68,6 @@
 	}
 </style>
 <style scoped lang="scss">
-	@use '../../styles/mixins.scss';
-	@include mixins.opacityTransition();
+	@use '../../styles/mixins/transitions.scss';
+	@include transitions.vueOpacity();
 </style>

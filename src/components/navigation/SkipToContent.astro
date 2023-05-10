@@ -15,10 +15,11 @@ import BaseButton from '../base/BaseButton.vue'
 <style lang='scss'>
 	.skipBtn {
 		position: absolute;
-		top: -10vh;
+		top: -20vh;
 		max-width: max-content;
 		border: 1px solid var(--white);
 		transition: top var(--timeShort) ease-in-out;
+		z-index: 999;
 
 		&:focus-within {
 			top: 0;

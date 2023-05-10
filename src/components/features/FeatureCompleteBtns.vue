@@ -3,11 +3,14 @@
 		tag="div"
 		name="opacity"
 		v-if="areSectionsAvailable"
-		:class="{
-			[$style.attemptComplete]:
-				featureProgressStore[id].isAttemptsFinished &&
-				!$allSections[id].isFeatureComplete,
-		}"
+		:class="[
+			$style.featureCompleteBtns,
+			{
+				[$style.attemptComplete]:
+					featureProgressStore[id].isAttemptsFinished &&
+					!$allSections[id].isFeatureComplete,
+			},
+		]"
 	>
 		<BaseButton
 			key="0"
@@ -139,7 +142,17 @@
 </script>
 
 <style module lang="scss">
-	@use '../../styles/mixins.scss';
+	@use '../../styles/mixins/containerStyles.scss';
+
+	.featureCompleteBtns {
+		width: 100%;
+		display: grid;
+		grid-template-rows: [pdfSave-Start] min-content [pdfSave-indicator] min-content [indicator-end];
+		grid-template-columns: [topLine] 1fr [bottomLine];
+		align-items: end;
+		justify-content: center;
+		margin: var(--s2) auto;
+	}
 
 	.attemptComplete {
 		position: sticky;
@@ -156,11 +169,11 @@
 		grid-area: pdfSave-Start/topLine/pdfSave-indicator/bottomLine;
 		margin: 0 auto var(--s-2);
 		width: fit-content;
-		@include mixins.flexCenter;
+		@include containerStyles.flexCenter;
 		&__feedback,
 		&__btn {
 			animation-delay: var(--timeShort);
-			@include mixins.flexCenter;
+			@include containerStyles.flexCenter;
 			padding: var(--s-4) var(--s-2);
 			text-align: center;
 			border-radius: var(--s10);
@@ -184,8 +197,8 @@
 	}
 </style>
 <style scoped lang="scss">
-	@use '../../styles/mixins.scss';
-	@include mixins.opacityTransition();
+	@use '../../styles/mixins/transitions.scss';
+	@include transitions.vueOpacity();
 	.opacity-enter-active {
 		transition-delay: var(--timeShort);
 	}

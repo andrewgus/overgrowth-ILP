@@ -90,7 +90,9 @@
 </script>
 
 <style module lang="scss">
-	@use '../../styles/mixins.scss';
+	@use '../../styles/mixins/accessibility.scss';
+	@use '../../styles/mixins/transitions.scss';
+	@use '../../styles/mixins/containerStyles.scss';
 	.titleCard {
 		grid-area: card-start/landing-top/card-indicator/landing-bottom;
 		justify-self: center;
@@ -127,19 +129,19 @@
 			text-align: center;
 			margin: 0 auto var(--s-4);
 			> .instructions {
-				@include mixins.visuallyHidden();
+				@include accessibility.visuallyHidden();
 			}
 		}
 		&:hover .instructions,
 		&:focus-within .instructions {
 			all: unset;
-			@include mixins.basicTransition();
+			@include transitions.short();
 			display: block;
 			padding: 0 var(--s-10);
 			margin-top: var(--s-4);
 			background-color: var(--yellow5);
 			border-radius: var(--s-10);
-			@include mixins.darkBorder();
+			@include containerStyles.darkBorder();
 		}
 		> div {
 			display: flex;
