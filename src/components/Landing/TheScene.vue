@@ -6,21 +6,21 @@
 		:class="$style.scene"
 	>
 		<div
-			v-if="useFeatureExists('reflection')"
+			v-if="useActivityExists('reflection')"
 			key="reflection"
-			v-show="$features.reflection"
+			v-show="$activities.reflection"
 			:class="{ [$style.reflectionBg]: isBgLoaded }"
 		></div>
 		<div
-			v-if="useFeatureExists('practice')"
+			v-if="useActivityExists('practice')"
 			key="practice"
-			v-show="$features.practice"
+			v-show="$activities.practice"
 			:class="{ [$style.practiceBg]: isBgLoaded }"
 		></div>
 		<div
-			v-if="useFeatureExists('choice')"
+			v-if="useActivityExists('choice')"
 			key="choice"
-			v-show="$features.choice"
+			v-show="$activities.choice"
 			:class="{ [$style.choiceBg]: isBgLoaded }"
 		></div>
 	</TransitionGroup>
@@ -29,7 +29,7 @@
 <script setup lang="ts">
 	import { ref, watchEffect } from 'vue'
 	import { useStore } from '@nanostores/vue'
-	import { featuresMap, useFeatureExists } from '../../store/lessonStore'
+	import { activitysMap, useActivityExists } from '../../store/lessonStore'
 
 	const props = defineProps({
 		scene: {
@@ -38,7 +38,7 @@
 		},
 	})
 
-	const $features = useStore(featuresMap)
+	const $activities = useStore(activitysMap)
 	const isBgLoaded = ref(false)
 
 	watchEffect(() => {

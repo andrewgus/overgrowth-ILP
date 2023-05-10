@@ -1,42 +1,42 @@
 <template>
 	<div :class="$style.titleCard">
 		<h1 id="lessonHeading" tabindex="-1">{{ title }}</h1>
-		<fieldset :class="$style.options" v-if="featuresOn">
-			<legend aria-describedby="featureToggleInstructions">
+		<fieldset :class="$style.options" v-if="activitysOn">
+			<legend aria-describedby="activityToggleInstructions">
 				Included in this lesson are&hellip;
 				<span :class="$style.instructions"
 					>(You&nbsp;can toggle&nbsp;activities on/off)</span
 				>
 			</legend>
-			<div v-if="useFeatureExists('reflection')">
+			<div v-if="useActivityExists('reflection')">
 				<BaseSwitch
 					type="Reflection"
-					:set="getFeatureValue('reflection')"
-					@toggleSwitch="useToggleFeature('reflection')"
+					:set="getActivityValue('reflection')"
+					@toggleSwitch="useToggleActivity('reflection')"
 				/>
 			</div>
 			<BaseSeparator
 				orientation="vertical"
 				hidden
-				v-if="multiFeatures.reflectionAndOther"
+				v-if="multiActivitys.reflectionAndOther"
 			/>
-			<div v-if="useFeatureExists('practice')">
+			<div v-if="useActivityExists('practice')">
 				<BaseSwitch
 					type="Practice"
-					:set="getFeatureValue('practice')"
-					@toggleSwitch="useToggleFeature('practice')"
+					:set="getActivityValue('practice')"
+					@toggleSwitch="useToggleActivity('practice')"
 				/>
 			</div>
 			<BaseSeparator
 				orientation="vertical"
 				hidden
-				v-if="multiFeatures.practiceAndChoice"
+				v-if="multiActivitys.practiceAndChoice"
 			/>
-			<div v-if="useFeatureExists('choice')">
+			<div v-if="useActivityExists('choice')">
 				<BaseSwitch
 					type="Choice"
-					:set="getFeatureValue('choice')"
-					@toggleSwitch="useToggleFeature('choice')"
+					:set="getActivityValue('choice')"
+					@toggleSwitch="useToggleActivity('choice')"
 				/>
 			</div>
 		</fieldset>
@@ -47,10 +47,10 @@
 	import { computed } from 'vue'
 	import { useStore } from '@nanostores/vue'
 	import {
-		featuresMap,
-		useFeatureExists,
-		useToggleFeature,
-		type FeatureType,
+		activitysMap,
+		useActivityExists,
+		useToggleActivity,
+		type ActivityType,
 	} from '../../store/lessonStore'
 	import BaseSeparator from '../base/BaseSeparator.vue'
 	import BaseSwitch from '../base/BaseSwitch.vue'
@@ -62,28 +62,28 @@
 		},
 	})
 
-	const $features = useStore(featuresMap)
+	const $activities = useStore(activitysMap)
 
-	const twoFeatures = (feature1: FeatureType, feature2: FeatureType) => {
-		return useFeatureExists(feature1) && useFeatureExists(feature2)
+	const twoActivitys = (activity1: ActivityType, activity2: ActivityType) => {
+		return useActivityExists(activity1) && useActivityExists(activity2)
 	}
-	const getFeatureValue = (feature: FeatureType) => {
-		return $features.value[feature] as boolean
+	const getActivityValue = (activity: ActivityType) => {
+		return $activities.value[activity] as boolean
 	}
 
-	const featuresOn = computed(() => {
+	const activitysOn = computed(() => {
 		return (
-			useFeatureExists('reflection') ||
-			useFeatureExists('practice') ||
-			useFeatureExists('choice')
+			useActivityExists('reflection') ||
+			useActivityExists('practice') ||
+			useActivityExists('choice')
 		)
 	})
-	const multiFeatures = computed(() => {
+	const multiActivitys = computed(() => {
 		const reflectionAndOther =
-			twoFeatures('reflection', 'practice') ||
-			twoFeatures('reflection', 'choice')
+			twoActivitys('reflection', 'practice') ||
+			twoActivitys('reflection', 'choice')
 
-		const practiceAndChoice = twoFeatures('practice', 'choice')
+		const practiceAndChoice = twoActivitys('practice', 'choice')
 
 		return { reflectionAndOther, practiceAndChoice }
 	})

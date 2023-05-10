@@ -1,5 +1,5 @@
 <template>
-	<component :is="reflectionFeature" v-bind="conditionalProps">
+	<component :is="reflectionActivity" v-bind="conditionalProps">
 		<slot></slot>
 	</component>
 </template>
@@ -14,7 +14,7 @@
 	}
 	const props = defineProps<Props>()
 
-	const reflectionFeature = defineAsyncComponent(
+	const reflectionActivity = defineAsyncComponent(
 		() =>
 			import(
 				`./reflectionOptions/${

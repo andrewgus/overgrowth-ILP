@@ -4,23 +4,23 @@
 		name="opacity"
 		v-if="areSectionsAvailable"
 		:class="[
-			$style.featureCompleteBtns,
+			$style.activityCompleteBtns,
 			{
 				[$style.attemptComplete]:
-					featureProgressStore[id].isAttemptsFinished &&
-					!$allSections[id].isFeatureComplete,
+					activityProgressStore[id].isAttemptsFinished &&
+					!$allSections[id].isActivityComplete,
 			},
 		]"
 	>
 		<BaseButton
 			key="0"
-			v-if="!$allSections[id].isFeatureComplete && !isLastSection"
-			:isDisabled="!featureProgressStore[id].isAttemptsFinished"
-			:class="$style.featureCompleteBtn"
+			v-if="!$allSections[id].isActivityComplete && !isLastSection"
+			:isDisabled="!activityProgressStore[id].isAttemptsFinished"
+			:class="$style.activityCompleteBtn"
 			:text="
-				!featureProgressStore[id].isAttemptsFinished
-					? `Complete ${$allSections[id].featureType} activity&nbsp;to&nbsp;continue`
-					: `Lock in ${$allSections[id].featureType} &amp; continue?`
+				!activityProgressStore[id].isAttemptsFinished
+					? `Complete ${$allSections[id].activityType} activity&nbsp;to&nbsp;continue`
+					: `Lock in ${$allSections[id].activityType} &amp; continue?`
 			"
 			@btnClick="setComplete"
 		/>
@@ -71,9 +71,9 @@
 		useSetCurrSection,
 		nextSectionAfterID,
 		useIsLastSection,
-		useSetFeatureComplete,
+		useSetActivityComplete,
 	} from '../../store/lessonStore'
-	import { featureProgressStore } from '../../store/featureOptionsStore'
+	import { activityProgressStore } from '../../store/activityOptionsStore'
 	import BaseButton from '../base/BaseButton.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
 	import useAreSectionsAvailable from '../../composables/useAreSectionsAvailable'
@@ -90,10 +90,10 @@
 
 	const { areSectionsAvailable } = useAreSectionsAvailable()
 	const nextSection = nextSectionAfterID(props.id)
-	const isLastSection = useIsLastSection(featureProgressStore[props.id].id)
+	const isLastSection = useIsLastSection(activityProgressStore[props.id].id)
 
 	const saveAsPDF = async () => {
-		featureProgressStore[props.id].pdfGenStatus = {
+		activityProgressStore[props.id].pdfGenStatus = {
 			isDownloading: true,
 			isComplete: false,
 			isFailed: false,
@@ -111,7 +111,7 @@
 		const thisSection = clicked.closest('article') as HTMLElement
 
 		useSetCurrSection(thisSection.id)
-		useSetFeatureComplete()
+		useSetActivityComplete()
 		await nextTick()
 		const saveBtnEl = thisSection.querySelector(
 			'button[class*="pdfSave__btn"]'
@@ -120,11 +120,11 @@
 	}
 
 	const pdfStatusUpdate = computed(() => {
-		if (featureProgressStore[props.id].pdfGenStatus.isDownloading)
+		if (activityProgressStore[props.id].pdfGenStatus.isDownloading)
 			return 'Downloading…'
-		if (featureProgressStore[props.id].pdfGenStatus.isComplete)
+		if (activityProgressStore[props.id].pdfGenStatus.isComplete)
 			return 'Download complete!'
-		if (featureProgressStore[props.id].pdfGenStatus.isFailed)
+		if (activityProgressStore[props.id].pdfGenStatus.isFailed)
 			return 'Failed to download. Try again?'
 
 		return 'Save as PDF'
@@ -132,7 +132,7 @@
 
 	const shouldDisplayVisualFeedback = computed(() => {
 		const pdfStatusAsArray = Object.entries(
-			featureProgressStore[props.id].pdfGenStatus
+			activityProgressStore[props.id].pdfGenStatus
 		)
 		const isAttemptingDownload = pdfStatusAsArray.some(([_, isDownloading]) => {
 			return isDownloading === true
@@ -144,7 +144,7 @@
 <style module lang="scss">
 	@use '../../styles/mixins/containerStyles.scss';
 
-	.featureCompleteBtns {
+	.activityCompleteBtns {
 		width: 100%;
 		display: grid;
 		grid-template-rows: [pdfSave-Start] min-content [pdfSave-indicator] min-content [indicator-end];
@@ -159,7 +159,7 @@
 		bottom: var(--s-4);
 	}
 
-	.featureCompleteBtn {
+	.activityCompleteBtn {
 		grid-area: pdfSave-indicator/topLine/indicator-end/bottomLine;
 		align-self: end;
 		width: 100%;

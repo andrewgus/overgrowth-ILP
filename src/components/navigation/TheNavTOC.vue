@@ -146,7 +146,6 @@
 					&:hover,
 					&:focus {
 						background-color: var(--peach);
-						font-weight: 700;
 						outline: none;
 						text-decoration: underline;
 					}

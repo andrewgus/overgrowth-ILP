@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-	// TODO: include a checkbox&label for "don't show this for any future activities" which will provide/inject and boolean value, sent to the featureCompleteBtn. If checked (therefore, true), then update the featureProgress store prop "wantsNoMoreAlerts", and if that is true (defaults to false), then do not show the alert at all on feature activity sections.
+	// TODO: include a checkbox&label for "don't show this for any future activities" which will provide/inject and boolean value, sent to the activityCompleteBtn. If checked (therefore, true), then update the activityProgress store prop "wantsNoMoreAlerts", and if that is true (defaults to false), then do not show the alert at all on activity activity sections.
 	defineProps({
 		show: {
 			type: Boolean,

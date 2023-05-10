@@ -1,4 +1,4 @@
-// FeatureOptionsStore maintains the state across various feature interactions. This manages the state of a user's work within a feature.
+// ActivityOptionsStore maintains the state across various activity interactions. This manages the state of a user's work within a activity.
 import { reactive } from 'vue'
 
 // REFLECTION
@@ -32,8 +32,8 @@ function initUserReflectionsStore(id: string, prompt: string, answer?: string) {
 	 NOTE: When creating first practice activity component, will need to create a store for # of user attempts and how they performed in each attempt.
 */
 
-// Tracking user progress within feature interactions
-interface featureProgress {
+// Tracking user progress within activity interactions
+interface activityProgress {
 	[id: string]: {
 		id: string
 		isAttemptsFinished: boolean
@@ -44,9 +44,9 @@ interface featureProgress {
 		}
 	}
 }
-const featureProgressStore = reactive<featureProgress>({})
-function initFeatureProgressStore(id: string) {
-	featureProgressStore[id] = {
+const activityProgressStore = reactive<activityProgress>({})
+function initActivityProgressStore(id: string) {
+	activityProgressStore[id] = {
 		id: id,
 		isAttemptsFinished: false,
 		pdfGenStatus: {
@@ -60,6 +60,6 @@ function initFeatureProgressStore(id: string) {
 export {
 	userReflectionsStore,
 	initUserReflectionsStore,
-	featureProgressStore,
-	initFeatureProgressStore,
+	activityProgressStore,
+	initActivityProgressStore,
 }

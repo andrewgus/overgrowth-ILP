@@ -1,7 +1,7 @@
 ---
 import TheLesson from '../../layouts/TheLesson.astro'
 import StaticContent from '../../layouts/StaticContent.astro'
-import InteractiveFeature from '../../layouts/InteractiveFeature.vue'
+import InteractiveActivity from '../../layouts/InteractiveActivity.vue'
 ---
 
 <TheLesson
@@ -9,11 +9,11 @@ import InteractiveFeature from '../../layouts/InteractiveFeature.vue'
 	scene='setting'
 	gradientColor={'var(--green)'}
 >
-	<InteractiveFeature
+	<InteractiveActivity
 		client:load
-		featureType='practice'
-		title='Practice Feature'
-		prompt='This is a practice feature test.'
+		activityType='practice'
+		title='Practice Activity'
+		prompt='This is a practice activity test.'
 	/>
 	<StaticContent title='Welcome to the Course'>
 		<p>In this course, we will&hellip;</p>

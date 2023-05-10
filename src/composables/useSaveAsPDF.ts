@@ -1,6 +1,6 @@
 import { jsPDF } from 'jspdf'
 import type { SectionDetails } from '../store/lessonStore'
-import { featureProgressStore } from '../store/featureOptionsStore'
+import { activityProgressStore } from '../store/activityOptionsStore'
 
 /**
  * To generate a PDF download of a learner's work they've completed (practice and/or reflection)
@@ -32,7 +32,7 @@ export default function generatePDF(currSection: SectionDetails) {
 				newPDF.setPage(i)
 				newPDF.setFontSize(10)
 				newPDF.setTextColor(150)
-				newPDF.text(`${lessonName} ${currSection.featureType}`, 16, 20, {
+				newPDF.text(`${lessonName} ${currSection.activityType}`, 16, 20, {
 					align: 'left',
 				})
 			}
@@ -40,16 +40,16 @@ export default function generatePDF(currSection: SectionDetails) {
 				.save(`${currSection.id}.pdf`, { returnPromise: true })
 				.catch(
 					(_) =>
-						(featureProgressStore[currSection.id].pdfGenStatus.isFailed = true)
+						(activityProgressStore[currSection.id].pdfGenStatus.isFailed = true)
 				)
 				.then(
 					(_) =>
-						(featureProgressStore[currSection.id].pdfGenStatus.isDownloading =
+						(activityProgressStore[currSection.id].pdfGenStatus.isDownloading =
 							false)
 				)
 				.finally(
 					() =>
-						(featureProgressStore[currSection.id].pdfGenStatus.isComplete =
+						(activityProgressStore[currSection.id].pdfGenStatus.isComplete =
 							true)
 				)
 		},

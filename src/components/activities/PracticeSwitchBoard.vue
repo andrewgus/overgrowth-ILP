@@ -1,11 +1,10 @@
 <template>
-
 	<p>{{ prompt }}</p>
 	<slot></slot>
 </template>
 
 <script setup lang="ts">
-	import { featureProgressStore } from '../../store/featureOptionsStore'
+	import { activityProgressStore } from '../../store/activityOptionsStore'
 	// NOTE: id and prompt both needed for possible labels
 	type Props = {
 		id: string
@@ -14,5 +13,5 @@
 	const props = defineProps<Props>()
 
 	// FOR TESTING. This below would actually exist within a given child component. See reflection for example.
-	featureProgressStore[props.id].isAttemptsFinished = true
+	activityProgressStore[props.id].isAttemptsFinished = true
 </script>

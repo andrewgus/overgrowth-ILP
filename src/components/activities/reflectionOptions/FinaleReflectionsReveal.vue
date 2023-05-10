@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-	import { userReflectionsStore } from '../../../store/featureOptionsStore'
+	import { userReflectionsStore } from '../../../store/activityOptionsStore'
 	import BaseSeparator from '../../base/BaseSeparator.vue'
 
 	defineProps({

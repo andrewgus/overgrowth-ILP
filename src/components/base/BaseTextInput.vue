@@ -18,36 +18,18 @@
 
 	const emits = defineEmits(['userTyped'])
 
-	const props = defineProps({
-		id: {
-			type: String,
-			required: true,
-		},
-		prompt: {
-			type: String,
-			required: true,
-		},
-		placeholderText: {
-			type: String,
-			required: true,
-		},
-		storeProp: {
-			type: String,
-			required: true,
-		},
-		savedData: {
-			type: String,
-		},
-		isDisabled: {
-			type: Boolean,
-		},
-		describedBy: {
-			type: String,
-		},
-		completeCondition: {
-			type: Function,
-		},
-	})
+	type Props = {
+		id: string
+		prompt: string
+		placeholderText: string
+		storeProp: string
+		savedData?: string
+		isDisabled?: boolean
+		describedBy?: string
+		completeCondition?: Function
+	}
+
+	const props = defineProps<Props>()
 
 	const typedInput = ref<string>('')
 

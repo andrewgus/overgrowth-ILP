@@ -1,36 +1,36 @@
 <template>
-	<article class="section feature" :class="featureType" tabindex="-1">
+	<article class="section activity" :class="activityType" tabindex="-1">
 		<h2>{{ title }}</h2>
 		<BaseAlertText
 			:show="
-				!isFinaleReveal && !featureProgressStore[sectionID].isAttemptsFinished
+				!isFinaleReveal && !activityProgressStore[sectionID].isAttemptsFinished
 			"
 		>
 			Heads&nbsp;up!&nbsp;Once&nbsp;completed, this&nbsp;{{
-				featureType
+				activityType
 			}}&nbsp;activity
 			<strong>cannot</strong>&nbsp;be&nbsp;turned&nbsp;off&nbsp;later.
 		</BaseAlertText>
-		<component :is="feature" v-bind="conditionalProps">
+		<component :is="activity" v-bind="conditionalProps">
 			<slot></slot>
 		</component>
-		<FeatureCompleteBtns :id="sectionID" />
+		<ActivityCompleteBtns :id="sectionID" />
 	</article>
 </template>
 
 <script setup lang="ts">
 	import { computed, defineAsyncComponent } from 'vue'
-	import { useDoesFeatureExist, type FeatureType } from '../store/lessonStore'
+	import { useDoesActivityExist, type ActivityType } from '../store/lessonStore'
 	import {
-		initFeatureProgressStore,
-		featureProgressStore,
-	} from '../store/featureOptionsStore'
+		initActivityProgressStore,
+		activityProgressStore,
+	} from '../store/activityOptionsStore'
 	import createID from '../composables/useCreateID'
-	import FeatureCompleteBtns from '../components/features/FeatureCompleteBtns.vue'
+	import ActivityCompleteBtns from '../components/activities/ActivityCompleteBtns.vue'
 	import BaseAlertText from '../components/base/BaseAlertText.vue'
 
 	type Props = {
-		featureType: FeatureType
+		activityType: ActivityType
 		title: string
 		prompt: string
 		isFinaleReveal?: boolean
@@ -40,16 +40,16 @@
 		isFinaleReveal: false,
 	})
 	const sectionID = createID(props.title)
-	initFeatureProgressStore(sectionID)
+	initActivityProgressStore(sectionID)
 
-	const feature = defineAsyncComponent(() =>
+	const activity = defineAsyncComponent(() =>
 		import(
-			`../components/features/${
-				props.featureType.charAt(0).toUpperCase() + props.featureType.slice(1)
+			`../components/activities/${
+				props.activityType.charAt(0).toUpperCase() + props.activityType.slice(1)
 			}SwitchBoard.vue`
 		).finally(() => {
-			useDoesFeatureExist(props.featureType)
-			// only need setLocksHandler && updateLocalStorage scripts if features are being used within a given lesson
+			useDoesActivityExist(props.activityType)
+			// only need setLocksHandler && updateLocalStorage scripts if activities are being used within a given lesson
 			import('../scripts/setLocksHandler.js')
 			import('../scripts/updateLocalStorage.js')
 		})
@@ -60,20 +60,20 @@
 			id: sectionID,
 			prompt: props.prompt,
 		}
-		let featureProps: {}
-		switch (props.featureType) {
+		let activityProps: {}
+		switch (props.activityType) {
 			case 'reflection':
-				featureProps = {
+				activityProps = {
 					isFinaleReveal: props.isFinaleReveal,
 				}
 				break
 			case 'practice':
-				featureProps = {}
+				activityProps = {}
 				break
 			case 'choice':
-				featureProps = {}
+				activityProps = {}
 				break
 		}
-		return { ...universalProps, ...featureProps }
+		return { ...universalProps, ...activityProps }
 	})
 </script>

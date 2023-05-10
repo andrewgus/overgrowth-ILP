@@ -57,14 +57,9 @@ a {
   border: 1px solid transparent;
   border-radius: var(--s-10);
   padding: 0 var(--s-10);
+
   &:hover,
   &:focus {
-    font-weight: 700;
-  }
-  &:focus {
-    border-radius: var(--s-10);
-  }
-  &:hover {
     border: 1px solid var(--blue);
     background-color: var(--peach);
     text-underline-offset: var(--s-9);

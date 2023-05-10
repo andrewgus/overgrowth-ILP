@@ -2,13 +2,13 @@
 import { watch } from 'vue'
 import { allSectionsMap, lessonIDAtom } from '../store/lessonStore'
 import {
-	featureProgressStore,
+	activityProgressStore,
 	userReflectionsStore,
-} from '../store/featureOptionsStore'
+} from '../store/activityOptionsStore'
 import getLocalStorage from '../composables/useGetLocalStorage'
 
 type localStorageDataObjProps = {
-	isFeatureComplete?: boolean
+	isActivityComplete?: boolean
 	reflectionAnswer?: string
 	isReflectionOff?: boolean
 	isPracticeOff?: boolean
@@ -30,17 +30,17 @@ const useResetLocalStorageUserData = () => {
 	Object.values(userReflectionsStore).forEach(
 		(reflection) => (reflection.answer = '')
 	)
-	// Clearing all feature progress
+	// Clearing all activity progress
 	const allSectionsAsArray = Object.entries(allSectionsMap.get())
-	// finding first available feature to lock sections all after it
-	const firstFeature = allSectionsAsArray.findIndex(
-		([_, details]) => details.featureType !== null
+	// finding first available activity to lock sections all after it
+	const firstActivity = allSectionsAsArray.findIndex(
+		([_, details]) => details.activityType !== null
 	)
 	allSectionsAsArray.forEach(([key, details], index) => {
 		allSectionsMap.setKey(key, {
 			...details,
-			isLocked: index <= firstFeature ? false : true,
-			isFeatureComplete: details.featureType !== null ? false : null,
+			isLocked: index <= firstActivity ? false : true,
+			isActivityComplete: details.activityType !== null ? false : null,
 		})
 	})
 }
@@ -74,10 +74,10 @@ watch(
 )
 // Updating local storage based on user's progress
 allSectionsMap.listen((sections) => {
-	Object.entries(sections).forEach(([id, { isFeatureComplete }]) => {
-		if (isFeatureComplete) {
+	Object.entries(sections).forEach(([id, { isActivityComplete }]) => {
+		if (isActivityComplete) {
 			updateLocalStorageUserData(id, {
-				isFeatureComplete: isFeatureComplete ? isFeatureComplete : false,
+				isActivityComplete: isActivityComplete ? isActivityComplete : false,
 			})
 		}
 	})

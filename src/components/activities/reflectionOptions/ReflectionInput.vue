@@ -7,7 +7,7 @@
 			:prompt="prompt"
 			:savedData="localStorageAnswers"
 			:storeProp="userReflectionsStore[id].answer"
-			:isDisabled="!!$allSections[id].isFeatureComplete"
+			:isDisabled="!!$allSections[id].isActivityComplete"
 			:completeCondition="checkForCompletion"
 			placeholderText="I think&hellip;"
 			@userTyped="updateReflectionStore"
@@ -21,8 +21,8 @@
 	import {
 		userReflectionsStore,
 		initUserReflectionsStore,
-		featureProgressStore,
-	} from '../../../store/featureOptionsStore'
+		activityProgressStore,
+	} from '../../../store/activityOptionsStore'
 	import useAreSectionsAvailable from '../../../composables/useAreSectionsAvailable'
 	import getLocalStorage from '../../../composables/useGetLocalStorage'
 	import BaseTextInput from '../../base/BaseTextInput.vue'
@@ -52,9 +52,9 @@
 
 	const checkForCompletion = () => {
 		if (userReflectionsStore[props.id].answer.length > 25) {
-			featureProgressStore[props.id].isAttemptsFinished = true
+			activityProgressStore[props.id].isAttemptsFinished = true
 		} else {
-			featureProgressStore[props.id].isAttemptsFinished = false
+			activityProgressStore[props.id].isAttemptsFinished = false
 		}
 	}
 

@@ -1,7 +1,7 @@
 ---
 import TheLesson from '../../layouts/TheLesson.astro'
 import StaticContent from '../../layouts/StaticContent.astro'
-import InteractiveFeature from '../../layouts/InteractiveFeature.vue'
+import InteractiveActivity from '../../layouts/InteractiveActivity.vue'
 ---
 
 <TheLesson
@@ -9,9 +9,9 @@ import InteractiveFeature from '../../layouts/InteractiveFeature.vue'
 	scene='setting'
 	gradientColor={'var(--green)'}
 >
-	<InteractiveFeature
+	<InteractiveActivity
 		client:load
-		featureType='reflection'
+		activityType='reflection'
 		title='What do you think?'
 		prompt='When you hear the term Astronomy, what do you think about?'
 	>
@@ -27,18 +27,18 @@ import InteractiveFeature from '../../layouts/InteractiveFeature.vue'
 				<p>&lbrace;Learning Outcome 3&rbrace;</p>
 			</li>
 		</ul>
-	</InteractiveFeature>
-	<InteractiveFeature
+	</InteractiveActivity>
+	<InteractiveActivity
 		client:load
-		featureType='practice'
-		title='Practice Feature'
-		prompt='This is a practice feature test.'
+		activityType='practice'
+		title='Practice Activity'
+		prompt='This is a practice activity test.'
 	/>
-	<InteractiveFeature
+	<InteractiveActivity
 		client:load
-		featureType='choice'
-		title='Choice Feature'
-		prompt='This is a choice feature test.'
+		activityType='choice'
+		title='Choice Activity'
+		prompt='This is a choice activity test.'
 	/>
 	<StaticContent title='Welcome to the Course'>
 		<p>In this course, we will&hellip;</p>
@@ -130,9 +130,9 @@ import InteractiveFeature from '../../layouts/InteractiveFeature.vue'
 		</section>
 	</StaticContent>
 
-	<InteractiveFeature
+	<InteractiveActivity
 		client:load
-		featureType='reflection'
+		activityType='reflection'
 		title='And Now What Do You Think?'
 		prompt='You’ve learned new information. What do you think about now when you hear the term Astronomy?'
 	/>
@@ -294,15 +294,15 @@ import InteractiveFeature from '../../layouts/InteractiveFeature.vue'
 			deleniti?
 		</p>
 	</StaticContent>
-	<InteractiveFeature
+	<InteractiveActivity
 		client:load
-		featureType='reflection'
+		activityType='reflection'
 		title='One Last Time'
 		prompt='What’s changed in your thinking about Astronomy? Write it here.'
 	/>
-	<InteractiveFeature
+	<InteractiveActivity
 		client:load
-		featureType='reflection'
+		activityType='reflection'
 		title="How You've Grown…"
 		prompt='Read how your thinking has progressed as you’ve learned more about Astronomy.'
 		isFinaleReveal

@@ -21,13 +21,13 @@
       margin: var(--s2) 0;
     }
   }
-  &.feature {
+  &.activity {
     padding-bottom: var(--s-2);
     grid-template-rows:
       repeat(3, minmax(10vh, max-content))
       [completeBtnBtn-start] 1fr [completeBtn-end];
 
-    > div[class*="featureCompleteBtns"] {
+    > div[class*="activityCompleteBtns"] {
       grid-row: completeBtn-start/completeBtn-end;
       align-self: end;
     }
