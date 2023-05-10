@@ -15,6 +15,11 @@
   }
   &.staticContent {
     padding-bottom: var(--s2);
+
+    > img {
+      width: 100%;
+      margin: var(--s2) 0;
+    }
   }
   &.feature {
     padding-bottom: var(--s-2);
@@ -36,7 +41,13 @@
   }
 }
 @media only screen and (max-width: 75ch) {
-  #theLessonContent article.section > *:not(.fullWidth) {
-    grid-column: content-start / content-end;
+  #theLessonContent article.section {
+    > *:not(.fullWidth) {
+      grid-column: content-start / content-end;
+    }
+    * {
+      flex-flow: column nowrap;
+      align-items: center;
+    }
   }
 }

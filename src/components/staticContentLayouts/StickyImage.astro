@@ -1,0 +1,54 @@
+---
+type Props = {
+	imgSrc: string
+	altText?: string
+	align?: 'alignLeft' | 'alignRight'
+}
+const { imgSrc, altText = '', align = 'alignLeft' } = Astro.props
+
+// TODO: Art direction. Vertical vs Horizontal images. Vertical images would be side by side. Horizontal images would be at the top. Both would be sticky to the text. With vertical images, text would scroll by as image stays in view to the left or right of it. With horizontal images, text would scroll as image is at the stickied to the top and z-indexed to be atop the text.
+// TODO: this currently works for horizontal as intended, but not at all for vertical with position sticky. Need to recongifgure appropriately. Include a size-increase btn on the sticky image with client:visible on it to toggle increase/decrease of image size when image is small.
+---
+
+<div class:list={['fullWidth', 'content', align]}>
+	<div class='stickyImg'>
+		<img src={imgSrc} alt={altText} />
+	</div>
+	<div class='correspondingText'>
+		<slot />
+	</div>
+</div>
+
+<style lang='scss'>
+	.content {
+		margin: var(--s2) 0;
+		display: flex;
+		flex-flow: row wrap;
+		gap: var(--s2);
+
+		&.alignRight {
+			.stickyImg {
+				order: 2;
+			}
+			.correspondingText {
+				order: 1;
+			}
+		}
+
+		> .stickyImg {
+			display: flex;
+			align-items: start;
+			justify-content: center;
+			flex: 1.5;
+			> img {
+				max-width: 40ch;
+				width: 100%;
+				position: sticky;
+				top: var(--s8);
+			}
+		}
+		> .correspondingText {
+			flex: 2;
+		}
+	}
+</style>

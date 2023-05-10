@@ -1,6 +1,6 @@
 ---
-import ExternalLink from '../../components/base/ExternalLink.astro'
-import StickyImage from '../../components/contentLayouts/StickyImage.astro'
+import ExternalLink from '../../components/staticContentLayouts/ExternalLink.astro'
+import StickyImage from '../../components/staticContentLayouts/StickyImage.astro'
 import StaticContent from '../../layouts/StaticContent.astro'
 import TheLesson from '../../layouts/TheLesson.astro'
 ---
@@ -11,18 +11,63 @@ import TheLesson from '../../layouts/TheLesson.astro'
 	gradientColor={'var(--yellow-5)'}
 >
 	<StaticContent title='Welcome to the Course'>
-		<StickyImage altText='Astronaut' imageSrc='cel-website/construction.svg'>
+		<p>
+			Art history is a fascinating subject that delves into the rich and diverse
+			world of artistic expression throughout human history. From the earliest
+			cave paintings to the most cutting-edge contemporary art, art history
+			provides a lens through which we can explore the cultural, social, and
+			political contexts that have shaped the art of different eras and regions.
+		</p>
+		<p>
+			Through the study of art history, we can learn about the different styles,
+			techniques, and movements that have emerged over time, as well as the key
+			figures who have shaped the course of art history. We can explore the ways
+			in which art has been used to communicate ideas, tell stories, and
+			challenge conventions, and we can appreciate the beauty and complexity of
+			artworks from around the world.
+		</p>
+		<p>
+			Whether you are an art lover, a student of history, or simply curious
+			about the world around you, art history is a fascinating and rewarding
+			subject to explore. So why not dive in and discover the incredible world
+			of art history for yourself?
+		</p>
+		<StickyImage
+			altText='Café Terrace at Night by Vincent Van Gogh'
+			imgSrc='https://theawesomedaily.com/wp-content/uploads/2016/12/Famous-Paintings-18-1.jpg'
+		>
 			<p>
-				Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ex placeat
-				mollitia officiis fuga perspiciatis cupiditate similique aliquid rerum
-				doloremque tempore? Nostrum sequi voluptate necessitatibus et
-				praesentium quae qui iure est.
+				One of the most exciting aspects of art history is the way in which it
+				allows us to trace the evolution of artistic expression over time. By
+				studying different periods and styles, <ExternalLink
+					src='https://www.metmuseum.org/'
+					title='we can see how artists have'
+				/>
+
+				responded to the social, political, and cultural context of their times,
+				and how their work has both reflected and shaped these contexts. We can
+				also see how artists have been influenced by one another, and how their
+				ideas and techniques have been passed down from generation to
+				generation.
 			</p>
 			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit.
-				<ExternalLink src='https://www.google.com' title='Google' />
-				Minima delectus consectetur reprehenderit laboriosam ullam magni fuga inventore
-				iure, ea cum, eos aliquam ex beatae quae fugit!
+				At the same time, art history also allows us to appreciate the unique
+				qualities of individual artworks, and to understand the meanings and
+				messages they convey. Whether we are looking at a painting, a sculpture,
+				or a piece of architecture, we can explore the ways in which the artist
+				has used form, color, composition, and other elements to create a
+				powerful and evocative work of art. We can also consider the symbolism
+				and cultural significance of these elements, and how they relate to the
+				broader themes and ideas of the work.
+			</p>
+			<p>
+				Finally, studying art history can also deepen our understanding of the
+				world around us, and of ourselves as human beings. By exploring the
+				diverse range of artistic traditions that have emerged throughout
+				history, we can gain insights into the ways in which different cultures
+				have sought to express their values, beliefs, and aspirations. We can
+				also consider the role that art has played in shaping our own lives and
+				identities, and in shaping the world we live in today.
 			</p>
 		</StickyImage>
 	</StaticContent>
