@@ -40,7 +40,12 @@ const { filteredLessons, topicTitle } = Astro.props
 			filteredLessons.map((fL: { url: string }) => (
 				<li>
 					<a class='linkCard' href={fL.url}>
-						{fL.url.split('/').at(-1)!.replaceAll('-', ' ')}
+						{fL.url
+							.split('/')
+							.at(-1)!
+							.split('-')
+							.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+							.join(' ')}
 					</a>
 				</li>
 			))

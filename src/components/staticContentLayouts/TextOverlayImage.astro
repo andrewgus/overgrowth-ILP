@@ -1,0 +1,25 @@
+---
+/**
+ * Intent is to have an image, fullWidth be shown, and then, with scroll, image with opaque BG scroll over it. Similar to side-by-side, but for larger images.
+ */
+import BaseImage from '../base/BaseImage.astro'
+type Props = {
+	imgName: string
+	altText?: string
+	align?: 'alignLeft' | 'alignRight'
+}
+const { imgName, altText = '', align = 'alignLeft' } = Astro.props
+---
+
+<div class:list={['fullWidth', 'textOverlayImage']}>
+	<BaseImage describedBy='test234' imgSrc={imgName} altText={altText} />
+	<div id='test234' class='overlayText'>
+		<slot />
+	</div>
+</div>
+
+<style lang='scss'>
+	.overlayText {
+		background-color: hsla(0deg, 0%, 100%, 0.67);
+	}
+</style>

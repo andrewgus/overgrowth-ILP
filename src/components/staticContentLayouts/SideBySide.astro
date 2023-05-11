@@ -1,26 +1,33 @@
 ---
+// NOTE: TRY BUILDING AND SEE IF THIS COMMENT IS INCLUDED IF NOT. If not included, I should write the intent of each layout in this area.
+/**
+ * Use case for layout here...
+ */
+import BaseImage from '../base/BaseImage.astro'
 type Props = {
-	imgSrc: string
+	imgName: string
 	altText?: string
 	align?: 'alignLeft' | 'alignRight'
 }
-const { imgSrc, altText = '', align = 'alignLeft' } = Astro.props
+const { imgName, altText = '', align = 'alignLeft' } = Astro.props
 
 // TODO: Art direction. Vertical vs Horizontal images. Vertical images would be side by side. Horizontal images would be at the top. Both would be sticky to the text. With vertical images, text would scroll by as image stays in view to the left or right of it. With horizontal images, text would scroll as image is at the stickied to the top and z-indexed to be atop the text.
 // TODO: this currently works for horizontal as intended, but not at all for vertical with position sticky. Need to recongifgure appropriately. Include a size-increase btn on the sticky image with client:visible on it to toggle increase/decrease of image size when image is small.
+// TODO: create dynamic unique id generated with this component's every use for aria-describedby between image and text. Should also be for TextOverlayImage component. ***OR** do I make this pairing only exist if a param is added, such as "textDescribes: boolean"? For example: textDescribes is a boolean prop where, if true, the id+describedBy will be added **OR** the words "...as described below," to the end of the alt text.
+// TODO: provide a prop for ratio options for col sets. 2:1 (60/40), 1:1: (50/50), etc etc.
 ---
 
-<div class:list={['fullWidth', 'content', align]}>
+<div class:list={['fullWidth', 'sideBySide', align]}>
 	<div class='stickyImg'>
-		<img src={imgSrc} alt={altText} />
+		<BaseImage describedBy={'test123'} imgSrc={imgName} altText={altText} />
 	</div>
-	<div class='correspondingText'>
+	<div id='test123' class='correspondingText'>
 		<slot />
 	</div>
 </div>
 
 <style lang='scss'>
-	.content {
+	.sideBySide {
 		margin: var(--s2) 0;
 		display: flex;
 		flex-flow: row wrap;
@@ -40,8 +47,10 @@ const { imgSrc, altText = '', align = 'alignLeft' } = Astro.props
 			align-items: start;
 			justify-content: center;
 			flex: 1.5;
-			> img {
+			> :global(img) {
+				object-fit: contain;
 				max-width: 40ch;
+				max-height: 85vh;
 				width: 100%;
 				position: sticky;
 				top: var(--s7);

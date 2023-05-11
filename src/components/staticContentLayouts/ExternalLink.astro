@@ -7,21 +7,21 @@ const { src, title } = Astro.props
 ---
 
 <a class='extLink' href={src} target='_blank' rel='noreferrer'>
-	<span class='visuallyHidden'>Link to External Site&nbsp;</span>
 	{title}
-	<img aria-hidden='true' alt='' src='../extLink.svg' />
+	<span class='visuallyHidden'>opens in a new window</span>
+	<img src='../extLink.svg' alt='' aria-hidden='true' />
 </a>
 
 <style lang='scss'>
 	.extLink {
 		display: inline-flex;
 		flex-flow: row nowrap;
-		gap: 0 var(--s-10);
-		align-items: center;
+		gap: 0 var(--s-8);
+		align-items: baseline;
 
 		> img {
-			height: var(--s-3);
-			width: var(--s-3);
+			height: var(--s-2);
+			width: var(--s-2);
 		}
 	}
 </style>

@@ -45,7 +45,7 @@
     > *:not(.fullWidth) {
       grid-column: content-start / content-end;
     }
-    * {
+    *:not(.extLink) {
       flex-flow: column nowrap;
       align-items: center;
     }

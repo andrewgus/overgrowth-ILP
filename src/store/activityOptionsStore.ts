@@ -1,4 +1,4 @@
-// ActivityOptionsStore maintains the state across various activity interactions. This manages the state of a user's work within a activity.
+// activityOptionsStore maintains the state across various activity interactions. This manages the state of a user's work within a activity.
 import { reactive } from 'vue'
 
 // REFLECTION
