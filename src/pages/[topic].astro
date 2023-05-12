@@ -3,9 +3,9 @@ import '../styles/libraryPages.scss'
 import LibLayout from '../layouts/LibLayout.astro'
 
 export async function getStaticPaths() {
-	const allLessons = await Astro.glob('../pages/*/*.astro')
+	const allLessons = await Astro.glob('./*/*.astro')
 
-	const topicURLs = allLessons.map((lesson) => lesson.url!.split('/').at(1))
+	const topicURLs = allLessons.map((lesson) => lesson.url!.split('/').at(2))
 
 	return topicURLs.map((topic) => {
 		const filteredLessons = allLessons.filter((lesson) =>
@@ -29,7 +29,7 @@ const { filteredLessons, topicTitle } = Astro.props
 
 <LibLayout title={`${topicTitle!} Interactive Lessons`}>
 	<nav>
-		<a href='/'>Back to all topics</a>
+		<a href='/catalog/'>Back to all topics</a>
 	</nav>
 	<p>Hello</p>
 	<p>

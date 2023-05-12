@@ -29,7 +29,7 @@
 		&::before {
 			content: '';
 			display: inline-flex;
-			background-image: url(../info.svg);
+			background-image: url(../catalog/info.svg);
 			background-repeat: no-repeat;
 			background-size: var(--s0);
 			background-position: center right var(--s0);

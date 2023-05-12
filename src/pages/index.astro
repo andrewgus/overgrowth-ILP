@@ -2,10 +2,10 @@
 import '../styles/libraryPages.scss'
 import LibLayout from '../layouts/LibLayout.astro'
 
-const allLessons = await Astro.glob('../pages/*/*.astro')
+const allLessons = await Astro.glob('./*/*.astro')
 
 const topicURLs = [
-	...new Set(allLessons.map((lesson) => lesson.url!.split('/').at(1))),
+	...new Set(allLessons.map((lesson) => lesson.url!.split('/').at(2))),
 ]
 
 const topicTitles = topicURLs.map((title) => {
@@ -24,7 +24,7 @@ const topicTitles = topicURLs.map((title) => {
 		{
 			topicTitles.map((title, i) => (
 				<li>
-					<a class='linkCard' href={`/${topicURLs[i]}`}>
+					<a class='linkCard' href={`/catalog/${topicURLs[i]}`}>
 						{title}
 					</a>
 				</li>

@@ -24,10 +24,10 @@
     "@astrojs/vue": "^2.1.1",
     "@nanostores/vue": "^0.7.0",
     "@vueuse/core": "^10.1.2",
-    "astro": "^2.3.4",
+    "astro": "^2.4.5",
     "jspdf": "^2.5.1",
     "nanostores": "^0.8.1",
-    "vue": "^3.2.47"
+    "vue": "^3.3.1"
   },
   "devDependencies": {
     "sass": "^1.62.1"
