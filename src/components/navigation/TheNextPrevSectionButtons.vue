@@ -59,9 +59,7 @@
 
 <style module lang="scss">
 	@use '../../styles/mixins/containerStyles.scss';
-	@use '../../styles/mixins/transitions.scss';
 	.nextPrev {
-		min-height: 48px;
 		grid-area: 1/2/2/3;
 		display: flex;
 		justify-self: end;
@@ -72,12 +70,9 @@
 
 		> a.btn_next,
 		> a.btn_prev {
-			@include containerStyles.flexCenter();
 			color: var(--black);
 			border-radius: 0;
-			padding: var(--s-2);
 			border: none;
-			@include transitions.short();
 			&:visited {
 				color: var(--black);
 			}

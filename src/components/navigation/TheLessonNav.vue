@@ -55,7 +55,7 @@
 			margin: 0 auto;
 			display: grid;
 			align-items: center;
-			grid-template-columns: 2.5fr 1fr;
+			grid-template-columns: 3fr 1fr;
 			padding: var(--s-5);
 
 			> p {

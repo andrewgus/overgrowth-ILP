@@ -76,16 +76,15 @@
 </script>
 
 <style module lang="scss">
+	@use '../../styles/mixins/transitions.scss';
 	button.btnTOC {
-		min-height: 48px;
+		height: var(--s4);
 		font-size: var(--s-1);
 		grid-area: 1/3/2/4;
-		height: var(--s4);
 		justify-self: end;
 		border: 1px solid var(--darkGray);
 		border-radius: 0px var(--s10) var(--s10) 0px;
 		margin-left: var(--s-3);
-		padding: var(--s-2);
 	}
 	.lessonTOC {
 		grid-area: 2/1/3/4;
@@ -97,8 +96,7 @@
 		width: 100%;
 		max-height: 90vh;
 		overflow: scroll;
-		-webkit-transition: var(--timeShort) all ease-in-out;
-		transition: var(--timeShort) all ease-in-out;
+		@include transitions.short();
 
 		& {
 			opacity: 0;

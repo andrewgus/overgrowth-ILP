@@ -1,11 +1,11 @@
 #theLessonContent article.section {
+  min-height: 90vh;
+  padding: 0 var(--s-4);
   display: grid;
   grid-template-columns:
     auto [content-start] minmax(auto, 10ch) [innerContent-start] minmax(auto, 60ch)
     [innerContent-end] minmax(auto, 10ch) [content-end] auto;
   align-content: start;
-  min-height: 90vh;
-  padding: 0 var(--s-4);
 
   &.isLocked {
     display: none;
@@ -40,14 +40,13 @@
     grid-column: content-start / content-end;
   }
 }
-@media only screen and (max-width: 75ch) {
+@media only screen and (max-width: 100ch) {
   #theLessonContent article.section {
     > *:not(.fullWidth) {
       grid-column: content-start / content-end;
     }
-    *:not(.extLink) {
+    > * {
       flex-flow: column nowrap;
-      align-items: center;
     }
   }
 }

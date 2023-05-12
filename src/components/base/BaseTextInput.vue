@@ -50,6 +50,7 @@
 
 <style module lang="scss">
 	.textarea {
+		width: 100%;
 		resize: none;
 		font-size: var(--s0);
 		font-family: var(--fonts);

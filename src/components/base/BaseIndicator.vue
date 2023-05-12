@@ -47,7 +47,7 @@
 	.indicator {
 		width: fit-content;
 		align-self: center;
-		margin: 0 auto;
+		margin: 0 auto var(--s0);
 
 		&__link {
 			text-decoration: none;
