@@ -3,24 +3,35 @@
  * Use case for layout here...
  */
 import BaseImage from '../base/BaseImage.astro'
+import { nanoid } from 'nanoid'
 type Props = {
 	imgName: string
 	altText?: string
 	align?: 'alignLeft' | 'alignRight'
+	setRatio?: '1:1' | '2:3'
+	needTextDescription?: boolean
 }
-const { imgName, altText = '', align = 'alignLeft' } = Astro.props
+
+const {
+	imgName,
+	altText = '',
+	align = 'alignLeft',
+	setRatio,
+	needTextDescription = false,
+} = Astro.props
+
+const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
 
 // TODO: Art direction. Vertical vs Horizontal images. Vertical images would be side by side. Horizontal images would be at the top. Both would be sticky to the text. With vertical images, text would scroll by as image stays in view to the left or right of it. With horizontal images, text would scroll as image is at the stickied to the top and z-indexed to be atop the text.
 // TODO: this currently works for horizontal as intended, but not at all for vertical with position sticky. Need to recongifgure appropriately. Include a size-increase btn on the sticky image with client:visible on it to toggle increase/decrease of image size when image is small.
-// TODO: create dynamic unique id generated with this component's every use for aria-describedby between image and text. Should also be for TextOverlayImage component. ***OR** do I make this pairing only exist if a param is added, such as "textDescribes: boolean"? For example: textDescribes is a boolean prop where, if true, the id+describedBy will be added **OR** the words "...as described below," to the end of the alt text.
-// TODO: provide a prop for ratio options for col sets. 2:1 (60/40), 1:1: (50/50), etc etc.
+// TODO: provide a prop for ratio options for col sets. 3: (60/40), 1:1: (50/50), etc etc. NOTE: NEED TO THINK ABOUT THIS MORE.
 ---
 
 <div class:list={['fullWidth', 'sideBySide', align]}>
 	<div class='stickyImg'>
-		<BaseImage describedBy={'test123'} imgName={imgName} altText={altText} />
+		<BaseImage describedBy={needID} imgName={imgName} altText={altText} />
 	</div>
-	<div id='test123' class='correspondingText'>
+	<div id={needID} class='correspondingText'>
 		<slot />
 	</div>
 </div>

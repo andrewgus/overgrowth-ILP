@@ -1,9 +1,9 @@
 ---
+import TheLesson from '../../layouts/TheLesson.astro'
 import ExternalLink from '../../components/staticContentLayouts/ExternalLink.astro'
 import SideBySide from '../../components/staticContentLayouts/SideBySide.astro'
 import TextOverlayImage from '../../components/staticContentLayouts/TextOverlayImage.astro'
 import StaticContent from '../../layouts/StaticContent.astro'
-import TheLesson from '../../layouts/TheLesson.astro'
 ---
 
 <TheLesson
@@ -46,6 +46,7 @@ import TheLesson from '../../layouts/TheLesson.astro'
 		<SideBySide
 			altText='Café Terrace at Night by Vincent Van Gogh'
 			imgName='cafeterrace.jpg'
+			needTextDescription
 		>
 			<p>
 				One of the most exciting aspects of art history is the way in which it
@@ -60,6 +61,43 @@ import TheLesson from '../../layouts/TheLesson.astro'
 				also see how artists have been influenced by one another, and how their
 				ideas and techniques have been passed down from generation to
 				generation.
+			</p>
+			<p>
+				At the same time, art history also allows us to appreciate the unique
+				qualities of individual artworks, and to understand the meanings and
+				messages they convey. Whether we are looking at a painting, a sculpture,
+				or a piece of architecture, we can explore the ways in which the artist
+				has used form, color, composition, and other elements to create a
+				powerful and evocative work of art. We can also consider the symbolism
+				and cultural significance of these elements, and how they relate to the
+				broader themes and ideas of the work.
+			</p>
+			<p>
+				Finally, studying art history can also deepen our understanding of the
+				world around us, and of ourselves as human beings. By exploring the
+				diverse range of artistic traditions that have emerged throughout
+				history, we can gain insights into the ways in which different cultures
+				have sought to express their values, beliefs, and aspirations. We can
+				also consider the role that art has played in shaping our own lives and
+				identities, and in shaping the world we live in today.
+			</p>
+		</SideBySide>
+		<SideBySide
+			align={'alignRight'}
+			altText='Café Terrace at Night by Vincent Van Gogh'
+			imgName='cafeterrace.jpg'
+		>
+			<p>
+				One of the most exciting aspects of art history is the way in which it
+				allows us to trace the evolution of artistic expression over time. By
+				studying different periods and styles, <ExternalLink
+					src='https://www.metmuseum.org/'
+					title='we can see how artists have'
+				/>
+				responded to the social, political, and cultural context of their times,
+				and how their work has both reflected and shaped these contexts. We can also
+				see how artists have been influenced by one another, and how their ideas
+				and techniques have been passed down from generation to generation.
 			</p>
 			<p>
 				At the same time, art history also allows us to appreciate the unique
