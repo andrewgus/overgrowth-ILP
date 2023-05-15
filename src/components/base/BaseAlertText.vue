@@ -38,6 +38,10 @@
 			margin-bottom: var(--s-4);
 			border-bottom: 1px dashed var(--darkGray);
 		}
+
+		> * {
+			padding: 0 var(--s-4);
+		}
 	}
 </style>
 <style scoped lang="scss">

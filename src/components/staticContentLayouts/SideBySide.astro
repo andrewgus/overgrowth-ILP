@@ -46,13 +46,18 @@ const { imgName, altText = '', align = 'alignLeft' } = Astro.props
 			align-items: start;
 			justify-content: center;
 			flex: 1.5;
-			> :global(img) {
-				object-fit: contain;
+			> :global(picture) {
+				position: sticky;
+				top: var(--s7);
 				max-width: 40ch;
 				max-height: 85vh;
 				width: 100%;
-				position: sticky;
-				top: var(--s7);
+				> :global(img) {
+					object-fit: contain;
+					max-width: inherit;
+					max-height: inherit;
+					width: inherit;
+				}
 			}
 		}
 		> .correspondingText {

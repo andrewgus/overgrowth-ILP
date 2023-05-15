@@ -5,7 +5,6 @@ import SkipToContent from '../components/navigation/SkipToContent.astro'
 import TheLanding from '../components/landing/TheLanding.vue'
 import TheLessonNav from '../components/navigation/TheLessonNav.vue'
 import createID from '../composables/useCreateID'
-import getLocalStorage from '../composables/useGetLocalStorage'
 
 type Props = {
 	title: string
@@ -38,8 +37,7 @@ const {
 		</script>
 		<title>{title} &vert; FSCJ</title>
 	</head>
-	<body id={`${createID(title)}-lesson`}>
-		<!-- TODO: get LocalStorageDialog to only render IF getLocalStorage() exists. Otherwise, don't. -->
+	<body id={`${createID(Astro.props.title)}-lesson`}>
 		<LocalStorageDialog client:load />
 		<SkipToContent />
 		<TheLessonNav client:load />

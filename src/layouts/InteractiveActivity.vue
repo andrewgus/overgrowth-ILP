@@ -17,10 +17,10 @@
 			<div :class="$style.disableAlerts">
 				<input
 					type="checkbox"
-					id="disableActivityAlert"
+					:id="`disabledAlert-${sectionID}`"
 					@click="registerNoMoreAlerts($event)"
 				/>
-				<label for="disableActivityAlert"
+				<label :for="`disabledAlert-${sectionID}`"
 					>Hide these alerts on all future activities</label
 				>
 			</div>

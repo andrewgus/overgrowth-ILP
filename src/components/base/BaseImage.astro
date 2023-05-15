@@ -10,11 +10,25 @@ const imageFilePath = `https://fscjcel.blob.core.windows.net/ilp-assets/${Astro.
 	.at(3)}`
 
 const { imgName, altText = '', describedBy } = Astro.props
-// TODO: build in srcset of a <picture> to account for 1x and 2x pixel density. creating two images, but designers only need to put in the one name for it to work for both, assuming they use the correct naming convention.
+// TODO: Talk with team about 2x images not properly falling back. If we can always gaurantee a 2x copy, then we can implement, but I wouldn't want to implement if we don't think it will always be done correctly. Not enough room for error.
 ---
 
-<img
-	aria-describedby={describedBy}
-	src=`${imageFilePath}:${imgName}`
-	alt={altText}
-/>
+<picture>
+	<source
+		type='image/avif'
+		srcset=`${imageFilePath}_${imgName.split('.').at(0)}.avif`
+	/>
+	<source
+		type='image/webp'
+		srcset=`${imageFilePath}_${imgName.split('.').at(0)}.webp`
+	/>
+	<source
+		type=`image/${imgName.split('.').at(-1)}`
+		srcset=`${imageFilePath}_${imgName}`
+	/>
+	<img
+		src=`${imageFilePath}_${imgName}`
+		alt={altText}
+		aria-describedby={describedBy}
+	/>
+</picture>
