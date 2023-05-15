@@ -28,23 +28,44 @@
 						>{{ navItem!.title }}</a
 					>
 				</li>
+				<li v-if="areLockedSections">
+					<p>
+						{{
+							Object.keys($allLockedSections).length
+						}}&nbsp;more&nbsp;section{{
+							Object.keys($allLockedSections).length === 1 ? '' : 's'
+						}}
+						can&nbsp;become available as&nbsp;you complete&nbsp;activities
+					</p>
+				</li>
 			</ol>
 		</div>
 	</transition>
 </template>
 
 <script setup lang="ts">
-	import { ref, useCssModule } from 'vue'
-	import { useStore } from '@nanostores/vue'
+	import { ref, computed, useCssModule } from 'vue'
+	import { mapStores } from '@nanostores/vue'
 	import {
+		allSectionsMap,
 		filteredNavSectionsComputed,
+		filteredLockedSectionsComputed,
 		currSectionMap,
 		useSetCurrSection,
 	} from '../../store/lessonStore'
 	import BaseButton from '../base/BaseButton.vue'
 
-	const $currSection = useStore(currSectionMap)
-	const $allNavSections = useStore(filteredNavSectionsComputed)
+	const {
+		allSectionsMap: $allSections,
+		currSectionMap: $currSection,
+		filteredNavSectionsComputed: $allNavSections,
+		filteredLockedSectionsComputed: $allLockedSections,
+	} = mapStores({
+		allSectionsMap,
+		currSectionMap,
+		filteredNavSectionsComputed,
+		filteredLockedSectionsComputed,
+	})
 
 	const isMenuOpen = ref<boolean>(false)
 
@@ -56,6 +77,13 @@
 		useSetCurrSection(section)
 		toggleMenu()
 	}
+
+	const areLockedSections = computed(() => {
+		return (
+			Object.keys($allNavSections.value).length !==
+			Object.keys($allSections.value).length
+		)
+	})
 
 	// transition enter only
 	const styles = useCssModule()
@@ -136,9 +164,13 @@
 					background-color: var(--green);
 				}
 
-				> a {
+				> a,
+				> p {
 					padding: var(--s-2) var(--s-4);
 					width: 100%;
+				}
+
+				> a {
 					text-decoration: none;
 
 					&:hover,

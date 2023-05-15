@@ -3,14 +3,14 @@ import { reactive } from 'vue'
 
 // REFLECTION
 // log user's reflection answers
-type userReflectionResponses = {
+type UserReflectionResponses = {
 	[id: string]: {
 		prompt: string
 		answer: string
 	}
 }
 
-const userReflectionsStore = reactive<userReflectionResponses>({})
+const userReflectionsStore = reactive<UserReflectionResponses>({})
 function initUserReflectionsStore(id: string, prompt: string, answer?: string) {
 	userReflectionsStore[id] = {
 		prompt: prompt,
@@ -33,18 +33,20 @@ function initUserReflectionsStore(id: string, prompt: string, answer?: string) {
 */
 
 // Tracking user progress within activity interactions
-interface activityProgress {
-	[id: string]: {
-		id: string
-		isAttemptsFinished: boolean
-		pdfGenStatus: {
-			isDownloading: boolean
-			isComplete: boolean
-			isFailed: boolean
-		}
+type ActivityProgressItem = {
+	id: string
+	isAttemptsFinished: boolean
+	pdfGenStatus: {
+		isDownloading: boolean
+		isComplete: boolean
+		isFailed: boolean
 	}
 }
-const activityProgressStore = reactive<activityProgress>({})
+type ActivityProgress = Record<string, ActivityProgressItem> & {
+	wantsNoMoreAlerts?: boolean
+}
+
+const activityProgressStore = reactive<ActivityProgress>({})
 function initActivityProgressStore(id: string) {
 	activityProgressStore[id] = {
 		id: id,
@@ -55,6 +57,7 @@ function initActivityProgressStore(id: string) {
 			isFailed: false,
 		},
 	}
+	activityProgressStore['wantsNoMoreAlerts'] = false
 }
 
 export {

@@ -2,14 +2,28 @@
 	<article class="section activity" :class="activityType" tabindex="-1">
 		<h2>{{ title }}</h2>
 		<BaseAlertText
+			v-if="!activityProgressStore.wantsNoMoreAlerts"
 			:show="
 				!isFinaleReveal && !activityProgressStore[sectionID].isAttemptsFinished
 			"
 		>
-			Heads&nbsp;up!&nbsp;Once&nbsp;completed, this&nbsp;{{
-				activityType
-			}}&nbsp;activity
-			<strong>cannot</strong>&nbsp;be&nbsp;turned&nbsp;off&nbsp;later.
+			<p>
+				<span class="visuallyHidden">Important: </span>
+				Heads&nbsp;up!&nbsp;Once&nbsp;completed, this&nbsp;{{
+					activityType
+				}}&nbsp;activity
+				<strong>cannot</strong>&nbsp;be&nbsp;turned&nbsp;off&nbsp;later.
+			</p>
+			<div :class="$style.disableAlerts">
+				<input
+					type="checkbox"
+					id="disableActivityAlert"
+					@click="registerNoMoreAlerts($event)"
+				/>
+				<label for="disableActivityAlert"
+					>Hide these alerts on all future activities</label
+				>
+			</div>
 		</BaseAlertText>
 		<component :is="activity" v-bind="conditionalProps">
 			<slot></slot>
@@ -19,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-	import { computed, defineAsyncComponent } from 'vue'
+	import { ref, computed, defineAsyncComponent, provide } from 'vue'
 	import { useDoesActivityExist, type ActivityType } from '../store/lessonStore'
 	import {
 		initActivityProgressStore,
@@ -39,6 +53,19 @@
 		toSave: false,
 		isFinaleReveal: false,
 	})
+
+	const wantsNoMoreAlerts = ref<boolean>(false)
+	const registerNoMoreAlerts = ({ target }: Event) => {
+		const checkbox = target as HTMLInputElement
+		if (!checkbox) return
+		if (checkbox.checked) {
+			wantsNoMoreAlerts.value = true
+		} else {
+			wantsNoMoreAlerts.value = false
+		}
+	}
+	provide('fromInteractiveActivityWantsNoMoreAlerts', wantsNoMoreAlerts)
+
 	const sectionID = createID(props.title)
 	initActivityProgressStore(sectionID)
 
@@ -77,3 +104,25 @@
 		return { ...universalProps, ...activityProps }
 	})
 </script>
+
+<style module lang="scss">
+	.disableAlerts {
+		max-width: 95%;
+		margin-top: var(--s-6);
+		display: flex;
+		align-items: center;
+		> input {
+			height: var(--s0);
+			width: var(--s0);
+			&:checked {
+				+ label {
+					font-style: italic;
+					color: var(--darkGray);
+				}
+			}
+		}
+		> label {
+			font-size: var(--s-1);
+		}
+	}
+</style>

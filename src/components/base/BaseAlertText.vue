@@ -1,14 +1,12 @@
 <template>
 	<transition name="opacity">
-		<p v-show="show" role="note" :class="$style.alertText">
-			<span class="visuallyHidden">Important: </span>
+		<div v-show="show" role="note" :class="$style.alertText">
 			<slot></slot>
-		</p>
+		</div>
 	</transition>
 </template>
 
 <script setup lang="ts">
-	// TODO: include a checkbox&label for "don't show this for any future activities" which will provide/inject and boolean value, sent to the activityCompleteBtn. If checked (therefore, true), then update the activityProgress store prop "wantsNoMoreAlerts", and if that is true (defaults to false), then do not show the alert at all on activity activity sections.
 	defineProps({
 		show: {
 			type: Boolean,
@@ -29,7 +27,7 @@
 		&::before {
 			content: '';
 			display: inline-flex;
-			background-image: url(../catalog/info.svg);
+			background-image: url(/catalog/info.svg);
 			background-repeat: no-repeat;
 			background-size: var(--s0);
 			background-position: center right var(--s0);

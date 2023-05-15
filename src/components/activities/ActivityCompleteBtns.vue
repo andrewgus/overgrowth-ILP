@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-	import { computed, nextTick } from 'vue'
+	import { computed, nextTick, inject, type Ref } from 'vue'
 	import { mapStores } from '@nanostores/vue'
 	import {
 		allSectionsMap,
@@ -91,6 +91,9 @@
 	const { areSectionsAvailable } = useAreSectionsAvailable()
 	const nextSection = nextSectionAfterID(props.id)
 	const isLastSection = useIsLastSection(activityProgressStore[props.id].id)
+	const wantsNoMoreAlerts = inject(
+		'fromInteractiveActivityWantsNoMoreAlerts'
+	) as Ref<boolean>
 
 	const saveAsPDF = async () => {
 		activityProgressStore[props.id].pdfGenStatus = {
@@ -105,13 +108,14 @@
 	}
 
 	const setComplete = async ({ target }: Event) => {
-		const clicked = target as HTMLButtonElement
-		if (!clicked) return
+		const completeBtn = target as HTMLButtonElement
+		if (!completeBtn) return
 
-		const thisSection = clicked.closest('article') as HTMLElement
+		const thisSection = completeBtn.closest('article') as HTMLElement
 
 		useSetCurrSection(thisSection.id)
 		useSetActivityComplete()
+		if (wantsNoMoreAlerts) activityProgressStore.wantsNoMoreAlerts = true
 		await nextTick()
 		const saveBtnEl = thisSection.querySelector(
 			'button[class*="pdfSave__btn"]'
