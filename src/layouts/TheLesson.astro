@@ -2,13 +2,14 @@
 import '../styles/root.scss'
 import LocalStorageDialog from '../components/modals/LocalStorageDialog.vue'
 import SkipToContent from '../components/navigation/SkipToContent.astro'
-import TheLanding from '../components/landing/TheLanding.vue'
+import TheLanding from '../components/landing/TheLanding.astro'
 import TheLessonNav from '../components/navigation/TheLessonNav.vue'
 import createID from '../composables/useCreateID'
 
 type Props = {
 	title: string
 	scene: string
+	isInteractive?: boolean
 	gradientColor?: string
 	language?: string
 }
@@ -16,6 +17,7 @@ type Props = {
 const {
 	title,
 	scene,
+	isInteractive = true,
 	gradientColor = 'var(--white)',
 	language = 'en',
 } = Astro.props
@@ -38,10 +40,10 @@ const {
 		<title>{title} &vert; FSCJ</title>
 	</head>
 	<body id={`${createID(Astro.props.title)}-lesson`}>
-		<LocalStorageDialog client:load />
+		{isInteractive && <LocalStorageDialog client:load />}
 		<SkipToContent />
 		<TheLessonNav client:load />
-		<TheLanding client:load title={title} scene={scene} color={gradientColor} />
+		<TheLanding scene={scene} title={title} color={gradientColor} />
 		<main id='theLessonContent'>
 			<slot />
 		</main>

@@ -27,8 +27,9 @@
 		<template key="1" v-else>
 			<div key="pdfSaveDiv" :class="$style.pdfSave">
 				<p
-					key="pdfFeedback"
 					v-if="shouldDisplayVisualFeedback"
+					aria-live="assertive"
+					key="pdfFeedback"
 					:class="$style.pdfSave__feedback"
 				>
 					{{ pdfStatusUpdate }}
@@ -131,7 +132,7 @@
 		if (activityProgressStore[props.id].pdfGenStatus.isFailed)
 			return 'Failed to download. Try again?'
 
-		return 'Save as PDF'
+		return ''
 	})
 
 	const shouldDisplayVisualFeedback = computed(() => {

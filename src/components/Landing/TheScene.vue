@@ -1,9 +1,10 @@
 <template>
 	<TransitionGroup
-		name="landingScene"
-		tag="div"
+		v-if="areSectionsAvailable"
 		aria-hidden="true"
 		:class="$style.scene"
+		tag="div"
+		name="landingScene"
 	>
 		<div
 			v-if="useActivityExists('reflection')"
@@ -29,7 +30,9 @@
 <script setup lang="ts">
 	import { ref, watchEffect } from 'vue'
 	import { useStore } from '@nanostores/vue'
-	import { activitysMap, useActivityExists } from '../../store/lessonStore'
+	import { activitiesMap, useActivityExists } from '../../store/lessonStore'
+	import useAreSectionsAvailable from '../../composables/useAreSectionsAvailable'
+	const { areSectionsAvailable } = useAreSectionsAvailable()
 
 	const props = defineProps({
 		scene: {
@@ -38,7 +41,7 @@
 		},
 	})
 
-	const $activities = useStore(activitysMap)
+	const $activities = useStore(activitiesMap)
 	const isBgLoaded = ref(false)
 
 	watchEffect(() => {

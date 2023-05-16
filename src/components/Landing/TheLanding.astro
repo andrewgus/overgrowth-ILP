@@ -1,0 +1,50 @@
+---
+import TheScene from './TheScene.vue'
+import TheTitleCard from './TheTitleCard.astro'
+import BaseIndicator from '../base/BaseIndicator.vue'
+
+type Props = {
+	title: string
+	scene: string
+	color?: string
+}
+const { title, scene, color = 'var(--white)' } = Astro.props
+
+const bgGradient = `linear-gradient(to bottom, white 0%, ${Astro.props.color} 40%, ${Astro.props.color} 60%, white 100%);`
+---
+
+<header class='landing'>
+	<TheScene client:load scene={scene} />
+	<TheTitleCard title={title} />
+	<BaseIndicator
+		class:list='onLandingIndicator'
+		isHidden
+		text='Scroll to start'
+		goTo='#theLessonContent'
+	/>
+</header>
+
+<style lang='scss'>
+	.landing {
+		min-height: 99vh;
+		width: 100vw;
+		display: grid;
+		grid-template-columns: [landing-top] 1fr [landing-bottom];
+		grid-template-rows: [card-start] 4fr [card-indicator] 20vh [indicator-end];
+	}
+	.onLandingIndicator {
+		grid-area: card-indicator/landing-top/indicator-end/landing-bottom;
+
+		:global(p) {
+			background-color: hsla(0deg, 0%, 98%, 0.5);
+			filter: drop-shadow(0 0 var(--s1) var(--white));
+			border-radius: var(--s10);
+		}
+	}
+</style>
+
+<style define:vars={{ bgGradient }}>
+	.landing {
+		background-image: var(--bgGradient);
+	}
+</style>

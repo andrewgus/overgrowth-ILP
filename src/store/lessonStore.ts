@@ -7,15 +7,15 @@ const lessonIDAtom = atom<string>('')
 
 // Activity setup for any given lesson
 type ActivityType = 'reflection' | 'practice' | 'choice'
-type ActivitysMap = Partial<{ [K in ActivityType]: boolean }>
-const activitysMap = map<ActivitysMap>({})
+type ActivitiesMap = Partial<{ [K in ActivityType]: boolean }>
+const activitiesMap = map<ActivitiesMap>({})
 // if activity layout is used in lesson, activate it
 const useDoesActivityExist = (activity: ActivityType) => {
-	activitysMap.setKey(activity, true)
+	activitiesMap.setKey(activity, true)
 }
 // Vue only: For v-ifs, if a given activity exists
 const useActivityExists = (activity: ActivityType) => {
-	if (useStore(activitysMap).value[activity] !== undefined) {
+	if (useStore(activitiesMap).value[activity] !== undefined) {
 		return true
 	} else {
 		return false
@@ -90,7 +90,7 @@ const findNextIncompleteActivity = (
 		return (
 			// it is a activity && the activity is on && the activity is not complete
 			sectionDetails.activityType !== null &&
-			activitysMap.get()[sectionDetails.activityType as ActivityType] &&
+			activitiesMap.get()[sectionDetails.activityType as ActivityType] &&
 			!sectionDetails.isActivityComplete
 		)
 	})
@@ -110,9 +110,9 @@ const setNextIncompleteActivityIfFound = (
 
 // To toggle activity on/off
 const useToggleActivity = (activity: ActivityType) => {
-	activitysMap.setKey(activity, !activitysMap.get()[activity])
+	activitiesMap.setKey(activity, !activitiesMap.get()[activity])
 	// updating allSections isLocked
-	const isActivityOn = activitysMap.get()[activity]
+	const isActivityOn = activitiesMap.get()[activity]
 	const allSectionsAsArray = setSectionsToArray(allSectionsMap.get())
 
 	// find the next available active activity
@@ -220,7 +220,7 @@ const useSetActivityComplete = () => {
 
 // filtering for sections that should be visible and navigable
 const filteredNavSectionsComputed = computed(
-	[allSectionsMap, activitysMap],
+	[allSectionsMap, activitiesMap],
 	(allSections) => {
 		const allSectionsAsArray = setSectionsToArray(allSections)
 
@@ -332,7 +332,7 @@ const useIsLastSection = (sectionID: string) => {
 
 export {
 	lessonIDAtom,
-	activitysMap,
+	activitiesMap,
 	useDoesActivityExist,
 	useActivityExists,
 	allSectionsMap,

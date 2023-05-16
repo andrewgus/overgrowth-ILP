@@ -1,0 +1,49 @@
+---
+import ActivitySwitches from './ActivitySwitches.vue'
+type Props = {
+	title: string
+}
+const { title } = Astro.props
+---
+
+<div class='titleCard'>
+	<h1 id='lessonHeading' tabindex='-1'>{title}</h1>
+	<ActivitySwitches client:load />
+</div>
+
+<style lang='scss'>
+	.titleCard {
+		grid-area: card-start/landing-top/card-indicator/landing-bottom;
+		justify-self: center;
+		align-self: start;
+		display: flex;
+		align-items: center;
+		flex-flow: column nowrap;
+		justify-content: space-between;
+		border-radius: var(--s5);
+		background-color: hsla(0deg, 0%, 98%, 0.5);
+		filter: drop-shadow(0 0 var(--s1) var(--white));
+		padding: var(--s0);
+		margin-top: var(--s2);
+
+		> h1 {
+			margin: 0;
+			text-align: center;
+		}
+	}
+	/* media queries */
+	@media only screen and (max-width: 950px) {
+		.titleCard {
+			> h1 {
+				line-height: 1.1;
+			}
+		}
+	}
+	@media only screen and (max-height: 950px) and (max-width: 950px) {
+		.titleCard {
+			padding: var(--s-10);
+			margin-top: 0;
+			width: 100%;
+		}
+	}
+</style>
