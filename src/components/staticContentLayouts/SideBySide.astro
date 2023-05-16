@@ -1,14 +1,14 @@
 ---
 /**
- * Use case for layout here...
+ * Vertically aligned layout of images and text. Creates a side-by-side layout for the two.
  */
 import BaseImage from '../base/BaseImage.astro'
 import { nanoid } from 'nanoid'
 type Props = {
 	imgName: string
 	altText?: string
-	align?: 'alignLeft' | 'alignRight' | 'alignTop'
-	setRatio?: '1:1' | '2:3'
+	align?: 'alignLeft' | 'alignRight'
+	setRatio?: 'r5050' | 'r6040'
 	needTextDescription?: boolean
 }
 
@@ -21,13 +21,9 @@ const {
 } = Astro.props
 
 const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
-
-// TODO: Art direction. Vertical vs Horizontal images. Vertical images would be side by side. Horizontal images would be at the top. Both would be sticky to the text. With vertical images, text would scroll by as image stays in view to the left or right of it. With horizontal images, text would scroll as image is at the stickied to the top and z-indexed to be atop the text.
-// TODO: this currently works for horizontal as intended, but not at all for vertical with position sticky. Need to recongifgure appropriately. Include a size-increase btn on the sticky image with client:visible on it to toggle increase/decrease of image size when image is small.
-// TODO: provide a prop for ratio options for col sets. 3: (60/40), 1:1: (50/50), etc etc. NOTE: NEED TO THINK ABOUT THIS MORE.
 ---
 
-<div class:list={['fullWidth', 'sideBySide', align]}>
+<div class:list={['fullWidth', 'sideBySide', align, setRatio]}>
 	<div class='stickyImg'>
 		<BaseImage describedBy={needID} imgName={imgName} altText={altText} />
 	</div>
@@ -43,20 +39,12 @@ const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
 		flex-flow: row wrap;
 		gap: var(--s2);
 
-		&.alignRight {
-			.stickyImg {
-				order: 2;
-			}
-			.correspondingText {
-				order: 1;
-			}
-		}
-
 		> .stickyImg {
 			display: flex;
 			align-items: start;
 			justify-content: center;
 			flex: 1.5;
+
 			> :global(picture) {
 				position: sticky;
 				top: var(--s7);
@@ -73,6 +61,28 @@ const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
 		}
 		> .correspondingText {
 			flex: 2;
+		}
+
+		&.alignRight {
+			.stickyImg {
+				order: 2;
+			}
+			.correspondingText {
+				order: 1;
+			}
+		}
+		&.r6040 {
+			.stickyImg {
+				flex: 3;
+			}
+		}
+		&.r5050 {
+			.stickyImg {
+				flex: 1;
+			}
+			.correspondingText {
+				flex: 1;
+			}
 		}
 	}
 </style>

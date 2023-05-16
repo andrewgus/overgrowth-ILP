@@ -3,23 +3,46 @@
  * Intent is to have an image, fullWidth be shown, and then, with scroll, image with opaque BG scroll over it. Similar to side-by-side, but for larger images.
  */
 import BaseImage from '../base/BaseImage.astro'
+import { nanoid } from 'nanoid'
 type Props = {
 	imgName: string
 	altText?: string
 	align?: 'alignLeft' | 'alignRight'
+	needTextDescription?: boolean
 }
-const { imgName, altText = '', align = 'alignLeft' } = Astro.props
+const {
+	imgName,
+	altText = '',
+	align = 'alignLeft',
+	needTextDescription = false,
+} = Astro.props
+
+const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
 ---
 
 <div class:list={['fullWidth', 'textOverlayImage']}>
-	<BaseImage describedBy='test234' imgSrc={imgName} altText={altText} />
-	<div id='test234' class='overlayText'>
+	<div class='bgImg'>
+		<BaseImage describedBy={needID} imgName={imgName} altText={altText} />
+	</div>
+	<div id={needID} class='overlayText'>
 		<slot />
 	</div>
 </div>
 
 <style lang='scss'>
-	.overlayText {
-		background-color: hsla(0deg, 0%, 100%, 0.67);
+	.textOverlayImage {
+		display: flex;
+		flex-flow: column nowrap;
+		align-items: start;
+		justify-content: start;
+
+		> .bgImg {
+			position: sticky;
+			top: 0;
+		}
+
+		> .overlayText {
+			background-color: hsla(0deg, 0%, 100%, 0.67);
+		}
 	}
 </style>
