@@ -51,6 +51,9 @@ p {
   & + p {
     margin-top: var(--s2);
   }
+  > small {
+    font-size: var(--s-1);
+  }
 }
 
 a {

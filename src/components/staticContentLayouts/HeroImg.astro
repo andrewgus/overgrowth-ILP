@@ -1,0 +1,33 @@
+---
+import BaseImage from '../base/BaseImage.astro'
+
+type Props = {
+	imgName: string
+	altText?: string
+	caption?: string
+}
+const { imgName, altText = '', caption } = Astro.props
+---
+
+<div class='fullWidth'>
+	<BaseImage imgName={imgName} altText={altText} />
+	{
+		!!caption && (
+			<p class='imgCaption'>
+				<small>{caption}</small>
+			</p>
+		)
+	}
+</div>
+
+<style lang='scss'>
+	:global(img) {
+		width: 100%;
+	}
+	.imgCaption {
+		display: block;
+		text-align: center;
+		font-style: italic;
+		margin: var(--s-4) auto 0;
+	}
+</style>

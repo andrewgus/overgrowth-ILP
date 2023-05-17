@@ -33,6 +33,10 @@
     }
   }
 
+  > div {
+    margin: var(--s2) 0;
+  }
+
   > *:not(.fullWidth) {
     grid-column: innerContent-start / innerContent-end;
   }

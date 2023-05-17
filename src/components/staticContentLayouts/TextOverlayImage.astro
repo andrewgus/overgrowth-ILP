@@ -20,6 +20,20 @@ const {
 const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
 ---
 
+<script>
+	window.addEventListener('load', () => {
+		const containerDivs = document.querySelectorAll(
+			'.textOverlayImage'
+		) as NodeListOf<HTMLDivElement>
+		const bgImgs = [...containerDivs].map(
+			(div) => div.querySelector('.bgImg img') as HTMLImageElement
+		)
+		bgImgs.forEach((img, i) =>
+			containerDivs[i].style.setProperty('--imgHeight', `${img.offsetHeight}px`)
+		)
+	})
+</script>
+
 <div class:list={['fullWidth', 'textOverlayImage', align]}>
 	<div class='bgImg'>
 		<BaseImage describedBy={needID} imgName={imgName} altText={altText} />
@@ -29,26 +43,10 @@ const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
 	</div>
 </div>
 
-<script>
-	window.addEventListener('DOMContentLoaded', () => {
-		const containerDiv = document.querySelector(
-			'.textOverlayImage'
-		) as HTMLDivElement
-		const imgContainer = document.querySelector('.bgImg') as HTMLDivElement
-		console.log(imgContainer.offsetHeight)
-
-		containerDiv.style.setProperty(
-			'--imgHeight',
-			`${imgContainer.offsetHeight + 10}px`
-		)
-	})
-</script>
-
 <style lang='scss'>
 	@use '../../styles/mixins/accessibility.scss';
 	.textOverlayImage {
 		--imgHeight: 60vh;
-		margin: var(--s2) 0;
 		display: flex;
 		flex-flow: column nowrap;
 		align-items: start;
@@ -57,7 +55,7 @@ const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
 
 		&::after {
 			display: block;
-			min-height: var(--imgHeight);
+			height: calc(var(--imgHeight) + var(--s2));
 			content: '';
 		}
 
