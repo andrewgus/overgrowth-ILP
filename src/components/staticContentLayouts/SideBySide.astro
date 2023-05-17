@@ -1,36 +1,73 @@
 ---
 /**
  * Vertically aligned layout of images and text. Creates a side-by-side layout for the two.
+ *
+ * NOTE: Props notes
+ *** ImgName is always required
+ *** altText is optional. Will be an empty string if not present.
+ *** Only if isNewSection is true, then a title is required.
+ *** align sets the image to the left or right
+ *** setRatio will increase image size to either 50% (r5050) or 60% (r6040)
+ *** needTextDescription binds the text to the img via aria-describedBy
  */
 import BaseImage from '../base/BaseImage.astro'
 import { nanoid } from 'nanoid'
-type Props = {
+
+type PropsWithIsNewSection =
+	| {
+			isNewSection?: false | undefined
+			title?: undefined
+	  }
+	| {
+			isNewSection?: true
+			title: string
+	  }
+
+type Props = PropsWithIsNewSection & {
 	imgName: string
 	altText?: string
-	align?: 'alignLeft' | 'alignRight'
+	align?: 'alignLeft' | 'alignRight' | 'alignTop'
 	setRatio?: 'r5050' | 'r6040'
 	needTextDescription?: boolean
 }
 
 const {
 	imgName,
+	setRatio,
 	altText = '',
 	align = 'alignLeft',
-	setRatio,
 	needTextDescription = false,
+	isNewSection = false,
+	title,
 } = Astro.props
 
 const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
 ---
 
-<div class:list={['fullWidth', 'sideBySide', align, setRatio]}>
-	<div class='stickyImg'>
-		<BaseImage describedBy={needID} imgName={imgName} altText={altText} />
-	</div>
-	<div id={needID} class='correspondingText'>
-		<slot />
-	</div>
-</div>
+{
+	() => {
+		const layout = (
+			<Fragment>
+				<div class='stickyImg'>
+					<BaseImage describedBy={needID} imgName={imgName} altText={altText} />
+				</div>
+				<div id={needID} class='correspondingText'>
+					<slot />
+				</div>
+			</Fragment>
+		)
+		return isNewSection ? (
+			<section class:list={['fullWidth', 'sideBySide', align, setRatio]}>
+				<h3>{title}</h3>
+				{layout}
+			</section>
+		) : (
+			<div class:list={['fullWidth', 'sideBySide', align, setRatio]}>
+				{layout}
+			</div>
+		)
+	}
+}
 
 <style lang='scss'>
 	.sideBySide {
@@ -38,6 +75,10 @@ const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
 		display: flex;
 		flex-flow: row wrap;
 		gap: var(--s2);
+
+		> h3 {
+			width: 100%;
+		}
 
 		> .stickyImg {
 			display: flex;
@@ -63,12 +104,36 @@ const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
 			flex: 2;
 		}
 
+		&.alignTop {
+			flex-flow: column nowrap;
+			> .stickyImg {
+				width: 80ch;
+
+				> :global(picture),
+				> :global(img) {
+					max-width: inherit;
+				}
+			}
+			> .correspondingText {
+				width: 60ch;
+				margin: 0 auto;
+			}
+		}
+
 		&.alignRight {
 			.stickyImg {
 				order: 2;
 			}
 			.correspondingText {
 				order: 1;
+			}
+			@media only screen and (max-width: 85ch) {
+				.stickyImg {
+					order: 1;
+				}
+				.correspondingText {
+					order: 2;
+				}
 			}
 		}
 		&.r6040 {

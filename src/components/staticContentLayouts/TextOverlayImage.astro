@@ -7,7 +7,7 @@ import { nanoid } from 'nanoid'
 type Props = {
 	imgName: string
 	altText?: string
-	align?: 'alignLeft' | 'alignRight'
+	align?: 'alignLeft' | 'alignRight' | 'alignCenter'
 	needTextDescription?: boolean
 }
 const {
@@ -20,7 +20,7 @@ const {
 const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
 ---
 
-<div class:list={['fullWidth', 'textOverlayImage']}>
+<div class:list={['fullWidth', 'textOverlayImage', align]}>
 	<div class='bgImg'>
 		<BaseImage describedBy={needID} imgName={imgName} altText={altText} />
 	</div>
@@ -29,20 +29,79 @@ const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
 	</div>
 </div>
 
+<script>
+	window.addEventListener('DOMContentLoaded', () => {
+		const containerDiv = document.querySelector(
+			'.textOverlayImage'
+		) as HTMLDivElement
+		const imgContainer = document.querySelector('.bgImg') as HTMLDivElement
+		console.log(imgContainer.offsetHeight)
+
+		containerDiv.style.setProperty(
+			'--imgHeight',
+			`${imgContainer.offsetHeight + 10}px`
+		)
+	})
+</script>
+
 <style lang='scss'>
+	@use '../../styles/mixins/accessibility.scss';
 	.textOverlayImage {
+		--imgHeight: 60vh;
+		margin: var(--s2) 0;
 		display: flex;
 		flex-flow: column nowrap;
 		align-items: start;
 		justify-content: start;
+		min-height: max-content;
+
+		&::after {
+			display: block;
+			min-height: var(--imgHeight);
+			content: '';
+		}
 
 		> .bgImg {
 			position: sticky;
-			top: 0;
+			top: var(--s7);
+			width: 100%;
+
+			> :global(picture) {
+				width: inherit;
+				max-height: 85vh;
+
+				> :global(img) {
+					object-fit: contain;
+					width: inherit;
+					max-height: inherit;
+					width: inherit;
+				}
+			}
 		}
 
 		> .overlayText {
-			background-color: hsla(0deg, 0%, 100%, 0.67);
+			margin-top: var(--s2);
+			align-self: start;
+			max-width: 45ch;
+			z-index: 1;
+			background-color: hsla(0deg, 0%, 100%, 0.7);
+			border-radius: 0 var(--s-10) var(--s-10) 0;
+			padding: 0 var(--s-2);
+
+			> :global(p) {
+				@include accessibility.textDropShadowWhite();
+			}
+		}
+		&.alignRight {
+			> .overlayText {
+				align-self: end;
+			}
+		}
+		&.alignCenter {
+			> .overlayText {
+				max-width: 60ch;
+				align-self: center;
+			}
 		}
 	}
 </style>

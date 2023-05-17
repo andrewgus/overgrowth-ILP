@@ -9,3 +9,7 @@
   width: 1px;
   white-space: nowrap;
 }
+
+@mixin textDropShadowWhite {
+  filter: drop-shadow(0 0 1px var(--white));
+}

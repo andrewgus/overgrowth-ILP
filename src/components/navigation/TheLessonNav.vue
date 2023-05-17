@@ -1,17 +1,18 @@
 <template>
-	<transition name="opacity">
-		<nav
-			v-if="areSectionsAvailable"
-			id="lessonNav"
-			:class="[$style.lessonNav, { [$style.isInvisible]: !$isOnContent }]"
-		>
-			<div :class="$style.navInfo">
-				<p v-show="$isOnContent">{{ $currSection.title }}</p>
-				<TheNextPrevSectionButtons />
-				<TheNavToc />
-			</div>
-		</nav>
-	</transition>
+	<nav
+		v-if="areSectionsAvailable"
+		id="lessonNav"
+		:class="[$style.lessonNav, { [$style.isInvisible]: !$isOnContent }]"
+	>
+		<div :class="$style.navInfo">
+			<p v-show="$isOnContent">
+				<span :class="$style.currentSection">Currently on:</span>
+				{{ $currSection.title }}
+			</p>
+			<TheNextPrevSectionButtons />
+			<TheNavToc />
+		</div>
+	</nav>
 </template>
 
 <script setup lang="ts">
@@ -28,10 +29,11 @@
 
 <style module lang="scss">
 	@use '../../styles/mixins/transitions.scss';
+	@use '../../styles/mixins/accessibility.scss';
 	.lessonNav {
 		display: block;
+		z-index: 999;
 		background-color: hsla(0, 0%, 100%, 0.98);
-		z-index: 1;
 		width: 100%;
 		position: sticky;
 		top: 0;
@@ -40,7 +42,7 @@
 
 		&.isInvisible {
 			opacity: 0;
-			transform: translateY(-10vh);
+			transform: translateY(-15vh);
 			height: 1px;
 		}
 		&.isInvisible:focus-within {
@@ -64,6 +66,11 @@
 				white-space: nowrap;
 				text-overflow: ellipsis;
 			}
+		}
+	}
+	@media only screen and (max-width: 450px) {
+		.currentSection {
+			@include accessibility.visuallyHidden();
 		}
 	}
 </style>

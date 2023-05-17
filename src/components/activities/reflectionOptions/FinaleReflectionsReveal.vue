@@ -56,10 +56,6 @@
 			background-color: var(--offWhite);
 			border-radius: var(--s-10);
 
-			&:last-child {
-				margin-bottom: var(--s6);
-			}
-
 			> * {
 				p {
 					padding: var(--s0) var(--s0);

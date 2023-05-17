@@ -24,7 +24,7 @@
   &.activity {
     padding-bottom: var(--s-2);
     grid-template-rows:
-      repeat(3, minmax(10vh, max-content))
+      repeat(3, minmax(auto, max-content))
       [completeBtnBtn-start] 1fr [completeBtn-end];
 
     > div[class*="activityCompleteBtns"] {
@@ -39,9 +39,7 @@
   > *.fullWidth {
     grid-column: content-start / content-end;
   }
-}
-@media only screen and (max-width: 85ch) {
-  #theLessonContent article.section {
+  @media only screen and (max-width: 85ch) {
     > *:not(.fullWidth) {
       grid-column: content-start / content-end;
     }

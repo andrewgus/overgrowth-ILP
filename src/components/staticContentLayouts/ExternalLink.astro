@@ -1,13 +1,12 @@
 ---
 type Props = {
 	src: string
-	title: string
 }
-const { src, title } = Astro.props
+const { src } = Astro.props
 ---
 
 <a class='extLink' href={src} target='_blank' rel='noreferrer'
-	>{title}<img src='/catalog/extLink.svg' alt='opens in a new window' />
+	><slot /><img src='/catalog/extLink.svg' alt='opens in a new window' />
 </a>
 
 <style lang='scss'>

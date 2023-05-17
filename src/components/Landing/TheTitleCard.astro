@@ -12,6 +12,7 @@ const { title } = Astro.props
 </div>
 
 <style lang='scss'>
+	@use '../../styles/mixins/shadows.scss';
 	.titleCard {
 		grid-area: card-start/landing-top/card-indicator/landing-bottom;
 		justify-self: center;
@@ -22,7 +23,7 @@ const { title } = Astro.props
 		justify-content: space-between;
 		border-radius: var(--s5);
 		background-color: hsla(0deg, 0%, 98%, 0.5);
-		filter: drop-shadow(0 0 var(--s1) var(--white));
+		@include shadows.dropShadowWhite();
 		padding: var(--s0);
 		margin-top: var(--s2);
 
