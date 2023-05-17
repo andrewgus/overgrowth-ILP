@@ -80,6 +80,7 @@ const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
 		}
 
 		> .stickyImg {
+			// TODO: Check out these styles and TextOverlayImage. See how I can simplify both with the same affect.
 			display: flex;
 			align-items: start;
 			justify-content: center;
@@ -87,7 +88,7 @@ const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
 
 			> :global(picture) {
 				position: sticky;
-				top: var(--s7);
+				top: var(--s6);
 				max-width: 40ch;
 				max-height: 85vh;
 				width: 100%;

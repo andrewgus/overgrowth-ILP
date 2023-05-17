@@ -29,7 +29,10 @@ const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
 			(div) => div.querySelector('.bgImg img') as HTMLImageElement
 		)
 		bgImgs.forEach((img, i) =>
-			containerDivs[i].style.setProperty('--imgHeight', `${img.offsetHeight}px`)
+			containerDivs[i].style.setProperty(
+				'--imgHeight',
+				`min(${img.offsetHeight}px, 85vh)`
+			)
 		)
 	})
 </script>
@@ -61,7 +64,7 @@ const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
 
 		> .bgImg {
 			position: sticky;
-			top: var(--s7);
+			top: var(--s6);
 			width: 100%;
 
 			> :global(picture) {
@@ -97,7 +100,7 @@ const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
 		}
 		&.alignCenter {
 			> .overlayText {
-				max-width: 60ch;
+				max-width: 50ch;
 				align-self: center;
 			}
 		}
