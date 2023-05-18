@@ -5,6 +5,8 @@ import SideBySide from '../../components/staticContentLayouts/SideBySide.astro'
 import TextOverlayImage from '../../components/staticContentLayouts/TextOverlayImage.astro'
 import StaticContent from '../../layouts/StaticContent.astro'
 import HeroImg from '../../components/staticContentLayouts/HeroImg.astro'
+import TabsWidget from '../../components/staticContentLayouts/presentationalWidgets/TabsWidget.astro'
+import TabItem from '../../components/staticContentLayouts/presentationalWidgets/TabItem.astro'
 ---
 
 <TheLesson
@@ -104,6 +106,18 @@ import HeroImg from '../../components/staticContentLayouts/HeroImg.astro'
 				invites the viewer to imagine themselves in the vibrant ambiance of the
 				café.
 			</p>
+			<TabsWidget title='A Test Widget' tabNames={['Tab-1', 'Tab-2', 'Tab-3']}>
+				<TabItem>
+					<p>lorem</p>
+				</TabItem>
+
+				<TabItem>
+					<p>ipsum</p>
+				</TabItem>
+				<TabItem>
+					<p>dolor</p>
+				</TabItem>
+			</TabsWidget>
 			<p>
 				The painting reflects van Gogh's fascination with capturing the essence
 				of everyday life and his desire to convey emotions through his art.
@@ -122,186 +136,190 @@ import HeroImg from '../../components/staticContentLayouts/HeroImg.astro'
 				captivate viewers with its timeless charm and the artist's passionate
 				expression of his own emotional experiences.
 			</p>
+
+			<SideBySide
+				setAlign={'alignRight'}
+				altText='Le Mal Du Pays by René Magritte'
+				setRatio={'r6040'}
+				imgName='le-mal-du-pays.jpg'
+			>
+				<p>
+					"Le Mal Du Pays" is a notable painting created by Belgian surrealist
+					artist René Magritte in 1940. Translated as "Homesickness" or "The
+					Country of the Deceiver," the artwork portrays a mysterious landscape
+					featuring a cloudy sky, rocky cliffs, and a body of water. The
+					painting's main focus is a large boulder placed incongruously on a
+					table, creating a juxtaposition of natural and man-made elements.
+					Magritte's meticulous attention to detail and precise execution add to
+					the enigmatic atmosphere of the scene.
+				</p>
+				<p>
+					The painting "Le Mal Du Pays" reflects Magritte's fascination with the
+					exploration of reality, perception, and the subconscious. The imagery
+					and composition evoke a sense of displacement and longing, capturing
+					the theme of homesickness or a longing for one's homeland. The
+					juxtaposition of the natural and artificial elements raises questions
+					about the authenticity of our surroundings and challenges our
+					perception of reality. Magritte's use of symbolism and surreal
+					juxtapositions invites viewers to contemplate the complex relationship
+					between the self and the environment.
+				</p>
+				<p>
+					Magritte's meticulous technique and his signature style of precise
+					representation contribute to the impact of "Le Mal Du Pays." The
+					carefully rendered details, such as the texture of the boulder and the
+					realistic depiction of the landscape, create a sense of solidity and
+					believability. Yet, the presence of the unexpected boulder disrupts
+					our expectations and creates a sense of ambiguity and intrigue.
+					Through this artistic paradox, Magritte prompts viewers to question
+					the nature of perception and challenge their assumptions about the
+					world around them.
+				</p>
+				<p>
+					"Le Mal Du Pays" exemplifies Magritte's ability to create
+					thought-provoking and visually captivating works of art. Its dreamlike
+					quality and exploration of the human condition resonate with viewers,
+					inviting contemplation and reflection. The painting's intriguing
+					combination of familiar and unfamiliar elements encourages us to
+					question our perception of reality and explore the depths of our own
+					emotions and desires.
+				</p>
+			</SideBySide>
 		</SideBySide>
-		<SideBySide
-			setAlign={'alignRight'}
-			altText='Le Mal Du Pays by René Magritte'
-			setRatio={'r6040'}
-			imgName='le-mal-du-pays.jpg'
-		>
+		<StaticContent title='The Second Section'>
+			<p>In this course, we will&hellip;</p>
 			<p>
-				"Le Mal Du Pays" is a notable painting created by Belgian surrealist
-				artist René Magritte in 1940. Translated as "Homesickness" or "The
-				Country of the Deceiver," the artwork portrays a mysterious landscape
-				featuring a cloudy sky, rocky cliffs, and a body of water. The
-				painting's main focus is a large boulder placed incongruously on a
-				table, creating a juxtaposition of natural and man-made elements.
-				Magritte's meticulous attention to detail and precise execution add to
-				the enigmatic atmosphere of the scene.
+				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
+				fuga error repudiandae. Libero voluptatem impedit amet incidunt
+				blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum
+				quisquam, dolor deleniti?
 			</p>
 			<p>
-				The painting "Le Mal Du Pays" reflects Magritte's fascination with the
-				exploration of reality, perception, and the subconscious. The imagery
-				and composition evoke a sense of displacement and longing, capturing the
-				theme of homesickness or a longing for one's homeland. The juxtaposition
-				of the natural and artificial elements raises questions about the
-				authenticity of our surroundings and challenges our perception of
-				reality. Magritte's use of symbolism and surreal juxtapositions invites
-				viewers to contemplate the complex relationship between the self and the
-				environment.
+				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
+				fuga error repudiandae. Libero voluptatem impedit amet incidunt
+				blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum
+				quisquam, dolor deleniti?
 			</p>
 			<p>
-				Magritte's meticulous technique and his signature style of precise
-				representation contribute to the impact of "Le Mal Du Pays." The
-				carefully rendered details, such as the texture of the boulder and the
-				realistic depiction of the landscape, create a sense of solidity and
-				believability. Yet, the presence of the unexpected boulder disrupts our
-				expectations and creates a sense of ambiguity and intrigue. Through this
-				artistic paradox, Magritte prompts viewers to question the nature of
-				perception and challenge their assumptions about the world around them.
+				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
+				fuga error repudiandae. Libero voluptatem impedit amet incidunt
+				blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum
+				quisquam, dolor deleniti?
 			</p>
 			<p>
-				"Le Mal Du Pays" exemplifies Magritte's ability to create
-				thought-provoking and visually captivating works of art. Its dreamlike
-				quality and exploration of the human condition resonate with viewers,
-				inviting contemplation and reflection. The painting's intriguing
-				combination of familiar and unfamiliar elements encourages us to
-				question our perception of reality and explore the depths of our own
-				emotions and desires.
+				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
+				fuga error repudiandae. Libero voluptatem impedit amet incidunt
+				blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum
+				quisquam, dolor deleniti?
 			</p>
-		</SideBySide>
-	</StaticContent>
-	<StaticContent title='The Second Section'>
-		<p>In this course, we will&hellip;</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
-			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis
-			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
-			deleniti?
-		</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
-			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis
-			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
-			deleniti?
-		</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
-			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis
-			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
-			deleniti?
-		</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
-			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis
-			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
-			deleniti?
-		</p>
-		<HeroImg
-			imgName='washington-crossing-delaware.jpg'
-			caption={'Washington Crossing the Delaware by Emanuel Leutze, 1851'}
-		/>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
-			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis
-			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
-			deleniti?
-		</p>
-		<TextOverlayImage imgName='cafeterrace.jpg' setAlign={'alignCenter'}>
+			<HeroImg
+				imgName='washington-crossing-delaware.jpg'
+				caption={'Washington Crossing the Delaware by Emanuel Leutze, 1851'}
+			/>
 			<p>
-				"Cafe Terrace" is a renowned painting created by Dutch
-				post-impressionist artist Vincent van Gogh in 1888. The painting depicts
-				a cozy outdoor café in the town of Arles, France, illuminated by warm
-				gas lamps. Van Gogh's use of vibrant colors and expressive brushstrokes
-				captures the atmosphere and charm of the scene. The dominant hues of
-				yellows and blues create a sense of inviting warmth, while the
-				contrasting shadows add depth and dimension to the composition.
+				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
+				fuga error repudiandae. Libero voluptatem impedit amet incidunt
+				blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum
+				quisquam, dolor deleniti?
 			</p>
+			<TextOverlayImage imgName='cafeterrace.jpg' setAlign={'alignCenter'}>
+				<p>
+					"Cafe Terrace" is a renowned painting created by Dutch
+					post-impressionist artist Vincent van Gogh in 1888. The painting
+					depicts a cozy outdoor café in the town of Arles, France, illuminated
+					by warm gas lamps. Van Gogh's use of vibrant colors and expressive
+					brushstrokes captures the atmosphere and charm of the scene. The
+					dominant hues of yellows and blues create a sense of inviting warmth,
+					while the contrasting shadows add depth and dimension to the
+					composition.
+				</p>
+				<p>
+					The composition of "Cafe Terrace" is carefully balanced, with the
+					central focus on the café itself. Van Gogh skillfully leads the
+					viewer's gaze towards the brightly lit terrace, drawing attention to
+					the patrons seated at the tables. The curving lines of the cobblestone
+					street and the awning above the café create a sense of movement and
+					guide the eye through the painting. The overall effect is an immersive
+					experience that invites the viewer to imagine themselves in the
+					vibrant ambiance of the café.
+				</p>
+				<p>
+					The painting reflects van Gogh's fascination with capturing the
+					essence of everyday life and his desire to convey emotions through his
+					art. "Cafe Terrace" radiates a sense of tranquility and conviviality,
+					inviting viewers to immerse themselves in the relaxed atmosphere of
+					the café. Through his use of bold colors and expressive brushwork, van
+					Gogh infuses the scene with a sense of energy and emotion, capturing
+					the essence of the moment and conveying his personal vision of the
+					world.
+				</p>
+				<p>
+					Van Gogh's "Cafe Terrace" remains a beloved and iconic artwork,
+					admired for its lively depiction of an evening scene and its ability
+					to evoke a sense of nostalgia and serenity. The painting stands as a
+					testament to van Gogh's unique artistic style and his ability to
+					capture the beauty found in simple, everyday subjects. It continues to
+					inspire and captivate viewers with its timeless charm and the artist's
+					passionate expression of his own emotional experiences.
+				</p>
+			</TextOverlayImage>
 			<p>
-				The composition of "Cafe Terrace" is carefully balanced, with the
-				central focus on the café itself. Van Gogh skillfully leads the viewer's
-				gaze towards the brightly lit terrace, drawing attention to the patrons
-				seated at the tables. The curving lines of the cobblestone street and
-				the awning above the café create a sense of movement and guide the eye
-				through the painting. The overall effect is an immersive experience that
-				invites the viewer to imagine themselves in the vibrant ambiance of the
-				café.
+				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
+				fuga error repudiandae. Libero voluptatem impedit amet incidunt
+				blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum
+				quisquam, dolor deleniti?
 			</p>
 			<p>
-				The painting reflects van Gogh's fascination with capturing the essence
-				of everyday life and his desire to convey emotions through his art.
-				"Cafe Terrace" radiates a sense of tranquility and conviviality,
-				inviting viewers to immerse themselves in the relaxed atmosphere of the
-				café. Through his use of bold colors and expressive brushwork, van Gogh
-				infuses the scene with a sense of energy and emotion, capturing the
-				essence of the moment and conveying his personal vision of the world.
+				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
+				fuga error repudiandae. Libero voluptatem impedit amet incidunt
+				blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum
+				quisquam, dolor deleniti?
+			</p>
+		</StaticContent>
+		<StaticContent title='The Third Section'>
+			<p>In this course, we will&hellip;</p>
+			<p>
+				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
+				fuga error repudiandae. Libero voluptatem impedit amet incidunt
+				blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum
+				quisquam, dolor deleniti?
 			</p>
 			<p>
-				Van Gogh's "Cafe Terrace" remains a beloved and iconic artwork, admired
-				for its lively depiction of an evening scene and its ability to evoke a
-				sense of nostalgia and serenity. The painting stands as a testament to
-				van Gogh's unique artistic style and his ability to capture the beauty
-				found in simple, everyday subjects. It continues to inspire and
-				captivate viewers with its timeless charm and the artist's passionate
-				expression of his own emotional experiences.
+				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
+				fuga error repudiandae. Libero voluptatem impedit amet incidunt
+				blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum
+				quisquam, dolor deleniti?
 			</p>
-		</TextOverlayImage>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
-			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis
-			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
-			deleniti?
-		</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
-			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis
-			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
-			deleniti?
-		</p>
-	</StaticContent>
-	<StaticContent title='The Third Section'>
-		<p>In this course, we will&hellip;</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
-			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis
-			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
-			deleniti?
-		</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
-			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis
-			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
-			deleniti?
-		</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
-			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis
-			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
-			deleniti?
-		</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
-			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis
-			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
-			deleniti?
-		</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
-			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis
-			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
-			deleniti?
-		</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
-			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis
-			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
-			deleniti?
-		</p>
-		<p>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
-			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis
-			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
-			deleniti?
-		</p>
+			<p>
+				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
+				fuga error repudiandae. Libero voluptatem impedit amet incidunt
+				blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum
+				quisquam, dolor deleniti?
+			</p>
+			<p>
+				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
+				fuga error repudiandae. Libero voluptatem impedit amet incidunt
+				blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum
+				quisquam, dolor deleniti?
+			</p>
+			<p>
+				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
+				fuga error repudiandae. Libero voluptatem impedit amet incidunt
+				blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum
+				quisquam, dolor deleniti?
+			</p>
+			<p>
+				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
+				fuga error repudiandae. Libero voluptatem impedit amet incidunt
+				blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum
+				quisquam, dolor deleniti?
+			</p>
+			<p>
+				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
+				fuga error repudiandae. Libero voluptatem impedit amet incidunt
+				blanditiis ducimus consequatur quos, vitae beatae hic eligendi, rerum
+				quisquam, dolor deleniti?
+			</p>
+		</StaticContent>
 	</StaticContent>
 </TheLesson>

@@ -1,0 +1,19 @@
+---
+type Props = {
+	content?: any
+}
+const { content } = Astro.props
+
+/**
+ * TabItem of a TabWidget
+ *
+ * @param _props - Record<string, any>
+ * @param _props.children - Any HTML elements. Parent element: `<div>`
+ */
+export type TabItem = typeof import('./TabsWidget.astro')
+---
+
+<Fragment>
+	{content}
+	<slot />
+</Fragment>
