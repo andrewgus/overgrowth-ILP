@@ -5,25 +5,25 @@
  * NOTE: Props notes:
  *** imgName is always required
  *** altText is optional. Will be an empty string if not present.
- *** align sets text to left of, right of, or centered on image.
- *** needsDescribedBy binds the text to the img via aria-describedBy for proper association.
+ *** setAlign sets text to left of, right of, or centered on image.
+ *** isDescribedBy binds the text to the img via aria-describedBy for proper association.
  */
 import BaseImage from '../base/BaseImage.astro'
 import createNanoID from '../../composables/useCreateNanoID'
 type Props = {
 	imgName: string
 	altText?: string
-	align?: 'alignLeft' | 'alignRight' | 'alignCenter'
-	needsDescribedBy?: boolean
+	setAlign?: 'alignLeft' | 'alignRight' | 'alignCenter'
+	isDescribedBy?: boolean
 }
 const {
 	imgName,
 	altText = '',
-	align = 'alignCenter',
-	needsDescribedBy = false,
+	setAlign = 'alignCenter',
+	isDescribedBy = false,
 } = Astro.props
 
-const describedByID = createNanoID(needsDescribedBy, Astro.self.name)
+const describedByID = createNanoID(isDescribedBy, Astro.self.name)
 ---
 
 <script>
@@ -43,7 +43,7 @@ const describedByID = createNanoID(needsDescribedBy, Astro.self.name)
 	})
 </script>
 
-<div class:list={['fullWidth', 'textOverlayImage', align]}>
+<div class:list={['fullWidth', 'textOverlayImage', setAlign]}>
 	<div class='overlaidImg'>
 		<BaseImage
 			describedBy={describedByID}

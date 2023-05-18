@@ -9,17 +9,17 @@ import createID from '../composables/useCreateID'
 type Props = {
 	title: string
 	scene: string
-	isInteractive?: boolean
 	gradientColor?: string
 	language?: string
+	isInteractive?: boolean
 }
 
 const {
 	title,
 	scene,
-	isInteractive = true,
 	gradientColor = 'var(--white)',
 	language = 'en',
+	isInteractive = true,
 } = Astro.props
 ---
 

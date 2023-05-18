@@ -22,8 +22,8 @@ import HeroImg from '../../components/staticContentLayouts/HeroImg.astro'
 			political contexts that have shaped the art of different eras and regions.
 		</p>
 		<TextOverlayImage
-			needsDescribedBy
-			align={'alignCenter'}
+			isDescribedBy
+			setAlign={'alignCenter'}
 			imgName='washington-crossing-delaware.jpg'
 			altText='Washington Crossing the Delaware by Emanuel Leutze'
 		>
@@ -77,7 +77,7 @@ import HeroImg from '../../components/staticContentLayouts/HeroImg.astro'
 		</p>
 		<SideBySide
 			isNewSection
-			needsDescribedBy
+			isDescribedBy
 			title={'A Look at Van Gogh'}
 			altText='Café Terrace at Night by Vincent Van Gogh'
 			imgName='cafeterrace.jpg'
@@ -125,7 +125,7 @@ import HeroImg from '../../components/staticContentLayouts/HeroImg.astro'
 			</p>
 		</SideBySide>
 		<SideBySide
-			align={'alignRight'}
+			setAlign={'alignRight'}
 			altText='Le Mal Du Pays by René Magritte'
 			setRatio={'r5050'}
 			imgName='le-mal-du-pays.jpg'
@@ -208,7 +208,7 @@ import HeroImg from '../../components/staticContentLayouts/HeroImg.astro'
 			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
 			deleniti?
 		</p>
-		<TextOverlayImage imgName='cafeterrace.jpg' align={'alignCenter'}>
+		<TextOverlayImage imgName='cafeterrace.jpg' setAlign={'alignCenter'}>
 			<p>
 				"Cafe Terrace" is a renowned painting created by Dutch
 				post-impressionist artist Vincent van Gogh in 1888. The painting depicts

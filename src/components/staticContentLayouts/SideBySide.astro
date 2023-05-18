@@ -6,9 +6,9 @@
  *** imgName is always required
  *** altText is optional. Will be an empty string if not present.
  *** Only if isNewSection is true, then a title is required.
- *** align sets the image to the left, right, or top. 'alignTop' disables position: sticky.
+ *** setAlign sets the image to the left, right, or top. 'alignTop' disables position: sticky.
  *** setRatio will increase image size to either 50% (r5050) or 60% (r6040)
- *** needsDescribedBy binds the text to the img via aria-describedBy for proper association.
+ *** isDescribedBy binds the text to the img via aria-describedBy for proper association.
  */
 import BaseImage from '../base/BaseImage.astro'
 import createNanoID from '../../composables/useCreateNanoID'
@@ -26,22 +26,22 @@ type PropsWithIsNewSection =
 type Props = PropsWithIsNewSection & {
 	imgName: string
 	altText?: string
-	align?: 'alignLeft' | 'alignRight' | 'alignTop'
+	setAlign?: 'alignLeft' | 'alignRight' | 'alignTop'
 	setRatio?: 'r5050' | 'r6040'
-	needsDescribedBy?: boolean
+	isDescribedBy?: boolean
 }
 
 const {
 	imgName,
 	setRatio,
 	altText = '',
-	align = 'alignLeft',
-	needsDescribedBy = false,
+	setAlign = 'alignLeft',
+	isDescribedBy = false,
 	isNewSection = false,
 	title,
 } = Astro.props
 
-const describedByID = createNanoID(needsDescribedBy, Astro.self.name)
+const describedByID = createNanoID(isDescribedBy, Astro.self.name)
 ---
 
 {
@@ -61,12 +61,12 @@ const describedByID = createNanoID(needsDescribedBy, Astro.self.name)
 			</Fragment>
 		)
 		return isNewSection ? (
-			<section class:list={['fullWidth', 'sideBySide', align, setRatio]}>
+			<section class:list={['fullWidth', 'sideBySide', setAlign, setRatio]}>
 				<h3>{title}</h3>
 				{layout}
 			</section>
 		) : (
-			<div class:list={['fullWidth', 'sideBySide', align, setRatio]}>
+			<div class:list={['fullWidth', 'sideBySide', setAlign, setRatio]}>
 				{layout}
 			</div>
 		)

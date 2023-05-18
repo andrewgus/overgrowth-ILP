@@ -1,5 +1,5 @@
 <template>
-	<article class="section activity" :class="activityType" tabindex="-1">
+	<article class="section activity" :class="setActivityType" tabindex="-1">
 		<h2>{{ title }}</h2>
 		<BaseAlertText
 			v-if="!activityProgressStore.wantsNoMoreAlerts"
@@ -10,7 +10,7 @@
 			<p>
 				<span class="visuallyHidden">Important: </span>
 				Heads&nbsp;up!&nbsp;Once&nbsp;completed, this&nbsp;{{
-					activityType
+					setActivityType
 				}}&nbsp;activity
 				<strong>cannot</strong>&nbsp;be&nbsp;turned&nbsp;off&nbsp;later.
 			</p>
@@ -44,7 +44,7 @@
 	import BaseAlertText from '../components/base/BaseAlertText.vue'
 
 	type Props = {
-		activityType: ActivityType
+		setActivityType: ActivityType
 		title: string
 		prompt: string
 		isFinaleReveal?: boolean
@@ -72,10 +72,11 @@
 	const activity = defineAsyncComponent(() =>
 		import(
 			`../components/activities/${
-				props.activityType.charAt(0).toUpperCase() + props.activityType.slice(1)
+				props.setActivityType.charAt(0).toUpperCase() +
+				props.setActivityType.slice(1)
 			}SwitchBoard.vue`
 		).finally(() => {
-			useDoesActivityExist(props.activityType)
+			useDoesActivityExist(props.setActivityType)
 			// only need setLocksHandler && updateLocalStorage scripts if activities are being used within a given lesson
 			import('../scripts/setLocksHandler.js')
 			import('../scripts/updateLocalStorage.js')
@@ -88,7 +89,7 @@
 			prompt: props.prompt,
 		}
 		let activityProps: {}
-		switch (props.activityType) {
+		switch (props.setActivityType) {
 			case 'reflection':
 				activityProps = {
 					isFinaleReveal: props.isFinaleReveal,
