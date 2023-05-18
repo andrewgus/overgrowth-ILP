@@ -46,6 +46,7 @@ const describedByID = createNanoID(isDescribedBy, Astro.self.name)
 
 {
 	() => {
+		const containerStyles = ['fullWidth', 'sideBySide', setAlign, setRatio]
 		const layout = (
 			<Fragment>
 				<div class='stickyImg'>
@@ -61,14 +62,12 @@ const describedByID = createNanoID(isDescribedBy, Astro.self.name)
 			</Fragment>
 		)
 		return isNewSection ? (
-			<section class:list={['fullWidth', 'sideBySide', setAlign, setRatio]}>
+			<section class:list={containerStyles}>
 				<h3>{title}</h3>
 				{layout}
 			</section>
 		) : (
-			<div class:list={['fullWidth', 'sideBySide', setAlign, setRatio]}>
-				{layout}
-			</div>
+			<div class:list={containerStyles}>{layout}</div>
 		)
 	}
 }
