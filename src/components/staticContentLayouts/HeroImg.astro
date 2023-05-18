@@ -17,7 +17,7 @@ type Props = {
 }
 const { imgName, altText = '', caption } = Astro.props
 
-const describedByID = createNanoID(caption, Astro.self.name)
+const describedByID = createNanoID(Astro.self.name, caption)
 ---
 
 <div class:list={['fullWidth', 'heroImg']}>

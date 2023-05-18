@@ -41,7 +41,7 @@ const {
 	title,
 } = Astro.props
 
-const describedByID = createNanoID(isDescribedBy, Astro.self.name)
+const describedByID = createNanoID(Astro.self.name, isDescribedBy)
 ---
 
 {
