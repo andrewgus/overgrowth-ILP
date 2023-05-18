@@ -26,9 +26,11 @@
 		/>
 		<template key="1" v-else>
 			<div key="pdfSaveDiv" :class="$style.pdfSave">
+				<div class="visuallyHidden" aria-live="assertive">
+					{{ pdfStatusUpdate }}
+				</div>
 				<p
 					v-if="shouldDisplayVisualFeedback"
-					aria-live="assertive"
 					key="pdfFeedback"
 					:class="$style.pdfSave__feedback"
 				>
@@ -191,10 +193,14 @@
 			border: 1px solid var(--darkGray);
 			border-right: 0;
 			border-radius: var(--s10) 0 0 var(--s10);
+
+			& + .pdfSave__btn {
+				border-radius: 0 var(--s10) var(--s10) 0;
+			}
 		}
-		&__btn:not(:only-child) {
-			border-radius: 0 var(--s10) var(--s10) 0;
-		}
+		// &__btn:not(:only-child) {
+		// 	border-radius: 0 var(--s10) var(--s10) 0;
+		// }
 	}
 	.continueIndicator {
 		background-color: var(--white);
