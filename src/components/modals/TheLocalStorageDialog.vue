@@ -1,5 +1,5 @@
 <template>
-	<dialog ref="dialogEl" :class="$style.dialog">
+	<dialog role="alertdialog" ref="dialogEl" :class="$style.dialog">
 		<h1 tabindex="-1" ref="dialogHeadingEl">
 			{{ !confirmDelete ? 'Hey there! &#128075;' : 'Are You Sure?' }}
 		</h1>
