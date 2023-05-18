@@ -1,12 +1,6 @@
 ---
 /**
  * Vertically-aligned layout of text and image. Creates an overlay effect where the image is first fully visible, then corresponding text, on scroll, overlays the image, and then, once text is fully scrolled, image is fully visible again.
- *
- * NOTE: Props notes:
- *** imgName is always required
- *** altText is optional. Will be an empty string if not present.
- *** setAlign sets text to left of, right of, or centered on image.
- *** isDescribedBy binds the text to the img via aria-describedBy for proper association.
  */
 import BaseImage from '../base/BaseImage.astro'
 import createNanoID from '../../composables/useCreateNanoID'

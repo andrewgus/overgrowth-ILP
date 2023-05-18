@@ -40,7 +40,7 @@ const describedByID = createNanoID(Astro.self.name)
 	})
 </script>
 
-<div class:list={['tabs', 'fullWidth']}>
+<section class:list={['tabs', 'fullWidth']}>
 	<h3 id={describedByID}>{title}</h3>
 	<div role='tablist' aria-describedby={describedByID}>
 		{
@@ -69,7 +69,7 @@ const describedByID = createNanoID(Astro.self.name)
 			</div>
 		))
 	}
-</div>
+</section>
 
 <style lang='scss'>
 	.tabs {

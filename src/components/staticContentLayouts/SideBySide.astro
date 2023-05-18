@@ -1,14 +1,6 @@
 ---
 /**
  * Horizontally-aligned (sans 'alignTop') layout of text and image. Creates a side-by-side layout for the two.
- *
- * NOTE: Props notes:
- *** imgName is always required
- *** altText is optional. Will be an empty string if not present.
- *** Only if isNewSection is true, then a title is required.
- *** setAlign sets the image to the left, right, or top. 'alignTop' disables position: sticky.
- *** setRatio will increase image size to either 50% (r5050) or 60% (r6040)
- *** isDescribedBy binds the text to the img via aria-describedBy for proper association.
  */
 import BaseImage from '../base/BaseImage.astro'
 import createNanoID from '../../composables/useCreateNanoID'
