@@ -1,5 +1,6 @@
 ---
 import BaseImage from '../base/BaseImage.astro'
+import { nanoid } from 'nanoid'
 
 type Props = {
 	imgName: string
@@ -7,13 +8,15 @@ type Props = {
 	caption?: string
 }
 const { imgName, altText = '', caption } = Astro.props
+
+const needID = !!caption ? `${Astro.self.name}-${nanoid(8)}` : ''
 ---
 
 <div class='fullWidth'>
-	<BaseImage imgName={imgName} altText={altText} />
+	<BaseImage describedBy={needID} imgName={imgName} altText={altText} />
 	{
 		!!caption && (
-			<p class='imgCaption'>
+			<p id={needID} class='imgCaption'>
 				<small>{caption}</small>
 			</p>
 		)

@@ -28,7 +28,7 @@ type Props = PropsWithIsNewSection & {
 	altText?: string
 	align?: 'alignLeft' | 'alignRight' | 'alignTop'
 	setRatio?: 'r5050' | 'r6040'
-	needTextDescription?: boolean
+	needsDescribedBy?: boolean
 }
 
 const {
@@ -36,12 +36,12 @@ const {
 	setRatio,
 	altText = '',
 	align = 'alignLeft',
-	needTextDescription = false,
+	needsDescribedBy = false,
 	isNewSection = false,
 	title,
 } = Astro.props
 
-const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
+const needID = needsDescribedBy ? `${Astro.self.name}-${nanoid(8)}` : ''
 ---
 
 {

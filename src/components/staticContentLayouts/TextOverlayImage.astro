@@ -13,7 +13,7 @@ type Props = {
 const {
 	imgName,
 	altText = '',
-	align = 'alignLeft',
+	align = 'alignCenter',
 	needTextDescription = false,
 } = Astro.props
 
@@ -81,25 +81,31 @@ const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
 		}
 
 		> .overlayText {
-			margin-top: var(--s2);
-			align-self: start;
-			max-width: 45ch;
 			z-index: 1;
+			margin-top: var(--s2);
+			max-width: 45ch;
 			background-color: hsla(0deg, 0%, 100%, 0.7);
-			border-radius: 0 var(--s-10) var(--s-10) 0;
 			padding: 0 var(--s-2);
 
 			> :global(p) {
 				@include accessibility.textDropShadowWhite();
 			}
 		}
+		&.alignLeft {
+			> .overlayText {
+				border-radius: 0 var(--s-10) var(--s-10) 0;
+				align-self: start;
+			}
+		}
 		&.alignRight {
 			> .overlayText {
+				border-radius: var(--s-10) 0 0 var(--s-10);
 				align-self: end;
 			}
 		}
 		&.alignCenter {
 			> .overlayText {
+				border-radius: var(--s-10) var(--s-10);
 				max-width: 50ch;
 				align-self: center;
 			}
