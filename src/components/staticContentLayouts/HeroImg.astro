@@ -1,6 +1,14 @@
 ---
+/**
+ * Full width image with optional caption.
+ *
+ * NOTE: Props notes:
+ *** imgName is always required
+ *** altText is optional. Will be an empty string if not present.
+ *** caption is optional for a caption below the image. Implements aria-describedby for proper association.
+ */
 import BaseImage from '../base/BaseImage.astro'
-import { nanoid } from 'nanoid'
+import createNanoID from '../../composables/useCreateNanoID'
 
 type Props = {
 	imgName: string
@@ -9,14 +17,14 @@ type Props = {
 }
 const { imgName, altText = '', caption } = Astro.props
 
-const needID = !!caption ? `${Astro.self.name}-${nanoid(8)}` : ''
+const describedByID = createNanoID(caption, Astro.self.name)
 ---
 
-<div class='fullWidth'>
-	<BaseImage describedBy={needID} imgName={imgName} altText={altText} />
+<div class:list={['fullWidth', 'heroImg']}>
+	<BaseImage describedBy={describedByID} imgName={imgName} altText={altText} />
 	{
 		!!caption && (
-			<p id={needID} class='imgCaption'>
+			<p id={describedByID} class='imgCaption'>
 				<small>{caption}</small>
 			</p>
 		)
@@ -24,13 +32,14 @@ const needID = !!caption ? `${Astro.self.name}-${nanoid(8)}` : ''
 </div>
 
 <style lang='scss'>
-	:global(img) {
+	.heroImg {
 		width: 100%;
-	}
-	.imgCaption {
-		display: block;
-		text-align: center;
-		font-style: italic;
-		margin: var(--s-4) auto 0;
+
+		> .imgCaption {
+			display: block;
+			text-align: center;
+			font-style: italic;
+			margin: var(--s-4) auto 0;
+		}
 	}
 </style>

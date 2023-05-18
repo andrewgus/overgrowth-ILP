@@ -1,17 +1,17 @@
 ---
 /**
- * Vertically aligned layout of images and text. Creates a side-by-side layout for the two.
+ * Horizontally-aligned (sans 'alignTop') layout of text and image. Creates a side-by-side layout for the two.
  *
- * NOTE: Props notes
- *** ImgName is always required
+ * NOTE: Props notes:
+ *** imgName is always required
  *** altText is optional. Will be an empty string if not present.
  *** Only if isNewSection is true, then a title is required.
- *** align sets the image to the left or right
+ *** align sets the image to the left, right, or top. 'alignTop' disables position: sticky.
  *** setRatio will increase image size to either 50% (r5050) or 60% (r6040)
- *** needTextDescription binds the text to the img via aria-describedBy
+ *** needsDescribedBy binds the text to the img via aria-describedBy for proper association.
  */
 import BaseImage from '../base/BaseImage.astro'
-import { nanoid } from 'nanoid'
+import createNanoID from '../../composables/useCreateNanoID'
 
 type PropsWithIsNewSection =
 	| {
@@ -41,7 +41,7 @@ const {
 	title,
 } = Astro.props
 
-const needID = needsDescribedBy ? `${Astro.self.name}-${nanoid(8)}` : ''
+const describedByID = createNanoID(needsDescribedBy, Astro.self.name)
 ---
 
 {
@@ -49,9 +49,13 @@ const needID = needsDescribedBy ? `${Astro.self.name}-${nanoid(8)}` : ''
 		const layout = (
 			<Fragment>
 				<div class='stickyImg'>
-					<BaseImage describedBy={needID} imgName={imgName} altText={altText} />
+					<BaseImage
+						describedBy={describedByID}
+						imgName={imgName}
+						altText={altText}
+					/>
 				</div>
-				<div id={needID} class='correspondingText'>
+				<div id={describedByID} class='correspondingText'>
 					<slot />
 				</div>
 			</Fragment>
@@ -78,48 +82,21 @@ const needID = needsDescribedBy ? `${Astro.self.name}-${nanoid(8)}` : ''
 		> h3 {
 			width: 100%;
 		}
-
 		> .stickyImg {
-			// TODO: Check out these styles and TextOverlayImage. See how I can simplify both with the same affect.
 			display: flex;
 			align-items: start;
 			justify-content: center;
+			width: 100%;
 			flex: 1.5;
-
 			> :global(picture) {
 				position: sticky;
 				top: var(--s7);
-				max-width: 40ch;
 				max-height: 85vh;
-				width: 100%;
-				> :global(img) {
-					object-fit: contain;
-					max-width: inherit;
-					max-height: inherit;
-					width: inherit;
-				}
 			}
 		}
 		> .correspondingText {
 			flex: 2;
 		}
-
-		&.alignTop {
-			flex-flow: column nowrap;
-			> .stickyImg {
-				width: 80ch;
-
-				> :global(picture),
-				> :global(img) {
-					max-width: inherit;
-				}
-			}
-			> .correspondingText {
-				width: 60ch;
-				margin: 0 auto;
-			}
-		}
-
 		&.alignRight {
 			.stickyImg {
 				order: 2;
@@ -134,6 +111,21 @@ const needID = needsDescribedBy ? `${Astro.self.name}-${nanoid(8)}` : ''
 				.correspondingText {
 					order: 2;
 				}
+			}
+		}
+		&.alignTop {
+			flex-flow: column nowrap;
+			> .stickyImg {
+				width: 80ch;
+
+				> :global(picture),
+				> :global(img) {
+					max-width: inherit;
+				}
+			}
+			> .correspondingText {
+				width: 60ch;
+				margin: 0 auto;
 			}
 		}
 		&.r6040 {

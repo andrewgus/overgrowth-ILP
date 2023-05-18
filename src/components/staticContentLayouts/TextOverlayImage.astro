@@ -1,23 +1,29 @@
 ---
 /**
- * Intent is to have an image, fullWidth be shown, and then, with scroll, image with opaque BG scroll over it. Similar to side-by-side, but for larger images.
+ * Vertically-aligned layout of text and image. Creates an overlay effect where the image is first fully visible, then corresponding text, on scroll, overlays the image, and then, once text is fully scrolled, image is fully visible again.
+ *
+ * NOTE: Props notes:
+ *** imgName is always required
+ *** altText is optional. Will be an empty string if not present.
+ *** align sets text to left of, right of, or centered on image.
+ *** needsDescribedBy binds the text to the img via aria-describedBy for proper association.
  */
 import BaseImage from '../base/BaseImage.astro'
-import { nanoid } from 'nanoid'
+import createNanoID from '../../composables/useCreateNanoID'
 type Props = {
 	imgName: string
 	altText?: string
 	align?: 'alignLeft' | 'alignRight' | 'alignCenter'
-	needTextDescription?: boolean
+	needsDescribedBy?: boolean
 }
 const {
 	imgName,
 	altText = '',
 	align = 'alignCenter',
-	needTextDescription = false,
+	needsDescribedBy = false,
 } = Astro.props
 
-const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
+const describedByID = createNanoID(needsDescribedBy, Astro.self.name)
 ---
 
 <script>
@@ -25,10 +31,10 @@ const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
 		const containerDivs = document.querySelectorAll(
 			'.textOverlayImage'
 		) as NodeListOf<HTMLDivElement>
-		const bgImgs = [...containerDivs].map(
-			(div) => div.querySelector('.bgImg img') as HTMLImageElement
+		const imgs = [...containerDivs].map(
+			(div) => div.querySelector('.overlaidImg img') as HTMLImageElement
 		)
-		bgImgs.forEach((img, i) =>
+		imgs.forEach((img, i) =>
 			containerDivs[i].style.setProperty(
 				'--imgHeight',
 				`min(${img.offsetHeight}px, 85vh)`
@@ -38,10 +44,14 @@ const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
 </script>
 
 <div class:list={['fullWidth', 'textOverlayImage', align]}>
-	<div class='bgImg'>
-		<BaseImage describedBy={needID} imgName={imgName} altText={altText} />
+	<div class='overlaidImg'>
+		<BaseImage
+			describedBy={describedByID}
+			imgName={imgName}
+			altText={altText}
+		/>
 	</div>
-	<div id={needID} class='overlayText'>
+	<div id={describedByID} class='overlayText'>
 		<slot />
 	</div>
 </div>
@@ -52,43 +62,33 @@ const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
 		--imgHeight: 60vh;
 		display: flex;
 		flex-flow: column nowrap;
-		align-items: start;
 		justify-content: start;
-		min-height: max-content;
 
 		&::after {
+			content: '';
 			display: block;
 			height: calc(var(--imgHeight) + var(--s2));
-			content: '';
 		}
-
-		> .bgImg {
+		> .overlaidImg {
 			position: sticky;
 			top: var(--s7);
 			width: 100%;
-
-			> :global(picture) {
-				width: inherit;
-				max-height: 85vh;
-
-				> :global(img) {
-					object-fit: contain;
-					width: inherit;
-					max-height: inherit;
-					width: inherit;
-				}
-			}
 		}
-
 		> .overlayText {
 			z-index: 1;
 			margin-top: var(--s2);
 			max-width: 45ch;
 			background-color: hsla(0deg, 0%, 100%, 0.7);
-			padding: 0 var(--s-2);
-
+			padding: var(--s-2);
 			> :global(p) {
 				@include accessibility.textDropShadowWhite();
+			}
+		}
+		&.alignCenter {
+			> .overlayText {
+				border-radius: var(--s-10) var(--s-10);
+				max-width: 50ch;
+				align-self: center;
 			}
 		}
 		&.alignLeft {
@@ -101,13 +101,6 @@ const needID = needTextDescription ? `${Astro.self.name}-${nanoid(8)}` : ''
 			> .overlayText {
 				border-radius: var(--s-10) 0 0 var(--s-10);
 				align-self: end;
-			}
-		}
-		&.alignCenter {
-			> .overlayText {
-				border-radius: var(--s-10) var(--s-10);
-				max-width: 50ch;
-				align-self: center;
 			}
 		}
 	}

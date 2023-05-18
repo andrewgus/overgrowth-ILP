@@ -32,3 +32,16 @@ const { imgName, altText = '', describedBy } = Astro.props
 		aria-describedby={describedBy}
 	/>
 </picture>
+
+<style lang='scss'>
+	picture {
+		width: inherit;
+		max-height: 85vh;
+		> img {
+			object-fit: contain;
+			width: inherit;
+			max-height: inherit;
+			width: inherit;
+		}
+	}
+</style>
