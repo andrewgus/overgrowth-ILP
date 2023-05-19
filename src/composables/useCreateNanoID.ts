@@ -10,6 +10,6 @@ export default function createNanoID<T extends string | boolean>(
 	componentName: string,
 	ifPropTrue?: T
 ) {
-	if (!ifPropTrue) return `${componentName}-${nanoid(8)}`
-	return (!!ifPropTrue as boolean) ? `${componentName}-${nanoid(8)}` : ''
+	if (!ifPropTrue) return `${componentName}-${nanoid(12)}`
+	return (!!ifPropTrue as boolean) ? `${componentName}-${nanoid(12)}` : ''
 }

@@ -46,9 +46,7 @@
 <style module lang="scss">
 	.indicator {
 		width: fit-content;
-		align-self: center;
-		margin: 0 auto var(--s0);
-
+		margin: 0 auto;
 		&__link {
 			text-decoration: none;
 			&,

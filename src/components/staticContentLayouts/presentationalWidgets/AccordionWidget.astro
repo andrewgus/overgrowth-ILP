@@ -1,0 +1,13 @@
+---
+// TODO: create this out of details/summmary elements. Cleanest way to do it.
+
+type Props = {
+	title: string
+}
+const { title } = Astro.props
+---
+
+<details>
+	<summary aria-expanded='false'>{title}</summary>
+	<slot />
+</details>

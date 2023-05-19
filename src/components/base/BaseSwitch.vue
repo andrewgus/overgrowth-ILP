@@ -1,26 +1,25 @@
 <template>
-	<label :for="`${type.toLowerCase()}Switch`">{{ type }}</label>
-	<div :class="$style.switch">
-		<input
-			@click="toggleSwitch"
-			:id="`${type.toLowerCase()}Switch`"
-			:class="[$style.input, { [$style.off]: !enabled }]"
-			type="button"
-			role="switch"
-			:aria-checked="enabled"
-			:value="enabled ? 'on' : 'off'"
-		/>
-		<span :class="$style.toggleText" aria-hidden="true">{{
-			enabled ? 'On' : 'Off'
-		}}</span>
-	</div>
+	<button
+		@click="toggleSwitch"
+		:class="[$style.switchBtn, { [$style.isOff]: !enabled }]"
+		type="button"
+		role="switch"
+		:aria-checked="enabled"
+	>
+		<span>{{ switchName }}</span>
+		<span :class="$style.visualSwitch" aria-hidden="true">
+			<span :class="$style.toggleText">
+				{{ enabled ? 'On' : 'Off' }}
+			</span>
+		</span>
+	</button>
 </template>
 
 <script setup lang="ts">
 	import { ref } from 'vue'
 
 	const props = defineProps({
-		type: {
+		switchName: {
 			type: String,
 			required: true,
 		},
@@ -40,56 +39,53 @@
 </script>
 
 <style module lang="scss">
+	@use '../../styles/mixins/containerStyles.scss';
 	@use '../../styles/mixins/transitions.scss';
 	@use '../../styles/mixins/shadows.scss';
-	.switch {
-		display: grid;
-		grid-template: 1fr/ 1fr;
-		align-items: center;
+	.switchBtn {
+		min-width: var(--s8);
+		cursor: pointer;
+		color: var(--black);
+		background-color: transparent;
+		border: none;
+		border-radius: var(--s-10);
+		@include containerStyles.flexCenter();
+		flex-flow: column nowrap;
 		@include transitions.button();
 
-		&:hover:not(:focus-within) {
-			@include shadows.blueDropShadow();
+		> .visualSwitch {
+			margin-top: var(--s-8);
+			width: var(--s7);
+			background-color: var(--lightGray);
+			border-radius: var(--s10);
+			@include containerStyles.darkBorder();
 
-			> :not(.off) + .toggleText {
+			> .toggleText {
+				-webkit-transition: all var(--timeShort) var(--transitionFlourish);
+				transition: all var(--timeShort) var(--transitionFlourish);
+				@include containerStyles.flexCenter();
+				font-size: var(--s-1);
+				pointer-events: none;
+				width: var(--s0);
+				height: var(--s0);
+				padding: var(--s-2);
+				border-radius: 50%;
+				background-color: var(--green1);
+			}
+		}
+		&:hover {
+			> .visualSwitch {
+				@include shadows.blueDropShadow();
+			}
+			&:not(.isOff) .toggleText {
 				animation: switchJiggle var(--timeLong) var(--transitionFlourish);
 			}
 		}
-		> * {
-			grid-area: 1/1/-1/-1;
+		&.isOff .toggleText {
+			background-color: var(--red-1);
+			color: var(--white);
+			transform: translateX(4ch);
 		}
-		> .input {
-			cursor: pointer;
-			padding: 0;
-			border-radius: var(--s10);
-			width: var(--s6);
-			height: calc(var(--s2) + 1px);
-			border: 1px solid var(--darkGray);
-			background: var(--white);
-			color: transparent;
-
-			&.off + .toggleText {
-				transform: translateX(var(--s2));
-				margin: 0 0 0 2px;
-				color: #fff;
-				background: var(--red);
-			}
-		}
-	}
-	.toggleText {
-		font-size: var(--s-1);
-		pointer-events: none;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: var(--s0);
-		height: var(--s0);
-		padding: var(--s-2);
-		border-radius: 50%;
-		margin: 0 0 0 1px;
-		-webkit-transition: var(--timeShort) all var(--transitionFlourish);
-		transition: var(--timeShort) all var(--transitionFlourish);
-		background-color: var(--green1);
 	}
 
 	@keyframes switchJiggle {

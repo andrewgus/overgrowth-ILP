@@ -31,15 +31,17 @@ const bgGradient = `linear-gradient(to bottom, white 0%, ${Astro.props.color} 40
 		width: 100vw;
 		display: grid;
 		grid-template-columns: [landing-top] 1fr [landing-bottom];
-		grid-template-rows: [card-start] 4fr [card-indicator] 20vh [indicator-end];
-	}
-	.onLandingIndicator {
-		grid-area: card-indicator/landing-top/indicator-end/landing-bottom;
+		grid-template-rows: [card-start] 4fr [card-indicator] 50vh [indicator-end];
 
-		:global(p) {
-			background-color: hsla(0deg, 0%, 98%, 0.5);
-			@include shadows.dropShadowWhite();
-			border-radius: var(--s10);
+		> .onLandingIndicator {
+			align-self: end;
+			grid-area: card-indicator/landing-top/indicator-end/landing-bottom;
+
+			:global(p) {
+				background-color: hsla(0deg, 0%, 98%, 0.5);
+				@include shadows.dropShadowWhite();
+				border-radius: var(--s10);
+			}
 		}
 	}
 </style>
