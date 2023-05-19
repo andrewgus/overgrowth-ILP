@@ -55,20 +55,20 @@
 
 		> .visualSwitch {
 			margin-top: var(--s-8);
-			width: var(--s7);
+			min-width: var(--s7);
 			background-color: var(--lightGray);
 			border-radius: var(--s10);
 			@include containerStyles.darkBorder();
+			height: max(auto, var(--s7));
 
 			> .toggleText {
+				float: left;
 				-webkit-transition: all var(--timeShort) var(--transitionFlourish);
 				transition: all var(--timeShort) var(--transitionFlourish);
-				@include containerStyles.flexCenter();
 				font-size: var(--s-1);
 				pointer-events: none;
-				width: var(--s0);
-				height: var(--s0);
-				padding: var(--s-2);
+				padding: var(--s-10);
+				aspect-ratio: 1/1;
 				border-radius: 50%;
 				background-color: var(--green1);
 			}
@@ -84,7 +84,7 @@
 		&.isOff .toggleText {
 			background-color: var(--red-1);
 			color: var(--white);
-			transform: translateX(4ch);
+			float: right;
 		}
 	}
 
