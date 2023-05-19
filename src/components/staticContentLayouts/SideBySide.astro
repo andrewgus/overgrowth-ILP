@@ -20,7 +20,7 @@ type Props = PropsWithIsNewSection & {
 	altText?: string
 	setAlign?: 'alignLeft' | 'alignRight' | 'alignTop'
 	setRatio?: 'r5050' | 'r6040'
-	isDescribedBy?: boolean
+	isLongDescForComplexImg?: boolean
 }
 
 const {
@@ -28,12 +28,12 @@ const {
 	setRatio,
 	altText = '',
 	setAlign = 'alignLeft',
-	isDescribedBy = false,
+	isLongDescForComplexImg = false,
 	isNewSection = false,
 	title,
 } = Astro.props
 
-const describedByID = createNanoID(Astro.self.name, isDescribedBy)
+const describedByID = createNanoID(Astro.self.name, isLongDescForComplexImg)
 ---
 
 {

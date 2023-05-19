@@ -8,16 +8,16 @@ type Props = {
 	imgName: string
 	altText?: string
 	setAlign?: 'alignLeft' | 'alignRight' | 'alignCenter'
-	isDescribedBy?: boolean
+	isLongDescForComplexImg?: boolean
 }
 const {
 	imgName,
 	altText = '',
 	setAlign = 'alignCenter',
-	isDescribedBy = false,
+	isLongDescForComplexImg = false,
 } = Astro.props
 
-const describedByID = createNanoID(Astro.self.name, isDescribedBy)
+const describedByID = createNanoID(Astro.self.name, isLongDescForComplexImg)
 ---
 
 <script>
