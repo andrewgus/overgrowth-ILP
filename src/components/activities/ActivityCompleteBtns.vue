@@ -27,7 +27,8 @@
 		<template key="1" v-else>
 			<div key="pdfSaveDiv" :class="$style.pdfSave">
 				<div class="visuallyHidden" aria-live="assertive">
-					{{ pdfStatusUpdate }}
+					<span>{{ canContinueAnnouncement }}</span>
+					<span>{{ pdfStatusUpdate }}</span>
 				</div>
 				<p
 					v-if="shouldDisplayVisualFeedback"
@@ -43,7 +44,6 @@
 							? 'Save again?'
 							: 'Save your work as a PDF?'
 					"
-					srText="Optional"
 					:aria-label="
 						shouldDisplayVisualFeedback
 							? `Save ${$allSections[id].title} as a PDF again?`
@@ -66,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-	import { computed, nextTick, inject, type Ref } from 'vue'
+	import { computed, nextTick, inject, type Ref, ref, watch } from 'vue'
 	import { mapStores } from '@nanostores/vue'
 	import {
 		allSectionsMap,
@@ -120,6 +120,7 @@
 		useSetActivityComplete()
 		if (wantsNoMoreAlerts) activityProgressStore.wantsNoMoreAlerts = true
 		await nextTick()
+		setCanContinueAnnouncement()
 		const saveBtnEl = thisSection.querySelector(
 			'button[class*="pdfSave__btn"]'
 		) as HTMLButtonElement
@@ -146,6 +147,11 @@
 		})
 		return isAttemptingDownload
 	})
+
+	const canContinueAnnouncement = ref<string>('')
+	const setCanContinueAnnouncement = () =>
+		(canContinueAnnouncement.value =
+			'You can now continue to the next section.')
 </script>
 
 <style module lang="scss">

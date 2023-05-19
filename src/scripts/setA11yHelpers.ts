@@ -5,7 +5,7 @@ const visuallyHiddenText = (A11yText: string, position: 'begin' | 'end') => {
 }
 
 const elementsToA11y = document.querySelectorAll(
-	'strong, em, del, ins, mark, code, q'
+	'strong, em, del, ins, mark, code, q, blockquote'
 )
 
 elementsToA11y.forEach((el) => {
@@ -65,6 +65,16 @@ elementsToA11y.forEach((el) => {
 				visuallyHiddenText('quote begin', 'begin')
 			)
 			el.insertAdjacentHTML('beforeend', visuallyHiddenText('quote end', 'end'))
+			break
+		case 'BLOCKQUOTE':
+			el.insertAdjacentHTML(
+				'afterbegin',
+				visuallyHiddenText('block quote begin', 'begin')
+			)
+			el.insertAdjacentHTML(
+				'beforeend',
+				visuallyHiddenText('block quote end', 'end')
+			)
 			break
 	}
 })

@@ -54,6 +54,11 @@ p {
   > small {
     font-size: var(--s-1);
   }
+  > mark {
+    background-color: var(--yellow3);
+    border-radius: var(--s-10);
+    padding: 0 var(--s-10);
+  }
 }
 
 a {

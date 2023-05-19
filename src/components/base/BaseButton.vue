@@ -7,13 +7,9 @@
 		autocomplete="off"
 		@click="$emit('btnClick', $event)"
 	>
-		<span v-if="!!srText" class="visuallyHidden">{{ srText }}:&nbsp;</span
-		>{{ text }}
+		{{ text }}
 	</button>
-	<a v-else :href="url" :class="btnStyles"
-		><span v-if="!!srText" class="visuallyHidden">{{ srText }}:&nbsp;</span>
-		{{ text }}</a
-	>
+	<a v-else :href="url" :class="btnStyles">{{ text }}</a>
 </template>
 
 <script setup lang="ts">
@@ -28,9 +24,6 @@
 		isDisabled: {
 			type: Boolean,
 			default: false,
-		},
-		srText: {
-			type: String,
 		},
 		isWarning: {
 			type: Boolean,
