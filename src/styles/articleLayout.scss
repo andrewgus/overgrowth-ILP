@@ -16,6 +16,10 @@
   &.staticContent {
     padding-bottom: var(--s2);
 
+    > *:not(h2) + *:not(section) {
+      margin-top: var(--s2);
+    }
+
     > img {
       width: 100%;
       margin: var(--s2) 0;
@@ -31,10 +35,6 @@
       grid-row: completeBtn-start/completeBtn-end;
       align-self: end;
     }
-  }
-
-  > div {
-    margin: var(--s2) 0;
   }
 
   > *:not(.fullWidth) {

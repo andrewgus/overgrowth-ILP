@@ -9,7 +9,7 @@
   font-size: var(--s0);
   box-sizing: border-box;
 
-  &:focus {
+  &:focus:not([tabindex="-1"]) {
     animation: focusPulse var(--timeShort) var(--transitionFlourish) forwards;
   }
   &:visited {

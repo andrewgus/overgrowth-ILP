@@ -51,7 +51,8 @@ p {
   & + p {
     margin-top: var(--s2);
   }
-  > small {
+  > small,
+  > small > span {
     font-size: var(--s-1);
   }
   > mark {

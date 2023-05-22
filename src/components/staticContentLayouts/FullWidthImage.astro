@@ -19,8 +19,10 @@ const describedByID = createNanoID(Astro.self.name, caption)
 	<BaseImage describedBy={describedByID} imgName={imgName} altText={altText} />
 	{
 		!!caption && (
-			<p id={describedByID} class='imgCaption'>
-				<small>{caption}</small>
+			<p class='imgCaption'>
+				<small>
+					Caption: <span id={describedByID}>{caption}</span>
+				</small>
 			</p>
 		)
 	}
