@@ -15,7 +15,7 @@
 	>
 		<div id="navItemsList" v-show="isMenuOpen" :class="$style.lessonTOC">
 			<h2 class="visuallyHidden">Navigation Links</h2>
-			<ol>
+			<ol aria-describedby="additonalSections">
 				<li
 					v-for="navItem in $allNavSections"
 					:key="navItem.id"
@@ -29,7 +29,7 @@
 					>
 				</li>
 				<li v-if="areLockedSections">
-					<p>
+					<p id="additonalSections">
 						{{
 							Object.keys($allLockedSections).length
 						}}&nbsp;more&nbsp;section{{
@@ -162,6 +162,7 @@
 				}
 				&.greenDot::before {
 					background-color: var(--green);
+					filter: drop-shadow(0 0 2px var(--green2));
 				}
 
 				> a,

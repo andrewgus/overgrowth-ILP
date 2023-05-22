@@ -46,8 +46,8 @@
 					"
 					:aria-label="
 						shouldDisplayVisualFeedback
-							? `Save ${$allSections[id].title} as a PDF again?`
-							: `Save ${$allSections[id].title} as a PDF?`
+							? `Optional: Save ${$allSections[id].title} as a PDF again?`
+							: `Optional: Save ${$allSections[id].title} as a PDF?`
 					"
 					:class="$style.pdfSave__btn"
 					@btnClick="saveAsPDF"
@@ -149,9 +149,12 @@
 	})
 
 	const canContinueAnnouncement = ref<string>('')
-	const setCanContinueAnnouncement = () =>
-		(canContinueAnnouncement.value =
-			'You can now continue to the next section.')
+	const setCanContinueAnnouncement = () => {
+		setTimeout(() => {
+			canContinueAnnouncement.value =
+				'You can now continue to the next section.'
+		}, 1000)
+	}
 </script>
 
 <style module lang="scss">
