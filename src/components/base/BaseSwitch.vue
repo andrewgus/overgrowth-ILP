@@ -43,34 +43,38 @@
 	@use '../../styles/mixins/transitions.scss';
 	@use '../../styles/mixins/shadows.scss';
 	.switchBtn {
+		@include containerStyles.flexCenter();
+		@include transitions.button();
 		min-width: var(--s8);
 		cursor: pointer;
 		color: var(--black);
 		background-color: transparent;
 		border: none;
 		border-radius: var(--s-10);
-		@include containerStyles.flexCenter();
 		flex-flow: column nowrap;
-		@include transitions.button();
 
 		> .visualSwitch {
+			@include containerStyles.darkBorder();
+			display: flex;
+			align-items: center;
+			justify-content: start;
 			margin-top: var(--s-8);
-			min-width: var(--s7);
 			background-color: var(--lightGray);
 			border-radius: var(--s10);
-			@include containerStyles.darkBorder();
-			height: max(auto, var(--s7));
+			width: var(--s7);
 
 			> .toggleText {
-				float: left;
-				-webkit-transition: all var(--timeShort) var(--transitionFlourish);
-				transition: all var(--timeShort) var(--transitionFlourish);
+				@include transitions.flourish();
+				display: inline-flex;
+				justify-content: center;
+				align-items: center;
 				font-size: var(--s-1);
 				pointer-events: none;
 				padding: var(--s-10);
 				aspect-ratio: 1/1;
 				border-radius: 50%;
 				background-color: var(--green1);
+				width: 50%;
 			}
 		}
 		&:hover {
@@ -84,7 +88,7 @@
 		&.isOff .toggleText {
 			background-color: var(--red-1);
 			color: var(--white);
-			float: right;
+			transform: translateX(100%);
 		}
 	}
 

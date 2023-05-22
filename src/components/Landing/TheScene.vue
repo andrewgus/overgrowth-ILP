@@ -4,7 +4,7 @@
 		aria-hidden="true"
 		:class="$style.scene"
 		tag="div"
-		name="landingScene"
+		name="opacity"
 	>
 		<div
 			v-if="useActivityExists('reflection')"
@@ -128,18 +128,7 @@
 		}
 	}
 </style>
-<style scoped>
-	/* transition styles */
-	.landingScene-enter-from,
-	.landingScene-leave-to {
-		opacity: 0;
-	}
-	.landingScene-enter-active,
-	.landingScene-leave-active {
-		transition: var(--timeShort) opacity ease-in-out;
-	}
-	.landingScene-enter-to,
-	.landingScene-leave-from {
-		opacity: 1;
-	}
+<style scoped lang="scss">
+	@use '../../styles/mixins/transitions.scss';
+	@include transitions.vueOpacity();
 </style>
