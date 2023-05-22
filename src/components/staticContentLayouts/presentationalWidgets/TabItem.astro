@@ -1,20 +1,6 @@
 ---
-type Props = {
-	content?: any
-}
-const { content } = Astro.props
-
-/**
- * TabItem of a TabWidget
- *
- * @param _props - Record<string, any>
- * @param _props.children - Any HTML elements. Parent element: `<div>`
- */
-// TODO: This might make more sense as a Vue component, given how much easier it is to manage keypress.left/right for traversing the elements
-export type TabItem = typeof import('./TabsWidget.astro')
 ---
 
 <Fragment>
-	{content}
 	<slot />
 </Fragment>

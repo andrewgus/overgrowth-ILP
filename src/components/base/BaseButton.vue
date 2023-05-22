@@ -44,46 +44,17 @@
 </script>
 
 <style module lang="scss">
-	@use '../../styles/mixins/containerStyles.scss';
+	@use '../../styles/mixins/buttons.scss';
 	@use '../../styles/mixins/shadows.scss';
-	@use '../../styles/mixins/transitions.scss';
 
 	.btn {
-		@include containerStyles.flexCenter();
-		color: var(--black);
-		cursor: pointer;
-		border: 1px solid var(--darkGray);
-		padding: var(--s-4) var(--s-2);
-		background-color: var(--lightBlue);
-		border-radius: var(--s10);
+		@include buttons.primary();
+		@include shadows.blueDropShadow();
 		text-decoration: none;
 		line-height: 1.6;
-		@include shadows.blueDropShadow();
-		@include transitions.button();
-
-		&:hover,
-		&:focus {
-			background-color: var(--peach);
-			filter: none;
-		}
-
-		&:hover {
-			color: var(--blue);
-			@include shadows.hoverBoxShadow();
-		}
-
-		&:focus {
-			z-index: 10;
-		}
 
 		&.warning {
-			background-color: var(--red);
-			color: var(--white);
-			&:hover {
-				color: var(--red-3);
-				background-color: var(--peach);
-				@include shadows.hoverBoxShadowWarning();
-			}
+			@include buttons.warning();
 		}
 
 		&.disabled {

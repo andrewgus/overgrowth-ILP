@@ -1,6 +1,6 @@
 @use "sizing.scss";
-@use "typography.scss";
 @use "colors.scss";
+@use "typography.scss";
 @use "accessibility.scss";
 @use "transition.scss";
 @use "articleLayout.scss";
@@ -9,7 +9,7 @@
   font-size: var(--s0);
   box-sizing: border-box;
 
-  &:focus:not([tabindex="-1"]) {
+  &:focus:not(article) {
     animation: focusPulse var(--timeShort) var(--transitionFlourish) forwards;
   }
   &:visited {

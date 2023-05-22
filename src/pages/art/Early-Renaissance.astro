@@ -5,8 +5,10 @@ import SideBySide from '../../components/staticContentLayouts/SideBySide.astro'
 import TextOverlayImage from '../../components/staticContentLayouts/TextOverlayImage.astro'
 import StaticContent from '../../layouts/StaticContent.astro'
 import FullWidthImage from '../../components/staticContentLayouts/FullWidthImage.astro'
-import TabsWidget from '../../components/staticContentLayouts/presentationalWidgets/TabsWidget.astro'
-import TabItem from '../../components/staticContentLayouts/presentationalWidgets/TabItem.astro'
+import TabsPanel from '../../components/staticContentLayouts/presentationalWidgets/TabsPanel.astro'
+import TabsItem from '../../components/staticContentLayouts/presentationalWidgets/TabItem.astro'
+import FlipCards from '../../components/staticContentLayouts/presentationalWidgets/FlipCards.astro'
+import FlipCardItem from '../../components/staticContentLayouts/presentationalWidgets/FlipCardItem.astro'
 ---
 
 <TheLesson
@@ -16,6 +18,29 @@ import TabItem from '../../components/staticContentLayouts/presentationalWidgets
 	gradientColor={'var(--yellow-5)'}
 >
 	<StaticContent title='Welcome to the Course'>
+		<TabsPanel
+			title='A Test Widget'
+			tabNames={['Van Gogh', 'René Margritte', 'Edward Hopper']}
+		>
+			<TabsItem slot='1'>
+				<p>
+					Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corporis
+					iusto earum, laudantium tempora perspiciatis dolorum deleniti modi,
+					reprehenderit quia aspernatur neque maxime sunt molestias a, corrupti
+					architecto? Explicabo, aperiam quidem.
+				</p>
+			</TabsItem>
+			<TabsItem slot='2'>
+				<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+			</TabsItem>
+			<TabsItem slot='3'>
+				<p>Corrupti architecto? Explicabo, aperiam quidem.</p>
+			</TabsItem>
+		</TabsPanel>
+		<!-- <FlipCards>
+			<FlipCardItem cardFrontContent='Hello' cardBackContent='Hi' />
+			<FlipCardItem cardFrontContent='Goodbye' cardBackContent='Bye' />
+		</FlipCards> -->
 		<p>
 			<strong>Art history is</strong> a fascinating subject that delves into the
 			rich and diverse world of artistic expression throughout human history. From
@@ -23,16 +48,6 @@ import TabItem from '../../components/staticContentLayouts/presentationalWidgets
 			history provides a lens through which we can explore the cultural, social,
 			and political contexts that have shaped the art of different eras and regions.
 		</p>
-		<section>
-			<h3>A New Section</h3>
-			<p>
-				<strong>Art history is</strong> a fascinating subject that delves into the
-				rich and diverse world of artistic expression throughout human history. From
-				the earliest cave paintings to the most cutting-edge contemporary art, art
-				history provides a lens through which we can explore the cultural, social,
-				and political contexts that have shaped the art of different eras and regions.
-			</p>
-		</section>
 		<TextOverlayImage
 			setAlign={'alignCenter'}
 			imgName='washington-crossing-delaware.jpg'
@@ -118,18 +133,6 @@ import TabItem from '../../components/staticContentLayouts/presentationalWidgets
 				invites the viewer to imagine themselves in the vibrant ambiance of the
 				café.
 			</p>
-			<TabsWidget title='A Test Widget' tabNames={['Tab-1', 'Tab-2', 'Tab-3']}>
-				<TabItem>
-					<p>lorem</p>
-				</TabItem>
-
-				<TabItem>
-					<p>ipsum</p>
-				</TabItem>
-				<TabItem>
-					<p>dolor</p>
-				</TabItem>
-			</TabsWidget>
 			<p>
 				The painting reflects van Gogh's fascination with capturing the essence
 				of everyday life and his desire to convey emotions through his art.

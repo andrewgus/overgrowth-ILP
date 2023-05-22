@@ -1,0 +1,19 @@
+---
+type Props = {
+	isFullWidth?: boolean
+}
+const { isFullWidth = false } = Astro.props
+---
+
+<div class:list={['flipCards', { fullWidth: isFullWidth }]}>
+	<slot />
+</div>
+
+<style>
+	.flipCards {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(15rem, 22rem));
+		grid-gap: var(--s0);
+		justify-content: start;
+	}
+</style>

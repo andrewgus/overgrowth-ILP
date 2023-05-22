@@ -1,0 +1,129 @@
+---
+/**
+ * Creates a tabular widget for presenting content
+ * NOTE: Make sure to include 'slot={number order here}' on
+ */
+import createNanoID from '../../../composables/useCreateNanoID'
+
+type Props = {
+	title: string
+	tabNames: string[]
+	isFullWidth?: boolean
+}
+const { title, tabNames, isFullWidth = false } = Astro.props
+
+const describedByID = createNanoID(Astro.self.name)
+---
+
+<script>
+	// FIXME: What is there are multiple .tabs divs? Refactor to consider that as this is run once.
+	const tabBtns: NodeListOf<HTMLButtonElement> =
+		document.querySelectorAll('.tabs [id^="tab-"]')
+	const tabPanels: NodeListOf<HTMLDivElement> = document.querySelectorAll(
+		'.tabs [id^="tabpanel-"]'
+	)
+
+	const toggleMatchingPanel = (index: number) => {
+		tabPanels.forEach((panel, i) => {
+			if (index === i) {
+				panel?.classList.remove('isHidden')
+				tabBtns[i].tabIndex = 0
+				tabBtns[i].ariaSelected = 'true'
+			} else {
+				panel?.classList.add('isHidden')
+				tabBtns[i].tabIndex = -1
+				tabBtns[i].ariaSelected = 'false'
+			}
+		})
+	}
+
+	tabBtns.forEach((btn, i) => {
+		btn.addEventListener('click', (e) => {
+			const btnClicked = e.target
+			if (!btnClicked) return
+			toggleMatchingPanel(i)
+		})
+	})
+</script>
+
+<section class:list={['tabsWidget', { fullWidth: isFullWidth }]}>
+	<h3 id={describedByID}>{title}</h3>
+	<div class='tabs'>
+		<div class='tabBtns' role='tablist' aria-describedby={describedByID}>
+			{
+				tabNames.map((tabName, i) => (
+					<button
+						id={`tab-${i}`}
+						aria-selected={i === 0 ? true : false}
+						aria-controls={`tabpanel-${i}`}
+						type='button'
+						role='tab'
+						tabindex={i === 0 ? 0 : -1}
+					>
+						{tabName}
+					</button>
+				))
+			}
+		</div>
+		{
+			tabNames.map((_, i) => (
+				<div
+					class='tabContent'
+					id={`tabpanel-${i}`}
+					role='tabpanel'
+					aria-labelledby={`tab-${i}`}
+					class:list={[{ isHidden: i !== 0 }]}
+				>
+					{async () => {
+						let html = ''
+						if (Astro.slots.has((i + 1).toString())) {
+							html = await Astro.slots.render((i + 1).toString())
+						}
+						return <Fragment set:html={html} />
+					}}
+				</div>
+			))
+		}
+	</div>
+</section>
+
+<style lang='scss'>
+	@use '../../../styles/mixins/button.scss';
+
+	.tabs {
+		box-shadow: var(--s-10) var(--s-10) var(--s-10) var(--lightGray);
+		border-radius: var(--s-5);
+		.tabBtns {
+			display: flex;
+			flex-flow: row wrap;
+			justify-content: start;
+			align-items: start;
+
+			> button {
+				@include button.primary();
+				border-radius: var(--s-5) var(--s-5) 0 0;
+				flex: 1 0 auto;
+				min-width: 10ch;
+
+				&[tabindex='0'] {
+					text-decoration-line: underline;
+					text-decoration-color: var(--blue2);
+					text-underline-offset: var(--s-7);
+					text-decoration-thickness: var(--s-9);
+				}
+			}
+		}
+
+		.tabContent {
+			padding: var(--s-2);
+			min-height: 10vh;
+			background-color: var(--offWhite);
+			border: 1px solid var(--darkGray);
+			border-top: 0;
+			border-radius: 0 0 var(--s-5) var(--s-5);
+		}
+	}
+	.isHidden {
+		display: none;
+	}
+</style>
