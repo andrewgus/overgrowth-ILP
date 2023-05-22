@@ -88,7 +88,7 @@ const describedByID = createNanoID(Astro.self.name)
 </section>
 
 <style lang='scss'>
-	@use '../../../styles/mixins/button.scss';
+	@use '../../../styles/mixins/buttons.scss';
 
 	.tabs {
 		box-shadow: var(--s-10) var(--s-10) var(--s-10) var(--lightGray);
@@ -100,7 +100,7 @@ const describedByID = createNanoID(Astro.self.name)
 			align-items: start;
 
 			> button {
-				@include button.primary();
+				@include buttons.primary();
 				border-radius: var(--s-5) var(--s-5) 0 0;
 				flex: 1 0 auto;
 				min-width: 10ch;
@@ -113,7 +113,6 @@ const describedByID = createNanoID(Astro.self.name)
 				}
 			}
 		}
-
 		.tabContent {
 			padding: var(--s-2);
 			min-height: 10vh;
