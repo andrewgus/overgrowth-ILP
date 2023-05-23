@@ -33,14 +33,16 @@ const { cardFrontContent, cardBackContent } = Astro.props
 	})
 </script>
 
-<button class='flipCard'>
+<button class='flipCard' type='button'>
 	<span class='cardFront'
-		><span class='visuallyHidden'>Card Front:&nbsp;</span>{
+		><span class='visuallyHidden'>Flip Card Front:&nbsp;</span>{
 			cardFrontContent
 		}</span
 	>
 	<span class='cardBack isHidden'
-		><span class='visuallyHidden'>Card Back:&nbsp;</span>{cardBackContent}</span
+		><span class='visuallyHidden'>Flip Card Back:&nbsp;</span>{
+			cardBackContent
+		}</span
 	>
 </button>
 
@@ -53,17 +55,21 @@ const { cardFrontContent, cardBackContent } = Astro.props
 		@include shadows.blueDropShadow();
 		@include transitions.long();
 		border-radius: var(--s-10);
-		min-height: 10vh;
-		min-width: 10vh;
+		min-height: 15vh;
+		min-width: 15vh;
 		max-width: max-content;
 		background-color: var(--lightBlue);
 
 		> span {
-			@include transitions.long();
+			@include transitions.short();
 		}
 
 		&.cardFlipped {
 			transform: rotateY(180deg);
+
+			> * {
+				animation: cardFlip var(--timeShort) ease-in-out forwards;
+			}
 
 			> .cardBack {
 				transform: rotateY(-180deg);
@@ -77,9 +83,10 @@ const { cardFrontContent, cardBackContent } = Astro.props
 		}
 		10% {
 			opacity: 0;
+			transform: rotateY(0deg);
 		}
-		11% {
-			transform: rotateY(180);
+		20% {
+			transform: rotateY(180deg);
 		}
 		100% {
 			opacity: 1;
