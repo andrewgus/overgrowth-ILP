@@ -95,8 +95,11 @@
 		&__btns {
 			margin-top: var(--s-2);
 			display: flex;
-			flex-flow: row nowrap;
+			flex-flow: row wrap;
 			gap: var(--s-2);
+			> button {
+				flex: 1 1 auto;
+			}
 		}
 	}
 	@media only screen and (max-width: 520px) {
