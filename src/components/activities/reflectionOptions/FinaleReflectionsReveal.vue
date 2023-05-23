@@ -1,5 +1,5 @@
 <template>
-	<div :class="$style.reflectionFinale">
+	<div class="fullWidth" :class="$style.reflectionFinale">
 		<p>{{ prompt }}</p>
 		<div :class="$style.reflectionResponses">
 			<div
@@ -43,22 +43,32 @@
 		flex-flow: column nowrap;
 		justify-content: center;
 		align-items: flex-start;
+
+		> p {
+			width: 60ch;
+			margin: var(--s2) auto;
+		}
 	}
 	.reflectionResponses {
 		display: flex;
-		flex-flow: column nowrap;
+		flex-flow: row wrap;
 		gap: var(--s2);
-		width: 100%;
+		flex: 1 1 auto;
+
 		> .responseItem {
 			align-self: stretch;
 			flex: 1;
 			border: var(--s-10) solid var(--darkGray);
 			background-color: var(--offWhite);
-			border-radius: var(--s-10);
+			border-radius: var(--s4);
+			overflow: scroll;
+			min-width: 25%;
+			aspect-ratio: 2/3;
 
 			> * {
 				p {
-					padding: var(--s0) var(--s0);
+					margin: 0;
+					padding: var(--s0);
 				}
 				p:first-child {
 					border-bottom: 1px dashed var(--darkGray);
@@ -73,7 +83,7 @@
 					}
 				}
 				p:last-child {
-					padding: var(--s2) var(--s0);
+					min-height: 15vh;
 				}
 			}
 		}

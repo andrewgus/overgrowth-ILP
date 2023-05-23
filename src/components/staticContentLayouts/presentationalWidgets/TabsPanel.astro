@@ -16,33 +16,53 @@ const describedByID = createNanoID(Astro.self.name)
 ---
 
 <script>
-	// FIXME: What is there are multiple .tabs divs? Refactor to consider that as this is run once.
-	const tabBtns: NodeListOf<HTMLButtonElement> =
-		document.querySelectorAll('.tabs [id^="tab-"]')
-	const tabPanels: NodeListOf<HTMLDivElement> = document.querySelectorAll(
-		'.tabs [id^="tabpanel-"]'
-	)
+	const tabWidgets: NodeListOf<HTMLDivElement> =
+		document.querySelectorAll('.tabsWidget')
 
-	const toggleMatchingPanel = (index: number) => {
-		tabPanels.forEach((panel, i) => {
-			if (index === i) {
-				panel?.classList.remove('isHidden')
-				tabBtns[i].tabIndex = 0
-				tabBtns[i].ariaSelected = 'true'
-			} else {
-				panel?.classList.add('isHidden')
-				tabBtns[i].tabIndex = -1
-				tabBtns[i].ariaSelected = 'false'
-			}
+	const updateTabAttributes = (btn: HTMLButtonElement, isSelected: boolean) => {
+		btn.tabIndex = isSelected ? 0 : -1
+		btn.setAttribute('aria-selected', isSelected.toString())
+	}
+
+	const toggleMatchingPanel = (btnSelected: HTMLButtonElement) => {
+		const btnArray = Array.from(
+			btnSelected.parentElement!.children
+		) as HTMLButtonElement[]
+		const tabContentArray = Array.from(
+			btnSelected.closest('.tabsWidget')!.querySelectorAll('.tabContent')
+		)
+
+		btnArray.forEach((btn) => {
+			const isSelected = btn === btnSelected
+			updateTabAttributes(btn, isSelected)
+		})
+
+		tabContentArray.forEach((content) => {
+			const isSelected =
+				btnSelected.id === content.getAttribute('aria-labelledby')
+			content.classList.toggle('isHidden', !isSelected)
 		})
 	}
 
-	tabBtns.forEach((btn, i) => {
-		btn.addEventListener('click', (e) => {
-			const btnClicked = e.target
-			if (!btnClicked) return
-			toggleMatchingPanel(i)
-		})
+	const handleClick = ({ target }: MouseEvent | FocusEvent) => {
+		const btnClicked = target instanceof HTMLButtonElement && target
+		if (!btnClicked) return
+		toggleMatchingPanel(btnClicked)
+	}
+
+	const handleKeyDown = (e: KeyboardEvent) => {
+		const btnKeyed = e.target instanceof HTMLButtonElement && e.target
+		if (!btnKeyed) return
+		const prevBtn = btnKeyed?.previousElementSibling as HTMLButtonElement
+		const nextBtn = btnKeyed?.nextElementSibling as HTMLButtonElement
+
+		if (e.key === 'ArrowLeft' && prevBtn) toggleMatchingPanel(prevBtn)
+		if (e.key === 'ArrowRight' && nextBtn) toggleMatchingPanel(nextBtn)
+	}
+
+	tabWidgets.forEach((widget) => {
+		widget.addEventListener('click', handleClick)
+		widget.addEventListener('keydown', handleKeyDown)
 	})
 </script>
 
@@ -53,9 +73,9 @@ const describedByID = createNanoID(Astro.self.name)
 			{
 				tabNames.map((tabName, i) => (
 					<button
-						id={`tab-${i}`}
+						id={`tab-${describedByID}-${i}`}
 						aria-selected={i === 0 ? true : false}
-						aria-controls={`tabpanel-${i}`}
+						aria-controls={`tabpanel-${describedByID}-${i}`}
 						type='button'
 						role='tab'
 						tabindex={i === 0 ? 0 : -1}
@@ -69,9 +89,9 @@ const describedByID = createNanoID(Astro.self.name)
 			tabNames.map((_, i) => (
 				<div
 					class='tabContent'
-					id={`tabpanel-${i}`}
+					id={`tabpanel-${describedByID}-${i}`}
 					role='tabpanel'
-					aria-labelledby={`tab-${i}`}
+					aria-labelledby={`tab-${describedByID}-${i}`}
 					class:list={[{ isHidden: i !== 0 }]}
 				>
 					{async () => {

@@ -71,9 +71,9 @@ a {
   &:focus {
     border: 1px solid var(--blue);
     background-color: var(--peach);
-    text-underline-offset: var(--s-9);
+    text-underline-offset: 4px;
+    text-decoration-thickness: 3px;
     text-decoration-skip-ink: none;
-    text-decoration-thickness: var(--s-10);
   }
 }
 
