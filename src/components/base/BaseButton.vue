@@ -50,6 +50,7 @@
 	.btn {
 		@include buttons.primary();
 		@include shadows.blueDropShadow();
+		border-radius: var(--s10);
 		text-decoration: none;
 		line-height: 1.6;
 

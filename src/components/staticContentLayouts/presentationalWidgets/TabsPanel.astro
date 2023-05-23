@@ -31,12 +31,10 @@ const describedByID = createNanoID(Astro.self.name)
 		const tabContentArray = Array.from(
 			btnSelected.closest('.tabsWidget')!.querySelectorAll('.tabContent')
 		)
-
 		btnArray.forEach((btn) => {
 			const isSelected = btn === btnSelected
 			updateTabAttributes(btn, isSelected)
 		})
-
 		tabContentArray.forEach((content) => {
 			const isSelected =
 				btnSelected.id === content.getAttribute('aria-labelledby')
@@ -49,13 +47,11 @@ const describedByID = createNanoID(Astro.self.name)
 		if (!btnClicked) return
 		toggleMatchingPanel(btnClicked)
 	}
-
 	const handleKeyDown = (e: KeyboardEvent) => {
 		const btnKeyed = e.target instanceof HTMLButtonElement && e.target
 		if (!btnKeyed) return
 		const prevBtn = btnKeyed?.previousElementSibling as HTMLButtonElement
 		const nextBtn = btnKeyed?.nextElementSibling as HTMLButtonElement
-
 		if (e.key === 'ArrowLeft' && prevBtn) toggleMatchingPanel(prevBtn)
 		if (e.key === 'ArrowRight' && nextBtn) toggleMatchingPanel(nextBtn)
 	}
