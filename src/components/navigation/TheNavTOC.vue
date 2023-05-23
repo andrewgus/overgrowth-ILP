@@ -35,7 +35,7 @@
 						}}&nbsp;more&nbsp;section{{
 							Object.keys($allLockedSections).length === 1 ? '' : 's'
 						}}
-						can&nbsp;become available as&nbsp;you complete&nbsp;activities
+						will&nbsp;become available as&nbsp;you complete&nbsp;activities
 					</p>
 				</li>
 			</ol>

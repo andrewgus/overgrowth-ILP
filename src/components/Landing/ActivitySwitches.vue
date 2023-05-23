@@ -1,7 +1,7 @@
 <template>
 	<fieldset :class="$style.options" v-if="areSectionsAvailable && activitiesOn">
 		<legend aria-describedby="activityToggleInstructions">
-			Included in this lesson are&hellip;
+			This lesson includes&hellip;
 			<span :class="$style.instructions"
 				>(You&nbsp;can toggle activities on/off)</span
 			>
