@@ -3,6 +3,10 @@
   -webkit-transition: all var(--timeShort) ease-in-out;
   transition: all var(--timeShort) ease-in-out;
 }
+@mixin long {
+  -webkit-transition: all var(--timeLong) ease-in-out;
+  transition: all var(--timeLong) ease-in-out;
+}
 @mixin flourish {
   -webkit-transition: all var(--timeShort) var(--transitionFlourish);
   transition: all var(--timeShort) var(--transitionFlourish);

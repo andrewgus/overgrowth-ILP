@@ -1,87 +1,88 @@
 ---
-import createNanoID from '../../../composables/useCreateNanoID'
-import BaseImage from '../../base/BaseImage.astro'
-
-type PropsWithImage =
-	| {
-			isImage?: false | undefined
-			requiredAltText?: undefined
-	  }
-	| {
-			isImage?: true
-			requiredAltText: string
-	  }
-
-type Props = PropsWithImage & {
+type Props = {
 	cardFrontContent: string
 	cardBackContent: string
 }
-const {
-	cardFrontContent,
-	cardBackContent,
-	isImage = false,
-	requiredAltText,
-} = Astro.props
-
-const flipID = createNanoID(Astro.self.name)
-
-const ifImage = (content: string) => {
-	if (
-		content.includes('.jpg') ||
-		content.includes('.png') ||
-		content.includes('.jpeg') ||
-		content.includes('.svg')
-	) {
-		return true
-	} else {
-		return false
-	}
-}
+const { cardFrontContent, cardBackContent } = Astro.props
 ---
 
 <script>
-	const flipTheCard = (cardLink: EventTarget | null) => {
-		const cardToFlip = cardLink as HTMLAnchorElement
-		if (!cardToFlip) return
-		console.log(cardToFlip)
+	const cards: NodeListOf<HTMLDivElement> =
+		document.querySelectorAll('.flipCard')
+
+	const flipTheCard = (e: MouseEvent) => {
+		const flipCard = e.currentTarget! as HTMLElement
+		const cardFront = flipCard.querySelector('.cardFront') as HTMLSpanElement
+		const cardBack = flipCard.querySelector('.cardBack') as HTMLSpanElement
+
+		flipCard.classList.toggle('cardFlipped')
+		const isFlipped = flipCard.classList.contains('cardFlipped')
+
+		if (isFlipped) {
+			console.log(isFlipped)
+			cardFront.classList.add('isHidden')
+			cardBack.classList.remove('isHidden')
+		} else {
+			cardBack.classList.add('isHidden')
+			cardFront.classList.remove('isHidden')
+		}
 	}
 
-	const cards = document.querySelectorAll('.flipCard')
-	cards.forEach((card, i) => {
-		card.addEventListener('click', (e) => {
-			flipTheCard(e.target)
-		})
+	Array.from(cards).forEach((card) => {
+		card.addEventListener('click', flipTheCard)
 	})
 </script>
 
-<div class='flipCard'>
-	<a class='flipCardFront' id={`${flipID}-front`} href={`#${flipID}-back`}
-		>{
-			() => {
-				return ifImage(cardFrontContent) ? (
-					<BaseImage imgName={cardFrontContent} altText={requiredAltText} />
-				) : (
-					cardFrontContent
-				)
-			}
-		}</a
+<button class='flipCard'>
+	<span class='cardFront'
+		><span class='visuallyHidden'>Card Front:&nbsp;</span>{
+			cardFrontContent
+		}</span
 	>
-	<a class='flipCardBack' id={`${flipID}-back`} href={`#${flipID}-front`}
-		>{cardBackContent}</a
+	<span class='cardBack isHidden'
+		><span class='visuallyHidden'>Card Back:&nbsp;</span>{cardBackContent}</span
 	>
-</div>
+</button>
 
 <style lang='scss'>
-	@use '../../../styles/mixins/containerStyles.scss';
+	@use '../../../styles/mixins/buttons.scss';
+	@use '../../../styles/mixins/shadows.scss';
+	@use '../../../styles/mixins/transitions.scss';
 	.flipCard {
-		@include containerStyles.flexCenter();
-		@include containerStyles.darkBorder();
+		@include buttons.primary();
+		@include shadows.blueDropShadow();
+		@include transitions.long();
+		border-radius: var(--s-10);
 		min-height: 10vh;
 		min-width: 10vh;
 		max-width: max-content;
 		background-color: var(--lightBlue);
+
+		> span {
+			@include transitions.long();
+		}
+
+		&.cardFlipped {
+			transform: rotateY(180deg);
+
+			> .cardBack {
+				transform: rotateY(-180deg);
+			}
+		}
 	}
-	.flipCardBack {
-		transform: rotateY(180deg);
+
+	@keyframes cardFlip {
+		0% {
+			opacity: 1;
+		}
+		10% {
+			opacity: 0;
+		}
+		11% {
+			transform: rotateY(180);
+		}
+		100% {
+			opacity: 1;
+		}
 	}
 </style>
