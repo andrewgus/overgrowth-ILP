@@ -118,7 +118,8 @@
 
 		useSetCurrSection(thisSection.id)
 		useSetActivityComplete()
-		if (wantsNoMoreAlerts) activityProgressStore.wantsNoMoreAlerts = true
+		console.log(wantsNoMoreAlerts.value)
+		if (wantsNoMoreAlerts.value) activityProgressStore.wantsNoMoreAlerts = true
 		await nextTick()
 		setCanContinueAnnouncement()
 		const saveBtnEl = thisSection.querySelector(
