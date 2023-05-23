@@ -45,6 +45,7 @@
 	.switchBtn {
 		@include containerStyles.flexCenter();
 		@include transitions.button();
+		flex: 1;
 		min-width: var(--s8);
 		cursor: pointer;
 		color: var(--black);
@@ -61,7 +62,7 @@
 			margin-top: var(--s-8);
 			background-color: var(--lightGray);
 			border-radius: var(--s10);
-			width: var(--s7);
+			width: 70%;
 
 			> .toggleText {
 				@include transitions.flourish();
