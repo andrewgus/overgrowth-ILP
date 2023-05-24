@@ -44,12 +44,14 @@ const observerCallbackSections = function (
 	entries: Array<IntersectionObserverEntry>
 ) {
 	const [entry] = entries
+	const entrySection = entry.target.closest('article.section')!
 	if (!entry.isIntersecting) return
 	// Only fires when scrolling up
 	if (entry.intersectionRect.top === 0) {
-		history.replaceState(null, '', `${baseURL}#${entry.target.id}`)
+		console.log(entry)
+		history.replaceState(null, '', `${baseURL}#${entrySection.id}`)
 		//setting current section id
-		useSetCurrSection(entry.target.id)
+		useSetCurrSection(entrySection.id)
 	}
 }
 
@@ -64,7 +66,7 @@ const observerOptionsHeadings = {
 }
 const observerOptionsSections = {
 	root: null,
-	threshold: 0.15,
+	threshold: 0.25,
 }
 
 const observerHeader = new IntersectionObserver(
@@ -82,6 +84,8 @@ const observerSections = new IntersectionObserver(
 
 observerHeader.observe(header)
 sectionHeadings.forEach((heading) => observerHeadings.observe(heading))
-sections.forEach((section) => observerSections.observe(section))
+sections.forEach((section) =>
+	observerSections.observe(section.lastElementChild!)
+)
 
 export {}

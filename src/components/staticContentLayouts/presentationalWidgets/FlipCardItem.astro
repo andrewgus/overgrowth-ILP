@@ -19,7 +19,6 @@ const { cardFrontContent, cardBackContent } = Astro.props
 		const isFlipped = flipCard.classList.contains('cardFlipped')
 
 		if (isFlipped) {
-			console.log(isFlipped)
 			cardFront.classList.add('isHidden')
 			cardBack.classList.remove('isHidden')
 		} else {
@@ -59,36 +58,21 @@ const { cardFrontContent, cardBackContent } = Astro.props
 		min-width: 15vh;
 		max-width: max-content;
 		background-color: var(--lightBlue);
-
 		> span {
-			@include transitions.short();
+			animation: cardFlipOpacity var(--timeLong) ease-in-out alternate;
 		}
-
 		&.cardFlipped {
 			transform: rotateY(180deg);
-
-			> * {
-				animation: cardFlip var(--timeShort) ease-in-out forwards;
-			}
-
-			> .cardBack {
-				transform: rotateY(-180deg);
-			}
+		}
+		> .cardBack {
+			transform: rotateY(-180deg);
 		}
 	}
-
-	@keyframes cardFlip {
-		0% {
-			opacity: 1;
-		}
-		10% {
+	@keyframes cardFlipOpacity {
+		from {
 			opacity: 0;
-			transform: rotateY(0deg);
 		}
-		20% {
-			transform: rotateY(180deg);
-		}
-		100% {
+		to {
 			opacity: 1;
 		}
 	}
