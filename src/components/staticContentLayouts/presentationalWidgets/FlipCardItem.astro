@@ -2,32 +2,40 @@
 type Props = {
 	cardFrontContent: string
 	cardBackContent: string
+	isFlippedProp?: boolean
 }
-const { cardFrontContent, cardBackContent } = Astro.props
+const { cardFrontContent, cardBackContent, isFlippedProp = false } = Astro.props
 ---
 
 <script>
-	const cards: NodeListOf<HTMLDivElement> =
-		document.querySelectorAll('.flipCard')
+	const cards = document.querySelectorAll<HTMLDivElement>('.flipCard')
 
 	const flipTheCard = (e: MouseEvent) => {
 		const flipCard = e.currentTarget! as HTMLElement
-		const cardFront = flipCard.querySelector('.cardFront') as HTMLSpanElement
-		const cardBack = flipCard.querySelector('.cardBack') as HTMLSpanElement
+		const cardFront = flipCard.querySelector<HTMLSpanElement>('.cardFront')
+		const cardBack = flipCard.querySelector<HTMLSpanElement>('.cardBack')
+		const cardInstructions =
+			flipCard.querySelector<HTMLSpanElement>('.instructions')
 
 		flipCard.classList.toggle('cardFlipped')
 		const isFlipped = flipCard.classList.contains('cardFlipped')
 
-		if (isFlipped) {
-			cardFront.classList.add('isHidden')
-			cardBack.classList.remove('isHidden')
-		} else {
-			cardBack.classList.add('isHidden')
-			cardFront.classList.remove('isHidden')
-		}
+		cardFront?.classList.toggle('isHidden', isFlipped)
+		cardBack?.classList.toggle('isHidden', !isFlipped)
+		cardInstructions!.style.opacity = '0'
+		setTimeout(() => {
+			cardInstructions!.style.opacity = '1'
+		}, 330)
+
+		cardInstructions!.innerHTML = cardInstructions!.innerHTML.replace(
+			/(back|front)/g,
+			(match) => {
+				return match === 'back' ? 'front' : 'back'
+			}
+		)
 	}
 
-	Array.from(cards).forEach((card) => {
+	cards.forEach((card) => {
 		card.addEventListener('click', flipTheCard)
 	})
 </script>
@@ -43,6 +51,9 @@ const { cardFrontContent, cardBackContent } = Astro.props
 			cardBackContent
 		}</span
 	>
+	<span class='instructions'
+		><span class='visuallyHidden'>Instructions:&nbsp;</span>Flip to back?</span
+	>
 </button>
 
 <style lang='scss'>
@@ -53,21 +64,52 @@ const { cardFrontContent, cardBackContent } = Astro.props
 		@include buttons.primary();
 		@include shadows.blueDropShadow();
 		@include transitions.long();
+		position: relative;
+		overflow: hidden;
 		border-radius: var(--s-10);
 		min-height: 15vh;
 		min-width: 15vh;
 		max-width: max-content;
 		background-color: var(--lightBlue);
+		padding-bottom: var(--s1);
+		&:hover {
+			> .instructions {
+				bottom: 3.5px;
+				right: 5px;
+			}
+		}
 		> span {
+			text-align: left;
+			line-height: 1.6;
 			animation: cardFlipOpacity var(--timeLong) ease-in-out alternate;
+			&.cardBack {
+				transform: rotateY(-180deg);
+			}
+			&.instructions {
+				transition: all var(--timeShort) ease-in-out;
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				font-size: var(--s-3);
+				font-style: italic;
+				background-color: var(--white);
+				border-width: 1px 0 0 1px;
+				border-color: var(--darkGray);
+				border-style: solid;
+				border-radius: var(--s-10) 0 0 0;
+				padding: var(--s-10);
+			}
 		}
 		&.cardFlipped {
 			transform: rotateY(180deg);
-		}
-		> .cardBack {
-			transform: rotateY(-180deg);
+			> .instructions {
+				border-width: 1px 1px 0 0;
+				border-radius: 0 var(--s-10) 0 0;
+				transform: rotateY(-180deg);
+			}
 		}
 	}
+
 	@keyframes cardFlipOpacity {
 		from {
 			opacity: 0;
