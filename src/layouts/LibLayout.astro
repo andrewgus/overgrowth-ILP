@@ -3,9 +3,10 @@ import '../styles/root.scss'
 
 type Props = {
 	title: string
+	isTopicsPage?: boolean
 }
 
-const { title } = Astro.props
+const { title, isTopicsPage = false } = Astro.props
 ---
 
 <!DOCTYPE html>
@@ -21,11 +22,79 @@ const { title } = Astro.props
 		<title>{title} &vert; FSCJ</title>
 	</head>
 	<body>
-		<header>
-			<h1>{title}</h1>
-		</header>
-		<main>
-			<slot />
-		</main>
+		<div>
+			<header>
+				{
+					isTopicsPage && (
+						<nav>
+							<a href='/catalog/'>Back to all topics</a>
+						</nav>
+					)
+				}
+				<h1>{title}</h1>
+			</header>
+			<main>
+				<slot />
+			</main>
+		</div>
+		<footer>
+			<a href='https://www.fscj.edu'
+				><img
+					src='/catalog/fscj-horizontal-logo.svg'
+					alt='Florida State College at Jacksonville'
+				/></a
+			>
+		</footer>
 	</body>
 </html>
+
+<style lang='scss'>
+	@use '../styles/mixins/buttons.scss';
+	@use '../styles/mixins/shadows.scss';
+
+	body {
+		padding: 0 var(--s-4);
+		> div {
+			max-width: 80ch;
+			margin: var(--s2) auto var(--s-10);
+			padding: var(--s2);
+			background-color: var(--offWhite);
+			border: 2px dashed var(--darkGray);
+			border-radius: var(--s2);
+		}
+	}
+
+	main {
+		> :global(p) {
+			margin-bottom: var(--s2);
+		}
+	}
+	nav {
+		padding: var(--s0) 0 var(--s2);
+		margin-bottom: var(--s2);
+		border-bottom: 1px dashed var(--darkGray);
+
+		> a {
+			@include buttons.primary();
+			@include shadows.blueDropShadow();
+			text-decoration: none;
+			max-width: max-content;
+			border-radius: var(--s10);
+			color: var(--black);
+			&:visited:not(:hover) {
+				color: var(--black);
+			}
+		}
+	}
+	footer {
+		max-width: 80ch;
+		margin: 0 auto;
+
+		> a {
+			float: right;
+			padding-top: var(--s-2);
+			width: 20ch;
+			display: block;
+		}
+	}
+</style>

@@ -18,14 +18,14 @@ const topicTitles = topicURLs.map((title) => {
 })
 ---
 
-<LibLayout title='FSCJ’s Interactive Lessons Catalog'>
-	<h2>All Topics</h2>
+<LibLayout title='FSCJ’s Interactive Lessons Catalog'>
+	<p>Select a topic to view all lessons on it.</p>
 	<ul class='cardGrid'>
 		{
 			topicTitles.map((title, i) => (
 				<li>
 					<a class='linkCard' href={`/catalog/${topicURLs[i]}`}>
-						{title}
+						<span>{title}</span>
 					</a>
 				</li>
 			))
