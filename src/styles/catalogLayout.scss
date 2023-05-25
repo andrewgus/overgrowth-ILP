@@ -12,6 +12,8 @@
 
   > li {
     @include containerStyles.darkBorder();
+    @include transitions.flourishShort();
+    @include shadows.blueDropShadow();
     max-width: 20ch;
     margin: 0;
     border-radius: var(--s0);
@@ -33,6 +35,16 @@
       hsl(87deg 70% 43%) 100%
     );
 
+    &:hover {
+      filter: none;
+      > .linkCard {
+        @include shadows.hoverBoxShadow();
+        > span {
+          background-color: var(--peach);
+        }
+      }
+    }
+
     > .linkCard {
       @include containerStyles.flexCenter();
       @include transitions.short();
@@ -42,12 +54,6 @@
       aspect-ratio: 1/1;
       &:visited {
         color: var(--black);
-      }
-      &:hover {
-        @include shadows.hoverBoxShadow();
-        > span {
-          background-color: var(--peach);
-        }
       }
       > span {
         min-width: 75%;

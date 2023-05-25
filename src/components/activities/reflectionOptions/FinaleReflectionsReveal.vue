@@ -47,9 +47,11 @@
 			display: flex;
 			flex-flow: column nowrap;
 			align-items: center;
-			gap: var(--s2);
+			gap: var(--s4);
 
 			> .responseItem {
+				max-width: 50ch;
+				width: 100%;
 				overflow: hidden;
 				border-radius: var(--s4);
 				border: var(--s-10) solid var(--darkGray);
