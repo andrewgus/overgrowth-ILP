@@ -49,9 +49,6 @@ const observerCallbackSections = function (
 	if (!entry.isIntersecting) return
 	// Only fires when scrolling up
 	if (entry.intersectionRect.top <= 360) {
-		console.log(entry.target)
-		console.log(entry.rootBounds)
-		console.log(entrySection)
 		history.replaceState(null, '', `${baseURL}#${entrySection.id}`)
 		//setting current section id
 		useSetCurrSection(entrySection.id)

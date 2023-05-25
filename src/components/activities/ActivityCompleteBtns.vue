@@ -118,10 +118,13 @@
 
 		useSetCurrSection(thisSection.id)
 		useSetActivityComplete()
-		console.log(wantsNoMoreAlerts.value)
+
 		if (wantsNoMoreAlerts.value) activityProgressStore.wantsNoMoreAlerts = true
+
 		await nextTick()
+
 		setCanContinueAnnouncement()
+
 		const saveBtnEl = thisSection.querySelector(
 			'button[class*="pdfSave__btn"]'
 		) as HTMLButtonElement
