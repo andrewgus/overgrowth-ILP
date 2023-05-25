@@ -63,30 +63,40 @@ const { cardFrontContent, cardBackContent, isFlippedProp = false } = Astro.props
 	.flipCard {
 		@include buttons.primary();
 		@include shadows.blueDropShadow();
-		@include transitions.long();
 		position: relative;
 		overflow: hidden;
 		border-radius: var(--s-10);
-		min-height: 15vh;
 		min-width: 15vh;
 		max-width: max-content;
-		background-color: var(--lightBlue);
 		padding-bottom: var(--s1);
+		aspect-ratio: 1/1;
+
 		&:hover {
 			> .instructions {
 				bottom: 3.5px;
 				right: 5px;
 			}
 		}
+		&.cardFlipped {
+			transform: rotateY(180deg);
+			> span {
+				transform: rotateY(-180deg);
+				&.instructions {
+					border-width: 1px 1px 0 0;
+					border-radius: 0 var(--s-10) 0 0;
+				}
+			}
+		}
 		> span {
 			text-align: left;
 			line-height: 1.6;
-			animation: cardFlipOpacity var(--timeLong) ease-in-out alternate;
-			&.cardBack {
-				transform: rotateY(-180deg);
-			}
+			-webkit-animation: cardFlipOpacity 0.75s ease-in-out alternate;
+			animation: cardFlipOpacity 0.75s ease-in-out alternate;
 			&.instructions {
-				transition: all var(--timeShort) ease-in-out;
+				-webkit-transition: bottom var(--timeShort) ease-in-out,
+					right var(--timeShort) ease-in-out;
+				transition: bottom var(--timeShort) ease-in-out,
+					right var(--timeShort) ease-in-out;
 				position: absolute;
 				bottom: 0;
 				right: 0;
@@ -98,14 +108,6 @@ const { cardFrontContent, cardBackContent, isFlippedProp = false } = Astro.props
 				border-style: solid;
 				border-radius: var(--s-10) 0 0 0;
 				padding: var(--s-10);
-			}
-		}
-		&.cardFlipped {
-			transform: rotateY(180deg);
-			> .instructions {
-				border-width: 1px 1px 0 0;
-				border-radius: 0 var(--s-10) 0 0;
-				transform: rotateY(-180deg);
 			}
 		}
 	}

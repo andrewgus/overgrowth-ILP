@@ -44,7 +44,7 @@
 	@use '../../styles/mixins/shadows.scss';
 	.switchBtn {
 		@include containerStyles.flexCenter();
-		@include transitions.button();
+		@include transitions.flourishLong();
 		flex: 1;
 		min-width: var(--s8);
 		cursor: pointer;
@@ -65,7 +65,7 @@
 			width: 70%;
 
 			> .toggleText {
-				@include transitions.flourish();
+				@include transitions.flourishShort();
 				display: inline-flex;
 				justify-content: center;
 				align-items: center;

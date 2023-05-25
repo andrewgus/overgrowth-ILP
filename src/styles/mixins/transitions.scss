@@ -7,18 +7,13 @@
   -webkit-transition: all var(--timeLong) ease-in-out;
   transition: all var(--timeLong) ease-in-out;
 }
-@mixin flourish {
+@mixin flourishShort {
   -webkit-transition: all var(--timeShort) var(--transitionFlourish);
   transition: all var(--timeShort) var(--transitionFlourish);
 }
-
-@mixin button {
-  -webkit-transition: var(--timeLong) box-shadow var(--transitionFlourish),
-    var(--timeLong) background-color var(--transitionFlourish), var(--timeLong) color var(--transitionFlourish),
-    var(--timeLong) filter var(--transitionFlourish);
-  transition: var(--timeLong) box-shadow var(--transitionFlourish),
-    var(--timeLong) background-color var(--transitionFlourish), var(--timeLong) color var(--transitionFlourish),
-    var(--timeLong) filter var(--transitionFlourish);
+@mixin flourishLong {
+  -webkit-transition: all var(--timeLong) var(--transitionFlourish);
+  transition: all var(--timeLong) var(--transitionFlourish);
 }
 
 // NOTE: VUE TRANSITION COMPONENTS

@@ -45,10 +45,13 @@ const observerCallbackSections = function (
 ) {
 	const [entry] = entries
 	const entrySection = entry.target.closest('article.section')!
+
 	if (!entry.isIntersecting) return
 	// Only fires when scrolling up
-	if (entry.intersectionRect.top === 0) {
-		console.log(entry)
+	if (entry.intersectionRect.top <= 360) {
+		console.log(entry.target)
+		console.log(entry.rootBounds)
+		console.log(entrySection)
 		history.replaceState(null, '', `${baseURL}#${entrySection.id}`)
 		//setting current section id
 		useSetCurrSection(entrySection.id)
@@ -66,7 +69,8 @@ const observerOptionsHeadings = {
 }
 const observerOptionsSections = {
 	root: null,
-	threshold: 0.25,
+	threshold: 0.1,
+	rootMargin: '-360px 0px 0px 0px',
 }
 
 const observerHeader = new IntersectionObserver(
