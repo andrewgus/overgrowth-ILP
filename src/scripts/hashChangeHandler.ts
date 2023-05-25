@@ -48,7 +48,7 @@ const observerCallbackSections = function (
 
 	if (!entry.isIntersecting) return
 	// Only fires when scrolling up
-	if (entry.intersectionRect.top <= 350) {
+	if (entry.intersectionRect.top <= 340) {
 		history.replaceState(null, '', `${baseURL}#${entrySection.id}`)
 		//setting current section id
 		useSetCurrSection(entrySection.id)
@@ -67,7 +67,7 @@ const observerOptionsHeadings = {
 const observerOptionsSections = {
 	root: null,
 	threshold: 0.1,
-	rootMargin: '-350px 0px 0px 0px',
+	rootMargin: '-340px 0px 0px 0px',
 }
 
 const observerHeader = new IntersectionObserver(
