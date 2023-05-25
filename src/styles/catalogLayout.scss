@@ -12,8 +12,8 @@
 
   > li {
     @include containerStyles.darkBorder();
-    @include transitions.flourishShort();
     @include shadows.blueDropShadow();
+    @include transitions.long();
     max-width: 20ch;
     margin: 0;
     border-radius: var(--s0);
@@ -56,7 +56,8 @@
         color: var(--black);
       }
       > span {
-        min-width: 75%;
+        width: 80%;
+
         font-weight: 700;
         text-align: center;
         padding: var(--s-5) var(--s-10);
