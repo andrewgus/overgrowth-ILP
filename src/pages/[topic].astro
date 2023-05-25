@@ -1,6 +1,6 @@
 ---
-import '../styles/libraryPages.scss'
-import LibLayout from '../layouts/LibLayout.astro'
+import '../styles/catalogPages.scss'
+import TheCatalog from '../layouts/TheCatalog.astro'
 
 export async function getStaticPaths() {
 	const allLessons = await Astro.glob('./*/*.astro')
@@ -27,7 +27,7 @@ export async function getStaticPaths() {
 const { filteredLessons, topicTitle } = Astro.props
 ---
 
-<LibLayout title={`${topicTitle!} Interactive Lessons`} isTopicsPage>
+<TheCatalog title={`${topicTitle!} Interactive Lessons`} isTopicsPage>
 	<p>Select one of the available lessons&hellip;</p>
 	<ul class='cardGrid'>
 		{
@@ -47,4 +47,4 @@ const { filteredLessons, topicTitle } = Astro.props
 			))
 		}
 	</ul>
-</LibLayout>
+</TheCatalog>

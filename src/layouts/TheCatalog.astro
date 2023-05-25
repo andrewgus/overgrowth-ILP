@@ -1,5 +1,6 @@
 ---
 import '../styles/root.scss'
+import SkipToContent from '../components/navigation/SkipToContent.astro'
 
 type Props = {
 	title: string
@@ -22,6 +23,7 @@ const { title, isTopicsPage = false } = Astro.props
 		<title>{title} &vert; FSCJ</title>
 	</head>
 	<body>
+		<SkipToContent />
 		<div>
 			<header>
 				{
@@ -31,7 +33,7 @@ const { title, isTopicsPage = false } = Astro.props
 						</nav>
 					)
 				}
-				<h1>{title}</h1>
+				<h1 id='titleHeading' tabindex='-1'>{title}</h1>
 			</header>
 			<main>
 				<slot />

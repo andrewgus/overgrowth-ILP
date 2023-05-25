@@ -1,6 +1,6 @@
 ---
-import '../styles/libraryPages.scss'
-import LibLayout from '../layouts/LibLayout.astro'
+import '../styles/catalogPages.scss'
+import TheCatalog from '../layouts/TheCatalog.astro'
 
 const allLessons = await Astro.glob('./*/*.astro')
 
@@ -18,7 +18,7 @@ const topicTitles = topicURLs.map((title) => {
 })
 ---
 
-<LibLayout title='FSCJ’s Interactive Lessons Catalog'>
+<TheCatalog title='FSCJ’s Interactive Lessons Catalog'>
 	<p>Select a topic to view available lessons&hellip;</p>
 	<ul class='cardGrid'>
 		{
@@ -31,4 +31,4 @@ const topicTitles = topicURLs.map((title) => {
 			))
 		}
 	</ul>
-</LibLayout>
+</TheCatalog>
