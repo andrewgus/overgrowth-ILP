@@ -5,41 +5,6 @@ type Props = {
 const { isFullWidth = false } = Astro.props
 ---
 
-<!-- <script>
-	const flipCards = document.querySelectorAll<HTMLDivElement>('.flipCards')
-
-	const setButtonTabIndex = (
-		cardBtns: HTMLCollectionOf<HTMLButtonElement>,
-		selectedBtn: HTMLButtonElement
-	) => {
-		Array.from(cardBtns).forEach((btn) => {
-			btn.tabIndex = selectedBtn === btn ? 0 : -1
-		})
-	}
-
-	const updateTabIndex = (selectedBtn: HTMLButtonElement) => {
-		flipCards.forEach(({ children }) => {
-			const cardBtns = children as HTMLCollectionOf<HTMLButtonElement>
-			setButtonTabIndex(cardBtns, selectedBtn)
-		})
-	}
-
-	const handleKeyDown = (e: KeyboardEvent) => {
-		const btnKeyed = e.target instanceof HTMLButtonElement && e.target
-		if (!btnKeyed) return
-		const prevBtn = btnKeyed?.previousElementSibling as HTMLButtonElement
-		const nextBtn = btnKeyed?.nextElementSibling as HTMLButtonElement
-
-		if (e.key === 'ArrowLeft' && prevBtn) updateTabIndex(prevBtn)
-		if (e.key === 'ArrowRight' && nextBtn) updateTabIndex(nextBtn)
-	}
-
-	flipCards.forEach((flipCard) => {
-		const cardBtns = flipCard.children! as HTMLCollectionOf<HTMLButtonElement>
-		setButtonTabIndex(cardBtns, cardBtns[0])
-		flipCard.addEventListener('keydown', handleKeyDown)
-	})
-</script> -->
 <div class:list={['flipCards', { fullWidth: isFullWidth }]}>
 	<slot />
 </div>
