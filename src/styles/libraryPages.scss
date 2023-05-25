@@ -7,7 +7,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(12ch, 30%));
   grid-gap: var(--s3);
-  justify-content: start;
+  justify-content: space-evenly;
   align-items: center;
 
   > li {

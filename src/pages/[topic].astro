@@ -28,9 +28,7 @@ const { filteredLessons, topicTitle } = Astro.props
 ---
 
 <LibLayout title={`${topicTitle!} Interactive Lessons`} isTopicsPage>
-	<p>
-		Select one of the available {topicTitle.toLowerCase()} interactive lessons&hellip;
-	</p>
+	<p>Select one of the available lessons&hellip;</p>
 	<ul class='cardGrid'>
 		{
 			filteredLessons.map((fL: { url: string }) => (
