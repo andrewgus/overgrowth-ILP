@@ -26,10 +26,6 @@
 		/>
 		<template key="1" v-else>
 			<div key="pdfSaveDiv" :class="$style.pdfSave">
-				<div class="visuallyHidden" aria-live="assertive">
-					<span>{{ canContinueAnnouncement }}</span>
-					<span>{{ pdfStatusUpdate }}</span>
-				</div>
 				<p
 					v-if="shouldDisplayVisualFeedback"
 					key="pdfFeedback"
@@ -63,6 +59,10 @@
 			/>
 		</template>
 	</TransitionGroup>
+	<div class="visuallyHidden" aria-live="assertive">
+		<span>{{ canContinueAnnouncement }}</span>
+		<span>{{ pdfStatusUpdate }}</span>
+	</div>
 </template>
 
 <script setup lang="ts">
