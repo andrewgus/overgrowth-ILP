@@ -6,15 +6,11 @@ const { title } = Astro.props
 ---
 
 <script>
-	const summaryBtns = document.querySelectorAll('.accordion > summary')
-	Array.from(summaryBtns).forEach((btn) => {
-		btn.addEventListener('click', () => {
-			btn.setAttribute(
-				'aria-exanded',
-				btn.closest('.accordion')?.getAttribute('open') === null
-					? 'true'
-					: 'false'
-			)
+	const details = document.querySelectorAll<HTMLDetailsElement>('.accordion')
+	details.forEach((detail) => {
+		const summaryBtn = detail.firstElementChild as HTMLButtonElement
+		summaryBtn.addEventListener('click', () => {
+			summaryBtn.setAttribute('aria-expanded', detail.open ? 'false' : 'true')
 		})
 	})
 </script>
