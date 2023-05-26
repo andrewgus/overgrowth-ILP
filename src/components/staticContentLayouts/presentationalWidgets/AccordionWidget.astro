@@ -1,13 +1,27 @@
 ---
-// TODO: create this out of details/summmary elements. Cleanest way to do it.
-
 type Props = {
 	title: string
 }
 const { title } = Astro.props
 ---
 
-<details>
-	<summary aria-expanded='false'>{title}</summary>
+<script>
+	const summaryBtns = document.querySelectorAll('.accordion > summary')
+	Array.from(summaryBtns).forEach((btn) => {
+		btn.addEventListener('click', () => {
+			btn.setAttribute(
+				'aria-exanded',
+				btn.closest('.accordion')?.getAttribute('open') === null
+					? 'true'
+					: 'false'
+			)
+		})
+	})
+</script>
+
+<details class='accordion'>
+	<summary aria-expanded='false' tabindex='0' role='button'>{title}</summary>
 	<slot />
 </details>
+
+<style></style>

@@ -23,19 +23,19 @@ const { title, isTopicsPage = false } = Astro.props
 		<title>{title} &vert; FSCJ</title>
 	</head>
 	<body>
-		<SkipToContent />
 		<div>
-			<header>
-				{
-					isTopicsPage && (
+			<SkipToContent />
+			{
+				isTopicsPage && (
+					<header>
 						<nav>
 							<a href='/catalog/'>Back to all topics</a>
 						</nav>
-					)
-				}
-				<h1 id='titleHeading' tabindex='-1'>{title}</h1>
-			</header>
+					</header>
+				)
+			}
 			<main>
+				<h1 id='titleHeading' tabindex='-1'>{title}</h1>
 				<slot />
 			</main>
 		</div>

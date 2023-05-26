@@ -17,7 +17,7 @@ type Props = {
 const {
 	title,
 	scene,
-	gradientColor = 'var(--white)',
+	gradientColor,
 	language = 'en',
 	isInteractive = true,
 } = Astro.props
@@ -38,16 +38,16 @@ const {
 			import '../scripts/hashChangeHandler.js'
 			setTimeout(() => {
 				import('../scripts/setA11yHelpers.js')
-			}, 100)
+			}, 500)
 		</script>
 		<title>{title} &vert; FSCJ</title>
 	</head>
-	<body id={`${createID(Astro.props.title)}-lesson`}>
+	<body id={`${createID(title)}-lesson`}>
 		{isInteractive && <TheLocalStorageDialog client:load />}
 		<SkipToContent />
 		<TheLessonNav client:load />
-		<TheLanding scene={scene} title={title} color={gradientColor} />
 		<main id='theLessonContent'>
+			<TheLanding scene={scene} title={title} color={gradientColor} />
 			<slot />
 		</main>
 	</body>
