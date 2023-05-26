@@ -6,7 +6,11 @@ const { src } = Astro.props
 ---
 
 <a class='extLink' href={src} target='_blank' rel='noreferrer'
-	><slot /><img src='/catalog/extLink.svg' alt='opens in a new window' />
+	><slot /><img
+		src='/catalog/extLink.svg'
+		role='img'
+		alt='opens in a new window'
+	/>
 </a>
 
 <style lang='scss'>

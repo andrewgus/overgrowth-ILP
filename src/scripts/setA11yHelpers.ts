@@ -1,82 +1,44 @@
-const visuallyHiddenText = (A11yText: string, position: 'begin' | 'end') => {
-	return `<span class="visuallyHidden">${A11yText}${
-		position === 'begin' ? ':&nbsp;' : ''
-	}</span>`
-}
-
 const elementsToA11y = document.querySelectorAll(
 	'strong, em, del, ins, mark, code, q, blockquote'
 )
 
+const visuallyHiddenText = (el: Element, A11yText: string) => {
+	el.insertAdjacentHTML(
+		'afterbegin',
+		`<span class="visuallyHidden">${A11yText}:&nbsp;</span>`
+	)
+	el.insertAdjacentHTML(
+		'beforeend',
+		`<span class="visuallyHidden">&nbsp;end ${A11yText}</span>`
+	)
+}
+
 elementsToA11y.forEach((el) => {
 	switch (el.nodeName) {
 		case 'STRONG':
-			el.insertAdjacentHTML(
-				'afterbegin',
-				visuallyHiddenText('Important', 'begin')
-			)
+			visuallyHiddenText(el, 'important')
 			break
 		case 'EM':
-			el.insertAdjacentHTML('afterbegin', visuallyHiddenText('Note', 'begin'))
+			visuallyHiddenText(el, 'note')
 			break
 		case 'DEL':
-			el.insertAdjacentHTML(
-				'afterbegin',
-				visuallyHiddenText('Strikethrough begin', 'begin')
-			)
-			el.insertAdjacentHTML(
-				'beforeend',
-				visuallyHiddenText('Strikethrough end', 'end')
-			)
+			visuallyHiddenText(el, 'strikethrough')
 			break
 		case 'INS':
-			el.insertAdjacentHTML(
-				'afterbegin',
-				visuallyHiddenText('Insert text begin', 'begin')
-			)
-			el.insertAdjacentHTML(
-				'beforeend',
-				visuallyHiddenText('Insert text end', 'end')
-			)
+			visuallyHiddenText(el, 'insert text')
 			break
 		case 'MARK':
-			el.insertAdjacentHTML(
-				'afterbegin',
-				visuallyHiddenText('Highlight text begin', 'begin')
-			)
-			el.insertAdjacentHTML(
-				'beforeend',
-				visuallyHiddenText('Highlight text end', 'end')
-			)
+			visuallyHiddenText(el, 'highlight')
 			break
 		case 'CODE':
-			el.insertAdjacentHTML(
-				'afterbegin',
-				visuallyHiddenText('code block begin', 'begin')
-			)
-			el.insertAdjacentHTML(
-				'beforeend',
-				visuallyHiddenText('code block end', 'end')
-			)
+			visuallyHiddenText(el, 'code block')
 			break
 		case 'Q':
-			el.insertAdjacentHTML(
-				'afterbegin',
-				visuallyHiddenText('quote begin', 'begin')
-			)
-			el.insertAdjacentHTML('beforeend', visuallyHiddenText('quote end', 'end'))
+			visuallyHiddenText(el, 'quote')
 			break
 		case 'BLOCKQUOTE':
-			el.insertAdjacentHTML(
-				'afterbegin',
-				visuallyHiddenText('block quote begin', 'begin')
-			)
-			el.insertAdjacentHTML(
-				'beforeend',
-				visuallyHiddenText('block quote end', 'end')
-			)
+			visuallyHiddenText(el, 'block quote')
 			break
 	}
 })
-
 export {}
