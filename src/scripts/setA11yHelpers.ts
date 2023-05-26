@@ -9,7 +9,7 @@ const visuallyHiddenText = (el: Element, A11yText: string) => {
 	)
 	el.insertAdjacentHTML(
 		'beforeend',
-		`<span class="visuallyHidden">&nbsp;end ${A11yText}</span>`
+		`<span class="visuallyHidden">;&nbsp;end ${A11yText}</span>`
 	)
 }
 
