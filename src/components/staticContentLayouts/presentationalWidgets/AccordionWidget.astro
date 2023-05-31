@@ -46,6 +46,7 @@ const { title } = Astro.props
 		}
 
 		&[open] {
+			@include containerStyles.lightBorder();
 			summary {
 				background-color: var(--blue-5);
 				color: var(--white);
