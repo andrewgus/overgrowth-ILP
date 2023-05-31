@@ -26,26 +26,31 @@ const { type, sayAloud = false } = Astro.props
 			'insert text': 'ins',
 		}[type]
 
+		const createVisuallyHiddenText = (a11yText: string, isBefore: boolean) => {
+			return isBefore
+				? `<span class="visuallyHidden">${a11yText}:&nbsp;</span>`
+				: `<span class="visuallyHidden">;&nbsp;end ${a11yText}</span>`
+		}
 		const visuallyHiddenText = {
 			'strong emphasis': [
-				'<span class="visuallyHidden">important:&nbsp;</span>',
-				'<span class="visuallyHidden">;&nbsp;end important</span>',
+				createVisuallyHiddenText('important', true),
+				createVisuallyHiddenText('important', false),
 			],
 			emphasis: [
-				'<span class="visuallyHidden">note:&nbsp;</span>',
-				'<span class="visuallyHidden">;&nbsp;end note</span>',
+				createVisuallyHiddenText('note', true),
+				createVisuallyHiddenText('note', false),
 			],
 			highlight: [
-				'<span class="visuallyHidden">highlight begin:&nbsp;</span>',
-				'<span class="visuallyHidden">;&nbsp;end highlight</span>',
+				createVisuallyHiddenText('highlight begin', true),
+				createVisuallyHiddenText('highlight', false),
 			],
 			'inline quote': [
-				'<span class="visuallyHidden">quote begin:&nbsp;</span>',
-				'<span class="visuallyHidden">;&nbsp;end quote</span>',
+				createVisuallyHiddenText('quote begin', true),
+				createVisuallyHiddenText('quote', false),
 			],
 			blockquote: '',
-			'strikethrough text': '<span class="visuallyHidden">was:&nbsp;</span>',
-			'insert text': '<span class="visuallyHidden">now:&nbsp;</span>',
+			'strikethrough text': createVisuallyHiddenText('was', true),
+			'insert text': createVisuallyHiddenText('now', true),
 		}[type]
 
 		const determineSayAloud = {
