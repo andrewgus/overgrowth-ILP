@@ -16,7 +16,7 @@
   &.staticContent {
     padding-bottom: var(--s2);
 
-    > *:not(h2) + *:not(section) {
+    > *:not(h2) + *:not(section) + *:not(details + details) {
       margin-top: var(--s2);
     }
 

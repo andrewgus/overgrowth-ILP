@@ -105,9 +105,10 @@ const describedByID = createNanoID(Astro.self.name)
 
 <style lang='scss'>
 	@use '../../../styles/mixins/buttons.scss';
+	@use '../../../styles/mixins/shadows.scss';
 
 	.tabs {
-		box-shadow: var(--s-10) var(--s-10) var(--s-10) var(--lightGray);
+		@include shadows.smallBoxShadow();
 		border-radius: var(--s-5);
 		.tabBtns {
 			display: flex;

@@ -49,6 +49,7 @@
 </script>
 
 <style module lang="scss">
+	@use '../../styles/mixins/shadows.scss';
 	.textarea {
 		width: 100%;
 		resize: none;
@@ -61,7 +62,7 @@
 		padding: var(--s-2);
 
 		&:focus {
-			box-shadow: var(--s-4) var(--s-4) var(--s-8) var(--lightGray);
+			@include shadows.largeBoxShadow();
 		}
 	}
 </style>

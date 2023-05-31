@@ -15,7 +15,7 @@ const { imgName, altText = '', caption } = Astro.props
 const describedByID = createNanoID(Astro.self.name, caption)
 ---
 
-<div class:list={['fullWidth', 'heroImg']}>
+<div class:list={['fullWidth', 'fullWidthImg']}>
 	<BaseImage describedBy={describedByID} imgName={imgName} altText={altText} />
 	{
 		!!caption && (
@@ -29,8 +29,9 @@ const describedByID = createNanoID(Astro.self.name, caption)
 </div>
 
 <style lang='scss'>
-	.heroImg {
+	.fullWidthImg {
 		width: 100%;
+		max-width: fit-content;
 
 		> .imgCaption {
 			display: block;

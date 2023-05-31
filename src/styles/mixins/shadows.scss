@@ -6,6 +6,13 @@
   filter: drop-shadow((0 0 var(--s1) var(--white)));
 }
 
+@mixin largeBoxShadow {
+  box-shadow: var(--s-4) var(--s-4) var(--s-8) var(--lightGray);
+}
+@mixin smallBoxShadow {
+  box-shadow: var(--s-10) var(--s-10) var(--s-10) var(--lightGray);
+}
+
 // box-shadow for hoving elements
 @mixin hoverBoxShadow {
   -webkit-box-shadow: inset var(--s-8) 0 0 var(--blue), inset var(--s-10) var(--s-10) 0 var(--blue),

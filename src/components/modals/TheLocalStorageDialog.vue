@@ -79,8 +79,6 @@
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
-			box-shadow: var(--s-6) var(--s-6) var(--s10) var(--yellow-5),
-				calc(-1 * var(--s-6)) calc(-1 * var(--s-6)) var(--s10) var(--yellow-5);
 			@include containerStyles.alert();
 		}
 

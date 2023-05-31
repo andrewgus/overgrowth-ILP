@@ -4,11 +4,11 @@ type Props = {
 	type:
 		| 'strong emphasis'
 		| 'emphasis'
-		| 'strikethrough text'
-		| 'insert text'
+		| 'highlight'
 		| 'inline quote'
 		| 'blockquote'
-		| 'highlight text'
+		| 'strikethrough text'
+		| 'insert text'
 	sayAloud?: boolean
 }
 const { type, sayAloud = false } = Astro.props
@@ -19,11 +19,11 @@ const { type, sayAloud = false } = Astro.props
 		const convertedType = {
 			'strong emphasis': 'strong',
 			emphasis: 'em',
-			'strikethrough text': 'del',
-			'insert text': 'ins',
-			'highlight text': 'mark',
+			highlight: 'mark',
 			'inline quote': 'q',
 			blockquote: 'blockquote',
+			'strikethrough text': 'del',
+			'insert text': 'ins',
 		}[type]
 
 		const visuallyHiddenText = {
@@ -35,7 +35,7 @@ const { type, sayAloud = false } = Astro.props
 				'<span class="visuallyHidden">note:&nbsp;</span>',
 				'<span class="visuallyHidden">;&nbsp;end note</span>',
 			],
-			'highlight text': [
+			highlight: [
 				'<span class="visuallyHidden">highlight begin:&nbsp;</span>',
 				'<span class="visuallyHidden">;&nbsp;end highlight</span>',
 			],
@@ -43,19 +43,19 @@ const { type, sayAloud = false } = Astro.props
 				'<span class="visuallyHidden">quote begin:&nbsp;</span>',
 				'<span class="visuallyHidden">;&nbsp;end quote</span>',
 			],
-			'insert text': '<span class="visuallyHidden">now:&nbsp;</span>',
-			'strikethrough text': '<span class="visuallyHidden">was:&nbsp;</span>',
 			blockquote: '',
+			'strikethrough text': '<span class="visuallyHidden">was:&nbsp;</span>',
+			'insert text': '<span class="visuallyHidden">now:&nbsp;</span>',
 		}[type]
 
 		const determineSayAloud = {
-			'inline quote': true,
-			'strikethrough text': true,
-			'insert text': true,
-			'highlight text': sayAloud,
 			'strong emphasis': sayAloud,
 			emphasis: sayAloud,
+			highlight: sayAloud,
+			'inline quote': true,
 			blockquote: false,
+			'strikethrough text': true,
+			'insert text': true,
 		}[type]
 
 		const [wrapperStart, wrapperEnd] = [
@@ -67,8 +67,6 @@ const { type, sayAloud = false } = Astro.props
 		if (Astro.slots.has('default')) {
 			slotContent = await Astro.slots.render('default')
 		}
-
-		console.log(determineSayAloud)
 
 		const html = `${wrapperStart}${
 			determineSayAloud

@@ -11,6 +11,7 @@ import FlipCards from '../../components/staticContentLayouts/presentationalWidge
 import FlipCardItem from '../../components/staticContentLayouts/presentationalWidgets/FlipCardItem.astro'
 import AccordionWidget from '../../components/staticContentLayouts/presentationalWidgets/AccordionWidget.astro'
 import TextDescriptor from '../../components/staticContentLayouts/A11yElements/TextDescriptor.astro'
+import BaseImage from '../../components/base/BaseImage.astro'
 ---
 
 <TheLesson
@@ -98,9 +99,9 @@ import TextDescriptor from '../../components/staticContentLayouts/A11yElements/T
 			artworks from around the world.
 		</p>
 		<p>
-			<mark
-				>Whether you are an art lover, a student of history, or simply curious</mark
-			>
+			<TextDescriptor type={'highlight'}>
+				Whether you are an art lover, a student of history, or simply curious
+			</TextDescriptor>
 			about the world around you, art history is a fascinating and rewarding subject
 			to explore. So why not dive in and discover the incredible world of art history
 			for yourself?
@@ -260,6 +261,7 @@ import TextDescriptor from '../../components/staticContentLayouts/A11yElements/T
 				possimus, enim autem ipsum maxime officia illum corrupti adipisci
 				asperiores itaque!
 			</p>
+			<FullWidthImage imgName='washington-crossing-delaware.jpg' />
 			<p>
 				Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam totam
 				voluptate accusamus accusantium cum asperiores delectus? Iure officia ea
