@@ -29,10 +29,12 @@ const { title } = Astro.props
 		@include shadows.smallBoxShadow();
 		overflow: hidden;
 
-		&:first-of-type:last-of-type {
+		&:first-of-type:last-of-type,
+		&:first-of-type:last-of-type:not([open]) > summary {
 			border-radius: var(--s-5);
 		}
-		&:first-of-type {
+		&:first-of-type,
+		&:first-of-type > summary {
 			border-radius: var(--s-5) var(--s-5) 0 0;
 		}
 		&:last-of-type {
