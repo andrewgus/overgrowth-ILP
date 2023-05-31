@@ -1,0 +1,81 @@
+@use "../../styles/mixins/containerStyles.scss";
+@use "../../styles/mixins/transitions.scss";
+@use "../../styles/mixins/shadows.scss";
+.cardGrid {
+  padding-left: 0;
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12ch, 1fr));
+  grid-gap: var(--s3);
+  justify-content: start;
+  align-items: center;
+
+  > li {
+    max-width: 20ch;
+    > .linkCard {
+      @include containerStyles.darkBorder();
+      @include containerStyles.flexCenter();
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--s0);
+      font-size: var(--s1);
+      flex-flow: column nowrap;
+      aspect-ratio: 1/1;
+      background-image: linear-gradient(
+        45deg,
+        hsl(195deg 100% 25%) 0%,
+        hsl(194deg 100% 26%) 11%,
+        hsl(192deg 100% 28%) 22%,
+        hsl(191deg 100% 29%) 33%,
+        hsl(189deg 100% 30%) 44%,
+        hsl(187deg 100% 31%) 56%,
+        hsl(185deg 100% 32%) 67%,
+        hsl(183deg 100% 32%) 78%,
+        hsl(181deg 100% 33%) 89%,
+        hsl(178deg 100% 34%) 100%
+      );
+
+      &::before {
+        @include transitions.short();
+        position: absolute;
+        content: "";
+        inset: 0;
+        opacity: 0;
+        background-image: linear-gradient(
+          225deg,
+          hsl(178deg 100% 34%) 0%,
+          hsl(175deg 100% 35%) 11%,
+          hsl(171deg 100% 35%) 22%,
+          hsl(167deg 100% 36%) 33%,
+          hsl(162deg 100% 36%) 44%,
+          hsl(152deg 72% 43%) 56%,
+          hsl(139deg 53% 48%) 67%,
+          hsl(121deg 45% 52%) 78%,
+          hsl(102deg 52% 49%) 89%,
+          hsl(87deg 70% 43%) 100%
+        );
+      }
+      &:hover {
+        &::before {
+          opacity: 1;
+        }
+        > span {
+          padding: var(--s-3) var(--s-10);
+        }
+      }
+      &:visited {
+        color: var(--black);
+      }
+      > span {
+        @include transitions.short();
+        z-index: 2;
+        width: 80%;
+        font-weight: 700;
+        text-align: center;
+        padding: var(--s-5) var(--s-10);
+        border-radius: var(--s-10);
+        background-color: var(--offWhite);
+      }
+    }
+  }
+}

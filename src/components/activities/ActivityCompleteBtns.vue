@@ -60,7 +60,7 @@
 		</template>
 	</TransitionGroup>
 	<div class="visuallyHidden" aria-live="assertive">
-		<span>{{ canContinueAnnouncement }}</span>
+		<span>{{ continueAnnouncement }}</span>
 		<span>{{ pdfStatusUpdate }}</span>
 	</div>
 </template>
@@ -98,6 +98,19 @@
 		'fromInteractiveActivityWantsNoMoreAlerts'
 	) as Ref<boolean>
 
+	const continueAnnouncement = ref<string>('')
+	const setContinueAnnouncement = (announcement: string) => {
+		setTimeout(() => {
+			continueAnnouncement.value = announcement
+		}, 2000)
+	}
+	watch(activityProgressStore[props.id], (newValue) => {
+		if (newValue.isAttemptsFinished)
+			setContinueAnnouncement('Continue button is now clickable.')
+		if (!newValue.isAttemptsFinished)
+			setContinueAnnouncement('Complete activity to continue.')
+	})
+
 	const saveAsPDF = async () => {
 		activityProgressStore[props.id].pdfGenStatus = {
 			isDownloading: true,
@@ -123,7 +136,7 @@
 
 		await nextTick()
 
-		setCanContinueAnnouncement()
+		setContinueAnnouncement('You can now continue to the next section.')
 
 		const saveBtnEl = thisSection.querySelector(
 			'button[class*="pdfSave__btn"]'
@@ -151,14 +164,6 @@
 		})
 		return isAttemptingDownload
 	})
-
-	const canContinueAnnouncement = ref<string>('')
-	const setCanContinueAnnouncement = () => {
-		setTimeout(() => {
-			canContinueAnnouncement.value =
-				'You can now continue to the next section.'
-		}, 1000)
-	}
 </script>
 
 <style module lang="scss">
@@ -173,12 +178,10 @@
 		justify-content: center;
 		margin: var(--s2) auto;
 	}
-
 	.attemptComplete {
 		position: sticky;
 		bottom: var(--s-4);
 	}
-
 	.activityCompleteBtn {
 		grid-area: pdfSave-indicator/topLine/indicator-end/bottomLine;
 		align-self: end;
@@ -211,9 +214,6 @@
 				border-radius: 0 var(--s10) var(--s10) 0;
 			}
 		}
-		// &__btn:not(:only-child) {
-		// 	border-radius: 0 var(--s10) var(--s10) 0;
-		// }
 	}
 	.continueIndicator {
 		background-color: var(--white);

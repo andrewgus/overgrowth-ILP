@@ -1,5 +1,4 @@
 ---
-import '../styles/catalogLayout.scss'
 import TheCatalog from '../layouts/TheCatalog.astro'
 
 const allLessons = await Astro.glob('./*/*.astro')
@@ -18,7 +17,7 @@ const topicTitles = topicURLs.map((title) => {
 })
 ---
 
-<TheCatalog title='FSCJ’s Interactive Lessons Catalog'>
+<TheCatalog title='FSCJ’s Interactive Lessons Catalog'>
 	<p>Select a topic to view available lessons&hellip;</p>
 	<ul class='cardGrid'>
 		{

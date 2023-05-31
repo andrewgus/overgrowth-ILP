@@ -51,7 +51,7 @@ const describedByID = createNanoID(Astro.self.name, isLongDescForComplexImg)
 </div>
 
 <style lang='scss'>
-	@use '../../styles/mixins/accessibility.scss';
+	@use '../../styles/mixins/a11y.scss';
 	.textOverlayImage {
 		--imgHeight: 60vh;
 		display: flex;
@@ -75,7 +75,7 @@ const describedByID = createNanoID(Astro.self.name, isLongDescForComplexImg)
 			background-color: hsla(0deg, 0%, 100%, 0.7);
 			padding: var(--s-2);
 			> :global(p) {
-				@include accessibility.textDropShadowWhite();
+				@include a11y.textDropShadowWhite();
 			}
 		}
 		&.alignCenter {

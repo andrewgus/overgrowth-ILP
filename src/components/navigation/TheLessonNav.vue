@@ -29,7 +29,7 @@
 
 <style module lang="scss">
 	@use '../../styles/mixins/transitions.scss';
-	@use '../../styles/mixins/accessibility.scss';
+	@use '../../styles/mixins/a11y.scss';
 	.lessonNav {
 		display: block;
 		z-index: 999;
@@ -70,7 +70,7 @@
 	}
 	@media only screen and (max-width: 450px) {
 		.currentSection {
-			@include accessibility.visuallyHidden();
+			@include a11y.visuallyHidden();
 		}
 	}
 </style>

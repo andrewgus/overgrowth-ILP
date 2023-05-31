@@ -1,5 +1,4 @@
 ---
-import '../styles/catalogLayout.scss'
 import TheCatalog from '../layouts/TheCatalog.astro'
 
 export async function getStaticPaths() {
@@ -27,7 +26,7 @@ export async function getStaticPaths() {
 const { filteredLessons, topicTitle } = Astro.props
 ---
 
-<TheCatalog title={`${topicTitle!} Interactive Lessons`} isTopicsPage>
+<TheCatalog title={`${topicTitle!} Interactive Lessons`} isTopicsPage>
 	<p>Select one of the available lessons&hellip;</p>
 	<ul class='cardGrid'>
 		{

@@ -1,5 +1,6 @@
 ---
 import '../styles/root.scss'
+import '../styles/specifiedLayouts/articleLayout.scss'
 import TheLocalStorageDialog from '../components/modals/TheLocalStorageDialog.vue'
 import SkipToContent from '../components/navigation/SkipToContent.astro'
 import TheLanding from '../components/landing/TheLanding.astro'
@@ -36,9 +37,6 @@ const {
 		<script>
 			import '../scripts/setSectionsHandler.js'
 			import '../scripts/hashChangeHandler.js'
-			setTimeout(() => {
-				import('../scripts/setA11yHelpers.js')
-			}, 500)
 		</script>
 		<title>{title} &vert; FSCJ</title>
 	</head>

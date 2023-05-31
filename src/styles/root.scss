@@ -1,9 +1,8 @@
 @use "sizing.scss";
 @use "colors.scss";
 @use "typography.scss";
-@use "accessibility.scss";
 @use "transition.scss";
-@use "articleLayout.scss";
+@use "a11yGlobalClasses.scss";
 
 * {
   font-size: var(--s0);

@@ -1,0 +1,89 @@
+---
+// NOTE: sayAloud prop to be used when descriptor is CRITICAL to the content. For example, the sentence: "To quote George Washington: 'Four Score and <strong>Seven Years</strong> ago,'[Emphasis added]" would need the SayAloud prop so screens readers understand where emphasis was added. The strong emphasis, itself, is critical to the content. If descriptor is not critical, then sayAloud is not necessary.
+type Props = {
+	type:
+		| 'strong emphasis'
+		| 'emphasis'
+		| 'strikethrough text'
+		| 'insert text'
+		| 'inline quote'
+		| 'blockquote'
+		| 'highlight text'
+	sayAloud?: boolean
+}
+const { type, sayAloud = false } = Astro.props
+---
+
+{
+	async () => {
+		const convertedType = {
+			'strong emphasis': 'strong',
+			emphasis: 'em',
+			'strikethrough text': 'del',
+			'insert text': 'ins',
+			'highlight text': 'mark',
+			'inline quote': 'q',
+			blockquote: 'blockquote',
+		}[type]
+
+		const visuallyHiddenText = {
+			'strong emphasis': [
+				'<span class="visuallyHidden">important:&nbsp;</span>',
+				'<span class="visuallyHidden">;&nbsp;end important</span>',
+			],
+			emphasis: [
+				'<span class="visuallyHidden">note:&nbsp;</span>',
+				'<span class="visuallyHidden">;&nbsp;end note</span>',
+			],
+			'highlight text': [
+				'<span class="visuallyHidden">highlight begin:&nbsp;</span>',
+				'<span class="visuallyHidden">;&nbsp;end highlight</span>',
+			],
+			'inline quote': [
+				'<span class="visuallyHidden">quote begin:&nbsp;</span>',
+				'<span class="visuallyHidden">;&nbsp;end quote</span>',
+			],
+			'insert text': '<span class="visuallyHidden">now:&nbsp;</span>',
+			'strikethrough text': '<span class="visuallyHidden">was:&nbsp;</span>',
+			blockquote: '',
+		}[type]
+
+		const determineSayAloud = {
+			'inline quote': true,
+			'strikethrough text': true,
+			'insert text': true,
+			'highlight text': sayAloud,
+			'strong emphasis': sayAloud,
+			emphasis: sayAloud,
+			blockquote: false,
+		}[type]
+
+		const [wrapperStart, wrapperEnd] = [
+			`<${convertedType}>`,
+			`</${convertedType}>`,
+		]
+
+		let slotContent = ''
+		if (Astro.slots.has('default')) {
+			slotContent = await Astro.slots.render('default')
+		}
+
+		console.log(determineSayAloud)
+
+		const html = `${wrapperStart}${
+			determineSayAloud
+				? Array.isArray(visuallyHiddenText)
+					? visuallyHiddenText[0]
+					: visuallyHiddenText
+				: ''
+		}${slotContent.trim()}${
+			determineSayAloud
+				? Array.isArray(visuallyHiddenText)
+					? visuallyHiddenText[1]
+					: ''
+				: ''
+		}${wrapperEnd}`
+
+		return <Fragment set:html={html} />
+	}
+}

@@ -74,7 +74,7 @@
 </script>
 
 <style module lang="scss">
-	@use '../../styles/mixins/accessibility.scss';
+	@use '../../styles/mixins/a11y.scss';
 	@use '../../styles/mixins/transitions.scss';
 	@use '../../styles/mixins/containerStyles.scss';
 	.options {
@@ -90,7 +90,7 @@
 			text-align: center;
 			margin: 0 auto var(--s-4);
 			> .instructions {
-				@include accessibility.visuallyHidden();
+				@include a11y.visuallyHidden();
 			}
 		}
 		&:hover .instructions,
