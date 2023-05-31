@@ -30,7 +30,7 @@
 }
 
 @mixin secondary {
-  @include containerStyles.darkBorder();
+  @include containerStyles.lightBorder();
   @include transitions.flourishLong();
   @include buttonHoverFocus();
   color: var(--white);

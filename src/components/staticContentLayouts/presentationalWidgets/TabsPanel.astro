@@ -117,14 +117,14 @@ const describedByID = createNanoID(Astro.self.name)
 			align-items: start;
 
 			> button {
-				@include buttons.primary();
+				@include buttons.secondary();
 				border-radius: var(--s-5) var(--s-5) 0 0;
 				flex: 1 0 auto;
 				min-width: 10ch;
 
 				&[tabindex='0'] {
 					text-decoration-line: underline;
-					text-decoration-color: var(--blue2);
+					text-decoration-color: var(--blue5);
 					text-underline-offset: var(--s-7);
 					text-decoration-thickness: var(--s-9);
 				}

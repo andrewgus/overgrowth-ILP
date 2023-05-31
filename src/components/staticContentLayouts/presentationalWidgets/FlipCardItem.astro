@@ -59,10 +59,12 @@ const { cardFrontContent, cardBackContent, isFlippedProp = false } = Astro.props
 <style lang='scss'>
 	@use '../../../styles/mixins/buttons.scss';
 	@use '../../../styles/mixins/shadows.scss';
-	@use '../../../styles/mixins/transitions.scss';
+	@use '../../../styles/mixins/containerStyles.scss';
 	.flipCard {
-		@include buttons.primary();
-		@include shadows.blueDropShadow();
+		@include buttons.secondary();
+		@include shadows.smallBoxShadow();
+		@include containerStyles.flexCenter();
+		text-align: left;
 		position: relative;
 		overflow: hidden;
 		border-radius: var(--s-10);
@@ -79,8 +81,12 @@ const { cardFrontContent, cardBackContent, isFlippedProp = false } = Astro.props
 		}
 		&.cardFlipped {
 			transform: rotateY(180deg);
+			background-color: var(--offWhite);
 			> span {
 				transform: rotateY(-180deg);
+				&:not(.instructions) {
+					color: var(--blue-5);
+				}
 				&.instructions {
 					border-width: 1px 1px 0 0;
 					border-radius: 0 var(--s-10) 0 0;
@@ -88,10 +94,10 @@ const { cardFrontContent, cardBackContent, isFlippedProp = false } = Astro.props
 			}
 		}
 		> span {
-			text-align: left;
 			line-height: 1.6;
 			-webkit-animation: cardFlipOpacity 0.75s ease-in-out alternate;
 			animation: cardFlipOpacity 0.75s ease-in-out alternate;
+
 			&.instructions {
 				-webkit-transition: bottom var(--timeShort) ease-in-out,
 					right var(--timeShort) ease-in-out;
@@ -103,6 +109,7 @@ const { cardFrontContent, cardBackContent, isFlippedProp = false } = Astro.props
 				font-size: var(--s-2);
 				font-style: italic;
 				background-color: var(--white);
+				color: var(--blue);
 				border-width: 1px 0 0 1px;
 				border-color: var(--darkGray);
 				border-style: solid;
