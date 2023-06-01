@@ -2,8 +2,8 @@
 /**
  * Vertically-aligned layout of text and image. Creates an overlay effect where the image is first fully visible, then corresponding text, on scroll, overlays the image, and then, once text is fully scrolled, image is fully visible again.
  */
-import BaseImage from '../base/BaseImage.astro'
-import createNanoID from '../../composables/useCreateNanoID'
+import BaseImage from '../../base/BaseImage.astro'
+import createNanoID from '../../../composables/useCreateNanoID'
 type Props = {
 	imgName: string
 	altText?: string
@@ -51,7 +51,7 @@ const describedByID = createNanoID(Astro.self.name, isLongDescForComplexImg)
 </div>
 
 <style lang='scss'>
-	@use '../../styles/mixins/a11y.scss';
+	@use '../../../styles/mixins/a11y.scss';
 	.textOverlayImage {
 		--imgHeight: 60vh;
 		display: flex;

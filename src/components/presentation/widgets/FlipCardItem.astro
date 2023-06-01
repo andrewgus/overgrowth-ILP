@@ -1,10 +1,9 @@
 ---
+// NOTE: To be used as a child within the FlipCardWidget component.
 type Props = {
-	cardFrontContent: string
-	cardBackContent: string
-	isFlippedProp?: boolean
+	spanTwoCol?: boolean
 }
-const { cardFrontContent, cardBackContent, isFlippedProp = false } = Astro.props
+const { spanTwoCol = false } = Astro.props
 ---
 
 <script>
@@ -40,20 +39,18 @@ const { cardFrontContent, cardBackContent, isFlippedProp = false } = Astro.props
 	})
 </script>
 
-<button class='flipCard' type='button'>
-	<span class='cardFront'
-		><span class='visuallyHidden'>Flip Card Front:&nbsp;</span>{
-			cardFrontContent
-		}</span
-	>
-	<span class='cardBack isHidden'
-		><span class='visuallyHidden'>Flip Card Back:&nbsp;</span>{
-			cardBackContent
-		}</span
-	>
-	<span class='instructions'
-		><span class='visuallyHidden'>Instructions:&nbsp;</span>Flip to back?</span
-	>
+<button class:list={['flipCard', { spanTwoCol: spanTwoCol }]} type='button'>
+	<div class='cardFront'>
+		<span class='visuallyHidden'>Flip Card Front:&nbsp;</span>
+		<slot name='front' />
+	</div>
+	<div class='cardBack isHidden'>
+		<span class='visuallyHidden'>Flip Card Back:&nbsp;</span>
+		<slot name='back' />
+	</div>
+	<div class='instructions'>
+		<span class='visuallyHidden'>Instructions:&nbsp;</span>Flip to back?
+	</div>
 </button>
 
 <style lang='scss'>
@@ -68,10 +65,25 @@ const { cardFrontContent, cardBackContent, isFlippedProp = false } = Astro.props
 		position: relative;
 		overflow: hidden;
 		border-radius: var(--s-10);
-		min-width: 15vh;
-		max-width: max-content;
 		padding-bottom: var(--s2);
 		aspect-ratio: 1/1;
+
+		&:not(.cardFlipped) {
+			:global(*) {
+				color: var(--white);
+			}
+			&:hover,
+			&:focus {
+				:global(*) {
+					color: var(--blue);
+				}
+			}
+		}
+
+		&.spanTwoCol {
+			grid-column: span 2;
+			aspect-ratio: 4/2;
+		}
 
 		&:hover {
 			> .instructions {
@@ -82,7 +94,7 @@ const { cardFrontContent, cardBackContent, isFlippedProp = false } = Astro.props
 		&.cardFlipped {
 			transform: rotateY(180deg);
 			background-color: var(--offWhite);
-			> span {
+			> div {
 				transform: rotateY(-180deg);
 				&:not(.instructions) {
 					color: var(--blue-5);
@@ -93,7 +105,7 @@ const { cardFrontContent, cardBackContent, isFlippedProp = false } = Astro.props
 				}
 			}
 		}
-		> span {
+		> div {
 			line-height: 1.6;
 			-webkit-animation: cardFlipOpacity 0.75s ease-in-out alternate;
 			animation: cardFlipOpacity 0.75s ease-in-out alternate;

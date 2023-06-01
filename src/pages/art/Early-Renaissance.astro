@@ -1,16 +1,15 @@
 ---
 import TheLesson from '../../layouts/TheLesson.astro'
-import ExternalLink from '../../components/staticContentLayouts/A11yElements/ExternalLink.astro'
-import SideBySide from '../../components/staticContentLayouts/SideBySide.astro'
-import TextOverlayImage from '../../components/staticContentLayouts/TextOverlayImage.astro'
 import StaticContent from '../../layouts/StaticContent.astro'
-import FullWidthImage from '../../components/staticContentLayouts/FullWidthImage.astro'
-import TabsPanel from '../../components/staticContentLayouts/presentationalWidgets/TabsPanel.astro'
-import TabsItem from '../../components/staticContentLayouts/presentationalWidgets/TabItem.astro'
-import FlipCards from '../../components/staticContentLayouts/presentationalWidgets/FlipCards.astro'
-import FlipCardItem from '../../components/staticContentLayouts/presentationalWidgets/FlipCardItem.astro'
-import AccordionWidget from '../../components/staticContentLayouts/presentationalWidgets/AccordionWidget.astro'
-import TextDescriptor from '../../components/staticContentLayouts/A11yElements/TextDescriptor.astro'
+import ExternalLink from '../../components/presentation/A11yElements/ExternalLink.astro'
+import TextDescriptor from '../../components/presentation/A11yElements/TextDescriptor.astro'
+import SideBySide from '../../components/presentation/contentLayouts/SideBySide.astro'
+import TextOverlayImage from '../../components/presentation/contentLayouts/TextOverlayImage.astro'
+import FullWidthImage from '../../components/presentation/contentLayouts/FullWidthImage.astro'
+import TabsWidget from '../../components/presentation/widgets/TabsWidget.astro'
+import AccordionWidget from '../../components/presentation/widgets/AccordionWidget.astro'
+import FlipCardWidget from '../../components/presentation/widgets/FlipCardWidget.astro'
+import FlipCardItem from '../../components/presentation/widgets/FlipCardItem.astro'
 ---
 
 <TheLesson
@@ -20,11 +19,11 @@ import TextDescriptor from '../../components/staticContentLayouts/A11yElements/T
 	gradientColor={'var(--yellow-5)'}
 >
 	<StaticContent title='Welcome to the Course'>
-		<TabsPanel
+		<TabsWidget
 			title='A Test Widget'
 			tabNames={['Van Gogh', 'René Margritte', 'Edward Hopper']}
 		>
-			<TabsItem slot='1'>
+			<Fragment slot='1'>
 				<p>
 					Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corporis
 					iusto earum, <TextDescriptor type={'inline quote'} sayAloud>
@@ -33,14 +32,14 @@ import TextDescriptor from '../../components/staticContentLayouts/A11yElements/T
 					reprehenderit quia aspernatur neque maxime sunt molestias a, corrupti architecto?
 					Explicabo, aperiam quidem.
 				</p>
-			</TabsItem>
-			<TabsItem slot='2'>
+			</Fragment>
+			<Fragment slot='2'>
 				<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-			</TabsItem>
-			<TabsItem slot='3'>
+			</Fragment>
+			<Fragment slot='3'>
 				<p>Corrupti architecto? Explicabo, aperiam quidem.</p>
-			</TabsItem>
-		</TabsPanel>
+			</Fragment>
+		</TabsWidget>
 		<p>
 			<TextDescriptor type={'highlight'} sayAloud>
 				Art history is
@@ -210,7 +209,7 @@ import TextDescriptor from '../../components/staticContentLayouts/A11yElements/T
 			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
 			deleniti?
 		</p>
-		<TabsPanel
+		<TabsWidget
 			title='Another Test Widget'
 			tabNames={[
 				'Leonardo da Vinci',
@@ -220,27 +219,27 @@ import TextDescriptor from '../../components/staticContentLayouts/A11yElements/T
 				'Jackson Pollock',
 			]}
 		>
-			<TabsItem slot='1'>
+			<Fragment slot='1'>
 				<p>
 					Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corporis
 					iusto earum, laudantium tempora perspiciatis dolorum deleniti modi,
 					reprehenderit quia aspernatur neque maxime sunt molestias a, corrupti
 					architecto? Explicabo, aperiam quidem.
 				</p>
-			</TabsItem>
-			<TabsItem slot='2'>
+			</Fragment>
+			<Fragment slot='2'>
 				<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-			</TabsItem>
-			<TabsItem slot='3'>
+			</Fragment>
+			<Fragment slot='3'>
 				<p>Corrupti architecto? Explicabo, aperiam quidem.</p>
-			</TabsItem>
-			<TabsItem slot='4'>
+			</Fragment>
+			<Fragment slot='4'>
 				<p>Monte</p>
-			</TabsItem>
+			</Fragment>
 			<Fragment slot='5'>
 				<p>Jackson Pollock</p>
 			</Fragment>
-		</TabsPanel>
+		</TabsWidget>
 		<p>
 			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
 			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis
@@ -366,20 +365,16 @@ import TextDescriptor from '../../components/staticContentLayouts/A11yElements/T
 	</StaticContent>
 	<StaticContent title='The Third Section'>
 		<p>In this course, we will&hellip;</p>
-		<FlipCards>
-			<FlipCardItem
-				cardFrontContent='This Italian artist is known for painting the ceiling of the Sistine Chapel in Vatican City.'
-				cardBackContent='Who is Michelangelo?'
-			/>
-			<FlipCardItem
-				cardFrontContent="This Dutch painter is famous for his masterpiece 'The Starry Night' and his post-impressionist style."
-				cardBackContent='Who is Vincent van Gogh?'
-			/>
-			<FlipCardItem
-				cardFrontContent="This Italian painter is renowned for his iconic painting 'The Last Supper' and the 'Mona Lisa'."
-				cardBackContent='Who is Leonardo da Vinci?'
-			/>
-		</FlipCards>
+		<FlipCardWidget>
+			<FlipCardItem>
+				<Fragment slot='front'>
+					<p>lorem</p>
+				</Fragment>
+				<Fragment slot='back'>
+					<p>lorem</p>
+				</Fragment>
+			</FlipCardItem>
+		</FlipCardWidget>
 		<p>
 			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
 			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis

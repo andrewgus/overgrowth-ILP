@@ -1,4 +1,5 @@
 ---
+// NOTE: only use FlipCardItem component as a child (for the <slot/>) of this component.
 type Props = {
 	isFullWidth?: boolean
 }
@@ -12,9 +13,9 @@ const { isFullWidth = false } = Astro.props
 <style>
 	.flipCards {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(15ch, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(20ch, 1fr));
 		grid-gap: var(--s0);
-		justify-items: center;
+		justify-items: stretch;
 		align-items: stretch;
 	}
 </style>

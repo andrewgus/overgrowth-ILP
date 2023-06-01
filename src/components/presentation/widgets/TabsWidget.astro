@@ -94,6 +94,10 @@ const describedByID = createNanoID(Astro.self.name)
 						let html = ''
 						if (Astro.slots.has((i + 1).toString())) {
 							html = await Astro.slots.render((i + 1).toString())
+						} else {
+							console.error(
+								'ERROR: Need numbered slots (starting at 1) for all TabItem components in TabPanel components'
+							)
 						}
 						return <Fragment set:html={html} />
 					}}
