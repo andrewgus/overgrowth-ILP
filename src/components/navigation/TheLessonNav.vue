@@ -33,7 +33,7 @@
 	.lessonNav {
 		display: block;
 		z-index: 999;
-		background-color: hsla(0, 0%, 100%, 0.98);
+		background-color: var(--white);
 		width: 100%;
 		position: sticky;
 		top: 0;

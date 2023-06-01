@@ -15,6 +15,5 @@
   background-color: var(--yellow5);
   border: 1px solid var(--darkGray);
   border-radius: var(--s10) var(--s0) var(--s10) var(--s0) / var(--s10) var(--s0) var(--s10) var(--s0);
-  box-shadow: var(--s-6) var(--s-6) var(--s10) var(--yellow-5),
-    calc(-1 * var(--s-6)) calc(-1 * var(--s-6)) var(--s10) var(--yellow-5);
+  filter: drop-shadow(0px 3px 0 var(--yellow-5));
 }

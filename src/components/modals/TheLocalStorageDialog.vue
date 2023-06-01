@@ -83,7 +83,7 @@
 		}
 
 		&::backdrop {
-			background-color: hsla(0deg, 0%, 100%, 60%);
+			background-color: hsl(0deg 0% 98% / 50%);
 		}
 		> h1 {
 			font-size: var(--s4);

@@ -38,7 +38,7 @@ const bgGradient = `linear-gradient(to bottom, white 0%, ${Astro.props.color} 40
 			grid-area: card-indicator/landing-top/indicator-end/landing-bottom;
 
 			:global(p) {
-				background-color: hsla(0deg, 0%, 98%, 0.5);
+				background-color: var(--transparentWhite);
 				@include shadows.dropShadowWhite();
 				border-radius: var(--s10);
 			}

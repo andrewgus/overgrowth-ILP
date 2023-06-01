@@ -1,22 +1,23 @@
 @use "sass:map";
 
 $colors: (
-  "green": hsl(168deg, 61%, 46%),
-  "yellow": hsl(48deg, 100%, 49%),
-  "red": hsl(348deg, 61%, 47%),
-  "blue": hsl(201deg, 100%, 28%),
+  "green": hsl(168deg 61% 46%),
+  "yellow": hsl(48deg 100% 49%),
+  "red": hsl(348deg 61% 47%),
+  "blue": hsl(201deg 100% 28%),
 );
 $percntDiff: 10%;
 
 :root {
-  --black: hsl(195deg, 4%, 18%);
-  --darkGray: hsl(200deg, 2%, 35%);
-  --lightGray: hsl(0deg, 0%, 84%);
-  --offWhite: hsl(0deg, 0%, 98%);
-  --white: hsl(0deg, 0%, 100%);
-  --lightBlue: hsl(201deg, 100%, 97%);
-  --peach: hsl(32deg, 100%, 97%);
-  --purple: hsl(300deg, 59%, 36%);
+  --black: hsl(195deg 4% 18%);
+  --darkGray: hsl(200deg 2% 35%);
+  --lightGray: hsl(0deg 0% 84%);
+  --offWhite: hsl(0deg 0% 98%);
+  --white: hsl(0deg 0% 100%);
+  --transparentWhite: hsl(0deg 0% 100% / 65%);
+  --lightBlue: hsl(201deg 100% 97%);
+  --peach: hsl(32deg 100% 97%);
+  --purple: hsl(300deg 59% 36%);
 
   @each $key, $val in $colors {
     --#{$key}-5: #{scale-color($val, $lightness: - $percntDiff * 5)};
