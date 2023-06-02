@@ -96,7 +96,9 @@ const describedByID = createNanoID(Astro.self.name)
 							html = await Astro.slots.render((i + 1).toString())
 						} else {
 							console.error(
-								'ERROR: Need numbered slots (starting at 1) for all TabItem components in TabPanel components'
+								`🛑 ERROR: A TabsWidget is missing at least one <Fragment slot="{number here}">. The following <Fragment> slot number is missing: ${
+									i + 1
+								} 🛑`
 							)
 						}
 						return <Fragment set:html={html} />

@@ -3,15 +3,27 @@ type Props = {
 	imgName: string
 	altText?: string
 	describedBy?: string
+	labelledby?: string
 }
+
+const { imgName, altText = '', describedBy, labelledby } = Astro.props
 
 const imageFilePath = `https://fscjcel.blob.core.windows.net/ilp-assets/${Astro.url.pathname
 	.split('/')
 	.at(3)}`
-
-const { imgName, altText = '', describedBy } = Astro.props
-// TODO: Talk with team about 2x images not properly falling back. If we can always gaurantee a 2x copy, then we can implement, but I wouldn't want to implement if we don't think it will always be done correctly. Not enough room for error.
 ---
+
+{
+	() => {
+		let html = ''
+		if (describedBy)
+			html = `<img
+		src='${imageFilePath}_${imgName}'
+		alt={altText}
+		aria-describedby={describedBy}
+	/>`
+	}
+}
 
 <picture>
 	<source
@@ -30,6 +42,7 @@ const { imgName, altText = '', describedBy } = Astro.props
 		src=`${imageFilePath}_${imgName}`
 		alt={altText}
 		aria-describedby={describedBy}
+		aria-labelledby={labelledby}
 	/>
 </picture>
 

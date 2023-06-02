@@ -4,6 +4,11 @@ type Props = {
 	spanTwoCol?: boolean
 }
 const { spanTwoCol = false } = Astro.props
+
+if (!Astro.slots.has('front'))
+	console.error('🛑 ERROR: A FlipCardItem is missing <Fragment slot="front"> 🛑')
+if (!Astro.slots.has('back'))
+	console.error('🛑 ERROR: A FlipCardItem is missing <Fragment slot="back"> 🛑')
 ---
 
 <script>

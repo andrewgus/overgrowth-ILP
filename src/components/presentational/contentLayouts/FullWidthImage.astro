@@ -12,16 +12,16 @@ type Props = {
 }
 const { imgName, altText = '', caption } = Astro.props
 
-const describedByID = createNanoID(Astro.self.name, caption)
+const labelledbyID = createNanoID(Astro.self.name, caption)
 ---
 
 <div class:list={['fullWidth', 'fullWidthImg']}>
-	<BaseImage describedBy={describedByID} imgName={imgName} altText={altText} />
+	<BaseImage labelledby={labelledbyID} imgName={imgName} altText={altText} />
 	{
 		!!caption && (
 			<p class='imgCaption'>
 				<small>
-					Caption: <span id={describedByID}>{caption}</span>
+					Caption: <span id={labelledbyID}>{caption}</span>
 				</small>
 			</p>
 		)
