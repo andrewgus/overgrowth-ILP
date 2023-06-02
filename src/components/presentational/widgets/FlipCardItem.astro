@@ -6,7 +6,9 @@ type Props = {
 const { spanTwoCol = false } = Astro.props
 
 if (!Astro.slots.has('front'))
-	console.error('🛑 ERROR: A FlipCardItem is missing <Fragment slot="front"> 🛑')
+	console.error(
+		'🛑 ERROR: A FlipCardItem is missing <Fragment slot="front"> 🛑'
+	)
 if (!Astro.slots.has('back'))
 	console.error('🛑 ERROR: A FlipCardItem is missing <Fragment slot="back"> 🛑')
 ---
@@ -123,7 +125,7 @@ if (!Astro.slots.has('back'))
 				position: absolute;
 				bottom: 0;
 				right: 0;
-				font-size: var(--s-2);
+				font-size: var(--s-1);
 				font-style: italic;
 				background-color: var(--white);
 				color: var(--blue);

@@ -156,8 +156,9 @@
 						var(--transitionFlourish);
 					content: '';
 					display: inline-block;
-					height: var(--s-2);
-					width: var(--s-2);
+					height: var(--s-1);
+					width: var(--s-1);
+					aspect-ratio: 1/1;
 					border-radius: 50%;
 				}
 				&.greenDot::before {
