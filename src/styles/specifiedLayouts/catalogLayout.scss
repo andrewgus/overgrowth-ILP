@@ -5,13 +5,12 @@
   padding-left: 0;
   list-style-type: none;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12ch, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(20ch, 1fr));
   grid-gap: var(--s3);
   justify-content: start;
   align-items: center;
 
   > li {
-    max-width: 20ch;
     > .linkCard {
       @include containerStyles.darkBorder();
       @include containerStyles.flexCenter();
