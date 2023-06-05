@@ -1,0 +1,143 @@
+---
+import TextDescriptor from '../../components/presentational/A11yElements/TextDescriptor.astro'
+import FlipCardItem from '../../components/presentational/widgets/FlipCardItem.astro'
+import FlipCardWidget from '../../components/presentational/widgets/FlipCardWidget.astro'
+import EmbedWidget from '../../layouts/EmbedWidget.astro'
+---
+
+<EmbedWidget>
+	<FlipCardWidget>
+		<FlipCardItem>
+			<Fragment slot='front'>
+				<p>Anterior (or Ventral)</p>
+			</Fragment>
+			<Fragment slot='back'>
+				<p>Describes the front or direction toward the front of the body.</p>
+				<hr />
+				<p>
+					<TextDescriptor type={'strong emphasis'}>Example:</TextDescriptor> The
+					toes are anterior to the foot.
+				</p>
+			</Fragment>
+		</FlipCardItem>
+		<FlipCardItem>
+			<Fragment slot='front'>
+				<p>Posterior (or Dorsal)</p>
+			</Fragment>
+			<Fragment slot='back'>
+				<p>Describes the back or direction toward the back of the body.</p>
+				<hr />
+				<p>
+					<TextDescriptor type={'strong emphasis'}>Example:</TextDescriptor> The
+					popliteus is posterior to the patella.
+				</p>
+			</Fragment>
+		</FlipCardItem>
+		<FlipCardItem>
+			<Fragment slot='front'>
+				<p>Superior (or Cranial)</p>
+			</Fragment>
+			<Fragment slot='back'>
+				<p>
+					Describes a position above or higher than another part of the body
+					proper.
+				</p>
+				<hr />
+				<p>
+					<TextDescriptor type={'strong emphasis'}>Example:</TextDescriptor> The
+					eyes are superior to the mouth.
+				</p>
+			</Fragment>
+		</FlipCardItem>
+		<FlipCardItem>
+			<Fragment slot='front'>
+				<p>Inferior (or Caudal)</p>
+			</Fragment>
+			<Fragment slot='back'>
+				<p>
+					Describes a position below or lower than another part of the body
+					proper; near or toward the tail.
+				</p>
+				<hr />
+				<p>
+					<TextDescriptor type={'strong emphasis'}>Example:</TextDescriptor> The
+					pelvis is inferior to the abdomen.
+				</p>
+			</Fragment>
+		</FlipCardItem>
+		<FlipCardItem>
+			<Fragment slot='front'>
+				<p>Medial</p>
+			</Fragment>
+			<Fragment slot='back'>
+				<p>Describes the middle or direction toward the middle of the body.</p>
+				<hr />
+				<p>
+					<TextDescriptor type={'strong emphasis'}>Example:</TextDescriptor> The
+					hallux is the medial toe.
+				</p>
+			</Fragment>
+		</FlipCardItem>
+		<FlipCardItem>
+			<Fragment slot='front'>
+				<p>Lateral</p>
+			</Fragment>
+			<Fragment slot='back'>
+				<p>Describes the side or direction toward the side of the body.</p>
+				<hr />
+				<p>
+					<TextDescriptor type={'strong emphasis'}>Example:</TextDescriptor> The
+					thumb (pollex) is lateral to the digits.
+				</p>
+			</Fragment>
+		</FlipCardItem>
+		<FlipCardItem>
+			<Fragment slot='front'>
+				<p>Superficial</p>
+			</Fragment>
+			<Fragment slot='back'>
+				<p>Describes a position closer to the surface of the body.</p>
+				<hr />
+				<p>
+					<TextDescriptor type={'strong emphasis'}>Example:</TextDescriptor> The
+					skin is superficial to the bones.
+				</p>
+			</Fragment>
+		</FlipCardItem>
+		<FlipCardItem>
+			<Fragment slot='front'>
+				<p>Deep</p>
+			</Fragment>
+			<Fragment slot='back'>
+				<p>Describes a position farther from the surface of the body.</p>
+				<hr />
+				<p>
+					<TextDescriptor type={'strong emphasis'}>Example:</TextDescriptor> The
+					brain is deep to the skull.
+				</p>
+			</Fragment>
+		</FlipCardItem>
+		<FlipCardItem>
+			<Fragment slot='front'>
+				<p>Concave</p>
+			</Fragment>
+			<Fragment slot='back'>
+				<p>
+					Exhibiting a depression, a hollow surface; a surface exhibiting an
+					inward curve. Bowl-like.
+				</p>
+			</Fragment>
+		</FlipCardItem>
+		<FlipCardItem>
+			<Fragment slot='front'>
+				<p>Convex</p>
+			</Fragment>
+			<Fragment slot='back'>
+				<p>
+					Having an outline or surface curved like the exterior of a circle or
+					sphere. Curved outward.
+				</p>
+			</Fragment>
+		</FlipCardItem>
+	</FlipCardWidget>
+</EmbedWidget>

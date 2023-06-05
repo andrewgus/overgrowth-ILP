@@ -2,8 +2,9 @@
 // NOTE: To be used as a child within the FlipCardWidget component.
 type Props = {
 	spanTwoCol?: boolean
+	spanTwoRow?: boolean
 }
-const { spanTwoCol = false } = Astro.props
+const { spanTwoCol = false, spanTwoRow = false } = Astro.props
 
 if (!Astro.slots.has('front'))
 	console.error(
@@ -46,7 +47,14 @@ if (!Astro.slots.has('back'))
 	})
 </script>
 
-<button class:list={['flipCard', { spanTwoCol: spanTwoCol }]} type='button'>
+<button
+	class:list={[
+		'flipCard',
+		{ spanTwoCol: spanTwoCol },
+		{ spanTwoRow: spanTwoRow },
+	]}
+	type='button'
+>
 	<div class='cardFront'>
 		<span class='visuallyHidden'>Flip Card Front:&nbsp;</span>
 		<slot name='front' />
@@ -74,7 +82,7 @@ if (!Astro.slots.has('back'))
 		border-radius: var(--s-10);
 		padding-bottom: var(--s2);
 		aspect-ratio: 1/1;
-		min-height: 25ch;
+		min-height: 18ch;
 
 		&:not(.cardFlipped) {
 			:global(*) {
@@ -90,7 +98,15 @@ if (!Astro.slots.has('back'))
 
 		&.spanTwoCol {
 			grid-column: span 2;
-			aspect-ratio: 4/2;
+			&:not(.spanTwoRow) {
+				aspect-ratio: 4/2;
+			}
+		}
+		&.spanTwoRow {
+			grid-row: span 2;
+			&:not(.spanTwoCol) {
+				aspect-ratio: 2/4;
+			}
 		}
 
 		&:hover {

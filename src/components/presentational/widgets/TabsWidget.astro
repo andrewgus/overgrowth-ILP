@@ -6,18 +6,17 @@
 import createNanoID from '../../../composables/useCreateNanoID'
 
 type Props = {
-	title: string
 	tabNames: string[]
 	isFullWidth?: boolean
 }
-const { title, tabNames, isFullWidth = false } = Astro.props
+const { tabNames, isFullWidth = false } = Astro.props
 
 const describedByID = createNanoID(Astro.self.name)
 ---
 
 <script>
 	const tabWidgets: NodeListOf<HTMLDivElement> =
-		document.querySelectorAll('.tabsWidget')
+		document.querySelectorAll('.tabs')
 
 	const updateTabAttributes = (btn: HTMLButtonElement, isSelected: boolean) => {
 		btn.tabIndex = isSelected ? 0 : -1
@@ -29,7 +28,7 @@ const describedByID = createNanoID(Astro.self.name)
 			btnSelected.parentElement!.children
 		) as HTMLButtonElement[]
 		const tabContentArray = Array.from(
-			btnSelected.closest('.tabsWidget')!.querySelectorAll('.tabContent')
+			btnSelected.closest('.tabs')!.querySelectorAll('.tabContent')
 		)
 		btnArray.forEach((btn) => {
 			const isSelected = btn === btnSelected
@@ -62,52 +61,47 @@ const describedByID = createNanoID(Astro.self.name)
 	})
 </script>
 
-<section class:list={['tabsWidget', { fullWidth: isFullWidth }]}>
-	<h3 id={describedByID}>{title}</h3>
-	<div class='tabs'>
-		<div class='tabBtns' role='tablist' aria-describedby={describedByID}>
-			{
-				tabNames.map((tabName, i) => (
-					<button
-						id={`tab-${describedByID}-${i}`}
-						aria-selected={i === 0 ? true : false}
-						aria-controls={`tabpanel-${describedByID}-${i}`}
-						type='button'
-						role='tab'
-						tabindex={i === 0 ? 0 : -1}
-					>
-						{tabName}
-					</button>
-				))
-			}
-		</div>
+<div class:list={['tabs', { fullWidth: isFullWidth }]}>
+	<div class='tabBtns' role='tablist'>
 		{
-			tabNames.map((_, i) => (
-				<div
-					class='tabContent'
-					id={`tabpanel-${describedByID}-${i}`}
-					role='tabpanel'
-					aria-labelledby={`tab-${describedByID}-${i}`}
-					class:list={[{ isHidden: i !== 0 }]}
+			tabNames.map((tabName, i) => (
+				<button
+					id={`tab-${describedByID}-${i}`}
+					aria-selected={i === 0 ? true : false}
+					aria-controls={`tabpanel-${describedByID}-${i}`}
+					type='button'
+					role='tab'
+					tabindex={i === 0 ? 0 : -1}
 				>
-					{async () => {
-						let html = ''
-						if (Astro.slots.has((i + 1).toString())) {
-							html = await Astro.slots.render((i + 1).toString())
-						} else {
-							console.error(
-								`🛑 ERROR: A TabsWidget is missing <Fragment slot='${
-									i + 1
-								}'> 🛑`
-							)
-						}
-						return <Fragment set:html={html} />
-					}}
-				</div>
+					{tabName}
+				</button>
 			))
 		}
 	</div>
-</section>
+	{
+		tabNames.map((_, i) => (
+			<div
+				class='tabContent'
+				id={`tabpanel-${describedByID}-${i}`}
+				role='tabpanel'
+				aria-labelledby={`tab-${describedByID}-${i}`}
+				class:list={[{ isHidden: i !== 0 }]}
+			>
+				{async () => {
+					let html = ''
+					if (Astro.slots.has((i + 1).toString())) {
+						html = await Astro.slots.render((i + 1).toString())
+					} else {
+						console.error(
+							`🛑 ERROR: A TabsWidget is missing <Fragment slot='${i + 1}'> 🛑`
+						)
+					}
+					return <Fragment set:html={html} />
+				}}
+			</div>
+		))
+	}
+</div>
 
 <style lang='scss'>
 	@use '../../../styles/mixins/buttons.scss';

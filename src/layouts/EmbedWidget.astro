@@ -1,0 +1,40 @@
+---
+import '../styles/root.scss'
+import useFormatTitle from '../composables/useFormatTitle'
+
+type Props = {
+	language?: string
+}
+const { language = 'en' } = Astro.props
+
+const title = useFormatTitle(Astro.url.pathname.split('/').at(-1) as string)
+---
+
+<!DOCTYPE html>
+<html lang={language}>
+	<head>
+		<meta charset='UTF-8' />
+		<meta
+			name='viewport'
+			content='width=device-width, initial-scale=1, user-scalable=YES'
+		/>
+		<link rel='icon' href='/catalog/favicon.png' sizes='any' />
+		<link rel='icon' type='image/svg+xml' href='/catalog/favicon.svg' />
+		<meta name='generator' content={Astro.generator} />
+		<title>{title} &vert; FSCJ</title>
+	</head>
+	<body>
+		<main>
+			<h1>{title}</h1>
+			<slot />
+		</main>
+	</body>
+</html>
+
+<style>
+	main {
+		max-width: 100ch;
+		margin: 0 auto;
+		padding: var(--s2);
+	}
+</style>

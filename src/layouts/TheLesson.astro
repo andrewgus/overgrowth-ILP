@@ -6,9 +6,9 @@ import SkipToContent from '../components/navigation/SkipToContent.astro'
 import TheLanding from '../components/landing/TheLanding.astro'
 import TheLessonNav from '../components/navigation/TheLessonNav.vue'
 import createID from '../composables/useCreateID'
+import useFormatTitle from '../composables/useFormatTitle'
 
 type Props = {
-	title: string
 	scene: string
 	gradientColor?: string
 	language?: string
@@ -16,12 +16,13 @@ type Props = {
 }
 
 const {
-	title,
 	scene,
 	gradientColor,
 	language = 'en',
 	isInteractive = true,
 } = Astro.props
+
+const title = useFormatTitle(Astro.url.pathname.split('/').at(-1) as string)
 ---
 
 <!DOCTYPE html>

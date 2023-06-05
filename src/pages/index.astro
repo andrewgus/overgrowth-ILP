@@ -1,5 +1,6 @@
 ---
 import TheCatalog from '../layouts/TheCatalog.astro'
+import useFormatTitle from '../composables/useFormatTitle'
 
 const allLessons = await Astro.glob('./*/*.astro')
 
@@ -7,14 +8,7 @@ const topicURLs = [
 	...new Set(allLessons.map((lesson) => lesson.url!.split('/').at(2))),
 ]
 
-const topicTitles = topicURLs.map((title) => {
-	return title
-		?.split('-')
-		.map((word) => {
-			return word.charAt(0).toUpperCase() + word.slice(1)
-		})
-		.join(' ')
-})
+const topicTitles = topicURLs.map((title) => useFormatTitle(title!))
 ---
 
 <TheCatalog title='FSCJ’s Interactive Lessons Catalog'>

@@ -1,5 +1,6 @@
 ---
 import TheCatalog from '../layouts/TheCatalog.astro'
+import useFormatTitle from '../composables/useFormatTitle'
 
 export async function getStaticPaths() {
 	const allLessons = await Astro.glob('./*/*.astro')
@@ -11,10 +12,7 @@ export async function getStaticPaths() {
 			lesson.url?.includes(topic!)
 		)
 
-		const topicTitle = topic!
-			.split('-')
-			.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-			.join(' ')
+		const topicTitle = useFormatTitle(topic!)
 
 		return {
 			params: { topic },
