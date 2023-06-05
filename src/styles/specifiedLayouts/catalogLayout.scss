@@ -17,6 +17,7 @@
       @include containerStyles.flexCenter();
       position: relative;
       overflow: hidden;
+      color: var(--black);
       border-radius: var(--s0);
       font-size: var(--s1);
       flex-flow: column nowrap;

@@ -19,27 +19,6 @@ import FlipCardItem from '../../components/presentational/widgets/FlipCardItem.a
 	gradientColor={'var(--yellow-5)'}
 >
 	<StaticContent title='Welcome to the Course'>
-		<TabsWidget
-			title='A Few Famous Artists'
-			tabNames={['Van Gogh', 'René Margritte', 'Edward Hopper']}
-		>
-			<Fragment slot='1'>
-				<p>
-					Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corporis
-					iusto earum, <TextDescriptor type={'highlight'}>
-						Hello everyone
-					</TextDescriptor> laudantium tempora perspiciatis dolorum deleniti modi,
-					reprehenderit quia aspernatur neque maxime sunt molestias a, corrupti architecto?
-					Explicabo, aperiam quidem.
-				</p>
-			</Fragment>
-			<Fragment slot='2'>
-				<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. sa</p>
-			</Fragment>
-			<Fragment slot='3'>
-				<p>Corrupti architecto? Explicabo, aperiam quidem.</p>
-			</Fragment>
-		</TabsWidget>
 		<p>
 			<TextDescriptor type={'highlight'} sayAloud>
 				Art history is
@@ -212,34 +191,24 @@ import FlipCardItem from '../../components/presentational/widgets/FlipCardItem.a
 			deleniti?
 		</p>
 		<TabsWidget
-			title='More Famous Artists'
-			tabNames={[
-				'Leonardo da Vinci',
-				'Pablo Picasso',
-				'Frida Kahlo',
-				'Claude Monet',
-				'Jackson Pollock',
-			]}
+			title='A Few Famous Artists'
+			tabNames={['Van Gogh', 'René Margritte', 'Edward Hopper']}
 		>
 			<Fragment slot='1'>
 				<p>
 					Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corporis
-					iusto earum, laudantium tempora perspiciatis dolorum deleniti modi,
-					reprehenderit quia aspernatur neque maxime sunt molestias a, corrupti
-					architecto? Explicabo, aperiam quidem.
+					iusto earum, <TextDescriptor type={'highlight'}>
+						Hello everyone
+					</TextDescriptor> laudantium tempora perspiciatis dolorum deleniti modi,
+					reprehenderit quia aspernatur neque maxime sunt molestias a, corrupti architecto?
+					Explicabo, aperiam quidem.
 				</p>
 			</Fragment>
 			<Fragment slot='2'>
-				<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+				<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. sa</p>
 			</Fragment>
 			<Fragment slot='3'>
 				<p>Corrupti architecto? Explicabo, aperiam quidem.</p>
-			</Fragment>
-			<Fragment slot='4'>
-				<p>Monte</p>
-			</Fragment>
-			<Fragment slot='5'>
-				<p>Jackson Pollock</p>
 			</Fragment>
 		</TabsWidget>
 		<p>
