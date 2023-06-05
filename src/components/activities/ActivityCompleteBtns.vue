@@ -105,7 +105,7 @@
 		}, 1000)
 		setTimeout(() => {
 			continueAnnouncement.value = ''
-		}, 1500)
+		}, 2000)
 	}
 	watch(activityProgressStore[props.id], (newValue) => {
 		if (newValue.isAttemptsFinished)
