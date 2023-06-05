@@ -60,7 +60,7 @@
 			/>
 		</template>
 	</TransitionGroup>
-	<div class="visuallyHidden" role="status">
+	<div class="visuallyHidden" aria-live="assertive">
 		{{ continueAnnouncement }}
 	</div>
 </template>
