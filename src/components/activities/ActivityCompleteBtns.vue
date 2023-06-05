@@ -27,9 +27,10 @@
 		<template key="1" v-else>
 			<div key="pdfSaveDiv" :class="$style.pdfSave">
 				<p
-					v-if="shouldDisplayVisualFeedback"
+					v-show="shouldDisplayVisualFeedback"
 					key="pdfFeedback"
 					:class="$style.pdfSave__feedback"
+					role="status"
 				>
 					{{ pdfStatusUpdate }}
 				</p>
@@ -59,9 +60,8 @@
 			/>
 		</template>
 	</TransitionGroup>
-	<div class="visuallyHidden" aria-live="assertive">
-		<span>{{ continueAnnouncement }}</span>
-		<span>{{ pdfStatusUpdate }}</span>
+	<div class="visuallyHidden" role="status">
+		{{ continueAnnouncement }}
 	</div>
 </template>
 
@@ -102,11 +102,15 @@
 	const setContinueAnnouncement = (announcement: string) => {
 		setTimeout(() => {
 			continueAnnouncement.value = announcement
-		}, 2000)
+		}, 1000)
+		setTimeout(() => {
+			continueAnnouncement.value = ''
+		}, 1500)
 	}
 	watch(activityProgressStore[props.id], (newValue) => {
 		if (newValue.isAttemptsFinished)
 			setContinueAnnouncement('Continue button is now clickable.')
+
 		if (!newValue.isAttemptsFinished)
 			setContinueAnnouncement('Complete activity to continue.')
 	})
@@ -146,11 +150,11 @@
 
 	const pdfStatusUpdate = computed(() => {
 		if (activityProgressStore[props.id].pdfGenStatus.isDownloading)
-			return 'Downloading…'
+			return 'PDF Downloading…'
 		if (activityProgressStore[props.id].pdfGenStatus.isComplete)
-			return 'Download complete!'
+			return 'PDF Download complete!'
 		if (activityProgressStore[props.id].pdfGenStatus.isFailed)
-			return 'Failed to download. Try again?'
+			return 'PDF Failed to download. Try again?'
 
 		return ''
 	})
@@ -210,7 +214,7 @@
 			border-right: 0;
 			border-radius: var(--s10) 0 0 var(--s10);
 
-			& + .pdfSave__btn {
+			&:not([style*='display: none']) + .pdfSave__btn {
 				border-radius: 0 var(--s10) var(--s10) 0;
 			}
 		}
