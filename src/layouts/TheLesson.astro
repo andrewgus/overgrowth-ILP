@@ -10,19 +10,19 @@ import useFormatTitle from '../composables/useFormatTitle'
 
 type Props = {
 	scene: string
+	title?: string
 	gradientColor?: string
 	language?: string
 	isInteractive?: boolean
 }
 
 const {
+	title = useFormatTitle(Astro.url.pathname.split('/').at(-1) as string),
 	scene,
 	gradientColor,
 	language = 'en',
 	isInteractive = true,
 } = Astro.props
-
-const title = useFormatTitle(Astro.url.pathname.split('/').at(-1) as string)
 ---
 
 <!DOCTYPE html>

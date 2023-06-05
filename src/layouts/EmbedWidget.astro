@@ -3,11 +3,13 @@ import '../styles/root.scss'
 import useFormatTitle from '../composables/useFormatTitle'
 
 type Props = {
+	title?: string
 	language?: string
 }
-const { language = 'en' } = Astro.props
-
-const title = useFormatTitle(Astro.url.pathname.split('/').at(-1) as string)
+const {
+	title = useFormatTitle(Astro.url.pathname.split('/').at(-1) as string),
+	language = 'en',
+} = Astro.props
 ---
 
 <!DOCTYPE html>
