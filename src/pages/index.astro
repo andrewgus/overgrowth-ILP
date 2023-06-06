@@ -5,7 +5,11 @@ import useFormatTitle from '../composables/useFormatTitle'
 const allLessons = await Astro.glob('./*/*.astro')
 
 const topicURLs = [
-	...new Set(allLessons.map((lesson) => lesson.url!.split('/').at(2))),
+	...new Set(
+		allLessons
+			.map((lesson) => lesson.url!.split('/').at(2))
+			.filter((topic) => topic !== 'test-pages')
+	),
 ]
 
 const topicTitles = topicURLs.map((title) => useFormatTitle(title!))
