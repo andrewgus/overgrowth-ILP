@@ -24,8 +24,8 @@
     "@astrojs/vue": "^2.2.1",
     "@nanostores/vue": "^0.9.0",
     "@vueuse/core": "^10.1.2",
-    "astro": "^2.5.7",
-    "jspdf": "^2.5.1",
+    "astro": "^2.6.1",
+    "jspdf": "latest",
     "nanoid": "^4.0.2",
     "nanostores": "^0.9.1",
     "vue": "^3.3.4"
