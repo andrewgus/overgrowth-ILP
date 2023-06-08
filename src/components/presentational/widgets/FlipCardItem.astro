@@ -78,10 +78,9 @@ if (!Astro.slots.has('back'))
 		text-align: left;
 		position: relative;
 		border-radius: var(--s-10);
-		padding: var(--s0) var(--s-2);
-		aspect-ratio: 1/1;
-		min-height: 22ch;
-		width: 100%;
+		padding: var(--s0) var(--s-2) var(--s3);
+		min-width: 100%;
+		min-height: 100%;
 
 		&:hover {
 			> .instructions {
@@ -92,15 +91,9 @@ if (!Astro.slots.has('back'))
 
 		&.spanTwoCol {
 			grid-column: span 2;
-			&:not(.spanTwoRow) {
-				aspect-ratio: 4/2;
-			}
 		}
 		&.spanTwoRow {
 			grid-row: span 2;
-			&:not(.spanTwoCol) {
-				aspect-ratio: 2/4;
-			}
 		}
 
 		&:not(.cardFlipped) {
@@ -141,8 +134,9 @@ if (!Astro.slots.has('back'))
 			&.cardBack:not(.isHidden) {
 				display: flex;
 				flex-flow: column nowrap;
+				justify-content: center;
 				align-items: center;
-				height: 100%;
+				min-height: 100%;
 
 				> :global(hr) {
 					width: 100%;
@@ -151,17 +145,9 @@ if (!Astro.slots.has('back'))
 					border: 0;
 				}
 				> :global(picture) {
-					width: 82%;
-					margin: 0 auto;
+					max-width: 80%;
+					margin: var(--s2) auto;
 				}
-			}
-			&.cardFront:not(.isHidden) {
-				justify-content: center;
-				text-align: center;
-			}
-
-			&.cardBack:not(.isHidden) {
-				justify-content: start;
 			}
 
 			&.instructions {

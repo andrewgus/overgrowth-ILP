@@ -14,6 +14,7 @@ const { isFullWidth = false } = Astro.props
 	.flipCards {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(22ch, 1fr));
+		grid-auto-rows: 22ch;
 		grid-gap: var(--s4);
 		justify-items: center;
 		align-items: stretch;
