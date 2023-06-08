@@ -56,15 +56,15 @@ if (!Astro.slots.has('back'))
 	type='button'
 >
 	<div class='cardFront'>
-		<span class='visuallyHidden'>Flip Card Front:&nbsp;</span>
+		<span class='visuallyHidden'>Card Front:&nbsp;</span>
 		<slot name='front' />
 	</div>
 	<div class='cardBack isHidden'>
-		<span class='visuallyHidden'>Flip Card Back:&nbsp;</span>
+		<span class='visuallyHidden'>Card Back:&nbsp;</span>
 		<slot name='back' />
 	</div>
 	<div class='instructions'>
-		<span class='visuallyHidden'>Instructions:&nbsp;</span>Flip to back?
+		<div class='visuallyHidden'>&hellip;</div>Flip to back?
 	</div>
 </button>
 
@@ -75,26 +75,18 @@ if (!Astro.slots.has('back'))
 	.flipCard {
 		@include buttons.secondary();
 		@include shadows.smallBoxShadow();
-		@include containerStyles.flexCenter();
 		text-align: left;
 		position: relative;
-		overflow: hidden;
 		border-radius: var(--s-10);
-		padding-bottom: var(--s3);
+		padding: var(--s0) var(--s-2);
 		aspect-ratio: 1/1;
 		min-height: 22ch;
-		max-width: 30ch;
 		width: 100%;
 
-		&:not(.cardFlipped) {
-			:global(*) {
-				color: var(--white);
-			}
-			&:hover,
-			&:focus {
-				:global(*) {
-					color: var(--blue);
-				}
+		&:hover {
+			> .instructions {
+				bottom: 3.5px;
+				right: 5px;
 			}
 		}
 
@@ -111,10 +103,18 @@ if (!Astro.slots.has('back'))
 			}
 		}
 
-		&:hover {
-			> .instructions {
-				bottom: 3.5px;
-				right: 5px;
+		&:not(.cardFlipped) {
+			:global(*) {
+				color: var(--white);
+			}
+			> div {
+				backface-visibility: hidden;
+			}
+			&:hover,
+			&:focus {
+				:global(*) {
+					color: var(--blue);
+				}
 			}
 		}
 		&.cardFlipped {
@@ -131,10 +131,38 @@ if (!Astro.slots.has('back'))
 				}
 			}
 		}
+
 		> div {
 			line-height: 1.6;
 			-webkit-animation: cardFlipOpacity 0.75s ease-in-out alternate;
 			animation: cardFlipOpacity 0.75s ease-in-out alternate;
+
+			&.cardFront:not(.isHidden),
+			&.cardBack:not(.isHidden) {
+				display: flex;
+				flex-flow: column nowrap;
+				align-items: center;
+				height: 100%;
+
+				> :global(hr) {
+					width: 100%;
+					height: 1px;
+					background-color: var(--black);
+					border: 0;
+				}
+				> :global(picture) {
+					width: 82%;
+					margin: 0 auto;
+				}
+			}
+			&.cardFront:not(.isHidden) {
+				justify-content: center;
+				text-align: center;
+			}
+
+			&.cardBack:not(.isHidden) {
+				justify-content: start;
+			}
 
 			&.instructions {
 				-webkit-transition: bottom var(--timeShort) ease-in-out,
