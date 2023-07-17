@@ -4,13 +4,15 @@ import StaticContent from '../../layouts/StaticContent.astro'
 import InteractiveActivity from '../../layouts/InteractiveActivity.vue'
 ---
 
-<TheLesson title='Introduction to Astronomy' scene='setting' gradientColor={'var(--green)'}>
+<TheLesson
+	title='Introduction to Astronomy'
+	scene='setting'
+	gradientColor={'var(--green)'}>
 	<InteractiveActivity
 		client:load
 		setActivityType='reflection'
 		title='What do you think?'
-		prompt='When you hear the term Astronomy, what do you think about?'
-	>
+		prompt='When you hear the term Astronomy, what do you think about?'>
 		<p>Things to consider:</p>
 		<ul>
 			<li>
@@ -29,12 +31,7 @@ import InteractiveActivity from '../../layouts/InteractiveActivity.vue'
 		setActivityType='practice'
 		title='Practice Activity'
 		prompt='This is a practice activity test.'
-	/>
-	<InteractiveActivity
-		client:load
-		setActivityType='choice'
-		title='Choice Activity'
-		prompt='This is a choice activity test.'
+		practiceType='explorable'
 	/>
 	<StaticContent title='Welcome to the Course'>
 		<p>In this course, we will&hellip;</p>
@@ -120,7 +117,6 @@ import InteractiveActivity from '../../layouts/InteractiveActivity.vue'
 			</p>
 		</section>
 	</StaticContent>
-
 	<InteractiveActivity
 		client:load
 		setActivityType='reflection'

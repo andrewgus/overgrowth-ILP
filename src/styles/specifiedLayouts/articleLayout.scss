@@ -1,4 +1,4 @@
-#theLessonContent article.section {
+article.section {
   min-height: 90vh;
   padding: 0 var(--s-4);
   display: grid;
@@ -37,14 +37,17 @@
     }
   }
 
-  > *:not(.fullWidth) {
+  > *:not(.fullWidth),
+  > astro-island > *:not(.fullWidth) {
     grid-column: innerContent-start / innerContent-end;
   }
-  > *.fullWidth {
+  > *.fullWidth,
+  > astro-island > *.fullWidth {
     grid-column: content-start / content-end;
   }
   @media only screen and (max-width: 85ch) {
-    > *:not(.fullWidth) {
+    > *:not(.fullWidth),
+    > astro-island > *:not(.fullWidth) {
       grid-column: content-start / content-end;
     }
     > * {

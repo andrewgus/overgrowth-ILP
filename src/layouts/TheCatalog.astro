@@ -19,10 +19,10 @@ const { title, isTopicsPage = false } = Astro.props
 			name='viewport'
 			content='width=device-width, initial-scale=1, user-scalable=YES'
 		/>
-		<link rel='icon' href='/catalog/favicon.png' sizes='any' />
-		<link rel='icon' type='image/svg+xml' href='/catalog/favicon.svg' />
+		<link rel='icon' href='/favicon.png' sizes='any' />
+		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
 		<meta name='generator' content={Astro.generator} />
-		<title>{title} &vert; FSCJ</title>
+		<title>{title}</title>
 	</head>
 	<body>
 		<div>
@@ -31,7 +31,7 @@ const { title, isTopicsPage = false } = Astro.props
 				isTopicsPage && (
 					<header>
 						<nav>
-							<a href='/catalog/'>Back to all topics</a>
+							<a href='/'>Back to all topics</a>
 						</nav>
 					</header>
 				)
@@ -42,13 +42,9 @@ const { title, isTopicsPage = false } = Astro.props
 			</main>
 		</div>
 		<footer>
-			<a href='https://www.fscj.edu'
-				><img
-					role='img'
-					src='/catalog/fscj-horizontal-logo.svg'
-					alt='Florida State College at Jacksonville'
-				/></a
-			>
+			<a href='https://github.com/andrewgus/overgrowth-ILP'>
+				<img role='img' src='/logo.svg' alt='Overgrowth' />
+			</a>
 		</footer>
 	</body>
 </html>
@@ -98,7 +94,7 @@ const { title, isTopicsPage = false } = Astro.props
 		> a {
 			float: right;
 			padding-top: var(--s-2);
-			width: 20ch;
+			width: 5ch;
 			display: block;
 		}
 	}

@@ -4,9 +4,8 @@
 		:class="[$style.switchBtn, { [$style.isOff]: !enabled }]"
 		type="button"
 		role="switch"
-		:aria-checked="enabled"
-	>
-		<span>{{ switchName }}</span>
+		:aria-checked="enabled">
+		<span>{{ name }}</span>
 		<span :class="$style.visualSwitch" aria-hidden="true">
 			<span :class="$style.toggleText">
 				{{ enabled ? 'On' : 'Off' }}
@@ -19,7 +18,7 @@
 	import { ref } from 'vue'
 
 	const props = defineProps({
-		switchName: {
+		name: {
 			type: String,
 			required: true,
 		},
@@ -45,8 +44,8 @@
 	.switchBtn {
 		@include containerStyles.flexCenter();
 		@include transitions.flourishLong();
-		flex: 1;
-		min-width: var(--s8);
+		flex: 0 1 auto;
+		min-width: var(--s9);
 		cursor: pointer;
 		color: var(--black);
 		background-color: transparent;
@@ -83,7 +82,7 @@
 				@include shadows.blueDropShadow();
 			}
 			&:not(.isOff) .toggleText {
-				animation: switchJiggle var(--timeLong) var(--transitionFlourish);
+				animation: switchJiggle var(--timeMed) var(--transitionFlourish);
 			}
 		}
 		&.isOff .toggleText {

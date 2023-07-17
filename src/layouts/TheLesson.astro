@@ -32,14 +32,14 @@ const {
 			name='viewport'
 			content='width=device-width, initial-scale=1, user-scalable=YES'
 		/>
-		<link rel='icon' href='/catalog/favicon.png' sizes='any' />
-		<link rel='icon' type='image/svg+xml' href='/catalog/favicon.svg' />
+		<link rel='icon' href='/favicon.png' sizes='any' />
+		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
 		<meta name='generator' content={Astro.generator} />
 		<script>
 			import '../scripts/setSectionsHandler.js'
 			import '../scripts/hashChangeHandler.js'
 		</script>
-		<title>{title} &vert; FSCJ</title>
+		<title>{title}</title>
 	</head>
 	<body id={`${createID(title)}-lesson`}>
 		{isInteractive && <TheLocalStorageDialog client:load />}

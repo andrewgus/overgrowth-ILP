@@ -17,3 +17,9 @@
   border-radius: var(--s10) var(--s0) var(--s10) var(--s0) / var(--s10) var(--s0) var(--s10) var(--s0);
   filter: drop-shadow(0px 3px 0 var(--yellow-5));
 }
+@mixin alertWarning {
+  background-color: var(--red5);
+  border: 1px solid var(--darkGray);
+  border-radius: var(--s10) var(--s0) var(--s10) var(--s0) / var(--s10) var(--s0) var(--s10) var(--s0);
+  filter: drop-shadow(0px 3px 0 var(--red-5));
+}

@@ -7,15 +7,6 @@ const { title } = Astro.props
 ---
 
 <div class='titleCard'>
-	<p class='fscjLink'>
-		<a href='https://www.fscj.edu'>
-			<img
-				role='img'
-				src='/catalog/favicon.svg'
-				alt='Florida State College at Jacksonville'
-			/>
-		</a>&nbsp;presents&hellip;
-	</p>
 	<h1 id='titleHeading' tabindex='-1'>{title}</h1>
 	<ActivitySwitches client:load />
 </div>
@@ -39,26 +30,6 @@ const { title } = Astro.props
 		> h1 {
 			margin: 0;
 			text-align: center;
-		}
-		> .fscjLink {
-			color: var(--black);
-
-			display: flex;
-			flex-flow: row nowrap;
-			align-items: center;
-
-			a {
-				padding: 0;
-				display: inline-flex;
-				max-height: 2ch;
-				align-items: center;
-				justify-content: center;
-				margin-top: -4px;
-
-				> img {
-					width: 3ch;
-				}
-			}
 		}
 	}
 	/* media queries */

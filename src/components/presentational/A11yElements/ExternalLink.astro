@@ -1,16 +1,22 @@
 ---
-type Props = {
-	src: string
+type PropsWithURLShown =
+	| {
+			isShownURL?: false | undefined
+			urlTitle?: undefined
+	  }
+	| {
+			isShownURL?: true
+			urlTitle: string
+	  }
+
+type Props = PropsWithURLShown & {
+	url: string
 }
-const { src } = Astro.props
+const { url } = Astro.props
 ---
 
-<a class='extLink' href={src} target='_blank' rel='noreferrer'
-	><slot /><img
-		src='/catalog/extLink.svg'
-		role='img'
-		alt='opens in a new window'
-	/>
+<a class='extLink' href={url} target='_blank' rel='noreferrer'>
+	<slot /><img src='/extLink.svg' role='img' alt='opens in a new window' />
 </a>
 
 <style lang='scss'>

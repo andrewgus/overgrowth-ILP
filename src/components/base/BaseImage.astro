@@ -10,7 +10,7 @@ const { imgName, altText = '', describedBy, labelledby } = Astro.props
 
 const imageFilePath = `https://fscjcel.blob.core.windows.net/ilp-assets/${Astro.url.pathname
 	.split('/')
-	.at(3)}`
+	.at(2)}`
 ---
 
 {
@@ -53,7 +53,8 @@ const imageFilePath = `https://fscjcel.blob.core.windows.net/ilp-assets/${Astro.
 		max-height: 85vh;
 		> img {
 			object-fit: contain;
-			width: 100%;
+			width: auto;
+			height: 100%;
 			max-width: inherit;
 			max-height: inherit;
 			display: block;

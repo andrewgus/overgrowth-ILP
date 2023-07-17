@@ -15,13 +15,13 @@ const topicURLs = [
 const topicTitles = topicURLs.map((title) => useFormatTitle(title!))
 ---
 
-<TheCatalog title='FSCJ’s Interactive Lessons Catalog'>
+<TheCatalog title='Interactive Lessons Catalog'>
 	<p>Select a topic to view available lessons&hellip;</p>
 	<ul class='cardGrid'>
 		{
 			topicTitles.map((title, i) => (
 				<li>
-					<a class='linkCard' href={`/catalog/${topicURLs[i]}`}>
+					<a class='linkCard' href={`/${topicURLs[i]}`}>
 						<span>{title}</span>
 					</a>
 				</li>

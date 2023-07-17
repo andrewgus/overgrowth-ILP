@@ -2,78 +2,96 @@
 import TheLesson from '../../layouts/TheLesson.astro'
 import StaticContent from '../../layouts/StaticContent.astro'
 import ExternalLink from '../../components/presentational/A11yElements/ExternalLink.astro'
-import TextDescriptor from '../../components/presentational/A11yElements/TextDescriptor.astro'
+import A11yTextStyle from '../../components/presentational/A11yElements/A11yTextStyle.astro'
 import SideBySide from '../../components/presentational/contentLayouts/SideBySide.astro'
 import TextOverlayImage from '../../components/presentational/contentLayouts/TextOverlayImage.astro'
 import FullWidthImage from '../../components/presentational/contentLayouts/FullWidthImage.astro'
 import TabsWidget from '../../components/presentational/widgets/TabsWidget.astro'
 import AccordionWidget from '../../components/presentational/widgets/AccordionWidget.astro'
-import FlipCardWidget from '../../components/presentational/widgets/FlipCardWidget.astro'
-import FlipCardItem from '../../components/presentational/widgets/FlipCardItem.astro'
+import FlipCardsWidget from '../../components/presentational/widgets/FlipCardsWidget.vue'
+import FlipCard from '../../components/presentational/widgets/FlipCard.vue'
 ---
 
 <TheLesson
 	title='Early Renaissance'
 	isInteractive={false}
 	scene='setting'
-	gradientColor={'var(--yellow-5)'}
->
+	gradientColor={'var(--yellow-5)'}>
 	<StaticContent title='Welcome to the Course'>
-		<TabsWidget tabNames={['Van Gogh', 'René Margritte', 'Edward Hopper']}>
-			<Fragment slot='1'>
-				<p>
-					Vincent van Gogh was a Dutch post-impressionist painter whose unique
-					style and emotionally charged works have left an indelible mark on the
-					art world. Van Gogh's art is characterized by his bold and expressive
-					brushwork, vibrant colors, and his ability to convey profound emotion
-					through his paintings. Despite struggling with mental health issues
-					throughout his life, his works, such as "Starry Night" and
-					"Sunflowers," continue to captivate viewers with their raw beauty and
-					deeply introspective nature.
-				</p>
-			</Fragment>
-			<Fragment slot='2'>
-				<p>
-					René Magritte was a Belgian surrealist artist known for his
-					thought-provoking and dreamlike imagery. Magritte's paintings often
-					juxtaposed ordinary objects in unexpected and mysterious ways,
-					challenging viewers' perception and the conventions of reality. He
-					explored themes of identity, perception, and the relationship between
-					language and image. With his meticulous attention to detail and his
-					ability to create a sense of ambiguity, Magritte's works, like "The
-					Son of Man" and "The Treachery of Images," continue to captivate and
-					intrigue art enthusiasts worldwide.
-				</p>
-			</Fragment>
-			<Fragment slot='3'>
-				<p>
-					Edward Hopper was an American realist painter known for his evocative
-					depictions of urban and rural scenes. Hopper's art often portrayed
-					solitary figures, empty streets, and quiet moments, reflecting a sense
-					of isolation and introspection. His use of light and shadow, along
-					with his keen observation of everyday life, created a sense of mood
-					and narrative within his paintings. Hopper's iconic works, such as
-					"Nighthawks" and "Morning Sun," captured the essence of modern
-					American life, and his unique visual language continues to resonate
-					with viewers, inviting them to contemplate the complexities of human
-					experience.
-				</p>
-			</Fragment>
-		</TabsWidget>
+		<FlipCardsWidget client:visible id={1} cardsTotal={4}>
+			<FlipCard client:idle id={1} cardNum={1}>
+				<Fragment slot='front'>
+					<p>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
+						provident adipisci, iusto amet aperiam dolor molestias quibusdam ad
+						quos a modi laudantium natus rem magnam asperiores fuga earum animi
+						repudiandae!
+					</p>
+				</Fragment>
+				<Fragment slot='back'>
+					<p>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
+						provident adipisci, iusto amet aperiam dolor molestias quibusdam ad
+						quos a modi laudantium natus rem magnam asperiores fuga earum animi
+						repudiandae!
+					</p>
+					<p>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
+						provident adipisci, iusto amet aperiam dolor molestias quibusdam ad
+						quos a modi laudantium natus rem magnam asperiores fuga earum animi
+						repudiandae!
+					</p>
+					<p>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
+						provident adipisci, iusto amet aperiam dolor molestias quibusdam ad
+						quos a modi laudantium natus rem magnam asperiores fuga earum animi
+						repudiandae!
+					</p>
+					<p>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
+						provident adipisci, iusto amet aperiam dolor molestias quibusdam ad
+						quos a modi laudantium natus rem magnam asperiores fuga earum animi
+						repudiandae!
+					</p>
+				</Fragment>
+			</FlipCard>
+			<FlipCard client:idle id={1} cardNum={2}>
+				<Fragment slot='front'>
+					<p>HI</p>
+				</Fragment>
+				<Fragment slot='back'>
+					<FullWidthImage imgName='washington-crossing-delaware.jpg' />
+				</Fragment>
+			</FlipCard>
+			<FlipCard client:idle id={1} cardNum={3}>
+				<Fragment slot='front'>
+					<p>HI</p>
+				</Fragment>
+				<Fragment slot='back'>
+					<p>HI</p>
+				</Fragment>
+			</FlipCard>
+			<FlipCard client:idle id={1} cardNum={4}>
+				<Fragment slot='front'>
+					<p>HI</p>
+				</Fragment>
+				<Fragment slot='back'>
+					<p>HI</p>
+				</Fragment>
+			</FlipCard>
+		</FlipCardsWidget>
 		<p>
-			<TextDescriptor type={'highlight'} sayAloud>
-				Art history is
-			</TextDescriptor> a fascinating subject that delves into the rich and diverse
-			world of artistic expression throughout human history. From the earliest cave
-			paintings to the most cutting-edge contemporary art, art history provides a
-			lens through which we can explore the cultural, social, and political contexts
-			that have shaped the art of different eras and regions.
+			<A11yTextStyle type={'highlight'} sayAloud>Art history is</A11yTextStyle> a
+			fascinating subject that delves into the rich and diverse world of artistic
+			expression throughout human history. From the earliest cave paintings to the
+			most cutting-edge contemporary art, art history provides a lens through which
+			we can explore the cultural, social, and political contexts that have shaped
+			the art of different eras and regions.
 		</p>
 		<TextOverlayImage
 			setAlign={'alignCenter'}
 			imgName='washington-crossing-delaware.jpg'
-			altText='Washington Crossing the Delaware by Emanuel Leutze'
-		>
+			altText='Washington Crossing the Delaware by Emanuel Leutze'>
 			<p>
 				Washington Crossing the Delaware is an iconic painting that captures a
 				pivotal moment in American history. Created by German-American artist
@@ -117,9 +135,9 @@ import FlipCardItem from '../../components/presentational/widgets/FlipCardItem.a
 			artworks from around the world.
 		</p>
 		<p>
-			<TextDescriptor type={'highlight'}>
+			<A11yTextStyle type={'highlight'}>
 				Whether you are an art lover, a student of history, or simply curious
-			</TextDescriptor>
+			</A11yTextStyle>
 			about the world around you, art history is a fascinating and rewarding subject
 			to explore. So why not dive in and discover the incredible world of art history
 			for yourself?
@@ -129,14 +147,12 @@ import FlipCardItem from '../../components/presentational/widgets/FlipCardItem.a
 			isLongDescForComplexImg
 			imgName='cafeterrace.jpg'
 			title={'A Look at Van Gogh'}
-			altText='Café Terrace at Night by Vincent Van Gogh'
-		>
+			altText='Café Terrace at Night by Vincent Van Gogh'>
 			<p>
 				"Cafe Terrace" is a renowned painting created by Dutch
 				post-impressionist artist Vincent van Gogh in 1888. The painting depicts
 				a <ExternalLink
-					src='https://mymodernmet.com/vincent-van-gogh-cafe-terrace-at-night-facts/'
-				>
+					url='https://mymodernmet.com/vincent-van-gogh-cafe-terrace-at-night-facts/'>
 					cozy outdoor café in the town of Arles, France
 				</ExternalLink>, illuminated by warm gas lamps. Van Gogh's use of
 				vibrant colors and expressive brushstrokes captures the atmosphere and
@@ -173,14 +189,54 @@ import FlipCardItem from '../../components/presentational/widgets/FlipCardItem.a
 				expression of his own emotional experiences.
 			</p>
 		</SideBySide>
+		<TabsWidget tabNames={['Van Gogh', 'René Margritte', 'Edward Hopper']}>
+			<Fragment slot='1'>
+				<p>
+					Vincent van Gogh was a Dutch post-impressionist painter whose unique
+					style and emotionally charged works have left an indelible mark on the
+					art world. Van Gogh's art is characterized by his bold and expressive
+					brushwork, vibrant colors, and his ability to convey profound emotion
+					through his paintings. Despite struggling with mental health issues
+					throughout his life, his works, such as "Starry Night" and
+					"Sunflowers," continue to captivate viewers with their raw beauty and
+					deeply introspective nature.
+				</p>
+			</Fragment>
+			<Fragment slot='2'>
+				<p>
+					René Magritte was a Belgian surrealist artist known for his
+					thought-provoking and dreamlike imagery. Magritte's paintings often
+					juxtaposed ordinary objects in unexpected and mysterious ways,
+					challenging viewers' perception and the conventions of reality. He
+					explored themes of identity, perception, and the relationship between
+					language and image. With his meticulous attention to detail and his
+					ability to create a sense of ambiguity, Magritte's works, like "The
+					Son of Man" and "The Treachery of Images," continue to captivate and
+					intrigue art enthusiasts worldwide.
+				</p>
+			</Fragment>
+			<Fragment slot='3'>
+				<p>
+					Edward Hopper was an American realist painter known for his evocative
+					depictions of urban and rural scenes. Hopper's art often portrayed
+					solitary figures, empty streets, and quiet moments, reflecting a sense
+					of isolation and introspection. His use of light and shadow, along
+					with his keen observation of everyday life, created a sense of mood
+					and narrative within his paintings. Hopper's iconic works, such as
+					"Nighthawks" and "Morning Sun," captured the essence of modern
+					American life, and his unique visual language continues to resonate
+					with viewers, inviting them to contemplate the complexities of human
+					experience.
+				</p>
+			</Fragment>
+		</TabsWidget>
 		<SideBySide
 			isNewSection
 			title={'A Moment with René Margritte'}
 			setAlign={'alignRight'}
 			altText='Le Mal Du Pays by René Magritte'
 			setRatio={'r6040'}
-			imgName='le-mal-du-pays.jpg'
-		>
+			imgName='le-mal-du-pays.jpg'>
 			<p>
 				"Le Mal Du Pays" is a notable painting created by Belgian surrealist
 				artist René Magritte in 1940. Translated as "Homesickness" or "The
@@ -341,8 +397,7 @@ import FlipCardItem from '../../components/presentational/widgets/FlipCardItem.a
 		<TextOverlayImage
 			imgName='cafeterrace.jpg'
 			altText={'Café Terrace by Vincent Van Gogh'}
-			setAlign={'alignCenter'}
-		>
+			setAlign={'alignCenter'}>
 			<p>
 				"Cafe Terrace" is a renowned painting created by Dutch
 				post-impressionist artist Vincent van Gogh in 1888. The painting depicts
@@ -396,26 +451,6 @@ import FlipCardItem from '../../components/presentational/widgets/FlipCardItem.a
 	</StaticContent>
 	<StaticContent title='The Third Section'>
 		<p>In this course, we will&hellip;</p>
-		<FlipCardWidget>
-			<FlipCardItem>
-				<Fragment slot='front'>
-					<p>lorem</p>
-				</Fragment>
-				<Fragment slot='back'>
-					<p>ipsum</p>
-					<hr />
-					<p>Lorem ipsum dolor</p>
-				</Fragment>
-			</FlipCardItem>
-			<FlipCardItem>
-				<Fragment slot='front'>
-					<p>lorem</p>
-				</Fragment>
-				<Fragment slot='back'>
-					<p>ipsum</p>
-				</Fragment>
-			</FlipCardItem>
-		</FlipCardWidget>
 		<p>
 			Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur earum
 			fuga error repudiandae. Libero voluptatem impedit amet incidunt blanditiis

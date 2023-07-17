@@ -4,16 +4,16 @@
   transition: all var(--timeShort) ease-in-out;
 }
 @mixin long {
-  -webkit-transition: all var(--timeLong) ease-in-out;
-  transition: all var(--timeLong) ease-in-out;
+  -webkit-transition: all var(--timeMed) ease-in-out;
+  transition: all var(--timeMed) ease-in-out;
 }
 @mixin flourishShort {
   -webkit-transition: all var(--timeShort) var(--transitionFlourish);
   transition: all var(--timeShort) var(--transitionFlourish);
 }
 @mixin flourishLong {
-  -webkit-transition: all var(--timeLong) var(--transitionFlourish);
-  transition: all var(--timeLong) var(--transitionFlourish);
+  -webkit-transition: all var(--timeMed) var(--transitionFlourish);
+  transition: all var(--timeMed) var(--transitionFlourish);
 }
 
 // NOTE: VUE TRANSITION COMPONENTS

@@ -5,24 +5,23 @@
 			v-if="!activityProgressStore.wantsNoMoreAlerts"
 			:show="
 				!isFinaleReveal && !activityProgressStore[sectionID].isAttemptsFinished
-			"
-		>
+			">
 			<p>
-				<span class="visuallyHidden">Important: </span>
-				Heads&nbsp;up!&nbsp;Once&nbsp;completed, this&nbsp;{{
+				<span class="visuallyHidden">Important:</span>
+				Heads&nbsp;up!&nbsp;Once&nbsp;complete, this&nbsp;{{
 					setActivityType
 				}}&nbsp;activity
-				<strong>cannot</strong>&nbsp;be&nbsp;turned&nbsp;off&nbsp;later.
+				<strong>cannot</strong>
+				&nbsp;be&nbsp;turned&nbsp;off&nbsp;later.
 			</p>
 			<div :class="$style.disableAlerts">
 				<input
 					type="checkbox"
 					:id="`disabledAlert-${sectionID}`"
-					@click="registerNoMoreAlerts($event)"
-				/>
-				<label :for="`disabledAlert-${sectionID}`"
-					>Hide these alerts on all future activities</label
-				>
+					@click="registerNoMoreAlerts($event)" />
+				<label :for="`disabledAlert-${sectionID}`">
+					Hide these alerts on all future activities
+				</label>
 			</div>
 		</BaseAlertText>
 		<component :is="activity" v-bind="conditionalProps">
@@ -48,11 +47,15 @@
 		title: string
 		prompt: string
 		isFinaleReveal?: boolean
+		practiceType?: 'explorable'
 	}
 	const props = withDefaults(defineProps<Props>(), {
 		toSave: false,
 		isFinaleReveal: false,
 	})
+
+	const sectionID = createID(props.title)
+	initActivityProgressStore(sectionID)
 
 	const wantsNoMoreAlerts = ref<boolean>(false)
 	const registerNoMoreAlerts = ({ target }: Event) => {
@@ -65,9 +68,6 @@
 		}
 	}
 	provide('fromInteractiveActivityWantsNoMoreAlerts', wantsNoMoreAlerts)
-
-	const sectionID = createID(props.title)
-	initActivityProgressStore(sectionID)
 
 	const activity = defineAsyncComponent(() =>
 		import(
@@ -96,7 +96,9 @@
 				}
 				break
 			case 'practice':
-				activityProps = {}
+				activityProps = {
+					practiceType: props.practiceType,
+				}
 				break
 			case 'choice':
 				activityProps = {}

@@ -23,6 +23,7 @@ const toggleSectionDisplay = (
 filteredNavSectionsComputed.subscribe((sections) => {
 	toggleSectionDisplay(sections, true)
 })
+
 filteredLockedSectionsComputed.subscribe((sections) => {
 	toggleSectionDisplay(sections, false)
 })
