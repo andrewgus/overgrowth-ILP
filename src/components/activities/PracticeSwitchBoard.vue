@@ -18,10 +18,8 @@
 	const practiceActivity = defineAsyncComponent(
 		() => import(`./practiceOptions/${props.practiceType}.vue`)
 	)
+
 	const conditionalProps = computed(() => {
 		return { id: props.id, prompt: props.prompt }
 	})
-
-	// FOR TESTING. This below would actually exist within a given child component. See reflection for example.
-	activityProgressStore[props.id].isAttemptsFinished = true
 </script>

@@ -47,7 +47,7 @@
 		title: string
 		prompt: string
 		isFinaleReveal?: boolean
-		practiceType?: 'explorable'
+		practiceType?: 'Explorable'
 	}
 	const props = withDefaults(defineProps<Props>(), {
 		toSave: false,
