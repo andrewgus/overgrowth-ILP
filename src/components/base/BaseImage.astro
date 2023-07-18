@@ -31,7 +31,7 @@ const imageFilePath = `https://fscjcel.blob.core.windows.net/ilp-assets/${Astro.
 		alt={altText}
 		aria-describedby={describedBy}
 		aria-labelledby={labelledby}
-		role={!!!altText ? 'presentation' : 'img'}
+		role={!!altText ? 'img' : 'presentation'}
 	/>
 </picture>
 
