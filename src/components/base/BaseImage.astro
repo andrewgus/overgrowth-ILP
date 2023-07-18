@@ -13,18 +13,6 @@ const imageFilePath = `https://fscjcel.blob.core.windows.net/ilp-assets/${Astro.
 	.at(2)}`
 ---
 
-{
-	() => {
-		let html = ''
-		if (describedBy)
-			html = `<img
-		src='${imageFilePath}_${imgName}'
-		alt={altText}
-		aria-describedby={describedBy}
-	/>`
-	}
-}
-
 <picture>
 	<source
 		type='image/avif'
@@ -43,6 +31,7 @@ const imageFilePath = `https://fscjcel.blob.core.windows.net/ilp-assets/${Astro.
 		alt={altText}
 		aria-describedby={describedBy}
 		aria-labelledby={labelledby}
+		role={!!!altText ? 'presentation' : 'img'}
 	/>
 </picture>
 
