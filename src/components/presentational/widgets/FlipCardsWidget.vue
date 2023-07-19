@@ -5,24 +5,27 @@
 			right arrow keys, or&nbsp;swiping left&nbsp;&amp;&nbsp;right
 			on&nbsp;the&nbsp;card.
 		</p>
-		<div ref="displayBoxEl" :class="$style.flipCards__displayBox">
+		<div
+			ref="displayBoxEl"
+			:id="`${flipID}-displayBox`"
+			:class="$style.flipCards__displayBox">
 			<slot></slot>
 		</div>
 		<div ref="nextPrevBtnsEl" :class="$style.flipCards__btns">
 			<BaseButton
 				text="&#9664;"
 				aria-label="previous card"
+				:aria-controls="`${flipID}-displayBox`"
 				@btnClick="goToCard('prev', $event)"
 				@focus="swapTabindex"
-				:disabled="onFirstCard"
-			></BaseButton>
+				:disabled="onFirstCard"></BaseButton>
 			<BaseButton
 				text="&#9654;"
 				aria-label="next card"
+				:aria-controls="`${flipID}-displayBox`"
 				@btnClick="goToCard('next', $event)"
 				@focus="swapTabindex"
-				:disabled="onLastCard"
-			></BaseButton>
+				:disabled="onLastCard"></BaseButton>
 		</div>
 	</div>
 </template>

@@ -3,28 +3,33 @@
 		<section
 			v-if="areFlipCardsAvailable"
 			v-show="isActive"
+			:id="`${flipID}-card#${cardNum}`"
 			ref="flipCardEl"
 			tabindex="-1"
 			:class="[$style.flipCard, { [$style.isFlipped]: !isOnFront }]"
 			:aria-labelledby="`${flipID}-${cardNum}`"
-			:aria-describedby="`${flipID}-instructions`"
-		>
+			:aria-describedby="`${flipID}-instructions`">
 			<p :class="$style.cardNum" :id="`${flipID}-${cardNum}`">
-				<span class="visuallyHidden">Flip Card</span> {{ cardNum }} of
+				<span class="visuallyHidden">Flip Card</span>
+				{{ cardNum }} of
 				{{ flipCardsStore[flipID].cardsTotalNum }}
 				<span>&vert; {{ isOnFront ? 'Front' : 'Back' }}</span>
 			</p>
 			<div ref="flipCardContentEl" :class="$style.cardContent" tabindex="-1">
-				<slot :name="isOnFront ? 'front' : 'back'"
-					>🛑 ERROR: FlipCard is missing
-					<code
-						>&lt;Fragment client:visible slot="{{
+				<slot :name="isOnFront ? 'front' : 'back'">
+					🛑 ERROR: FlipCard is missing
+					<code>
+						&lt;Fragment client:visible slot="{{
 							isOnFront ? 'front' : 'back'
-						}}"&gt;</code
-					>
+						}}"&gt;
+					</code>
 				</slot>
 			</div>
-			<button type="button" :class="$style.flipBtn" @click="flipTheCard">
+			<button
+				type="button"
+				:aria-controls="`${flipID}-card#${cardNum}`"
+				:class="$style.flipBtn"
+				@click="flipTheCard">
 				Flip to {{ isOnFront ? 'back' : 'front' }}?
 			</button>
 		</section>
