@@ -7,7 +7,7 @@ const allLessons = await Astro.glob('./*/*.astro')
 const topicURLs = [
 	...new Set(
 		allLessons
-			.map((lesson) => lesson.url!.split('/').at(2))
+			.map((lesson) => lesson.url!.split('/').at(1))
 			.filter((topic) => topic !== 'test-pages')
 	),
 ]
