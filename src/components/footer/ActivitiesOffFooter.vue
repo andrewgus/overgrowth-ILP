@@ -58,17 +58,28 @@
 		}
 	}
 
-	const unlockedAllStaticContent = computed(() =>
-		// Filter for only the static content section, and then return if every is unlocked
-		Object.values($allSections.value)
-			.filter((details) => details.activityType === null)
-			.every((sect) => sect.isLocked === false)
-	)
+	const unlockedAllPossibleSections = computed(() => {
+		// filter for any turned-off activities and map their keys
+		const turnedOffActivities = Object.entries($activities.value)
+			.filter(([_, isOn]) => !isOn)
+			.map(([type]) => type)
+		// filter for any section that is either static content or is NOT turned off
+		const unlockedSections = Object.values($allSections.value)
+			.filter((details) => {
+				return (
+					details.activityType === null ||
+					!turnedOffActivities.includes(details.activityType)
+				)
+			})
+			.every((section) => section.isLocked === false)
+
+		return unlockedSections
+	})
 
 	const showFooter = computed(
 		() =>
 			(anyActivityOff.value && !userUnderstands.value) ||
-			(userUnderstands.value && unlockedAllStaticContent.value)
+			(userUnderstands.value && unlockedAllPossibleSections.value)
 	)
 
 	watch(showFooter, (isShown) => {
