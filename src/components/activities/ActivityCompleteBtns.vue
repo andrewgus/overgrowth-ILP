@@ -10,8 +10,7 @@
 					activityProgressStore[id].isAttemptsFinished &&
 					!$allSections[id].isActivityComplete,
 			},
-		]"
-	>
+		]">
 		<BaseButton
 			key="0"
 			v-if="!$allSections[id].isActivityComplete && !isLastSection"
@@ -22,16 +21,14 @@
 					? `Complete ${$allSections[id].activityType} activity&nbsp;to&nbsp;continue`
 					: `Lock in ${$allSections[id].activityType} &amp; continue?`
 			"
-			@btnClick="setComplete"
-		/>
+			@btnClick="setComplete" />
 		<template key="1" v-else>
 			<div key="pdfSaveDiv" :class="$style.pdfSave">
 				<p
 					v-show="shouldDisplayVisualFeedback"
 					key="pdfFeedback"
 					:class="$style.pdfSave__feedback"
-					role="status"
-				>
+					role="status">
 					{{ pdfStatusUpdate }}
 				</p>
 				<BaseButton
@@ -47,8 +44,7 @@
 							: `Optional: Save ${$allSections[id].title} as a PDF?`
 					"
 					:class="$style.pdfSave__btn"
-					@btnClick="saveAsPDF"
-				/>
+					@btnClick="saveAsPDF" />
 			</div>
 			<BaseIndicator
 				:class="$style.continueIndicator"
@@ -56,12 +52,11 @@
 				v-if="!isLastSection"
 				text="Continue to next section"
 				:isHidden="id !== $currSection.id"
-				:goTo="`#${nextSection}`"
-			/>
+				:goTo="`#${nextSection}`" />
 		</template>
 	</TransitionGroup>
 	<div class="visuallyHidden" aria-live="assertive">
-		{{ continueAnnouncement }}
+		{{ ariaLiveAnnouncement }}
 	</div>
 </template>
 
@@ -80,6 +75,10 @@
 	import BaseButton from '../base/BaseButton.vue'
 	import BaseIndicator from '../base/BaseIndicator.vue'
 	import useAreSectionsAvailable from '../../composables/useAreSectionsAvailable'
+	import {
+		setAriaLiveAnnouncement,
+		ariaLiveAnnouncement,
+	} from '../../composables/useSetAriaLiveAnnouncement'
 
 	const props = defineProps({
 		id: {
@@ -98,21 +97,10 @@
 		'fromInteractiveActivityWantsNoMoreAlerts'
 	) as Ref<boolean>
 
-	const continueAnnouncement = ref<string>('')
-	const setContinueAnnouncement = (announcement: string) => {
-		setTimeout(() => {
-			continueAnnouncement.value = announcement
-		}, 1000)
-		setTimeout(() => {
-			continueAnnouncement.value = ''
-		}, 2000)
-	}
 	watch(activityProgressStore[props.id], (newValue) => {
-		if (newValue.isAttemptsFinished)
-			setContinueAnnouncement('Continue button is now clickable.')
-
-		if (!newValue.isAttemptsFinished)
-			setContinueAnnouncement('Complete activity to continue.')
+		newValue.isAttemptsFinished
+			? setAriaLiveAnnouncement('Continue button is now clickable.')
+			: setAriaLiveAnnouncement('Complete activity to continue.')
 	})
 
 	const saveAsPDF = async () => {
@@ -140,7 +128,7 @@
 
 		await nextTick()
 
-		setContinueAnnouncement('You can now continue to the next section.')
+		setAriaLiveAnnouncement('You can now continue to the next section.')
 
 		const saveBtnEl = thisSection.querySelector(
 			'button[class*="pdfSave__btn"]'

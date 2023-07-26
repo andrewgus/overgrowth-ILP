@@ -13,14 +13,9 @@ const activitiesMap = map<ActivitiesMap>({})
 const useDoesActivityExist = (activity: ActivityType) => {
 	activitiesMap.setKey(activity, true)
 }
-// Vue only: For v-ifs, if a given activity exists
-const useActivityExists = (activity: ActivityType) => {
-	if (useStore(activitiesMap).value[activity] !== undefined) {
-		return true
-	} else {
-		return false
-	}
-}
+// Vue only: if a given activity exists
+const useActivityExists = (activity: ActivityType) =>
+	useStore(activitiesMap).value.hasOwnProperty(activity)
 
 // All sections
 type SectionDetails = {

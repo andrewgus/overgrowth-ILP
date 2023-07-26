@@ -52,7 +52,6 @@
 	})
 
 	const areFlipCardsAvailable = ref<boolean>(false)
-	onMounted(() => (areFlipCardsAvailable.value = !!flipCardsStore[flipID]))
 
 	const flipID = `flipCardWidget-${props.id}`
 	const flipCardEl = ref<HTMLDivElement | null>(null)
@@ -63,6 +62,7 @@
 	)
 
 	const isOnFront = ref<boolean>(true)
+
 	const flipTheCard = () => {
 		isOnFront.value = !isOnFront.value
 		flipCardContentEl.value?.focus()
@@ -87,6 +87,8 @@
 			}
 		})
 	}
+
+	onMounted(() => (areFlipCardsAvailable.value = !!flipCardsStore[flipID]))
 </script>
 
 <style module lang="scss">

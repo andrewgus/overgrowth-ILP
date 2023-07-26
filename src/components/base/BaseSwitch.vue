@@ -46,7 +46,6 @@
 		@include transitions.flourishLong();
 		flex: 0 1 auto;
 		min-width: var(--s9);
-		cursor: pointer;
 		color: var(--black);
 		background-color: transparent;
 		border: none;

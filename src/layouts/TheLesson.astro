@@ -5,6 +5,7 @@ import TheLocalStorageDialog from '../components/modals/TheLocalStorageDialog.vu
 import SkipToContent from '../components/navigation/SkipToContent.astro'
 import TheLanding from '../components/landing/TheLanding.astro'
 import TheLessonNav from '../components/navigation/TheLessonNav.vue'
+import ActivitiesOffFooter from '../components/footer/ActivitiesOffFooter.vue'
 import createID from '../composables/useCreateID'
 
 type Props = {
@@ -45,9 +46,10 @@ const {
 		{isInteractive && <TheLocalStorageDialog client:load />}
 		<SkipToContent />
 		<TheLessonNav client:load />
+		<TheLanding scene={scene} title={title} color={gradientColor} />
 		<main id='theLessonContent'>
-			<TheLanding scene={scene} title={title} color={gradientColor} />
 			<slot />
 		</main>
+		{isInteractive && <ActivitiesOffFooter client:load />}
 	</body>
 </html>
