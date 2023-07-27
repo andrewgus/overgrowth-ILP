@@ -1,7 +1,7 @@
 ---
 // NOTE: sayAloud prop to be used when descriptor is CRITICAL to the content. For example, the sentence: "To quote George Washington: 'Four Score and <strong>Seven Years</strong> ago,'[Emphasis added]" would need the SayAloud prop so screens readers understand where emphasis was added. The strong emphasis, itself, is critical to the content. If descriptor is not critical, then sayAloud is not necessary.
 type Props = {
-	type:
+	setType:
 		| 'strong emphasis'
 		| 'emphasis'
 		| 'highlight'
@@ -11,7 +11,7 @@ type Props = {
 		| 'insert text'
 	sayAloud?: boolean
 }
-const { type, sayAloud = false } = Astro.props
+const { setType, sayAloud = false } = Astro.props
 ---
 
 {
@@ -24,7 +24,7 @@ const { type, sayAloud = false } = Astro.props
 			blockquote: 'blockquote',
 			'strikethrough text': 'del',
 			'insert text': 'ins',
-		}[type]
+		}[setType]
 
 		const createVisuallyHiddenText = (a11yText: string, isBefore: boolean) => {
 			return isBefore
@@ -51,7 +51,7 @@ const { type, sayAloud = false } = Astro.props
 			blockquote: '',
 			'strikethrough text': createVisuallyHiddenText('was', true),
 			'insert text': createVisuallyHiddenText('now', true),
-		}[type]
+		}[setType]
 
 		const determineSayAloud = {
 			'strong emphasis': sayAloud,
@@ -61,7 +61,7 @@ const { type, sayAloud = false } = Astro.props
 			blockquote: false,
 			'strikethrough text': true,
 			'insert text': true,
-		}[type]
+		}[setType]
 
 		const [wrapperStart, wrapperEnd] = [
 			`<${convertedType}>`,

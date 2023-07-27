@@ -2,7 +2,7 @@
 import TheLesson from '../../layouts/TheLesson.astro'
 import StaticContent from '../../layouts/StaticContent.astro'
 import ExternalLink from '../../components/presentational/A11yElements/ExternalLink.astro'
-import A11yTextStyle from '../../components/presentational/A11yElements/A11yTextStyle.astro'
+import TextStyle from '../../components/presentational/A11yElements/TextStyle.astro'
 import SideBySide from '../../components/presentational/contentLayouts/SideBySide.astro'
 import TextOverlayImage from '../../components/presentational/contentLayouts/TextOverlayImage.astro'
 import FullWidthImage from '../../components/presentational/contentLayouts/FullWidthImage.astro'
@@ -10,6 +10,7 @@ import TabsWidget from '../../components/presentational/widgets/TabsWidget.astro
 import AccordionWidget from '../../components/presentational/widgets/AccordionWidget.astro'
 import FlipCardsWidget from '../../components/presentational/widgets/FlipCardsWidget.vue'
 import FlipCard from '../../components/presentational/widgets/FlipCard.vue'
+import SubSection from '../../components/presentational/A11yElements/SubSection.astro'
 ---
 
 <TheLesson
@@ -18,8 +19,8 @@ import FlipCard from '../../components/presentational/widgets/FlipCard.vue'
 	scene='setting'
 	gradientColor={'var(--yellow-5)'}>
 	<StaticContent title='Welcome to the Course'>
-		<FlipCardsWidget client:visible id={1} cardsTotal={4}>
-			<FlipCard client:idle id={1} cardNum={1}>
+		<FlipCardsWidget client:visible id={'1'} cardsTotal={'4'}>
+			<FlipCard client:idle id={'1'} cardNum={'1'}>
 				<Fragment slot='front'>
 					<p>
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
@@ -55,7 +56,7 @@ import FlipCard from '../../components/presentational/widgets/FlipCard.vue'
 					</p>
 				</Fragment>
 			</FlipCard>
-			<FlipCard client:idle id={1} cardNum={2}>
+			<FlipCard client:idle id={'1'} cardNum={'2'}>
 				<Fragment slot='front'>
 					<p>HI</p>
 				</Fragment>
@@ -63,7 +64,7 @@ import FlipCard from '../../components/presentational/widgets/FlipCard.vue'
 					<FullWidthImage imgName='washington-crossing-delaware.jpg' />
 				</Fragment>
 			</FlipCard>
-			<FlipCard client:idle id={1} cardNum={3}>
+			<FlipCard client:idle id={'1'} cardNum={'3'}>
 				<Fragment slot='front'>
 					<p>HI</p>
 				</Fragment>
@@ -71,7 +72,7 @@ import FlipCard from '../../components/presentational/widgets/FlipCard.vue'
 					<p>HI</p>
 				</Fragment>
 			</FlipCard>
-			<FlipCard client:idle id={1} cardNum={4}>
+			<FlipCard client:idle id={'1'} cardNum={'4'}>
 				<Fragment slot='front'>
 					<p>HI</p>
 				</Fragment>
@@ -81,12 +82,12 @@ import FlipCard from '../../components/presentational/widgets/FlipCard.vue'
 			</FlipCard>
 		</FlipCardsWidget>
 		<p>
-			<A11yTextStyle type={'highlight'} sayAloud>Art history is</A11yTextStyle> a
-			fascinating subject that delves into the rich and diverse world of artistic
-			expression throughout human history. From the earliest cave paintings to the
-			most cutting-edge contemporary art, art history provides a lens through which
-			we can explore the cultural, social, and political contexts that have shaped
-			the art of different eras and regions.
+			<TextStyle setType={'highlight'} sayAloud>Art history is</TextStyle> a fascinating
+			subject that delves into the rich and diverse world of artistic expression
+			throughout human history. From the earliest cave paintings to the most cutting-edge
+			contemporary art, art history provides a lens through which we can explore
+			the cultural, social, and political contexts that have shaped the art of different
+			eras and regions.
 		</p>
 		<TextOverlayImage
 			setAlign={'alignCenter'}
@@ -135,9 +136,9 @@ import FlipCard from '../../components/presentational/widgets/FlipCard.vue'
 			artworks from around the world.
 		</p>
 		<p>
-			<A11yTextStyle type={'highlight'}>
+			<TextStyle setType={'highlight'}>
 				Whether you are an art lover, a student of history, or simply curious
-			</A11yTextStyle>
+			</TextStyle>
 			about the world around you, art history is a fascinating and rewarding subject
 			to explore. So why not dive in and discover the incredible world of art history
 			for yourself?
@@ -170,6 +171,11 @@ import FlipCard from '../../components/presentational/widgets/FlipCard.vue'
 				invites the viewer to imagine themselves in the vibrant ambiance of the
 				café.
 			</p>
+			<SubSection title='A SubSection'>
+				<p>SUBSECTION</p>
+				<p>lorem</p>
+				<p>SUBSECTION</p>
+			</SubSection>
 			<p>
 				The painting reflects van Gogh's fascination with capturing the essence
 				of everyday life and his desire to convey emotions through his art.

@@ -1,0 +1,47 @@
+---
+type Props = {
+	title: string
+}
+const { title } = Astro.props
+---
+
+<script>
+	const replaceHeading = (section: HTMLElement, newLevel: string) => {
+		const newHeading = document.createElement(newLevel) as HTMLHeadingElement
+		const originalHeading = section.firstElementChild! as HTMLHeadingElement
+		newHeading.innerText = originalHeading.innerText
+		section.replaceChild(newHeading, section.firstElementChild!)
+	}
+
+	window.addEventListener('load', () => {
+		const subSections = document.querySelectorAll('.subSection')
+
+		subSections.forEach((section) => {
+			const parentSection = section.parentElement!.closest(
+				'section, article'
+			) as HTMLElement
+			const parentSectionHeader = parentSection.querySelector(
+				'h2, h3, h4, h5'
+			) as HTMLHeadingElement
+
+			switch (parentSectionHeader.nodeName) {
+				case 'H3':
+					replaceHeading(section as HTMLElement, 'h4')
+					break
+				case 'H4':
+					replaceHeading(section as HTMLElement, 'h5')
+					break
+				case 'H5':
+					replaceHeading(section as HTMLElement, 'h6')
+					break
+				default:
+					break
+			}
+		})
+	})
+</script>
+
+<section class='subSection'>
+	<h3>{title}</h3>
+	<slot />
+</section>

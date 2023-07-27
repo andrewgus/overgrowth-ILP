@@ -42,11 +42,11 @@
 
 	const props = defineProps({
 		id: {
-			type: Number,
+			type: String,
 			required: true,
 		},
 		cardNum: {
-			type: Number,
+			type: String,
 			required: true,
 		},
 	})
@@ -58,7 +58,7 @@
 	const flipCardContentEl = ref<HTMLDivElement | null>(null)
 
 	const isActive = computed(
-		() => props.cardNum === flipCardsStore[flipID].activeCardIndex
+		() => +props.cardNum === flipCardsStore[flipID].activeCardIndex
 	)
 
 	const isOnFront = ref<boolean>(true)
@@ -81,7 +81,7 @@
 
 	if (flipCardsStore[flipID]) {
 		watch(flipCardsStore[flipID], async (newStoreVal) => {
-			if (newStoreVal.activeCardIndex === props.cardNum) {
+			if (newStoreVal.activeCardIndex === +props.cardNum) {
 				await nextTick()
 				flipCardEl.value?.focus()
 			}

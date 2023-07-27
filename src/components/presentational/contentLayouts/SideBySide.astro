@@ -87,6 +87,10 @@ const describedByID = createNanoID(Astro.self.name, isLongDescForComplexImg)
 		}
 		> .correspondingText {
 			flex: 2;
+
+			:global(.subSection) {
+				margin-bottom: var(--s2);
+			}
 		}
 		&.alignRight {
 			.stickyImg {

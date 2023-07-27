@@ -38,17 +38,17 @@
 
 	const props = defineProps({
 		id: {
-			type: Number,
+			type: String,
 			required: true,
 		},
 		cardsTotal: {
-			type: Number,
+			type: String,
 			required: true,
 		},
 	})
 
 	const flipID = `flipCardWidget-${props.id}`
-	initFlipCard(flipID, props.cardsTotal)
+	initFlipCard(flipID, +props.cardsTotal)
 
 	const displayBoxEl = ref<HTMLDivElement | null>(null)
 	const nextPrevBtnsEl = ref<HTMLDivElement | null>(null)

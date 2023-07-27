@@ -2,6 +2,7 @@
 import TheLesson from '../../layouts/TheLesson.astro'
 import StaticContent from '../../layouts/StaticContent.astro'
 import InteractiveActivity from '../../layouts/InteractiveActivity.vue'
+import SubSection from '../../components/presentational/A11yElements/SubSection.astro'
 ---
 
 <TheLesson
@@ -42,6 +43,19 @@ import InteractiveActivity from '../../layouts/InteractiveActivity.vue'
 			the schedule and we locked out all of the problems we saw each day in our
 			work.
 		</p>
+		<SubSection title='A subsection'>
+			<p>
+				SUBSECTION: Lorem ipsum dolor sit amet consectetur adipisicing elit.
+				Neque, repellat non. Illum eveniet id harum delectus facere ab, magni
+				nulla odit ipsum, culpa rem a saepe laudantium debitis quisquam maxime?
+			</p>
+			<SubSection title='A sub-subsection'>
+				<p>SUB-SUBSECTION</p>
+				<SubSection title='A sub-SUB-subsection'>
+					<p>SUB-SUB-SUBSECTION</p>
+				</SubSection>
+			</SubSection>
+		</SubSection>
 		<p>
 			“Every element of the program was in trouble and so were we. The
 			simulators were not working, Mission Control was behind in virtually every

@@ -71,8 +71,7 @@ const describedByID = createNanoID(Astro.self.name)
 					aria-controls={`tabpanel-${describedByID}-${i}`}
 					type='button'
 					role='tab'
-					tabindex={i === 0 ? 0 : -1}
-				>
+					tabindex={i === 0 ? 0 : -1}>
 					{tabName}
 				</button>
 			))
@@ -85,8 +84,7 @@ const describedByID = createNanoID(Astro.self.name)
 				id={`tabpanel-${describedByID}-${i}`}
 				role='tabpanel'
 				aria-labelledby={`tab-${describedByID}-${i}`}
-				class:list={[{ isHidden: i !== 0 }]}
-			>
+				class:list={[{ isHidden: i !== 0 }]}>
 				{async () => {
 					let html = ''
 					if (Astro.slots.has((i + 1).toString())) {
