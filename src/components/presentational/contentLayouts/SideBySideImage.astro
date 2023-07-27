@@ -38,7 +38,7 @@ const describedByID = createNanoID(Astro.self.name, isLongDescForComplexImg)
 
 {
 	() => {
-		const containerStyles = ['fullWidth', 'sideBySide', setAlign, setRatio]
+		const containerStyles = ['fullWidth', 'sideBySideImage', setAlign, setRatio]
 		const layout = (
 			<Fragment>
 				<div class='stickyImg'>
@@ -65,7 +65,7 @@ const describedByID = createNanoID(Astro.self.name, isLongDescForComplexImg)
 }
 
 <style lang='scss'>
-	.sideBySide {
+	.sideBySideImage {
 		display: flex;
 		flex-flow: row wrap;
 		gap: 0 var(--s2);
@@ -87,7 +87,6 @@ const describedByID = createNanoID(Astro.self.name, isLongDescForComplexImg)
 		}
 		> .correspondingText {
 			flex: 2;
-
 			:global(.subSection) {
 				margin-bottom: var(--s2);
 			}

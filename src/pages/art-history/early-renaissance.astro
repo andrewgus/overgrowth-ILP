@@ -3,7 +3,7 @@ import TheLesson from '../../layouts/TheLesson.astro'
 import StaticContent from '../../layouts/StaticContent.astro'
 import ExternalLink from '../../components/presentational/A11yElements/ExternalLink.astro'
 import TextStyle from '../../components/presentational/A11yElements/TextStyle.astro'
-import SideBySide from '../../components/presentational/contentLayouts/SideBySide.astro'
+import SideBySideImage from '../../components/presentational/contentLayouts/SideBySideImage.astro'
 import TextOverlayImage from '../../components/presentational/contentLayouts/TextOverlayImage.astro'
 import FullWidthImage from '../../components/presentational/contentLayouts/FullWidthImage.astro'
 import TabsWidget from '../../components/presentational/widgets/TabsWidget.astro'
@@ -143,7 +143,7 @@ import SubSection from '../../components/presentational/A11yElements/SubSection.
 			to explore. So why not dive in and discover the incredible world of art history
 			for yourself?
 		</p>
-		<SideBySide
+		<SideBySideImage
 			isNewSection
 			isLongDescForComplexImg
 			imgName='cafeterrace.jpg'
@@ -194,7 +194,7 @@ import SubSection from '../../components/presentational/A11yElements/SubSection.
 				captivate viewers with its timeless charm and the artist's passionate
 				expression of his own emotional experiences.
 			</p>
-		</SideBySide>
+		</SideBySideImage>
 		<TabsWidget tabNames={['Van Gogh', 'René Margritte', 'Edward Hopper']}>
 			<Fragment slot='1'>
 				<p>
@@ -236,7 +236,7 @@ import SubSection from '../../components/presentational/A11yElements/SubSection.
 				</p>
 			</Fragment>
 		</TabsWidget>
-		<SideBySide
+		<SideBySideImage
 			isNewSection
 			title={'A Moment with René Margritte'}
 			setAlign={'alignRight'}
@@ -283,7 +283,7 @@ import SubSection from '../../components/presentational/A11yElements/SubSection.
 				question our perception of reality and explore the depths of our own
 				emotions and desires.
 			</p>
-		</SideBySide>
+		</SideBySideImage>
 	</StaticContent>
 	<StaticContent title='The Second Section'>
 		<p>In this course, we will&hellip;</p>

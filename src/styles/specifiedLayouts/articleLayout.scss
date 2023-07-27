@@ -1,6 +1,6 @@
 article.section {
   min-height: 90vh;
-  padding: 0 var(--s-4);
+  padding: 0 var(--s-2);
   display: grid;
   grid-template-columns:
     auto [content-start] minmax(auto, 10ch) [innerContent-start] minmax(auto, 60ch)

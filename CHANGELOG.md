@@ -11,8 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - New SubSection component for proper semantics and accessibility of headings between sections and their child subsections
+- SideBySideImage & SideBySideText components created
 
 ### Changed
+- SideBySide component removed. Differed to more specified components based on usage.
 - Renamed A11yTextStyle to TextStyle. A11y not needed as it lives in A11y folder.
 - FlipCards and FlipCards Widget props updated for strings, rather than Numbers, for better DX
 - Updated semantics of TheLesson. Moved <header> into <main> as the header content is part of the main content

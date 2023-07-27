@@ -1,0 +1,90 @@
+---
+/**
+ * Horizontally-aligned layout of two text columns. Creates a side-by-side layout for the two.
+ */
+type PropsWithIsNewSection =
+	| {
+			isNewSection?: false | undefined
+			title?: undefined
+	  }
+	| {
+			isNewSection?: true
+			title: string
+	  }
+
+type Props = PropsWithIsNewSection & {
+	setRatio?: 'r4060' | 'r6040'
+	isFullWidth?: boolean
+}
+
+const {
+	setRatio,
+	isFullWidth = false,
+	isNewSection = false,
+	title,
+} = Astro.props
+---
+
+{
+	() => {
+		const containerStyles = ['sideBySideText', setRatio]
+		isFullWidth && containerStyles.push('fullWidth')
+		const layout = (
+			<Fragment>
+				<div class='colA'>
+					<slot name='a' />
+				</div>
+				<div class='colB'>
+					<slot name='b' />
+				</div>
+			</Fragment>
+		)
+		return isNewSection ? (
+			<section class:list={containerStyles}>
+				<h3>{title}</h3>
+				{layout}
+			</section>
+		) : (
+			<div class:list={containerStyles}>{layout}</div>
+		)
+	}
+}
+
+<style lang='scss'>
+	.sideBySideText {
+		display: flex;
+		flex-flow: row wrap;
+		align-items: start;
+		justify-content: space-between;
+		gap: 0 var(--s2);
+
+		> h3 {
+			width: 100%;
+		}
+		> * {
+			flex: 0 1 auto;
+			margin-left: auto;
+			margin-right: auto;
+			:global(.subSection) {
+				margin-bottom: var(--s2);
+			}
+		}
+
+		&.r6040 {
+			.colA {
+				flex: 1.5;
+			}
+			.colB {
+				flex: 0 1 auto;
+			}
+		}
+		&.r4060 {
+			.colA {
+				flex: 0 1 auto;
+			}
+			.colB {
+				flex: 1.5;
+			}
+		}
+	}
+</style>

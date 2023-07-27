@@ -1,8 +1,9 @@
 ---
 type Props = {
 	title: string
+	optionalClass?: string
 }
-const { title } = Astro.props
+const { title, optionalClass } = Astro.props
 ---
 
 <script>
@@ -41,7 +42,13 @@ const { title } = Astro.props
 	})
 </script>
 
-<section class='subSection'>
+<section class:list={['subSection', optionalClass]}>
 	<h3>{title}</h3>
 	<slot />
 </section>
+
+<style>
+	.subSection {
+		position: relative;
+	}
+</style>
