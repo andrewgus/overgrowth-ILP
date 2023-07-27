@@ -8,6 +8,5 @@ export default function createID(title: string) {
 		.trim()
 		.replaceAll(/[^\w\s]/g, '')
 		.replaceAll(' ', '-')
-		.substring(0, 25)
 		.toLowerCase()}`
 }
