@@ -46,8 +46,8 @@ const {
 		{isInteractive && <TheLocalStorageDialog client:load />}
 		<SkipToContent />
 		<TheLessonNav client:load />
-		<TheLanding scene={scene} title={title} color={gradientColor} />
 		<main id='theLessonContent'>
+			<TheLanding scene={scene} title={title} color={gradientColor} />
 			<slot />
 		</main>
 		{isInteractive && <ActivitiesOffFooter client:load />}

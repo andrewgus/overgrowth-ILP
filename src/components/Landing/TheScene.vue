@@ -4,26 +4,22 @@
 		aria-hidden="true"
 		:class="$style.scene"
 		tag="div"
-		name="opacity"
-	>
+		name="opacity">
 		<div
 			v-if="useActivityExists('reflection')"
 			key="reflection"
 			v-show="$activities.reflection"
-			:class="{ [$style.reflectionBg]: isBgLoaded }"
-		></div>
+			:class="{ [$style.reflectionBg]: isBgLoaded }"></div>
 		<div
 			v-if="useActivityExists('practice')"
 			key="practice"
 			v-show="$activities.practice"
-			:class="{ [$style.practiceBg]: isBgLoaded }"
-		></div>
+			:class="{ [$style.practiceBg]: isBgLoaded }"></div>
 		<div
 			v-if="useActivityExists('choice')"
 			key="choice"
 			v-show="$activities.choice"
-			:class="{ [$style.choiceBg]: isBgLoaded }"
-		></div>
+			:class="{ [$style.choiceBg]: isBgLoaded }"></div>
 	</TransitionGroup>
 </template>
 
@@ -58,13 +54,9 @@
 
 	const sceneDecor = {
 		backdrop: imgURL(),
-		backdropSmall: imgURL('small'),
 		reflection: imgURL('reflection'),
-		reflectionSmall: imgURL('reflection-small'),
 		practice: imgURL('practice'),
-		practiceSmall: imgURL('practice-small'),
 		choice: imgURL('choice'),
-		choiceSmall: imgURL('choice-small'),
 	}
 </script>
 
@@ -107,24 +99,10 @@
 			background-image: v-bind('sceneDecor.choice');
 		}
 	}
-
 	/* media queries */
 	@media only screen and (max-width: 950px) {
 		.scene {
-			background-image: v-bind('sceneDecor.backdropSmall');
-			grid-area: card-start/landing-top/card-indicator/landing-bottom;
 			aspect-ratio: 4/5;
-			max-height: 60vh;
-			align-self: end;
-			> .reflectionBg {
-				background-image: v-bind('sceneDecor.reflectionSmall');
-			}
-			> .practiceBg {
-				background-image: v-bind('sceneDecor.practiceSmall');
-			}
-			> .choiceBg {
-				background-image: v-bind('sceneDecor.choiceSmall');
-			}
 		}
 	}
 </style>
