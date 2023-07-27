@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.2.1] — 2023-07-27
+
+### Changed
+- Updated semantics of TheLesson. Moved <header> into <main> as the header content is part of the main content
+- Simplified TheScene to just use the one image with different aspect-ratio for smaller screens & zoom
+
 ## [0.2.0] — 2023-07-26
 
 ### Added
