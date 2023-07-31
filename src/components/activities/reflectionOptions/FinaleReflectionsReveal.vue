@@ -5,8 +5,7 @@
 			<div
 				v-for="(response, _, index) in userReflectionsStore"
 				:key="index"
-				:class="$style.responseItem"
-			>
+				:class="$style.responseItem">
 				<p :class="$style.question">
 					<span :class="$style.note">We asked:&nbsp;</span>
 					<span>{{ response.prompt }}</span>
@@ -14,8 +13,7 @@
 				<BaseSeparator
 					orientation="horizontal"
 					color="var(--darkGray)"
-					:class="$style.reflectionSeparator"
-				/>
+					:class="$style.reflectionSeparator" />
 				<p :class="$style.answer">
 					<span :class="$style.note">You answered:&nbsp;</span>
 					<span>{{ response.answer }}</span>
@@ -26,14 +24,27 @@
 </template>
 
 <script setup lang="ts">
+	import { onMounted } from 'vue'
 	import { userReflectionsStore } from '../../../store/activityOptionsStore'
+	import { allSectionsMap } from '../../../store/lessonStore'
 	import BaseSeparator from '../../base/BaseSeparator.vue'
 
-	defineProps({
+	const props = defineProps({
+		id: {
+			type: String,
+			required: true,
+		},
 		prompt: {
 			type: String,
 			required: true,
 		},
+	})
+	onMounted(() => {
+		allSectionsMap.listen((section) => {
+			section[props.id].isActivityComplete = !section[props.id].isLocked
+				? true
+				: false
+		})
 	})
 </script>
 

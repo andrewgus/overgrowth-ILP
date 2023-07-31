@@ -1,11 +1,11 @@
 <template>
-	<component :is="reflectionActivity" v-bind="conditionalProps">
+	<component :is="reflectionActivity" :id="id" :prompt="prompt">
 		<slot></slot>
 	</component>
 </template>
 
 <script setup lang="ts">
-	import { defineAsyncComponent, computed } from 'vue'
+	import { defineAsyncComponent } from 'vue'
 
 	type Props = {
 		id: string
@@ -22,9 +22,4 @@
 				}.vue`
 			)
 	)
-	const conditionalProps = computed(() => {
-		return props.isFinaleReveal
-			? { prompt: props.prompt }
-			: { id: props.id, prompt: props.prompt }
-	})
 </script>

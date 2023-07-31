@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.3.1] — 2023-07-31
+
+### Changed
+- Fixed load issue in setSectionsHandler file. Will now properly show all sections when every activity is complete.
+- FinaleReflectionReveal component fixed to properly be set that section to isActivityComplete: true when isLocked property is false.
+
 ## [0.3.0] — 2023-07-27
 
 ### Added
