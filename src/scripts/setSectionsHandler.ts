@@ -78,7 +78,9 @@ sections.forEach((section: HTMLElement, index: number) => {
 			? getActivityType(section.classList)
 			: null,
 		isLocked: getFirstActivityAndAllAfter(index),
+		// isLocked is whether to show it or not
 		isActivityComplete: isPreviouslyComplete(sectionIDs[index], section),
+		// isActivityComplete is used to determine the NEXT activity and unlock everything up until, and including, that next activity
 	}
 
 	allSectionsMap.setKey(sectionIDs[index], sectionDetails)
@@ -89,13 +91,19 @@ const SectionDetailValues = Object.values(allSectionsMap.get())
 const findNextIncompleteActivity = SectionDetailValues.find((details) => {
 	return (
 		details.activityType !== null &&
-		!!!getLocalStorage(details.id, 'isActivityComplete')
+		!getLocalStorage(details.id, 'isActivityComplete')
 	)
 })
 
 if (findNextIncompleteActivity) {
+	// If there is a nextIncompleteActivity, set that to nextIncompleteActivityMap and unlock everything up until, and including, that next activity.
 	useSetNextIncompleteActivity(findNextIncompleteActivity.id)
 	useUnlockNextSectionsAfterCompletion(true)
+} else {
+	// If there are no more incomplete activities, then everything should be unlocked
+	SectionDetailValues.forEach((section) => {
+		section.isLocked = false
+	})
 }
 
 // Setting whether on content or not && currSection
