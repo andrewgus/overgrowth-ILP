@@ -10,7 +10,7 @@
 	type Props = {
 		id: string
 		prompt: string
-		isFinaleReveal: boolean
+		isReflectionFinaleReveal: boolean
 	}
 	const props = defineProps<Props>()
 
@@ -18,7 +18,7 @@
 		() =>
 			import(
 				`./reflectionOptions/${
-					props.isFinaleReveal ? 'FinaleReflectionsReveal' : 'ReflectionInput'
+					props.isReflectionFinaleReveal ? 'FinaleReflectionsReveal' : 'ReflectionInput'
 				}.vue`
 			)
 	)

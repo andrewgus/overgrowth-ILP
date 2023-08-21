@@ -7,16 +7,21 @@ import createNanoID from '../../../composables/useCreateNanoID'
 
 type Props = {
 	imgName: string
+	isFullWidth?: boolean
 	altText?: string
 	caption?: string
 }
-const { imgName, altText = '', caption } = Astro.props
+const { imgName, isFullWidth = false, altText = '', caption } = Astro.props
 
 const labelledbyID = createNanoID(Astro.self.name, caption)
 ---
 
-<div class:list={['fullWidth', 'fullWidthImg']}>
-	<BaseImage labelledby={labelledbyID} imgName={imgName} altText={altText} />
+<div class:list={[{ fullWidth: isFullWidth }, 'soloImg']}>
+	<BaseImage
+		labelledby={labelledbyID}
+		imgName={imgName}
+		altText={altText}
+	/>
 	{
 		!!caption && (
 			<p class='imgCaption'>
@@ -29,9 +34,14 @@ const labelledbyID = createNanoID(Astro.self.name, caption)
 </div>
 
 <style lang='scss'>
-	.fullWidthImg {
-		width: 100%;
-		max-width: fit-content;
+	.soloImg {
+		max-width: 100%;
+
+		> :global(picture, img) {
+			width: 100%;
+			display: block;
+			margin: 0 auto;
+		}
 
 		> .imgCaption {
 			display: block;

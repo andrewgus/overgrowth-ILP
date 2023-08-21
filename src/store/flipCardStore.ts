@@ -1,6 +1,4 @@
-import { type Ref, ref, reactive } from 'vue'
-
-// TODO: use reactive to init one per widget used
+import { reactive } from 'vue'
 
 type FlipCardsInfo = {
 	[flipID: string]: {

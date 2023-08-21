@@ -32,10 +32,18 @@ const {
 		const layout = (
 			<Fragment>
 				<div class='colA'>
-					<slot name='a' />
+					<slot name='a'>
+						<code style='background-color:red'>
+							needs element with slot='a' prop
+						</code>
+					</slot>
 				</div>
 				<div class='colB'>
-					<slot name='b' />
+					<slot name='b'>
+						<code style='background-color:red'>
+							needs element with slot='b' prop
+						</code>
+					</slot>
 				</div>
 			</Fragment>
 		)
@@ -54,20 +62,23 @@ const {
 	.sideBySideText {
 		display: flex;
 		flex-flow: row wrap;
-		align-items: start;
+		align-items: stretch;
 		justify-content: space-between;
 		gap: 0 var(--s2);
 
 		> h3 {
 			width: 100%;
 		}
-		> * {
-			flex: 0 1 auto;
-			margin-left: auto;
-			margin-right: auto;
+		> .colA,
+		.colB {
+			flex: 1;
+			min-width: 25ch;
 			:global(.subSection) {
 				margin-bottom: var(--s2);
 			}
+			// > :global(table) {
+			// 	margin-top: 0;
+			// }
 		}
 
 		&.r6040 {

@@ -1,12 +1,29 @@
 ---
 type Props = {
 	title: string
+	giveMeConic?: boolean
 }
 
-const { title } = Astro.props
+const { title, giveMeConic } = Astro.props
+
+// TODO: Play around with the idea of conic gradients to jazz this up a bit. Maybe create a composable of good conic gradient combinations and, if no param is passed, then return a random conic gradient from an array of good combinations. If param is passed, grab that exact gradient from the array.
 ---
 
-<article class:list={['section', 'staticContent']} tabindex='-1'>
+<article
+	class:list={['section', 'staticContent', { colorize: giveMeConic }]}
+	tabindex='-1'>
 	<h2>{title}</h2>
 	<slot />
 </article>
+
+<style lang='scss'>
+	.colorize {
+		background-image: conic-gradient(
+			from 180deg at 10vmin 90%,
+			var(--red5),
+			var(--red5) 280deg,
+			var(--purple)
+		);
+	}
+	// NOTE: What could be done with too much white space? Conic gradients? What about this on the background-image of a given article? conic-gradient(from 180deg at 3% 66%, var(--blue5), var(--offWhite) 240deg,var(--offWhite) 280deg, var(--yellow5) 280deg). Play with this to make it work in mobile && desktop...
+</style>

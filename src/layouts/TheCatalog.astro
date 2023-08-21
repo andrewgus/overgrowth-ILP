@@ -1,7 +1,7 @@
 ---
+import SkipToContent from '../components/navigation/SkipToContent.astro'
 import '../styles/root.scss'
 import '../styles/specifiedLayouts/catalogLayout.scss'
-import SkipToContent from '../components/navigation/SkipToContent.astro'
 
 type Props = {
 	title: string
@@ -19,9 +19,20 @@ const { title, isTopicsPage = false } = Astro.props
 			name='viewport'
 			content='width=device-width, initial-scale=1, user-scalable=YES'
 		/>
-		<link rel='icon' href='/favicon.png' sizes='any' />
-		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
-		<meta name='generator' content={Astro.generator} />
+		<link
+			rel='icon'
+			href='/favicon.png'
+			sizes='any'
+		/>
+		<link
+			rel='icon'
+			type='image/svg+xml'
+			href='/favicon.svg'
+		/>
+		<meta
+			name='generator'
+			content={Astro.generator}
+		/>
 		<title>{title}</title>
 	</head>
 	<body>
@@ -37,14 +48,22 @@ const { title, isTopicsPage = false } = Astro.props
 				)
 			}
 			<main>
-				<h1 id='titleHeading' tabindex='-1'>{title}</h1>
+				<h1
+					id='titleHeading'
+					tabindex='-1'>
+					{title}
+				</h1>
 				<slot />
 			</main>
 		</div>
 		<footer>
-			<a href='https://github.com/andrewgus/overgrowth-ILP'>
-				<img role='img' src='/logo.svg' alt='Overgrowth' />
-			</a>
+			<a href='https://github.com/andrewgus/overgrowth-ILP'
+				><img
+					role='img'
+					src='/favicon.svg'
+					alt='Overgrowth'
+				/></a
+			>
 		</footer>
 	</body>
 </html>

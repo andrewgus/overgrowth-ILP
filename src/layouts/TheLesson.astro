@@ -1,17 +1,17 @@
 ---
-import '../styles/root.scss'
-import '../styles/specifiedLayouts/articleLayout.scss'
 import TheLocalStorageDialog from '../components/modals/TheLocalStorageDialog.vue'
 import SkipToContent from '../components/navigation/SkipToContent.astro'
 import TheLanding from '../components/landing/TheLanding.astro'
 import TheLessonNav from '../components/navigation/TheLessonNav.vue'
 import ActivitiesOffFooter from '../components/footer/ActivitiesOffFooter.vue'
 import createID from '../composables/useCreateID'
+import '../styles/root.scss'
+import '../styles/specifiedLayouts/articleLayout.scss'
 
 type Props = {
 	title: string
 	scene: string
-	gradientColor?: string
+	gradientColor: string
 	language?: string
 	isInteractive?: boolean
 }
@@ -33,9 +33,20 @@ const {
 			name='viewport'
 			content='width=device-width, initial-scale=1, user-scalable=YES'
 		/>
-		<link rel='icon' href='/favicon.png' sizes='any' />
-		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
-		<meta name='generator' content={Astro.generator} />
+		<link
+			rel='icon'
+			href='/favicon.png'
+			sizes='any'
+		/>
+		<link
+			rel='icon'
+			type='image/svg+xml'
+			href='/favicon.svg'
+		/>
+		<meta
+			name='generator'
+			content={Astro.generator}
+		/>
 		<script>
 			import '../scripts/setSectionsHandler.js'
 			import '../scripts/hashChangeHandler.js'
@@ -47,9 +58,38 @@ const {
 		<SkipToContent />
 		<TheLessonNav client:load />
 		<main id='theLessonContent'>
-			<TheLanding scene={scene} title={title} color={gradientColor} />
+			<TheLanding
+				scene={scene}
+				title={title}
+				color={gradientColor}
+			/>
 			<slot />
 		</main>
 		{isInteractive && <ActivitiesOffFooter client:load />}
 	</body>
 </html>
+
+<style define:vars={{ gradientColor }}>
+	body {
+		background-image: linear-gradient(to bottom, white 1%, transparent 1%),
+			linear-gradient(
+				to right,
+				var(--gradientColor),
+				var(--gradientColor) var(--s2),
+				transparent var(--s2)
+			),
+			linear-gradient(
+				to left,
+				var(--gradientColor),
+				var(--gradientColor) var(--s2),
+				transparent var(--s2)
+			),
+			repeating-linear-gradient(
+				to right,
+				var(--gradientColor),
+				var(--gradientColor) var(--s-5),
+				transparent var(--s-5),
+				transparent var(--s5)
+			);
+	}
+</style>

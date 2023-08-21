@@ -45,7 +45,7 @@
   }
   .flourish-enter-to,
   .flourish-leave-from {
-    animation: focusPulse 0.33s var(--transitionFlourish) forwards;
+    animation: focusPulse var(--timeShort) var(--transitionFlourish) forwards;
     opacity: 1;
   }
 }

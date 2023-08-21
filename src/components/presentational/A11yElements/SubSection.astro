@@ -2,9 +2,9 @@
 type Props = {
 	title: string
 	optionalClass?: string
-	isCallOutBox?: boolean
+	isFullWidth?: boolean
 }
-const { title, optionalClass, isCallOutBox = false } = Astro.props
+const { title, optionalClass, isFullWidth = false } = Astro.props
 ---
 
 <script>
@@ -43,18 +43,19 @@ const { title, optionalClass, isCallOutBox = false } = Astro.props
 	})
 </script>
 
-<section
-	class:list={['subSection', optionalClass, { callOutBox: isCallOutBox }]}>
+<section class:list={['subSection', optionalClass, { fullWidth: isFullWidth }]}>
 	<h3>{title}</h3>
 	<slot />
 </section>
 
 <style lang='scss'>
+	@use '../../../styles//mixins/containerStyles.scss';
+
 	.subSection {
 		position: relative;
-		&.isCallOutBox {
-			// TODO: add containerStyles mixin for a callOut. Same as is used in the CallOut component.
-			background-color: red;
+
+		> :global(* + *) {
+			margin-top: var(--s2);
 		}
 	}
 </style>

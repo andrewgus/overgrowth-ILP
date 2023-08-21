@@ -14,7 +14,10 @@ const bgGradient = `linear-gradient(to bottom, white 0%, ${Astro.props.color} 40
 ---
 
 <header class='landing'>
-	<TheScene client:load scene={scene} />
+	<TheScene
+		client:load
+		scene={scene}
+	/>
 	<TheTitleCard title={title} />
 	<BaseIndicator
 		class:list='onLandingIndicator'
@@ -32,6 +35,10 @@ const bgGradient = `linear-gradient(to bottom, white 0%, ${Astro.props.color} 40
 		display: grid;
 		grid-template-columns: [landing-top] 1fr [landing-bottom];
 		grid-template-rows: [card-start] 4fr [card-indicator] 50vh [indicator-end];
+		@supports (min-height: 1svh) {
+			min-height: 99svh;
+			grid-template-rows: [card-start] 4fr [card-indicator] 50svh [indicator-end];
+		}
 
 		> .onLandingIndicator {
 			align-self: end;

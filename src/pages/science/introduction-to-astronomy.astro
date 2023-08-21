@@ -2,7 +2,6 @@
 import TheLesson from '../../layouts/TheLesson.astro'
 import StaticContent from '../../layouts/StaticContent.astro'
 import InteractiveActivity from '../../layouts/InteractiveActivity.vue'
-import SubSection from '../../components/presentational/A11yElements/SubSection.astro'
 ---
 
 <TheLesson
@@ -13,7 +12,7 @@ import SubSection from '../../components/presentational/A11yElements/SubSection.
 		client:load
 		setActivityType='reflection'
 		title='What do you think?'
-		prompt='When you hear the term Astronomy, what do you think about?'>
+		prompts={['When you hear the term Astronomy, what do you think about?']}>
 		<p>Things to consider:</p>
 		<ul>
 			<li>
@@ -31,8 +30,12 @@ import SubSection from '../../components/presentational/A11yElements/SubSection.
 		client:load
 		setActivityType='practice'
 		title='Practice Activity'
-		prompt='This is a practice activity test.'
-		practiceType='Explorable'
+		prompts={['This is a practice activity test.']}
+		isPractice__setOptions={['Matching']}
+		isPracticeMatching__itemsAndAnswers={[
+			['test', 'yes'],
+			['test', 'no'],
+		]}
 	/>
 	<StaticContent title='Welcome to the Course'>
 		<p>In this course, we will&hellip;</p>
@@ -43,19 +46,6 @@ import SubSection from '../../components/presentational/A11yElements/SubSection.
 			the schedule and we locked out all of the problems we saw each day in our
 			work.
 		</p>
-		<SubSection title='A subsection'>
-			<p>
-				SUBSECTION: Lorem ipsum dolor sit amet consectetur adipisicing elit.
-				Neque, repellat non. Illum eveniet id harum delectus facere ab, magni
-				nulla odit ipsum, culpa rem a saepe laudantium debitis quisquam maxime?
-			</p>
-			<SubSection title='A sub-subsection'>
-				<p>SUB-SUBSECTION</p>
-				<SubSection title='A sub-SUB-subsection'>
-					<p>SUB-SUB-SUBSECTION</p>
-				</SubSection>
-			</SubSection>
-		</SubSection>
 		<p>
 			“Every element of the program was in trouble and so were we. The
 			simulators were not working, Mission Control was behind in virtually every
@@ -135,7 +125,9 @@ import SubSection from '../../components/presentational/A11yElements/SubSection.
 		client:load
 		setActivityType='reflection'
 		title='And Now What Do You Think?'
-		prompt='You’ve learned new information. What do you think about now when you hear the term Astronomy?'
+		prompts={[
+			'You’ve learned new information. What do you think about now when you hear the term Astronomy?',
+		]}
 	/>
 	<StaticContent title='The middle'>
 		<p>
@@ -299,13 +291,17 @@ import SubSection from '../../components/presentational/A11yElements/SubSection.
 		client:load
 		setActivityType='reflection'
 		title='One Last Time'
-		prompt='What’s changed in your thinking about Astronomy? Write it here.'
+		prompts={[
+			'What’s changed in your thinking about Astronomy? Write it here.',
+		]}
 	/>
 	<InteractiveActivity
 		client:load
 		setActivityType='reflection'
 		title="How You've Grown…"
-		prompt='Read how your thinking has progressed as you’ve learned more about Astronomy.'
-		isFinaleReveal
+		prompts={[
+			'Read how your thinking has progressed as you’ve learned more about Astronomy.',
+		]}
+		isReflection__FinaleReveal
 	/>
 </TheLesson>

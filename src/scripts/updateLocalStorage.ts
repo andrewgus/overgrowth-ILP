@@ -1,18 +1,13 @@
 // saving to localStorage
 import { watch } from 'vue'
-import { allSectionsMap, lessonIDAtom } from '../store/lessonStore'
-import {
-	activityProgressStore,
-	userReflectionsStore,
-} from '../store/activityOptionsStore'
+import { allSectionsMap, lessonIDAtom, useSetNextIncompleteActivity } from '../store/lessonStore'
+import {userReflectionsStore, userPracticeStore } from '../store/activityOptionsStore'
 import getLocalStorage from '../composables/useGetLocalStorage'
 
 type localStorageDataObjProps = {
 	isActivityComplete?: boolean
 	reflectionAnswer?: string
-	isReflectionOff?: boolean
-	isPracticeOff?: boolean
-	isChoiceOff?: boolean
+	isPracticeOptionStepsComplete: boolean[]
 }
 type localStorageDataTypes = keyof localStorageDataObjProps
 
@@ -30,12 +25,17 @@ const useResetLocalStorageUserData = () => {
 	Object.values(userReflectionsStore).forEach(
 		(reflection) => (reflection.answer = '')
 	)
+	// Clearing all practice steps
+	Object.values(userPracticeStore).forEach(
+		(practice) => (practice.isPracticeOptionStepsComplete.fill(false))
+	)
 	// Clearing all activity progress
 	const allSectionsAsArray = Object.entries(allSectionsMap.get())
 	// finding first available activity to lock sections all after it
 	const firstActivity = allSectionsAsArray.findIndex(
 		([_, details]) => details.activityType !== null
 	)
+	useSetNextIncompleteActivity(allSectionsAsArray[firstActivity][0])
 	allSectionsAsArray.forEach(([key, details], index) => {
 		allSectionsMap.setKey(key, {
 			...details,
@@ -66,6 +66,19 @@ watch(
 			if (answer !== '') {
 				updateLocalStorageUserData(id, {
 					reflectionAnswer: answer ? answer : '',
+				})
+			}
+		})
+	},
+	{ deep: true }
+)
+watch(
+	() => userPracticeStore,
+	(updatedReflections) => {
+		Object.entries(updatedReflections).forEach(([id, { isPracticeOptionStepsComplete }]) => {
+			if (isPracticeOptionStepsComplete.length >= 1) {
+				updateLocalStorageUserData(id, {
+					isPracticeOptionStepsComplete: isPracticeOptionStepsComplete
 				})
 			}
 		})

@@ -19,47 +19,65 @@ h1 {
 }
 h2 {
   font-size: var(--s4);
-  margin-top: var(--s6);
-  margin-bottom: var(--s2);
+  margin-top: 0;
+  margin-bottom: var(--s3);
 }
 @media only screen and (max-width: 950px) {
   h2 {
-    margin-top: var(--s3);
+    margin-top: var(--s4);
   }
 }
 h3 {
   font-size: var(--s3);
-  margin-top: var(--s5);
-  margin-bottom: var(--s1);
+  margin-top: var(--s6);
+  margin-bottom: var(--s2);
 }
 h4 {
   font-size: var(--s2);
-  margin-top: var(--s4);
-  margin-bottom: var(--s0);
+  margin-top: var(--s5);
+  margin-bottom: var(--s1);
 }
 h5 {
   font-size: var(--s1);
-  margin-top: var(--s3);
-  margin-bottom: var(--s-1);
+  margin-top: var(--s4);
+  margin-bottom: var(--s0);
 }
-
-p {
+label, p {
   color: var(--black);
   line-height: 1.6;
+}
+p {
   margin: 0;
 
   & + p {
     margin-top: var(--s2);
   }
   > small,
-  > small > span {
+  > small > span,
+  > sup,
+  > sub {
     font-size: var(--s-1);
   }
   > mark {
-    background-color: var(--yellow4);
     border-radius: var(--s-10);
-    border: 1px solid var(--yellow-1);
     padding: 0 var(--s-10);
+
+    &.highlightblue {
+      background-color: var(--blue5);
+      border: 1px solid var(--blue-1);
+    }
+    &.highlightgreen {
+      background-color: var(--green5);
+      border: 1px solid var(--green-1);
+    }
+    &.highlightred {
+      background-color: var(--red5);
+      border: 1px solid var(--red-1);
+    }
+    &.highlightyellow {
+      background-color: var(--yellow4);
+      border: 1px solid var(--yellow-1);
+    }
   }
 }
 
@@ -80,9 +98,27 @@ a {
 
 ul,
 ol {
-  margin-top: var(--s-4);
+  margin-top: var(--s-2);
 
   li + li {
-    margin-top: var(--s-4);
+    margin-top: var(--s-2);
   }
 }
+dl {
+  
+  dt {
+    background-image: linear-gradient(to right, var(--yellow4) 20%, transparent ,transparent 50%);
+    font-size: var(--s0);
+    font-weight: 700;
+    padding: var(--s-10) 0 var(--s-10) var(--s-6);
+  }
+  dd {
+    margin: 0;
+    margin-bottom: var(--s2);
+    padding-top: var(--s-6);
+    padding-left: var(--s-2);
+    
+  }
+}
+
+

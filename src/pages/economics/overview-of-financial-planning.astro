@@ -1,0 +1,1794 @@
+---
+import TheLesson from '../../layouts/TheLesson.astro'
+import InteractiveActivity from '../../layouts/InteractiveActivity.vue'
+import StaticContent from '../../layouts/StaticContent.astro'
+import SubSection from '../../components/presentational/A11yElements/SubSection.astro'
+import SideBySideText from '../../components/presentational/contentLayouts/SideBySideText.astro'
+import TextStyle from '../../components/presentational/A11yElements/TextStyle.astro'
+import MathEq from '../../components/presentational/math/MathEq.astro'
+import CallOut from '../../components/presentational/contentLayouts/CallOut.astro'
+import ResponsiveTable from '../../components/presentational/tableElements/ResponsiveTable.astro'
+import TableHeader from '../../components/presentational/tableElements/TableHeader.astro'
+import TableRow from '../../components/presentational/tableElements/TableRow.astro'
+import TableData from '../../components/presentational/tableElements/TableData.astro'
+import SoloImage from '../../components/presentational/contentLayouts/SoloImage.astro'
+import ExternalLink from '../../components/presentational/A11yElements/ExternalLink.astro'
+import TableAttribution from '../../components/presentational/tableElements/TableAttribution.astro'
+import ResponsiveVideo from '../../components/presentational/responsiveElements/ResponsiveVideo.astro'
+import FlipCardsWidget from '../../components/presentational/widgets/FlipCardsWidget.vue'
+import FlipCard from '../../components/presentational/widgets/FlipCard.vue'
+import StepsList from '../../components/presentational/contentLayouts/StepsList.astro'
+import SideBySideImage from '../../components/presentational/contentLayouts/SideBySideImage.astro'
+import ReferenceItem from '../../components/presentational/contentLayouts/ReferenceItem.astro'
+---
+
+<TheLesson
+	title='Overview of Financial Planning'
+	scene='planning-a-budget'
+	gradientColor='var(--green-3)'>
+	<InteractiveActivity
+		client:load
+		title='What Is Financial Planning To You?'
+		setActivityType={'reflection'}
+		prompts={[
+			'Before we start, What does that term, financial planning, mean to you? How would you define it? Why?',
+		]}
+	/>
+	<StaticContent title='What Is Financial Planning?'>
+		<p>
+			Do you want to buy a new iPhone, a new car, or your own house? Do you want
+			to begin reducing your debt instead of increasing it? Do you want to keep
+			growing your wealth? If you answered yes to even one of these questions,
+			financial planning could be the answer! Whatever your goals, life is
+			complicated and risky, and having a well-developed financial plan
+			increases the odds of achieving your goals.
+		</p>
+		<SubSection title='Financial Planning Defined'>
+			<p>
+				The idea of financial planning is really no different from the idea of
+				planning most anything. It is an ongoing process that looks at your
+				current financial situation and creates strategies to reach your
+				financial goals.
+			</p>
+			<p>
+				Financial planning often delves into multiple areas of finance,
+				including investing, taxes, savings, retirement, real estate, insurance,
+				and more. A financial plan has to be re-evaluated, adjusted, and
+				re-adjusted. The earlier you start, the better off you will be!
+			</p>
+		</SubSection>
+	</StaticContent>
+	<StaticContent title='Factors Affecting Financial Planning'>
+		<p>
+			There are many factors that can affect financial planning. These factors
+			can range from what can be considered small (micro factors) to relatively
+			large (macro factors).
+		</p>
+		<SideBySideText>
+			<SubSection
+				title='Micro Factors'
+				optionalClass='littleCircle'
+				slot='a'>
+				<ul>
+					<li>
+						<p>Family Structure</p>
+					</li>
+					<li>
+						<p>Health</p>
+					</li>
+					<li>
+						<p>Age/Life Stage</p>
+					</li>
+					<li>
+						<p>Career Choice (covered in Module 2)</p>
+					</li>
+				</ul>
+			</SubSection>
+			<SubSection
+				title='Macro Factors'
+				optionalClass='bigCircle'
+				slot='b'>
+				<ul>
+					<li>
+						<p>Business Cycles</p>
+					</li>
+					<li>
+						<p>Labor Market</p>
+					</li>
+					<li>
+						<p>Currency Value</p>
+					</li>
+					<li>
+						<p>Other economic performance indicators</p>
+					</li>
+				</ul>
+			</SubSection>
+		</SideBySideText>
+		<SubSection title='How You Benefit From Financial Planning '>
+			<p>Financial planning can:</p>
+			<ul>
+				<li>
+					<p>
+						Prevent devastating mistakes (e.g., poor credit, bankruptcy, housing
+						foreclosure)
+					</p>
+				</li>
+				<li>
+					<p>Prepare you for emergencies</p>
+				</li>
+				<li>
+					<p>Help you to be financially secure later in life</p>
+				</li>
+			</ul>
+		</SubSection>
+	</StaticContent>
+	<StaticContent title='Six Steps To the Financial Planning Process'>
+		<p>There are six essential steps to the financial planning process:</p>
+		<ol>
+			<li>
+				<p>Define goals</p>
+			</li>
+			<li>
+				<p>Assess your current situation</p>
+			</li>
+			<li>
+				<p>Identify and evaluate plans that could achieve your goals</p>
+			</li>
+			<li>
+				<p>Select and implement the best plan</p>
+			</li>
+			<li>
+				<p>Evaluate your financial plan</p>
+			</li>
+			<li>
+				<p>Revise your financial plan (annually)</p>
+			</li>
+		</ol>
+	</StaticContent>
+	<StaticContent title='Step 1: Define Goals'>
+		<p>Define by timing of goals:</p>
+		<ol>
+			<li>
+				<p>Short-term (1–2 years)</p>
+			</li>
+			<li>
+				<p>Intermediate (2–10 years)</p>
+			</li>
+			<li>
+				<p>Long-term (beyond 10 years)</p>
+			</li>
+		</ol>
+		<p>
+			Create a S.M.A.R.T Goal: A truly useful goal must be Specific, Measurable,
+			Attainable, Relevant, and Time-bound
+		</p>
+		<SubSection title='S.M.A.R.T Goal Example'>
+			<dl>
+				<dt>Goal:</dt>
+				<dd>To Wake up earlier</dd>
+				<dt>Specific:</dt>
+				<dd>
+					I want to wake up earlier each morning to have more time for my
+					morning routine.
+				</dd>
+				<dt>Measurable:</dt>
+				<dd>
+					I will start setting my alarm clock for 7:30 AM this week, and each
+					week set it earlier by 15 minutes. Plus, I will write the time when I
+					actually woke up on my calendar to measure progress.
+				</dd>
+				<dt>Attainable:</dt>
+				<dd>
+					My schedule allows me to go to bed at a decent time each night, so
+					waking up earlier will not take away many hours of rest.
+				</dd>
+				<dt>Relevant:</dt>
+				<dd>
+					My morning routine is filled with social media, and I feel rushed
+					trying to get to work each day, so waking up early would help me feel
+					calmer.
+				</dd>
+				<dt>Time-bound:</dt>
+				<dd>
+					In four weeks, I want to wake up one hour earlier than when I usually
+					wake up now.
+				</dd>
+			</dl>
+		</SubSection>
+	</StaticContent>
+	<StaticContent title='Step 2: Assess Your Current Situation'>
+		<p>Questions for you to consider:</p>
+		<ol>
+			<li>
+				<p>Are you a big spender or a big saver?</p>
+			</li>
+			<li>
+				<p>
+					Your saving accounts for what <TextStyle setType={'strong emphasis'}>
+						percentage
+					</TextStyle> of your after-tax income?
+				</p>
+			</li>
+		</ol>
+		<CallOut
+			setColor={'green'}
+			isCentered>
+			<p>This formula helps you determine your after-income savings:</p>
+			<MathEq
+				isDisplayMode
+				formula='\\frac{\\text{Saving}}{\\text{After-tax income}} \\times 100\\%'
+			/>
+		</CallOut>
+		<SoloImage imgName='spender-saver.svg' />
+		<ul>
+			<li>
+				<p>
+					<TextStyle setType={'strong emphasis'}>
+						Financial Statements
+					</TextStyle>
+				</p>
+				<ul>
+					<li>
+						<p>
+							Describe an individual’s or family’s current financial condition
+						</p>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<p>
+					<TextStyle setType={'strong emphasis'}>
+						Balance Sheet (or Net Worth Statement)
+					</TextStyle>
+				</p>
+				<ul>
+					<li>
+						<p>Net Worth = Assets &minus; Liabilities</p>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<p>
+					<TextStyle setType={'strong emphasis'}>Assets</TextStyle>: What you
+					own
+				</p>
+				<ul>
+					<li>
+						<p>
+							Definition: Any items with economic value that can be converted to
+							cash (e.g., car, shares of stock, cash deposits)
+						</p>
+					</li>
+					<li>
+						<p>
+							Assets may be used to store wealth, create income, and reduce
+							future expenses.
+						</p>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<p>
+					<TextStyle setType={'strong emphasis'}>Types of Assets</TextStyle>
+				</p>
+				<ul>
+					<li>
+						<p>
+							Liquid assets are financial assets that can be easily sold without
+							a loss in value.
+						</p>
+					</li>
+					<li>
+						<p>
+							Household assets are items normally owned by a household, such as
+							a home, a car, and furniture.
+						</p>
+					</li>
+					<li>
+						<p>
+							Financial assets (i.e., investment), such as bonds, stocks, mutual
+							funds, and real estate
+						</p>
+					</li>
+				</ul>
+				<ResponsiveTable
+					tableTitle='Table 1: Assets and the Role of Assets'
+					isAttributed>
+					<TableRow slot='head'>
+						<TableHeader
+							name='Asset'
+							direction='col'
+						/>
+						<TableHeader
+							name='Reduce Expenses'
+							direction='col'
+						/>
+						<TableHeader
+							name='Increase Income'
+							direction='col'
+						/>
+						<TableHeader
+							name='Store Wealth'
+							direction='col'
+						/>
+					</TableRow>
+					<TableRow>
+						<TableHeader
+							name='Car'
+							direction='row'
+						/>
+						<TableData data='Yes' />
+						<TableData data='No' />
+						<TableData data='No' />
+					</TableRow>
+					<TableRow>
+						<TableHeader
+							name='Savings Account'
+							direction='row'
+						/>
+						<TableData data='No' />
+						<TableData data='Yes' />
+						<TableData data='Yes' />
+					</TableRow>
+					<TableRow>
+						<TableHeader
+							name='Money Market Account'
+							direction='row'
+						/>
+						<TableData data='No' />
+						<TableData data='Yes' />
+						<TableData data='Yes' />
+					</TableRow>
+					<TableRow>
+						<TableHeader
+							name='Home'
+							direction='row'
+						/>
+						<TableData data='Yes' />
+						<TableData data='No' />
+						<TableData data='Yes' />
+					</TableRow>
+					<TableRow>
+						<TableHeader
+							name='Rental Property'
+							direction='row'
+						/>
+						<TableData data='No' />
+						<TableData data='Yes' />
+						<TableData data='Yes' />
+					</TableRow>
+					<TableRow>
+						<TableHeader
+							name='Investment in Bonds'
+							direction='row'
+						/>
+						<TableData data='No' />
+						<TableData data='Yes' />
+						<TableData data='Yes' />
+					</TableRow>
+					<TableRow>
+						<TableHeader
+							name='Investment in Stocks'
+							direction='row'
+						/>
+						<TableData data='No' />
+						<TableData data='Yes' />
+						<TableData data='Yes' />
+					</TableRow>
+					<TableAttribution slot='attribution'>
+						Source: "<ExternalLink
+							url='https://open.umn.edu/opentextbooks/textbooks/personal-finance'>
+							Personal Finance
+						</ExternalLink>" by Rachel Siegel and Carol Yacht, Saylor Foundation
+						| <ExternalLink
+							url='http://creativecommons.org/licenses/by-nc-sa/4.0'>
+							CC BY-NC-SA 4.0
+						</ExternalLink>
+					</TableAttribution>
+				</ResponsiveTable>
+			</li>
+			<li>
+				<p>
+					<TextStyle setType={'strong emphasis'}>Liabilities</TextStyle>: What
+					you owe
+				</p>
+				<ul>
+					<li>
+						<p>
+							Definition: Debts a person owes to someone else (e.g., student
+							loans, credit card balance, car loan)
+						</p>
+					</li>
+					<li>
+						<p>Types:</p>
+						<ul>
+							<li>
+								<p>
+									Short-term (or current) liabilities: Obligations to be paid
+									off within one year
+								</p>
+							</li>
+							<li>
+								<p>
+									Long-term liabilities: Obligations that will be paid off over
+									a period longer than one year
+								</p>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+		<SubSection title='How To Calculate Your Net Worth (as of today)'>
+			<CallOut
+				setColor={'green'}
+				isCentered>
+				<MathEq
+					formula='\\text{Net Worth} = \\text{What You Own} - \\text{What You Owe} = \\text{Assets} - \\text{Liabilities}'
+				/>
+			</CallOut>
+			<SideBySideText>
+				<ResponsiveTable
+					tableTitle='Asset'
+					slot='a'>
+					<TableRow>
+						<TableHeader
+							name='House'
+							direction={'row'}
+						/>
+						<TableData data='$300,000' />
+					</TableRow>
+					<TableRow>
+						<TableHeader
+							direction={'row'}
+							name='Car'
+						/>
+						<TableData data='$20,000' />
+					</TableRow>
+					<TableRow>
+						<TableHeader
+							direction={'row'}
+							name='Checking Account'
+						/>
+						<TableData data='$5,000' />
+					</TableRow>
+					<TableRow>
+						<TableHeader
+							direction={'row'}
+							name='TFSA'
+						/>
+						<TableData data='$15,000' />
+					</TableRow>
+					<TableRow slot='foot'>
+						<TableHeader
+							direction={'row'}
+							name='Total'
+						/>
+						<TableData data='$340,000' />
+					</TableRow>
+				</ResponsiveTable>
+				<ResponsiveTable
+					isAttributed
+					tableTitle='Liabilities'
+					slot='b'>
+					<TableRow>
+						<TableHeader
+							direction={'row'}
+							name='Mortgage'
+						/>
+						<TableData data='$200,000' />
+					</TableRow>
+					<TableRow>
+						<TableHeader
+							direction={'row'}
+							name='Car Loan'
+						/>
+						<TableData data='$15,000' />
+					</TableRow>
+					<TableRow>
+						<TableHeader
+							direction={'row'}
+							name='Credit Cards'
+						/>
+						<TableData data='$3,000' />
+					</TableRow>
+					<TableRow>
+						<TableHeader
+							direction={'row'}
+							name='Student Loan'
+						/>
+						<TableData data='$27,0000' />
+					</TableRow>
+					<TableRow slot='foot'>
+						<TableHeader
+							direction={'row'}
+							name='Total'
+						/>
+						<TableData data='$245,000' />
+					</TableRow>
+					<TableAttribution slot='attribution'>
+						Source: Banerjee, P. (2015, June 18). <ExternalLink
+							url='https://www.youtube.com/watch?v=KhSnNtdYR9Y'>
+							How to calculate your net worth
+						</ExternalLink> [Video]. YouTube.
+					</TableAttribution>
+				</ResponsiveTable>
+			</SideBySideText>
+			<CallOut
+				setColor={'green'}
+				isCentered>
+				<MathEq
+					isDisplayMode
+					formula='\\begin{align*} \\text{Net Worth} &= \\text{Assets} - \\text{Liabilities} \\\\ &=\\$340,000 - \\$245,000 \\\\ &=\\$95,000 \\end{align*}'
+				/>
+			</CallOut>
+			<ResponsiveVideo
+				introText={'Watch the video How to calculate your net worth or additional information on how to calculate net worth'}
+				transcriptSrc='how-to-calculate-your-net-worth-transcript.pdf'
+				title='How to Calculate Your Net Worth'
+				url='https://www.youtube.com/embed/KhSnNtdYR9Y'
+			/>
+		</SubSection>
+		<SubSection title='Positive Versus Negative Net Worth'>
+			<ul>
+				<li>
+					<p>Positive net worth:</p>
+					<ul>
+						<li>
+							<p>When assets &gt; liabilities, net worth &gt; 0.</p>
+						</li>
+						<li>
+							<p>Keep doing what you are doing.</p>
+						</li>
+						<li>
+							<p>Do not forget that a person’s net worth fluctuates.</p>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<p>Negative net worth:</p>
+					<ul>
+						<li>
+							<p>When assets &lt; liabilities, net worth &lt; 0.</p>
+						</li>
+						<li>
+							<p>It is a sign that you need to increase your net worth.</p>
+						</li>
+						<li>
+							<p>Strategies:</p>
+							<ul>
+								<li>
+									<p>Increase assets</p>
+								</li>
+								<li>
+									<p>Decrease debt</p>
+								</li>
+								<li>
+									<p>Or both</p>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</SubSection>
+	</StaticContent>
+	<InteractiveActivity
+		client:load
+		title='Time to Practice: Calculating Net Worth'
+		setActivityType={'practice'}
+		isPractice__setOptions={['Matching', 'Math']}
+		prompts={[
+			'Review the item and it’s value and determine if it is an asset or liability by selecting the correct answer.',
+			'Think about the answers to the questions below. When you think you have the correct answer, type in the number to see if it is correct.',
+		]}
+		isPracticeMatching__itemsAndAnswers={[
+			['Annual Salary: $42,000', 'Asset'],
+			['Saving account balance: $1,500', 'Asset'],
+			['Checking account balance: $750', 'Asset'],
+			['Credit card balance: $2,800', 'Liability'],
+			['Value of automobile: $15,000', 'Asset'],
+			['Auto loan: $6,750', 'Liability'],
+		]}
+		isPracticeMath__QsAndAs={[
+			[
+				'\\text{Assets} = \\$42,000 + \\$1,500 + \\$750 + \\$15,000 =',
+				'\\$59,000',
+			],
+			['\\text{Liabilities} = \\$2,800 + \\$6,750 =', '\\$9,550'],
+			[
+				'\\text{Net Worth} = \\text{Assets} - \\text{Liabilities} = \\$59,250 - \\$9550 =',
+				'\\$49,700',
+			],
+		]}>
+		<p>Let’s help Maria calculate her net worth.</p>
+		<ul>
+			<li>
+				<p>
+					First, determine Maria’s assets and liabilities and the totals of
+					each.
+				</p>
+			</li>
+			<li>
+				<p>Next, add the assets together.</p>
+			</li>
+			<li>
+				<p>Then, add the liabilities together.</p>
+			</li>
+			<li>
+				<p>
+					Finally, determine the net worth by subtracting the liabilities from
+					the assets.
+				</p>
+			</li>
+		</ul>
+		<p>
+			<TextStyle setType={'strong emphasis'}>
+				Determine Maria's Assets and Liabilities and the Totals of Each
+			</TextStyle>
+		</p>
+		<CallOut
+			setColor={'green'}
+			isCentered
+			isActivityFinalFeedback
+			slot='finalFeedback'>
+			<p>
+				Maria has a <TextStyle setType={'highlight'}>positive</TextStyle> net worth.
+				It means her current financial situation is <TextStyle
+					setType={'highlight'}>
+					good
+				</TextStyle>.
+			</p>
+		</CallOut>
+	</InteractiveActivity>
+	<StaticContent title='Steps 3, 4, 5, and 6 of the Financial Planning Process'>
+		<dl>
+			<dt>Step 3: Identify and evaluate plans that could achieve your goals</dt>
+			<dd>
+				<ul>
+					<li>
+						<p>
+							How can you obtain the necessary funds to achieve your financial
+							goals?
+						</p>
+					</li>
+					<li>
+						<p>
+							Will you need to reduce your spending to save more money each
+							month?
+						</p>
+					</li>
+					<li>
+						<p>
+							Will you need to make investments that generate a higher rate of
+							return?
+						</p>
+					</li>
+				</ul>
+			</dd>
+			<dt>Step 4: Select and implement the best plan</dt>
+			<dd>
+				<ul>
+					<li>
+						<p>
+							What are the advantages and disadvantages of each alternative plan
+							that could be used to achieve your goals?
+						</p>
+					</li>
+				</ul>
+			</dd>
+			<dt>Step 5: Evaluate your financial plan</dt>
+			<dd>
+				<ul>
+					<li>
+						<p>Is your financial plan working properly?</p>
+					</li>
+					<li>
+						<p>That is, will it enable you to achieve your financial goals?</p>
+					</li>
+				</ul>
+			</dd>
+			<dt>Step 6: Revise your financial plan</dt>
+			<dd>
+				<ul>
+					<li>
+						<p>Have your financial goals changed?</p>
+					</li>
+					<li>
+						<p>
+							Should parts of your financial plan be revised to achieve your
+							financial goals? If so, how?
+						</p>
+					</li>
+				</ul>
+			</dd>
+		</dl>
+		<p>
+			I hope that by the end of this course, you have started your first
+			financial plan.
+		</p>
+	</StaticContent>
+	<StaticContent title='Basic Tools in Finance: Cash Flow'>
+		<FlipCardsWidget
+			client:visible
+			id='1'
+			cardsTotal='6'>
+			<FlipCard
+				client:idle
+				id='1'
+				cardNum='1'>
+				<p slot='front'>What is Cash Flow?</p>
+				<Fragment slot='back'>
+					<p>Cash flow is the movement of cash.</p>
+					<p>
+						Cash <TextStyle
+							setType={'highlight'}
+							setHighlightColor={'green'}>
+							inflows
+						</TextStyle> are cash that you have received.
+					</p>
+					<p>
+						Cash <TextStyle
+							setType={'highlight'}
+							setHighlightColor={'red'}>
+							outflows
+						</TextStyle> are cash that you have spent.
+					</p>
+				</Fragment>
+			</FlipCard>
+			<FlipCard
+				client:idle
+				id='1'
+				cardNum='2'>
+				<p slot='front'>How do you calculate net cash flow?</p>
+				<Fragment slot='back'>
+					<MathEq
+						formula='\\text{Net cash flow} = \\text{Cash inflows} - \\text{Cash outflows}'
+					/>
+				</Fragment>
+			</FlipCard>
+			<FlipCard
+				client:idle
+				id='1'
+				cardNum='3'>
+				<p slot='front'>Positive net cash flow 😊</p>
+				<Fragment slot='back'>
+					<p>
+						When cash <TextStyle
+							setType={'highlight'}
+							setHighlightColor={'green'}>
+							inflows
+						</TextStyle> are <TextStyle setType={'emphasis'}>greater</TextStyle>
+						than cash <TextStyle
+							setType={'highlight'}
+							setHighlightColor={'red'}>
+							outflows
+						</TextStyle>
+					</p>
+					<p>
+						It means you have a <TextStyle setType={'strong emphasis'}>
+							cash surplus
+						</TextStyle> over a period of time, usually one month or one year.
+					</p>
+				</Fragment>
+			</FlipCard>
+			<FlipCard
+				client:idle
+				isNoFlip
+				id='1'
+				cardNum='4'
+				isNoFlip__setColor={'yellow'}>
+				<dl>
+					<dt>Think about it&hellip;</dt>
+					<dd>
+						How much cash should you add to your checking or savings account?
+					</dd>
+				</dl>
+			</FlipCard>
+			<FlipCard
+				client:idle
+				id='1'
+				cardNum='5'>
+				<p slot='front'>Negative net cash flow 🙁</p>
+				<Fragment slot='back'>
+					<p>
+						When cash <TextStyle
+							setType={'highlight'}
+							setHighlightColor={'green'}>
+							inflows
+						</TextStyle> are <TextStyle setType={'emphasis'}>
+							less than
+						</TextStyle> cash <TextStyle
+							setType={'highlight'}
+							setHighlightColor={'red'}>
+							outflows
+						</TextStyle>
+					</p>
+					<p>
+						It means you have a <TextStyle setType={'strong emphasis'}>
+							cash deficit
+						</TextStyle> over a period of time, usually one month or one year.
+					</p>
+				</Fragment>
+			</FlipCard>
+			<FlipCard
+				client:idle
+				isNoFlip
+				id='1'
+				cardNum='6'
+				isNoFlip__setColor={'yellow'}>
+				<dl>
+					<dt>Think about it&hellip;</dt>
+					<dd>
+						How much cash should you withdraw from your checking or savings
+						account?
+					</dd>
+					<dd>
+						How much credit should you use from credit cards or other sources?
+					</dd>
+				</dl>
+			</FlipCard>
+		</FlipCardsWidget>
+	</StaticContent>
+	<StaticContent title='Basic Tools of Finance: Cash Flow Statement'>
+		<dl>
+			<dt>What is a Cash Flow Statement?</dt>
+			<dd>
+				<ul>
+					<li>
+						<p>
+							<TextStyle setType={'strong emphasis'}>
+								Cash flow statements
+							</TextStyle> are used to analyze cash flow.
+						</p>
+					</li>
+					<li>
+						<p>
+							The cash flow statement shows how much cash came in, where it came
+							from, how much cash went out, and where it went <TextStyle
+								setType={'strong emphasis'}>
+								over a given period of time
+							</TextStyle>.
+						</p>
+					</li>
+				</ul>
+			</dd>
+		</dl>
+		<SubSection title='Cash Flow Statement—Example 1'>
+			<ResponsiveTable
+				tableTitle='Table 2: Personal Cash Flow Statement with Gross Wages '>
+				<TableRow>
+					<TableHeader
+						name='Cash from gross wages (cash inflows)'
+						direction={'row'}
+					/>
+					<TableData data='$40,000' />
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						name='Cash paid for: (cash outflows)'
+						direction={'col'}
+						spanColumns={2}
+					/>
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						name='Income tax and deductions'
+						direction={'row'}
+					/>
+					<TableData data='−$9,000' />
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						name='Rent expenses'
+						direction={'row'}
+					/>
+					<TableData data='−$10,800' />
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						name='Food'
+						direction={'row'}
+					/>
+					<TableData data='−$4,000' />
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						name='Car expenses'
+						direction={'row'}
+					/>
+					<TableData data='−$3,600' />
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						name='Clothing'
+						direction={'row'}
+					/>
+					<TableData data='−$2,000' />
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						name='Cell phone'
+						direction={'row'}
+					/>
+					<TableData data='−$1,200' />
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						name='Internet and Cable TV'
+						direction={'row'}
+					/>
+					<TableData data='−$800' />
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						name='Entertainment, travel, etc.'
+						direction={'row'}
+					/>
+					<TableData data='−$1,500' />
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						name='Car loan'
+						direction={'row'}
+					/>
+					<TableData data='−$2,500' />
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						name='Student loan'
+						direction={'row'}
+					/>
+					<TableData data='−$5,500' />
+				</TableRow>
+				<TableRow slot='foot'>
+					<TableHeader
+						name='Net Cash flow'
+						direction={'row'}
+					/>
+					<TableData data='−$900' />
+				</TableRow>
+				<TableAttribution slot='attribution'>
+					Source: "<ExternalLink
+						url='https://open.umn.edu/opentextbooks/textbooks/personal-finance'>
+						Personal Finance
+					</ExternalLink>" by Rachel Siegel and Carol Yacht, Saylor Foundation |
+					<ExternalLink url='http://creativecommons.org/licenses/by-nc-sa/4.0'>
+						CC BY-NC-SA 4.0
+					</ExternalLink>
+				</TableAttribution>
+			</ResponsiveTable>
+		</SubSection>
+		<SubSection title='Cash Flow Statement—Example 2'>
+			<ResponsiveTable tableTitle='Table 3A: Cash Inflows Statement'>
+				<TableRow slot='head'>
+					<TableHeader
+						direction={'col'}
+						name='Cash Inflows'
+					/>
+					<TableHeader
+						direction={'col'}
+						name='Last Month'
+					/>
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						direction={'row'}
+						name='Disposable (after-tax) income'
+					/>
+					<TableData data='$2,500' />
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						direction={'row'}
+						name='Interest on deposits'
+					/>
+					<TableData data='' />
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						direction={'row'}
+						name='Dividend payments'
+					/>
+					<TableData data='' />
+				</TableRow>
+				<TableRow slot='foot'>
+					<TableHeader
+						direction={'row'}
+						name='Total Cash Inflows'
+					/>
+					<TableData data='$2,500' />
+				</TableRow>
+			</ResponsiveTable>
+			<ResponsiveTable tableTitle='Table 3B: Cash Inflows Statement'>
+				<TableRow slot='head'>
+					<TableHeader
+						direction={'col'}
+						name='Cash Outflows'
+					/>
+					<TableHeader
+						direction={'col'}
+						name='Last Month'
+					/>
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						direction={'row'}
+						name='Rent'
+					/>
+					<TableData data='$600' />
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						direction={'row'}
+						name='Internet'
+					/>
+					<TableData data='$50' />
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						direction={'row'}
+						name='Electricity and water'
+					/>
+					<TableData data='$60' />
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						direction={'row'}
+						name='Cellular'
+					/>
+					<TableData data='$60' />
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						direction={'row'}
+						name='Groceries'
+					/>
+					<TableData data='$400' />
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						direction={'row'}
+						name='Health care insurance and expenses'
+					/>
+					<TableData data='$130' />
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						direction={'row'}
+						name='Clothing'
+					/>
+					<TableData data='$100' />
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						direction={'row'}
+						name='Car expenses (insurance, maintenance, and gas)'
+					/>
+					<TableData data='$200' />
+				</TableRow>
+				<TableRow>
+					<TableHeader
+						direction={'row'}
+						name='Recreation'
+					/>
+					<TableData data='$600' />
+				</TableRow>
+				<TableRow slot='foot'>
+					<TableHeader
+						direction={'row'}
+						name='Total Cash Outflows'
+					/>
+					<TableData data='$2,100' />
+				</TableRow>
+			</ResponsiveTable>
+			<CallOut
+				setColor={'green'}
+				isCentered>
+				<MathEq formula='\\bold{\\text{Net Cash Flows} = +\\$400}' />
+			</CallOut>
+		</SubSection>
+	</StaticContent>
+	<InteractiveActivity
+		client:load
+		title='Time to Practice: Creating a Cash Flow Statement'
+		setActivityType={'practice'}
+		prompts={[
+			'Which of Pauls’s items are considered cash inflow, and which items are considered cash outflow for last year? Match each item and its amount to either cash inflow or cash outflow.',
+			'Think about the answers to the questions below. When you think you have the answer, type in your answer to see if it is correct.',
+		]}
+		isPractice__setOptions={['Matching', 'Math']}
+		isPracticeMatching__itemsAndAnswers={[
+			['Income from Summer job (last year): $5,000', 'Cash Inflow'],
+			['Support from parents (last year): $3,500', 'Cash Inflow'],
+			['Scholarship (last year): $1,200', 'Cash Inflow'],
+			['Savings account balance (current): $1,250', 'Cash Inflow'],
+			[
+				'Expenses on food, clothing, and entertainment (last year): $3,500',
+				'Cash Outflow',
+			],
+			['Insurance expenses (last year): $4,000', 'Cash Outflow'],
+			['Current liabilities (current): $800', 'Cash Outflow'],
+		]}
+		isPracticeMath__QsAndAs={[
+			[
+				'\\text{Paul’s cash inflow amount: } \\$5,000 + \\$3,500 + \\$1,200 =',
+				'\\$9,700',
+			],
+			[
+				'\\text{Paul’s cash outflow amount: } \\$3,500 + \\$4,000 =',
+				'\\$7,500',
+			],
+		]}>
+		<p>
+			Paul is a college student who has the following financial information. He
+			would like your help in creating his cash flow statement for last year.
+		</p>
+		<p>Let’s help Paul.</p>
+		<ul>
+			<li>
+				<p>
+					First, determine which items on Pauls’s list below are considered cash
+					inflow and which items are considered cash outflow for last year.
+				</p>
+			</li>
+			<li>
+				<p>
+					Next, determine Paul’s cash inflow amount—add all inflow amounts
+					together.
+				</p>
+			</li>
+			<li>
+				<p>
+					Then, determine Paul’s cash outflow amount— add all outflow amounts
+					together.
+				</p>
+			</li>
+			<li>
+				<p>
+					Finally, determine if Paul had a positive or negative net cash flow
+					last year. (Which number is greater—cash inflow or outflow?)
+				</p>
+			</li>
+		</ul>
+		<ResponsiveTable tableTitle='Paul’s Cash Flow'>
+			<TableRow slot='head'>
+				<TableHeader
+					direction={'col'}
+					name='Cash Flow Items (In And Out)'
+				/>
+				<TableHeader
+					direction={'col'}
+					name='Amount'
+				/>
+			</TableRow>
+			<TableRow>
+				<TableHeader
+					direction={'row'}
+					name='Income from Summer job (last year)'
+				/>
+				<TableData data='$5,000' />
+			</TableRow>
+			<TableRow>
+				<TableHeader
+					direction={'row'}
+					name='Support from parents (last year)'
+				/>
+				<TableData data='$3,500' />
+			</TableRow>
+			<TableRow>
+				<TableHeader
+					direction={'row'}
+					name='Scholarship (last year)'
+				/>
+				<TableData data='$1,200' />
+			</TableRow>
+			<TableRow>
+				<TableHeader
+					direction={'row'}
+					name='Savings account balance (current)'
+				/>
+				<TableData data='$1,250' />
+			</TableRow>
+			<TableRow>
+				<TableHeader
+					direction={'row'}
+					name='Expenses on food, clothing, and entertainment (last year)'
+				/>
+				<TableData data='$3,500' />
+			</TableRow>
+			<TableRow>
+				<TableHeader
+					direction={'row'}
+					name='Insurance expenses (last year)'
+				/>
+				<TableData data='$4,000' />
+			</TableRow>
+			<TableRow>
+				<TableHeader
+					direction={'row'}
+					name='Current liabilities (current)'
+				/>
+				<TableData data='$800' />
+			</TableRow>
+		</ResponsiveTable>
+		<p>How did Paul do last year?</p>
+		<CallOut
+			setColor={'green'}
+			isCentered
+			isActivityFinalFeedback
+			slot='finalFeedback'>
+			<p>
+				Paul had a <TextStyle setType={'highlight'}>positive</TextStyle>
+				net cash flow last year. <TextStyle setType={'highlight'}>
+					$9,700 &gt; $7,500
+				</TextStyle>
+			</p>
+		</CallOut>
+	</InteractiveActivity>
+	<StaticContent title='Basic Tools in Finance: Checking Accounts'>
+		<FlipCardsWidget
+			id='2'
+			cardsTotal='5'
+			client:visible>
+			<FlipCard
+				client:idle
+				id='2'
+				cardNum='1'>
+				<p slot='front'>What Is A Checking Account?</p>
+				<Fragment slot='back'>
+					A <TextStyle setType={'highlight'}>checking account</TextStyle> (sometimes
+					called a transaction account) is a deposit account that allows you to easily
+					make withdrawals, deposits, and fund transfers.
+					<ol>
+						<li>
+							<p>
+								Incomes from wages and from investments are deposited into this
+								account, and expenses are paid from it.
+							</p>
+						</li>
+						<li>
+							<p>
+								Most people use a checking account as their primary cash flow
+								management tool for daily living.
+							</p>
+						</li>
+						<li>
+							<p>
+								<p>
+									Checking accounts typically do not provide much, if any,
+									interest
+								</p>
+							</p>
+						</li>
+					</ol>
+				</Fragment>
+			</FlipCard>
+			<FlipCard
+				client:idle
+				id='2'
+				cardNum='2'>
+				<p slot='front'>Types of Checking Accounts</p>
+				<Fragment slot='back'>
+					<ol>
+						<li>
+							<p>
+								Demand-deposit accounts are checking accounts that typically pay
+								no interest.
+							</p>
+						</li>
+						<li>
+							<p>
+								An interest-bearing checking account (also called a negotiable
+								order of withdrawal [NOW] account).
+							</p>
+						</li>
+						<li>
+							<p>
+								A share draft account is the credit-union version of a NOW
+								account.
+							</p>
+						</li>
+						<li>
+							<p>Student Checking Accounts</p>
+						</li>
+					</ol>
+				</Fragment>
+			</FlipCard>
+			<FlipCard
+				client:idle
+				id='2'
+				cardNum='3'
+				isNoFlip
+				isNoFlip__setColor={'yellow'}>
+				<p>
+					A <TextStyle setType={'highlight'}>
+						student checking account
+					</TextStyle> is one offered by credit unions and banks that is better for
+					students than a traditional bank account. It offers excellent benefits
+					to college students, including a low minimum balance, small fees, free
+					online bill pay, free ATM use or ATM rebates, free checks, online statements,
+					mobile deposits or transactions, online transfers, and free debit cards.
+				</p>
+			</FlipCard>
+			<FlipCard
+				client:idle
+				id='2'
+				cardNum='4'
+				isNoFlip
+				isNoFlip__setColor={'yellow'}>
+				<dl>
+					<dt>Checking Accounts Are Not Always Free</dt>
+					<dd>
+						Beware! A “free" checking account may not be as free as you think.
+						Some banks charge up to 50 different checking account fees,
+						including charges for using ATMs, seeing a human teller, account
+						maintenance, low balance, bounced checks (insufficient funds), stop
+						payment orders, check deposits, overdrafts, returned deposit
+						charges, excessive withdrawals, lost debit cards, paper statements,
+						foreign transactions, redeeming account points, returned mail, and
+						early account closure. Whew! Be a smart consumer and make sure you
+						understand exactly what your bank requires to get truly “free
+						checking.” Daniel Roccato Rutgers University, Camden, New Jersey
+					</dd>
+				</dl>
+			</FlipCard>
+		</FlipCardsWidget>
+		<SubSection title='How Do Checking Accounts Work?'>
+			<p>
+				When you open a checking account, you will typically receive a <TextStyle
+					setType={'strong emphasis'}>
+					debit card
+				</TextStyle>.
+			</p>
+			<StepsList>
+				<li>
+					<p>
+						Open a checking account at a bank or credit union. When you open a
+						checking account, <TextStyle setType={'highlight'}>
+							you will typically receive a debit card
+						</TextStyle>.
+					</p>
+					<dl>
+						<dt>What is A Debit Card?</dt>
+						<dd>
+							<SideBySideImage
+								imgName='debit-card.jpg'
+								setRatio={'r4060'}
+								setAlign={'alignRight'}>
+								<p>Debit Cards:</p>
+								<ul>
+									<li>
+										<p>
+											provide the cardholder electronic access to their bank
+											account(s) at a financial institution.
+										</p>
+									</li>
+									<li>
+										<p>
+											are also known as bank cards, ATM cards, cash cards, and
+											check cards.
+										</p>
+									</li>
+									<li>
+										<p>
+											deduct money directly from your checking account to pay
+											for a purchase.
+										</p>
+									</li>
+									<li>
+										<p>
+											can be used to withdraw cash through an ATM or through the
+											cash-back function that many merchants offer.
+										</p>
+									</li>
+								</ul>
+							</SideBySideImage>
+						</dd>
+						<dt>Why Use Debit Cards?</dt>
+						<dd>
+							<p>
+								Convenience&mdash;debit cards are often accepted as a form of
+								payment anywhere credit cards are accepted.
+							</p>
+						</dd>
+						<dt>Are There Limitations with Debit Cards?</dt>
+						<dd>
+							<p>Debit cards usually have daily purchase limits.</p>
+							<p>
+								You cannot make an especially large purchase with a debit card.
+							</p>
+						</dd>
+					</dl>
+				</li>
+				<li>
+					<p>Deposit funds into the account with cash or a check.</p>
+					<ul>
+						<li><p>Your money is protected.</p></li>
+						<li>
+							<p>
+								Money in a checking account is typically insured for up to
+								$250,000 by the Federal Deposit Insurance Corp (FDIC).
+							</p>
+						</li>
+						<li>
+							<p>
+								That means if you have less than that amount and your bank
+								fails, your money will be safe. Any amount over the FDIC limit
+								is at risk.
+							</p>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<p>Access your funds when you need them.</p>
+					<ul>
+						<li>
+							<p>
+								Funds you deposited in the checking account will then be
+								available to access and use.
+							</p>
+						</li>
+						<li>
+							<p>For example, you can use the funds to pay bills online.</p>
+						</li>
+					</ul>
+				</li>
+			</StepsList>
+		</SubSection>
+		<CallOut setColor={'blue'}>
+			<dl>
+				<dt>Getting to Know Your Account and What It Offers</dt>
+				<dd>
+					<ol>
+						<li>
+							<p>
+								Do you have a checking account? If you don’t, consider opening
+								one today.
+							</p>
+						</li>
+						<li>
+							<p>
+								If you do, does your bank offer online banking services, such as
+								electronic bill payment? Visit your bank's website to learn
+								more.
+							</p>
+							<ul>
+								<li><p>What products and services does your bank offer?</p></li>
+								<li>
+									<p>
+										Do you (or would you) use those products and services? Why
+										(or why not)?
+									</p>
+								</li>
+								<li>
+									<p>What are the main benefits and risks of online banking?</p>
+								</li>
+							</ul>
+						</li>
+					</ol>
+				</dd>
+			</dl>
+		</CallOut>
+	</StaticContent>
+	<StaticContent title='Basic Tools in Finance: Savings Accounts'>
+		<dl>
+			<dt>What Is A Savings Account?</dt>
+			<dd>
+				<ul>
+					<li>
+						<p>
+							A savings account is an interest-bearing deposit account designed
+							to hold money you don’t plan to spend immediately.
+						</p>
+						<ul>
+							<li>
+								<p>
+									Savings accounts pay interest. (The interest you earn on a
+									savings account is considered taxable income.)
+								</p>
+							</li>
+							<li>
+								<p>
+									Savings accounts have some limitations on how often you can
+									withdraw funds.
+								</p>
+							</li>
+							<li>
+								<p>Savings accounts are safe.</p>
+							</li>
+						</ul>
+					</li>
+
+					<li>
+						<p>Savings accounts help you store money for specific purposes.</p>
+						<ul>
+							<li>
+								<p>
+									For example, you may open a savings account to hold your
+									emergency fund or a down payment on a car.
+								</p>
+							</li>
+						</ul>
+					</li>
+
+					<li>
+						<p>Your money is protected.</p>
+						<ul>
+							<li>
+								<p>
+									Money in a savings account is also insured for up to $250,000
+									by the Federal Deposit Insurance Corp (FDIC).
+								</p>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</dd>
+			<dt>
+				<dt>How Do Savings Accounts Work?</dt>
+				<dd>
+					<ol>
+						<li>
+							<p>Open a savings account at a bank or credit union.</p>
+						</li>
+						<li>
+							<p>Deposit money into your savings account.</p>
+						</li>
+						<li>
+							<p>The bank then pays you interest on your balance.</p>
+							<ul>
+								<li>
+									<p>You can continue adding money to your savings account.</p>
+								</li>
+							</ul>
+						</li>
+					</ol>
+				</dd>
+				<dd>
+					<ResponsiveVideo
+						title='Checking and Savings 101'
+						url='https://www.youtube.com/embed/ku52Pb7fFT8'
+						introText={'Watch this video, Checking and Savings 101 [1:57 minutes] for additional information on checking and savings accounts.'}
+					/>
+				</dd>
+			</dt>
+		</dl>
+	</StaticContent>
+	<StaticContent title='Seek Expert Financial Advice'>
+		<p>
+			People often find it helpful to obtain the services of more broadly
+			qualified financial experts.
+		</p>
+		<p>
+			A financial planner is an investment professional who evaluates the
+			personal finances of an individual or family and recommends strategies to
+			set and achieve long-term financial goals.
+		</p>
+		<p>
+			The most recognized professional designation for financial planners is the
+			Certified Financial Planner.
+		</p>
+		<p>Some of the best apps are:</p>
+		<ul>
+			<li>
+				<p><ExternalLink url='https://www.acorns.com/'>Acorns</ExternalLink></p>
+			</li>
+			<li>
+				<p>
+					<ExternalLink url='https://claritymoney.com/en/'>
+						Clarity Money
+					</ExternalLink>
+				</p>
+			</li>
+			<!-- FIXME: Is this one still good? Doesn't seem to exist -->
+			<!-- <li>
+				<p>Check</p>
+			</li> -->
+			<li>
+				<p>
+					<ExternalLink
+						url='https://apps.microsoft.com/store/detail/home-budget-with-sync/XPDLJHS60S0BPV'>
+						HomeBudget
+					</ExternalLink>
+				</p>
+			</li>
+			<li>
+				<p>
+					<ExternalLink url='https://mint.intuit.com/'>Mint.com</ExternalLink>
+				</p>
+			</li>
+			<li>
+				<p>
+					<ExternalLink
+						url='https://www.empower.com/empower-personal-wealth-transition'>
+						Empower
+					</ExternalLink>
+				</p>
+			</li>
+			<li>
+				<p>
+					<ExternalLink
+						url='https://apps.apple.com/us/app/pocket-expense-6/id424575621'>
+						Pocket Expense
+					</ExternalLink>
+				</p>
+			</li>
+		</ul>
+	</StaticContent>
+	<StaticContent title='Key Takeaways'>
+		<ol>
+			<li>
+				<p>
+					A personal balance sheet summarizes your assets (what you own) and
+					liabilities (what you owe) in order to calculate your net worth.
+				</p>
+				<CallOut
+					setColor={'green'}
+					isCentered>
+					<MathEq
+						formula='\\text{Net worth} = \\text{What you own} - \\text{What you owe} = \\text{Assets} - \\text{Liabilities}'
+					/>
+				</CallOut>
+				<li>
+					<p>
+						A personal cash flow statement measures your cash inflows (money you
+						received) and your cash outflows (money you spent) to determine if
+						you have a positive or negative net cash flow.
+					</p>
+					<CallOut
+						setColor={'green'}
+						isCentered>
+						<MathEq
+							formula='\\text{Net cash flow} = \\text{Cash inflow} - \\text{Cash outflows}'
+						/>
+					</CallOut>
+				</li>
+				<li>
+					<p>
+						Net cash flows can be used to decrease liabilities, which will
+						increase net worth.
+					</p>
+				</li>
+				<li>
+					<p>Checking account: No interest, money for immediate use</p>
+				</li>
+				<li>
+					<p>Savings account: Low interest, money for short-term use</p>
+				</li>
+			</li>
+		</ol>
+	</StaticContent>
+	<InteractiveActivity
+		client:load
+		prompts={[
+			'Now at the end of this lesson, what does the term, financial planning, mean to you? How would you define it? Have your ideas about planning your finances changed with what you’ve learned?',
+		]}
+		setActivityType={'reflection'}
+		title='Revisiting Your Definition of Financial Planning'
+	/>
+	<InteractiveActivity
+		client:load
+		setActivityType={'reflection'}
+		title='Financial Planning in Your Own Words'
+		prompts={[
+			'Here’s a chance to look at how your own thoughts have changes over the course of this lesson. If you’d like, you can save this page as a PDF.',
+		]}
+		isReflection__FinaleReveal
+	/>
+	<StaticContent title='References'>
+		<ReferenceItem>
+			Banerjee, P. (2015, June 18). <TextStyle setType={'emphasis'}>
+				How to calculate your net worth
+			</TextStyle> [Video]. YouTube. <ExternalLink
+				url='https://www.youtube.com/watch?v=KhSnNtdYR9Y'
+				isShownURL
+				urlTitle={'How to calculate your net worth'}>
+				https://www.youtube.com/watch?v=KhSnNtdYR9Y
+			</ExternalLink>
+		</ReferenceItem>
+		<ReferenceItem>
+			Campbell, J. (2022, February 14).<TextStyle setType={'emphasis'}>
+				How to create a personal balance sheet and determine net worth
+			</TextStyle>. moneymanagement.org. <ExternalLink
+				url='https://www.moneymanagement.org/blog/how-to-create-a-personal-balance-sheet-and-determine-your-net-worth'
+				isShownURL
+				urlTitle={'How to create a personal balance sheet and determine net worth'}>
+				https://www.moneymanagement.org/blog/how-to-create-a-personal-balance-sheet-and-determine-your-net-worth
+			</ExternalLink>
+		</ReferenceItem>
+		<ReferenceItem>
+			Cross, D. (2023, February 13). <TextStyle setType={'emphasis'}>
+				On the road from $0 to a million, this simple pyramid is your map; what
+				level are you on?
+			</TextStyle> moneyunder30. <ExternalLink
+				url='https://www.moneyunder30.com/financial-planning-pyramid-11294'
+				isShownURL
+				urlTitle={'On the road from $0 to a million, this simple pyramid is your map; what level are you on?'}>
+				https://www.moneyunder30.com/financial-planning-pyramid-11294
+			</ExternalLink>
+		</ReferenceItem>
+		<ReferenceItem>
+			Frankenfield, J. (2023, May 27). <TextStyle setType={'emphasis'}>
+				What is a checking account? Here’s everything you need to know
+			</TextStyle>. Investopedia.com. <ExternalLink
+				url='https://www.investopedia.com/terms/c/checkingaccount.asp'
+				isShownURL
+				urlTitle={'What is a checking account? Here’s everything you need to know'}>
+				https://www.investopedia.com/terms/c/checkingaccount.asp
+			</ExternalLink>
+		</ReferenceItem>
+		<ReferenceItem>
+			Manning, L. (2023, February 15). <TextStyle setType={'emphasis'}>
+				Financial plans: Meaning, purpose, and key components
+			</TextStyle>. Investopedia. <ExternalLink
+				url='https://www.investopedia.com/terms/f/financial_plan.asp#:~:text=A%20financial%20plan%20documents%20an,plan%20for%20saving%20and%20investing '
+				isShownURL
+				urlTitle='Financial plans: Meaning, purpose, and key components'>
+				https://www.investopedia.com/terms/f/financial_plan.asp#:~:text=A%20financial%20plan%20documents%20an,plan%20for%20saving%20and%20investing
+			</ExternalLink>
+		</ReferenceItem>
+		<ReferenceItem>
+			Herrity, J. (2023, June 6). <TextStyle setType={'emphasis'}>
+				Guide on how to write SMART goals (with examples)
+			</TextStyle>. Indeed.com. <ExternalLink
+				url='https://www.indeed.com/career-advice/career-development/how-to-write-smart-goals'
+				isShownURL
+				urlTitle={'Guide on how to write SMART goals (with examples)'}>
+				https://www.indeed.com/career-advice/career-development/how-to-write-smart-goals
+			</ExternalLink>
+		</ReferenceItem>
+		<SubSection title='Attributions'>
+			<p>
+				"<ExternalLink
+					url='https://open.umn.edu/opentextbooks/textbooks/personal-finance'>
+					Personal Finance
+				</ExternalLink>" by Rachel Siegel and Carol Yacht, Saylor Foundation is
+				licensed under <ExternalLink
+					url='http://creativecommons.org/licenses/by-nc-sa/4.0'>
+					CC BY-NC-SA 4.0
+				</ExternalLink>
+			</p>
+			<p>
+				"<ExternalLink
+					url='https://www.oercommons.org/courses/the-math-of-money/view'>
+					The Math of Money
+				</ExternalLink>" by Zachary Klingensmith, OER Commons, is licensed under <ExternalLink
+					url='http://creativecommons.org/licenses/by-nc/4.0'>
+					CC BY-NC 4.0
+				</ExternalLink>
+			</p>
+		</SubSection>
+	</StaticContent>
+
+	<style is:global lang='scss'>
+		.littleCircle {
+			z-index: 1;
+			&::before {
+				content: '';
+				position: absolute;
+				top: calc(-1 * var(--s-2));
+				left: calc(-1 * var(--s-5));
+				z-index: -1;
+				width: var(--s7);
+				height: var(--s7);
+				background: var(--green5);
+				border-radius: 50%;
+			}
+		}
+		.bigCircle {
+			z-index: 1;
+			&::before {
+				content: '';
+				position: absolute;
+				top: calc(-1 * var(--s4));
+				left: calc(-1 * var(--s-5));
+				z-index: -1;
+				width: var(--s10);
+				height: var(--s10);
+				background: var(--blue5);
+				border-radius: 50%;
+			}
+		}
+	</style>
+</TheLesson>

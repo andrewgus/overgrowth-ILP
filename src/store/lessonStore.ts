@@ -40,14 +40,20 @@ const useToggleNavShown = () => {
 // currSectionMap contains the details of the section the user is currently viewing
 const currSectionMap = map<SectionDetails>()
 // nextIncompleteActivityMap contains the details of the next activity that is incomplete
-const nextIncompleteActivityMap = map<SectionDetails>()
+const nextIncompleteActivityMap = map<SectionDetails | {}>()
+
+const doesNextIncompleteActivityExist = () => Object.keys(nextIncompleteActivityMap.get()).length > 0
 
 // To determine current section & nextIncompleteActivity
 const useSetCurrSection = (sectionKey: string) => {
 	setSectionMap(currSectionMap, sectionKey)
 }
-const useSetNextIncompleteActivity = (sectionKey: string) => {
-	setSectionMap(nextIncompleteActivityMap, sectionKey)
+const useSetNextIncompleteActivity = (sectionKey?: string) => {
+	if (sectionKey) {
+		setSectionMap(nextIncompleteActivityMap as MapStore<SectionDetails>, sectionKey)
+	} else {
+		nextIncompleteActivityMap.set({})
+	}
 }
 const setSectionMap = (map: MapStore<SectionDetails>, sectionKey: string) => {
 	if (sectionKey !== '') {
@@ -58,7 +64,7 @@ const setSectionMap = (map: MapStore<SectionDetails>, sectionKey: string) => {
 		map.setKey('orderNum', null)
 		map.setKey('activityType', null)
 		map.setKey('isLocked', false)
-	}
+	} 
 }
 
 // set & find functions for user nav based on user input.
@@ -90,16 +96,16 @@ const findNextIncompleteActivity = (
 		)
 	})
 	setNextIncompleteActivityIfFound(next)
-
 	return next
 }
+
 const setNextIncompleteActivityIfFound = (
 	nextIncompleteSection: [string, SectionDetails] | undefined
 ) => {
 	if (nextIncompleteSection) {
 		useSetNextIncompleteActivity(nextIncompleteSection[0])
 	} else {
-		useSetNextIncompleteActivity('')
+		useSetNextIncompleteActivity()
 	}
 }
 
@@ -113,7 +119,8 @@ const useToggleActivity = (activity: ActivityType) => {
 	// find the next available active activity
 	findNextIncompleteActivity(allSectionsAsArray)
 
-	if (nextIncompleteActivityMap.get().id === '') {
+
+	if (!doesNextIncompleteActivityExist()) {
 		// all activities are turned off...
 		allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
 			// make sure all incomplete activities are isLocked: true
@@ -129,6 +136,7 @@ const useToggleActivity = (activity: ActivityType) => {
 			}
 		})
 	} else {
+		const nextIncompleteActivity = nextIncompleteActivityMap.get() as SectionDetails
 		// a nextIncompleteActivity exists...
 		if (!isActivityOn) {
 			// and user deactivates selected activity...
@@ -144,8 +152,8 @@ const useToggleActivity = (activity: ActivityType) => {
 				if (
 					(sectionDetails.activityType === null &&
 						sectionDetails.orderNum! <
-							nextIncompleteActivityMap.get().orderNum!) ||
-					sectionDetails.orderNum === nextIncompleteActivityMap.get().orderNum!
+						nextIncompleteActivity.orderNum!) ||
+					sectionDetails.orderNum === nextIncompleteActivity.orderNum!
 				) {
 					setSectionToLocked(sectionKey, sectionDetails, false)
 				}
@@ -155,13 +163,13 @@ const useToggleActivity = (activity: ActivityType) => {
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
 				// lock all suceeding sections
 				if (
-					sectionDetails.orderNum! > nextIncompleteActivityMap.get().orderNum!
+					sectionDetails.orderNum! > nextIncompleteActivity.orderNum!
 				) {
 					setSectionToLocked(sectionKey, sectionDetails, true)
 				}
 				// unlock the selected activity
 				if (
-					sectionDetails.orderNum === nextIncompleteActivityMap.get().orderNum
+					sectionDetails.orderNum === nextIncompleteActivity.orderNum
 				) {
 					setSectionToLocked(sectionKey, sectionDetails, false)
 				}
@@ -177,39 +185,33 @@ const useUnlockNextSectionsAfterCompletion = (fromLocalStorage?: boolean) => {
 	const foundNextIncompleteActivity = fromLocalStorage
 		? nextIncompleteActivityMap.get()
 		: findNextIncompleteActivity(allSectionsAsArray)
-
+	
 	// if there is a next active activity
 	if (foundNextIncompleteActivity !== undefined) {
+		const nextIncomplete = nextIncompleteActivityMap.get() as SectionDetails
 		// Unlock all activities up until, and including, the nextIncompleteActivity
 		allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
 			if (
-				sectionDetails.orderNum! <= nextIncompleteActivityMap.get().orderNum!
+				sectionDetails.orderNum! <= nextIncomplete.orderNum!
 			) {
 				setSectionToLocked(sectionKey, sectionDetails, false)
 			}
 		})
 	} else {
-		// if there is NOT a next available activity
 		allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
-			if (
-				sectionDetails.activityType === null ||
-				(sectionDetails.activityType !== null &&
-					sectionDetails.isActivityComplete)
-			) {
-				// Unlock all static content & complete activities
-				setSectionToLocked(sectionKey, sectionDetails, false)
-			}
+			// Unlock everything
+			setSectionToLocked(sectionKey, sectionDetails, false)
 		})
 	}
 }
 
 // To set a activity as complete & unlock next sections up until nextIncompleteActivity
 const useSetActivityComplete = () => {
-	// marking activity as complete
-	currSectionMap.setKey('isActivityComplete', true)
-	allSectionsMap.setKey(currSectionMap.get().id, {
-		...currSectionMap.get(),
-	})
+		// marking activity as complete
+		currSectionMap.setKey('isActivityComplete', true)
+		allSectionsMap.setKey(currSectionMap.get().id, {
+			...currSectionMap.get(),
+		})
 	useUnlockNextSectionsAfterCompletion()
 }
 
@@ -218,10 +220,12 @@ const filteredNavSectionsComputed = computed(
 	[allSectionsMap, activitiesMap],
 	(allSections) => {
 		const allSectionsAsArray = setSectionsToArray(allSections)
-
+		
 		const filterForUnlocked = allSectionsAsArray.filter(
 			([_, sectionDetails]) => {
-				if (nextIncompleteActivityMap.get().id !== '') {
+				if (doesNextIncompleteActivityExist()) {
+					const nextIncomplete = nextIncompleteActivityMap.get() as SectionDetails
+					// if there is a nextIncompleteActivity...
 					// (unlocked AND static content) OR (an unlocked, completed activity that comes before nextIncompleteActivity) OR the nextIncompleteActivity
 					return (
 						(sectionDetails.activityType === null &&
@@ -229,11 +233,12 @@ const filteredNavSectionsComputed = computed(
 						(!sectionDetails.isLocked &&
 							sectionDetails.isActivityComplete &&
 							sectionDetails.orderNum! <
-								nextIncompleteActivityMap.get().orderNum!) ||
+								nextIncomplete.orderNum!) ||
 						sectionDetails.orderNum! ===
-							nextIncompleteActivityMap.get().orderNum!
+							nextIncomplete.orderNum!
 					)
 				} else {
+					// else there is NOT a nextIncompleteActivity...
 					// any static content OR (activity is complete and not locked)
 					return (
 						sectionDetails.activityType === null ||
@@ -321,9 +326,30 @@ const nextSectionAfterID = (id: string) => {
 	})
 }
 
-const useIsLastSection = (sectionID: string) => {
-	return Object.keys(allSectionsMap.get()).at(-1) === sectionID
-}
+const useIsLastSection = (sectionID: string) => Object.keys(allSectionsMap.get()).at(-1) === sectionID
+
+const useIsLastActivity = (sectionID: string): boolean => {
+	const sectionToCheck = allSectionsMap.get()[sectionID];
+	
+	if (!sectionToCheck) return false;
+  
+	const sectionsWithActivity = Object.values(allSectionsMap.get())
+	  .filter(section => section.activityType !== null);
+  
+	let highestOrderNum = Number.MIN_SAFE_INTEGER;
+	let lastActivitySection = null;
+  
+	for (const currentSection of sectionsWithActivity) {
+	  if (currentSection.orderNum !== null && currentSection.orderNum > highestOrderNum) {
+		highestOrderNum = currentSection.orderNum;
+		lastActivitySection = currentSection;
+	  }
+	}
+  
+	return sectionToCheck === lastActivitySection;
+  };
+  
+
 
 export {
 	lessonIDAtom,
@@ -346,6 +372,7 @@ export {
 	isOnLastSectionComputed,
 	nextSectionAfterID,
 	useIsLastSection,
+	useIsLastActivity,
 	useSetActivityComplete,
 	useUnlockNextSectionsAfterCompletion,
 }

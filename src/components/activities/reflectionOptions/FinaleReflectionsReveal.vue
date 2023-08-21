@@ -1,19 +1,12 @@
 <template>
 	<div :class="$style.reflectionFinale">
-		<p>{{ prompt }}</p>
+		<p ref='promptEl'>{{ prompt }}</p>
 		<div :class="$style.reflectionResponses">
-			<div
-				v-for="(response, _, index) in userReflectionsStore"
-				:key="index"
-				:class="$style.responseItem">
+			<div v-for="(response, _, index) in userReflectionsStore" :key="index" :class="$style.responseItem">
 				<p :class="$style.question">
 					<span :class="$style.note">We asked:&nbsp;</span>
 					<span>{{ response.prompt }}</span>
 				</p>
-				<BaseSeparator
-					orientation="horizontal"
-					color="var(--darkGray)"
-					:class="$style.reflectionSeparator" />
 				<p :class="$style.answer">
 					<span :class="$style.note">You answered:&nbsp;</span>
 					<span>{{ response.answer }}</span>
@@ -24,67 +17,92 @@
 </template>
 
 <script setup lang="ts">
-	import { onMounted } from 'vue'
-	import { userReflectionsStore } from '../../../store/activityOptionsStore'
-	import { allSectionsMap } from '../../../store/lessonStore'
-	import BaseSeparator from '../../base/BaseSeparator.vue'
+import { ref } from 'vue'
+import { userReflectionsStore } from '../../../store/activityOptionsStore'
+import { allSectionsMap, useUnlockNextSectionsAfterCompletion } from '../../../store/lessonStore'
+import { useIntersectionObserver } from '@vueuse/core';
 
-	const props = defineProps({
-		id: {
-			type: String,
-			required: true,
-		},
-		prompt: {
-			type: String,
-			required: true,
-		},
-	})
-	onMounted(() => {
-		allSectionsMap.listen((section) => {
-			section[props.id].isActivityComplete = !section[props.id].isLocked
-				? true
-				: false
+const props = defineProps({
+	id: {
+		type: String,
+		required: true,
+	},
+	prompt: {
+		type: String,
+		required: true,
+	},
+})
+
+const promptEl = ref<HTMLElement | null>()
+// When the top of this component is visible, set to complete.
+useIntersectionObserver(
+	promptEl,
+	([{ isIntersecting }], _) => {
+		if (isIntersecting) allSectionsMap.setKey(props.id, {
+			...allSectionsMap.get()[props.id],
+			'isActivityComplete': true
 		})
-	})
+		useUnlockNextSectionsAfterCompletion()
+	},
+)
+
 </script>
 
 <style module lang="scss">
-	.reflectionFinale {
-		> p {
-			max-width: 60ch;
-			margin: var(--s2) auto;
-		}
-		.reflectionResponses {
-			display: flex;
-			flex-flow: column nowrap;
-			align-items: center;
-			gap: var(--s4);
+.reflectionFinale {
+	>p {
+		max-width: 60ch;
+		margin: var(--s2) auto;
+	}
 
-			> .responseItem {
-				max-width: 50ch;
-				width: 100%;
-				overflow: hidden;
-				border-radius: var(--s4);
-				border: var(--s-10) solid var(--darkGray);
-				background-color: var(--offWhite);
+	.reflectionResponses {
+		display: flex;
+		flex-flow: column nowrap;
+		align-items: center;
+		gap: var(--s6);
 
-				p {
-					padding: var(--s0) var(--s-2) var(--s-2) var(--s0);
-					&.question {
-						border-bottom: 1px dashed var(--darkGray);
-						background-color: var(--yellow5);
-					}
-				}
-				span.note {
-					display: block;
-					width: max-content;
-					border-radius: var(--s-10);
-					padding: 0 var(--s-10);
+		>.responseItem {
+			width: 100%;
+			overflow: hidden;
+			border-radius: var(--s0);
+			border: var(--s-10) solid var(--blue-2);
+			background-color: var(--offWhite);
+
+			p {
+				padding: var(--s0) var(--s2);
+
+				&.question {
+					border-bottom: 1px dashed var(--offWhite);
 					background-color: var(--blue-2);
 					color: var(--white);
-					margin-bottom: var(--s-4);
+					padding-bottom: var(--s2);
+
+					>.note {
+						color: var(--blue-2);
+						background-color: var(--white);
+					}
 				}
+
+			}
+
+			>.answer {
+				padding-top: var(--s4);
+				padding-bottom: var(--s2);
+
+				>.note {
+					background-color: var(--blue-2);
+					color: var(--white);
+				}
+			}
+
+			span.note {
+				display: block;
+				width: max-content;
+				border-radius: var(--s-10);
+				padding: 0 var(--s-10);
+				margin-bottom: var(--s2);
 			}
 		}
 	}
+}
 </style>

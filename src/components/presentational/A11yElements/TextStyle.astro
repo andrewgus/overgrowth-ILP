@@ -10,8 +10,9 @@ type Props = {
 		| 'strikethrough text'
 		| 'insert text'
 	sayAloud?: boolean
+	setHighlightColor?: 'green' | 'red' | 'yellow' | 'blue'
 }
-const { setType, sayAloud = false } = Astro.props
+const { setType, sayAloud = false, setHighlightColor = 'yellow' } = Astro.props
 ---
 
 {
@@ -64,7 +65,9 @@ const { setType, sayAloud = false } = Astro.props
 		}[setType]
 
 		const [wrapperStart, wrapperEnd] = [
-			`<${convertedType}>`,
+			`<${convertedType} ${
+				setHighlightColor ? `class="highlight${setHighlightColor}"` : ''
+			}>`,
 			`</${convertedType}>`,
 		]
 

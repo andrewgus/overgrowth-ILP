@@ -1,0 +1,101 @@
+---
+import createNanoID from '../../../composables/useCreateNanoID'
+
+type Props = {
+	tableTitle: string
+	isAttributed?: boolean
+}
+const { tableTitle, isAttributed = false } = Astro.props
+
+const tableID = createNanoID(Astro.self.name)
+---
+
+<script>
+	const tables = Array.from(
+		document.querySelectorAll('table[id^="ResponsiveTable"]')
+	) as HTMLTableElement[]
+
+	tables.forEach((table) => {
+		const tableHeaders = Array.from(
+			table.querySelectorAll('thead th')
+		) as HTMLElement[]
+		const headerNames = tableHeaders.map((head) => head.innerHTML)
+
+		const thisTableRows = Array.from(
+			table.querySelectorAll('tbody > tr')
+		) as HTMLElement[]
+
+		thisTableRows.some((row) => {
+			row.childElementCount >= 3 && row.parentElement?.classList.add('bigTable')
+		})
+
+		const thisTableDataInRows = thisTableRows.map(
+			(row) => Array.from(row.querySelectorAll('*')) as HTMLElement[]
+		)
+
+		thisTableDataInRows.forEach((dataInRow, i) => {
+			dataInRow.forEach((data, i) => (data.dataset.headerName = headerNames[i]))
+		})
+	})
+</script>
+
+<table
+	id={tableID}
+	class:list={[{ tableAttributed: isAttributed }]}
+	aria-describedby={isAttributed ? `${tableID}-attr` : ''}>
+	<caption>
+		{tableTitle}
+	</caption>
+	{
+		Astro.slots.has('head') && (
+			<thead>
+				<slot name='head' />
+			</thead>
+		)
+	}
+	<tbody>
+		<slot>
+			<tr>
+				<td colspan='1000'>
+					🛑 ERROR: Needs
+					<code style='background-color:salmon'>
+						&lt;TableRow&gt; component</code
+					>. <br />For <code>thead</code> use <code
+						style='background-color:salmon'>
+						&lt;TableRow slot="head"&gt; component</code
+					>. <br />For <code>tfoot</code> use <code
+						style='background-color:salmon'>
+						&lt;TableRow slot="foot"&gt; component</code
+					>.
+				</td>
+			</tr>
+		</slot>
+	</tbody>
+	{
+		Astro.slots.has('foot') && (
+			<tfoot>
+				<slot name='foot' />
+			</tfoot>
+		)
+	}
+</table>
+{
+	async () => {
+		if (isAttributed && Astro.slots.has('attribution')) {
+			let html = ''
+			html = await Astro.slots.render('attribution')
+			return (
+				<p id={`${tableID}-attr`}>
+					<small set:html={html} />
+				</p>
+			)
+		} else if (isAttributed && !Astro.slots.has('attribution')) {
+			return (
+				<code style='background-color:red'>
+					needs &lt;TableAttribution slot=attribution&gt; text here
+					&lt;/TableAttribution&gt;
+				</code>
+			)
+		}
+	}
+}

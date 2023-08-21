@@ -11,7 +11,7 @@
     "self-paced"
   ],
   "type": "module",
-  "version": "0.3.0",
+  "version": "0.6.1",
   "private": true,
   "scripts": {
     "dev": "astro dev",
@@ -23,14 +23,16 @@
   "dependencies": {
     "@astrojs/vue": "^2.2.1",
     "@nanostores/vue": "^0.10.0",
-    "@vueuse/core": "^10.2.1",
-    "astro": "^2.9.3",
+    "@vueuse/core": "^10.3.0",
+    "astro": "^2.10.12",
     "jspdf": "latest",
+    "katex": "^0.16.8",
     "nanoid": "^4.0.2",
     "nanostores": "^0.9.3",
     "vue": "^3.3.4"
   },
   "devDependencies": {
-    "sass": "^1.64.1"
+    "@types/katex": "^0.16.2",
+    "sass": "^1.66.1"
   }
 }

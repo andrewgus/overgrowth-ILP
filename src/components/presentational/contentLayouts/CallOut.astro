@@ -1,7 +1,58 @@
 ---
-// TODO: Create a box call-out box for content. Will basically be a div with a containerStyles mixin for styling. Similiar in style to an alert or alertWarning, but more cheerful color usage and less exaggerated corners.
+type Props = {
+	setColor: 'white' | 'green' | 'yellow' | 'red' | 'blue'
+	isCentered?: boolean
+	isActivityFinalFeedback?: boolean
+}
+const { isCentered, setColor, isActivityFinalFeedback = false } = Astro.props
 ---
 
-<div></div>
+{
+	isActivityFinalFeedback ? (
+		<div
+			class:list={[
+				'callOutBox',
+				{ centered: isCentered },
+				setColor,
+				{ finalFeedback: isActivityFinalFeedback },
+			]}
+			tabindex='-1'>
+			<slot />
+		</div>
+	) : (
+		<div class:list={['callOutBox', { centered: isCentered }, setColor]}>
+			<slot />
+		</div>
+	)
+}
 
-<style lang='scss'></style>
+<style lang='scss'>
+	@use '../../../styles/mixins/containerStyles.scss';
+
+	.callOutBox {
+		display: flex;
+		justify-content: start;
+		flex-flow: column nowrap;
+		margin: var(--s4) 0;
+		border-radius: var(--s-4);
+		padding: var(--s0);
+		min-height: 10vh;
+
+		@supports (min-height: 1svh) {
+			min-height: 12svh;
+		}
+		> :global(*) {
+			z-index: 1;
+		}
+
+		&.centered {
+			justify-content: center;
+			> :global(*) {
+				text-align: center;
+			}
+		}
+		&.finalFeedback {
+			margin-top: var(--s6);
+		}
+	}
+</style>

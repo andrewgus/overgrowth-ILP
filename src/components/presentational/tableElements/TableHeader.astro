@@ -1,0 +1,26 @@
+---
+type Props = {
+	name: string
+	direction: 'col' | 'row'
+	spanColumns?: number
+	spanRows?: number
+}
+const { name, direction, spanColumns, spanRows } = Astro.props
+---
+
+{
+	() => {
+		const getColSpan = !!spanColumns ? { colspan: spanColumns } : {}
+
+		const getRowSpan = !!spanRows ? { rowspan: spanRows } : {}
+
+		return (
+			<th
+				scope={direction}
+				{...getColSpan}
+				{...getRowSpan}>
+				{name}
+			</th>
+		)
+	}
+}

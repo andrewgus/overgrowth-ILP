@@ -57,12 +57,14 @@ export default function generatePDF(currSection: SectionDetails) {
 			ignoreElements: (el) =>
 				el.classList.toString().includes('btn') ||
 				el.classList.toString().includes('pdfSave') ||
-				el.classList.toString().includes('indicator'),
+				el.classList.toString().includes('indicator') ||
+				el.classList.toString().includes('alertText'),
 
 			scale: 0.7,
 			width: 700,
-			windowWidth: 700,
+			windowWidth: 700,		
 		},
+		image: { type: 'webp', quality: 100},
 		width: 700,
 		windowWidth: 700,
 		margin: [32, 16, 24, 16],

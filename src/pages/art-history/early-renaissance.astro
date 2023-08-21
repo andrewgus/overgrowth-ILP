@@ -5,12 +5,11 @@ import ExternalLink from '../../components/presentational/A11yElements/ExternalL
 import TextStyle from '../../components/presentational/A11yElements/TextStyle.astro'
 import SideBySideImage from '../../components/presentational/contentLayouts/SideBySideImage.astro'
 import TextOverlayImage from '../../components/presentational/contentLayouts/TextOverlayImage.astro'
-import FullWidthImage from '../../components/presentational/contentLayouts/FullWidthImage.astro'
+import SoloImage from '../../components/presentational/contentLayouts/SoloImage.astro'
 import TabsWidget from '../../components/presentational/widgets/TabsWidget.astro'
 import AccordionWidget from '../../components/presentational/widgets/AccordionWidget.astro'
 import FlipCardsWidget from '../../components/presentational/widgets/FlipCardsWidget.vue'
 import FlipCard from '../../components/presentational/widgets/FlipCard.vue'
-import SubSection from '../../components/presentational/A11yElements/SubSection.astro'
 ---
 
 <TheLesson
@@ -19,8 +18,14 @@ import SubSection from '../../components/presentational/A11yElements/SubSection.
 	scene='setting'
 	gradientColor={'var(--yellow-5)'}>
 	<StaticContent title='Welcome to the Course'>
-		<FlipCardsWidget client:visible id={'1'} cardsTotal={'4'}>
-			<FlipCard client:idle id={'1'} cardNum={'1'}>
+		<FlipCardsWidget
+			client:visible
+			id={'1'}
+			cardsTotal={'4'}>
+			<FlipCard
+				client:idle
+				id={'1'}
+				cardNum={'1'}>
 				<Fragment slot='front'>
 					<p>
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
@@ -56,15 +61,21 @@ import SubSection from '../../components/presentational/A11yElements/SubSection.
 					</p>
 				</Fragment>
 			</FlipCard>
-			<FlipCard client:idle id={'1'} cardNum={'2'}>
+			<FlipCard
+				client:idle
+				id={'1'}
+				cardNum={'2'}>
 				<Fragment slot='front'>
 					<p>HI</p>
 				</Fragment>
 				<Fragment slot='back'>
-					<FullWidthImage imgName='washington-crossing-delaware.jpg' />
+					<SoloImage imgName='washington-crossing-delaware.jpg' />
 				</Fragment>
 			</FlipCard>
-			<FlipCard client:idle id={'1'} cardNum={'3'}>
+			<FlipCard
+				client:idle
+				id={'1'}
+				cardNum={'3'}>
 				<Fragment slot='front'>
 					<p>HI</p>
 				</Fragment>
@@ -72,7 +83,10 @@ import SubSection from '../../components/presentational/A11yElements/SubSection.
 					<p>HI</p>
 				</Fragment>
 			</FlipCard>
-			<FlipCard client:idle id={'1'} cardNum={'4'}>
+			<FlipCard
+				client:idle
+				id={'1'}
+				cardNum={'4'}>
 				<Fragment slot='front'>
 					<p>HI</p>
 				</Fragment>
@@ -82,12 +96,15 @@ import SubSection from '../../components/presentational/A11yElements/SubSection.
 			</FlipCard>
 		</FlipCardsWidget>
 		<p>
-			<TextStyle setType={'highlight'} sayAloud>Art history is</TextStyle> a fascinating
-			subject that delves into the rich and diverse world of artistic expression
-			throughout human history. From the earliest cave paintings to the most cutting-edge
-			contemporary art, art history provides a lens through which we can explore
-			the cultural, social, and political contexts that have shaped the art of different
-			eras and regions.
+			<TextStyle
+				setType={'highlight'}
+				sayAloud>
+				Art history is
+			</TextStyle> a fascinating subject that delves into the rich and diverse world
+			of artistic expression throughout human history. From the earliest cave paintings
+			to the most cutting-edge contemporary art, art history provides a lens through
+			which we can explore the cultural, social, and political contexts that have
+			shaped the art of different eras and regions.
 		</p>
 		<TextOverlayImage
 			setAlign={'alignCenter'}
@@ -171,11 +188,6 @@ import SubSection from '../../components/presentational/A11yElements/SubSection.
 				invites the viewer to imagine themselves in the vibrant ambiance of the
 				café.
 			</p>
-			<SubSection title='A SubSection'>
-				<p>SUBSECTION</p>
-				<p>lorem</p>
-				<p>SUBSECTION</p>
-			</SubSection>
 			<p>
 				The painting reflects van Gogh's fascination with capturing the essence
 				of everyday life and his desire to convey emotions through his art.
@@ -348,7 +360,7 @@ import SubSection from '../../components/presentational/A11yElements/SubSection.
 				possimus, enim autem ipsum maxime officia illum corrupti adipisci
 				asperiores itaque!
 			</p>
-			<FullWidthImage imgName='washington-crossing-delaware.jpg' />
+			<SoloImage imgName='washington-crossing-delaware.jpg' />
 			<p>
 				Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam totam
 				voluptate accusamus accusantium cum asperiores delectus? Iure officia ea
@@ -390,7 +402,7 @@ import SubSection from '../../components/presentational/A11yElements/SubSection.
 			ducimus consequatur quos, vitae beatae hic eligendi, rerum quisquam, dolor
 			deleniti?
 		</p>
-		<FullWidthImage
+		<SoloImage
 			imgName='washington-crossing-delaware.jpg'
 			caption={'Washington Crossing the Delaware by Emanuel Leutze, 1851'}
 		/>

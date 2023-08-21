@@ -5,9 +5,9 @@ import { reactive } from 'vue'
 // log user's reflection answers
 type UserReflectionResponses = {
 	[id: string]: {
-		prompt: string
+		prompt: string,
 		answer: string
-	}
+	}	
 }
 
 const userReflectionsStore = reactive<UserReflectionResponses>({})
@@ -19,18 +19,17 @@ function initUserReflectionsStore(id: string, prompt: string, answer?: string) {
 }
 
 // PRACTICE
-/* TODO: A create a store for userPracticeAttempts with the following interface:
-
+type userPracticeProgess = {
 	[id: string]: {
-		id: string
-		attemptsTotal: number
-		[attemptNum: number]: {
-			...actions
-			[Need to figure this out later]
-		}
+	isPracticeOptionStepsComplete: boolean[]
+}}
+const userPracticeStore = reactive<userPracticeProgess>({})
+function initUserPracticeStore(id: string, isPracticeOptionsCompleteArr?: boolean[]) {
+	userPracticeStore[id] = {
+		isPracticeOptionStepsComplete: isPracticeOptionsCompleteArr ? isPracticeOptionsCompleteArr : []
 	}
-	 NOTE: When creating first practice activity component, will need to create a store for # of user attempts and how they performed in each attempt.
-*/
+}
+
 
 // Tracking user progress within activity interactions
 type ActivityProgressItem = {
@@ -63,6 +62,8 @@ function initActivityProgressStore(id: string) {
 export {
 	userReflectionsStore,
 	initUserReflectionsStore,
+	userPracticeStore,
+	initUserPracticeStore,
 	activityProgressStore,
 	initActivityProgressStore,
 }

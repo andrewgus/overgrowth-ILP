@@ -67,6 +67,9 @@ const describedByID = createNanoID(Astro.self.name, isLongDescForComplexImg)
 			position: sticky;
 			top: var(--s7);
 			width: 100%;
+			> :global(*) {
+				width: 100%;
+			}
 		}
 		> .overlayText {
 			z-index: 1;
@@ -74,7 +77,7 @@ const describedByID = createNanoID(Astro.self.name, isLongDescForComplexImg)
 			max-width: 45ch;
 			background-color: var(--transparentWhite);
 			padding: var(--s-2);
-			> :global(p) {
+			:global(*:not(table *)) {
 				@include a11y.textDropShadowWhite();
 			}
 			:global(.subSection) {

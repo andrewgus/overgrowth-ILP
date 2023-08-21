@@ -10,36 +10,57 @@ const { imgName, altText = '', describedBy, labelledby } = Astro.props
 
 const imageFilePath = `https://fscjcel.blob.core.windows.net/ilp-assets/${Astro.url.pathname
 	.split('/')
-	.at(2)}`
+	.at(3)}`
 ---
 
-<picture>
-	<source
-		type='image/avif'
-		srcset=`${imageFilePath}_${imgName.split('.').at(0)}.avif`
-	/>
-	<source
-		type='image/webp'
-		srcset=`${imageFilePath}_${imgName.split('.').at(0)}.webp`
-	/>
-	<source
-		type=`image/${imgName.split('.').at(-1)}`
-		srcset=`${imageFilePath}_${imgName}`
-	/>
-	<img
-		src=`${imageFilePath}_${imgName}`
-		alt={altText}
-		aria-describedby={describedBy}
-		aria-labelledby={labelledby}
-		role={!!altText ? 'img' : 'presentation'}
-	/>
-</picture>
+{
+	() => {
+		if (imgName.includes('.svg')) {
+			return (
+				<img
+					src={`${imageFilePath}_${imgName}`}
+					alt={altText}
+					aria-describedby={describedBy}
+					aria-labelledby={labelledby}
+					role={!!altText ? 'img' : 'presentation'}
+				/>
+			)
+		} else {
+			return (
+				<picture>
+					<source
+						type='image/avif'
+						srcset={`${imageFilePath}_${imgName.split('.').at(0)}.avif`}
+					/>
+					<source
+						type='image/webp'
+						srcset={`${imageFilePath}_${imgName.split('.').at(0)}.webp`}
+					/>
+					<source
+						type={`image/${imgName.split('.').at(-1)}`}
+						srcset={`${imageFilePath}_${imgName}`}
+					/>
+					<img
+						src={`${imageFilePath}_${imgName}`}
+						alt={altText}
+						aria-describedby={describedBy}
+						aria-labelledby={labelledby}
+						role={!!altText ? 'img' : 'presentation'}
+					/>
+				</picture>
+			)
+		}
+	}
+}
 
 <style lang='scss'>
 	picture {
 		width: inherit;
 		max-width: 100%;
 		max-height: 85vh;
+		@supports (max-height: 1svh) {
+			max-height: 85svh;
+		}
 		> img {
 			object-fit: contain;
 			width: auto;

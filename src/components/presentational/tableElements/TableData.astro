@@ -1,0 +1,11 @@
+---
+type Props = {
+	data: string
+}
+const { data } = Astro.props
+---
+
+<td>
+	{data}
+	{data === '' && <span class='visuallyHidden'>empty cell</span>}
+</td>

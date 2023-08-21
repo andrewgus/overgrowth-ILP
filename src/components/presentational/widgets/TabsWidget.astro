@@ -62,7 +62,9 @@ const describedByID = createNanoID(Astro.self.name)
 </script>
 
 <div class:list={['tabs', { fullWidth: isFullWidth }]}>
-	<div class='tabBtns' role='tablist'>
+	<div
+		class='tabBtns'
+		role='tablist'>
 		{
 			tabNames.map((tabName, i) => (
 				<button
@@ -135,6 +137,11 @@ const describedByID = createNanoID(Astro.self.name)
 			border: 1px solid var(--darkGray);
 			border-top: 0;
 			border-radius: 0 0 var(--s-5) var(--s-5);
+			@supports (min-height: 1svh) {
+				.tabContent {
+					min-height: 10svh;
+				}
+			}
 		}
 	}
 </style>
