@@ -32,7 +32,6 @@
 import katex from 'katex'
 import { ref, watch } from 'vue';
 import BaseButton from '../../base/BaseButton.vue';
-import useIsActivityCompleted from '../../../composables/useIsActivityCompleted';
 import { ariaLiveAnnouncement, setAriaLiveAnnouncement } from '../../../composables/useSetAriaLiveAnnouncement';
 
 const emit = defineEmits<{
@@ -65,15 +64,14 @@ const userFeedback = ref<(boolean | undefined)[]>([...props.MathQsAndAs].map(() 
 props.isStepComplete && userFeedback.value.fill(true)
 
 const checkForCorrect = (i: number) => {
-
-    if (userAnswersInput.value[i] === answersOnly[i]) {
+    if (userAnswersInput.value[i] === +answersOnly[i]) {
         setAriaLiveAnnouncement('Correct')
         userFeedback.value[i] = true
         equationEls.value![i].focus()
     }
 }
 const checkForIncorrect = (i: number) => {
-    if (userAnswersInput.value[i].length > 0 && userAnswersInput.value[i] !== answersOnly[i]) {
+    if (userAnswersInput.value[i].toString().length > 0 && +userAnswersInput.value[i] !== +answersOnly[i]) {
         setAriaLiveAnnouncement('Incorrect. Please try again.')
         userFeedback.value[i] = false
         equationEls.value![i].focus()
@@ -83,7 +81,6 @@ const checkForIncorrect = (i: number) => {
 watch(userFeedback.value, (newValue) => {
     if (newValue.every((val) => val === true)) emit('readyForNext', true);
 })
-// TODO: fix userFeedback if refresh and completed
 
 const readyForNext = () => {
     // if this is a multistep practice, then this signals that users is ready to see next step
