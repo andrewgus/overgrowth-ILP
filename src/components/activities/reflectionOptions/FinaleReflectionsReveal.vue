@@ -2,7 +2,8 @@
 	<div :class="$style.reflectionFinale">
 		<p ref='promptEl'>{{ prompt }}</p>
 		<div :class="$style.reflectionResponses">
-			<div v-for="(response, _, index) in userReflectionsStore" :key="index" :class="$style.responseItem">
+			<div v-for="(response, _, index) in userReflectionsStore" :key="index" :class="$style.responseItem"
+				class='blue'>
 				<p :class="$style.question">
 					<span :class="$style.note">We asked:&nbsp;</span>
 					<span>{{ response.prompt }}</span>
@@ -61,46 +62,52 @@ useIntersectionObserver(
 		align-items: center;
 		gap: var(--s6);
 
+
+
 		>.responseItem {
 			width: 100%;
 			overflow: hidden;
 			border-radius: var(--s0);
 			border: var(--s-10) solid var(--blue-2);
-			background-color: var(--offWhite);
 
-			p {
-				padding: var(--s0) var(--s2);
-
-				&.question {
-					border-bottom: 1px dashed var(--offWhite);
-					background-color: var(--blue-2);
-					color: var(--white);
-					padding-bottom: var(--s2);
-
-					>.note {
-						color: var(--blue-2);
-						background-color: var(--white);
-					}
-				}
-
+			&:first-child {
+				margin-top: var(--s0);
 			}
 
-			>.answer {
-				padding-top: var(--s4);
-				padding-bottom: var(--s2);
+			p {
+				z-index: 1;
+				max-width: 98%;
+				position: relative;
+				margin-inline: auto;
+				padding: var(--s0) var(--s2);
+				margin: var(--s0);
 
-				>.note {
-					background-color: var(--blue-2);
-					color: var(--white);
+				&.question {
+					border-bottom: var(--s-10) dashed var(--blue-2);
+					padding-bottom: var(--s2);
+
+					&::after {
+						overflow: hidden;
+					}
+
+					&::before {
+						overflow: hidden;
+					}
 				}
 			}
 
 			span.note {
 				display: block;
 				width: max-content;
+				font-size: var(--s1);
+				font-weight: 700;
 				border-radius: var(--s-10);
 				padding: 0 var(--s-10);
-				margin-bottom: var(--s2);
+				margin-bottom: var(--s0);
+				text-decoration: underline;
+				text-decoration-color: var(--blue-2);
+				text-decoration-thickness: var(--s-10);
+				text-underline-offset: var(--s-10);
 			}
 		}
 	}

@@ -19,12 +19,11 @@ import FlipCardsWidget from '../../components/presentational/widgets/FlipCardsWi
 import FlipCard from '../../components/presentational/widgets/FlipCard.vue'
 import StepsList from '../../components/presentational/contentLayouts/StepsList.astro'
 import SideBySideImage from '../../components/presentational/contentLayouts/SideBySideImage.astro'
-import ReferenceItem from '../../components/presentational/contentLayouts/ReferenceItem.astro'
 ---
 
 <TheLesson
 	title='Overview of Financial Planning'
-	scene='planning-a-budget'
+	scene={'planning-a-budget'}
 	gradientColor='var(--green-3)'>
 	<InteractiveActivity
 		client:load
@@ -1237,9 +1236,11 @@ import ReferenceItem from '../../components/presentational/contentLayouts/Refere
 				cardNum='1'>
 				<p slot='front'>What Is A Checking Account?</p>
 				<Fragment slot='back'>
-					A <TextStyle setType={'highlight'}>checking account</TextStyle> (sometimes
-					called a transaction account) is a deposit account that allows you to easily
-					make withdrawals, deposits, and fund transfers.
+					<p>
+						A <TextStyle setType={'highlight'}>checking account</TextStyle> (sometimes
+						called a transaction account) is a deposit account that allows you to
+						easily make withdrawals, deposits, and fund transfers.
+					</p>
 					<ol>
 						<li>
 							<p>
@@ -1436,7 +1437,7 @@ import ReferenceItem from '../../components/presentational/contentLayouts/Refere
 				</li>
 			</StepsList>
 		</SubSection>
-		<CallOut setColor={'blue'}>
+		<CallOut setColor={'yellow'}>
 			<dl>
 				<dt>Getting to Know Your Account and What It Offers</dt>
 				<dd>
@@ -1581,6 +1582,10 @@ import ReferenceItem from '../../components/presentational/contentLayouts/Refere
 					</ExternalLink>
 				</p>
 			</li>
+			<!-- FIXME: Is this one still good? Doesn't seem to exist -->
+			<!-- <li>
+				<p>Check</p>
+			</li> -->
 			<li>
 				<p>
 					<ExternalLink
@@ -1672,8 +1677,10 @@ import ReferenceItem from '../../components/presentational/contentLayouts/Refere
 		]}
 		isReflection__FinaleReveal
 	/>
-	<StaticContent title='References'>
-		<ReferenceItem>
+	<StaticContent
+		title='References'
+		isReferences>
+		<p>
 			Banerjee, P. (2015, June 18). <TextStyle setType={'emphasis'}>
 				How to calculate your net worth
 			</TextStyle> [Video]. YouTube. <ExternalLink
@@ -1682,8 +1689,8 @@ import ReferenceItem from '../../components/presentational/contentLayouts/Refere
 				urlTitle={'How to calculate your net worth'}>
 				https://www.youtube.com/watch?v=KhSnNtdYR9Y
 			</ExternalLink>
-		</ReferenceItem>
-		<ReferenceItem>
+		</p>
+		<p>
 			Campbell, J. (2022, February 14).<TextStyle setType={'emphasis'}>
 				How to create a personal balance sheet and determine net worth
 			</TextStyle>. moneymanagement.org. <ExternalLink
@@ -1692,8 +1699,8 @@ import ReferenceItem from '../../components/presentational/contentLayouts/Refere
 				urlTitle={'How to create a personal balance sheet and determine net worth'}>
 				https://www.moneymanagement.org/blog/how-to-create-a-personal-balance-sheet-and-determine-your-net-worth
 			</ExternalLink>
-		</ReferenceItem>
-		<ReferenceItem>
+		</p>
+		<p>
 			Cross, D. (2023, February 13). <TextStyle setType={'emphasis'}>
 				On the road from $0 to a million, this simple pyramid is your map; what
 				level are you on?
@@ -1703,8 +1710,8 @@ import ReferenceItem from '../../components/presentational/contentLayouts/Refere
 				urlTitle={'On the road from $0 to a million, this simple pyramid is your map; what level are you on?'}>
 				https://www.moneyunder30.com/financial-planning-pyramid-11294
 			</ExternalLink>
-		</ReferenceItem>
-		<ReferenceItem>
+		</p>
+		<p>
 			Frankenfield, J. (2023, May 27). <TextStyle setType={'emphasis'}>
 				What is a checking account? Here’s everything you need to know
 			</TextStyle>. Investopedia.com. <ExternalLink
@@ -1713,18 +1720,18 @@ import ReferenceItem from '../../components/presentational/contentLayouts/Refere
 				urlTitle={'What is a checking account? Here’s everything you need to know'}>
 				https://www.investopedia.com/terms/c/checkingaccount.asp
 			</ExternalLink>
-		</ReferenceItem>
-		<ReferenceItem>
+		</p>
+		<p>
 			Manning, L. (2023, February 15). <TextStyle setType={'emphasis'}>
 				Financial plans: Meaning, purpose, and key components
 			</TextStyle>. Investopedia. <ExternalLink
 				url='https://www.investopedia.com/terms/f/financial_plan.asp#:~:text=A%20financial%20plan%20documents%20an,plan%20for%20saving%20and%20investing '
 				isShownURL
-				urlTitle='Financial plans: Meaning, purpose, and key components'>
+				urlTitle={'Financial plans: Meaning, purpose, and key components'}>
 				https://www.investopedia.com/terms/f/financial_plan.asp#:~:text=A%20financial%20plan%20documents%20an,plan%20for%20saving%20and%20investing
 			</ExternalLink>
-		</ReferenceItem>
-		<ReferenceItem>
+		</p>
+		<p>
 			Herrity, J. (2023, June 6). <TextStyle setType={'emphasis'}>
 				Guide on how to write SMART goals (with examples)
 			</TextStyle>. Indeed.com. <ExternalLink
@@ -1733,58 +1740,57 @@ import ReferenceItem from '../../components/presentational/contentLayouts/Refere
 				urlTitle={'Guide on how to write SMART goals (with examples)'}>
 				https://www.indeed.com/career-advice/career-development/how-to-write-smart-goals
 			</ExternalLink>
-		</ReferenceItem>
+		</p>
 		<SubSection title='Attributions'>
 			<p>
-				"<ExternalLink
+				<ExternalLink
 					url='https://open.umn.edu/opentextbooks/textbooks/personal-finance'>
-					Personal Finance
-				</ExternalLink>" by Rachel Siegel and Carol Yacht, Saylor Foundation is
-				licensed under <ExternalLink
+					"Personal Finance"
+				</ExternalLink> by Rachel Siegel and Carol Yacht, Saylor Foundation is licensed
+				under <ExternalLink
 					url='http://creativecommons.org/licenses/by-nc-sa/4.0'>
 					CC BY-NC-SA 4.0
 				</ExternalLink>
 			</p>
 			<p>
-				"<ExternalLink
+				<ExternalLink
 					url='https://www.oercommons.org/courses/the-math-of-money/view'>
-					The Math of Money
-				</ExternalLink>" by Zachary Klingensmith, OER Commons, is licensed under <ExternalLink
+					"The Math of Money"
+				</ExternalLink> by Zachary Klingensmith, OER Commons, is licensed under <ExternalLink
 					url='http://creativecommons.org/licenses/by-nc/4.0'>
 					CC BY-NC 4.0
 				</ExternalLink>
 			</p>
 		</SubSection>
 	</StaticContent>
-
-	<style is:global lang='scss'>
-		.littleCircle {
-			z-index: 1;
-			&::before {
-				content: '';
-				position: absolute;
-				top: calc(-1 * var(--s-2));
-				left: calc(-1 * var(--s-5));
-				z-index: -1;
-				width: var(--s7);
-				height: var(--s7);
-				background: var(--green5);
-				border-radius: 50%;
-			}
-		}
-		.bigCircle {
-			z-index: 1;
-			&::before {
-				content: '';
-				position: absolute;
-				top: calc(-1 * var(--s4));
-				left: calc(-1 * var(--s-5));
-				z-index: -1;
-				width: var(--s10);
-				height: var(--s10);
-				background: var(--blue5);
-				border-radius: 50%;
-			}
-		}
-	</style>
 </TheLesson>
+<style is:global lang='scss'>
+	.littleCircle {
+		z-index: 1;
+		&::before {
+			content: '';
+			position: absolute;
+			top: calc(-1 * var(--s-2));
+			left: calc(-1 * var(--s-5));
+			z-index: -1;
+			width: var(--s7);
+			height: var(--s7);
+			background: var(--green5);
+			border-radius: 50%;
+		}
+	}
+	.bigCircle {
+		z-index: 1;
+		&::before {
+			content: '';
+			position: absolute;
+			top: calc(-1 * var(--s4));
+			left: calc(-1 * var(--s-5));
+			z-index: -1;
+			width: var(--s10);
+			height: var(--s10);
+			background: var(--blue5);
+			border-radius: 50%;
+		}
+	}
+</style>

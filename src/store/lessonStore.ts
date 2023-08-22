@@ -332,20 +332,20 @@ const useIsLastActivity = (sectionID: string): boolean => {
 	const sectionToCheck = allSectionsMap.get()[sectionID];
 	
 	if (!sectionToCheck) return false;
-  
+	// only get activities, not static content
 	const sectionsWithActivity = Object.values(allSectionsMap.get())
 	  .filter(section => section.activityType !== null);
   
 	let highestOrderNum = Number.MIN_SAFE_INTEGER;
 	let lastActivitySection = null;
-  
+	// get the last activity, based on having the highest ordernNum
 	for (const currentSection of sectionsWithActivity) {
 	  if (currentSection.orderNum !== null && currentSection.orderNum > highestOrderNum) {
 		highestOrderNum = currentSection.orderNum;
 		lastActivitySection = currentSection;
 	  }
 	}
-  
+	// return true if param section is also the last activity
 	return sectionToCheck === lastActivitySection;
   };
   

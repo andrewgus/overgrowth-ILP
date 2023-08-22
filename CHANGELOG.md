@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.6.2] — 2023-08-22
+
+### Changed
+
+- Changed how References page works to be a prop on StaticContent
+- Changed styles for fade on non-interactive elements
+- Imrpvoed saveAsPDF composable to save better
+- Added flash to Matching Item change based on feedback
+- Section break styles updated based on feedback
+- Made callOutBox styles global so it can be used in Vue and Astro files
+
 ## [0.6.1] — 2023-08-20
 
 ### Changed

@@ -119,7 +119,16 @@ const setComplete = async ({ target }: Event) => {
 	const nextSectionLinkEl = thisSection.querySelector(
 		'a[class*="_indicator"]'
 	) as HTMLElement
-	!!finalFeedbackEl ? (finalFeedbackEl.focus(), setAriaLiveAnnouncement('You can now continue to the next section.')) : nextSectionLinkEl.focus()
+	// if there is finalFeedback, then focus there, but let SR users know they can continue
+	if (!!finalFeedbackEl) {
+		finalFeedbackEl.focus()
+		finalFeedbackEl.scrollIntoView({ behavior: 'smooth', block: "center", inline: "nearest" })
+		setAriaLiveAnnouncement('You can continue to next section.');
+	} else {
+		// this does not need aria-live, as the link name describes it.
+		nextSectionLinkEl.focus()
+	}
+
 }
 
 const pdfStatusUpdate = computed(() => {
@@ -213,6 +222,7 @@ const showSavePdfBtn = computed(() => {
 	grid-area: pdfSave-indicator/topLine/indicator-end/bottomLine;
 }
 </style>
+
 <style scoped lang="scss">
 @use '../../styles/mixins/transitions.scss';
 @include transitions.vueOpacity();

@@ -32,6 +32,7 @@
 			</div>
 		</div>
 		<div :class='$style.answerReveal' v-else>
+
 			<table>
 				<caption>Matching Results</caption>
 				<thead>
@@ -49,6 +50,9 @@
 					</tr>
 				</tbody>
 			</table>
+			<!-- FIXME: Add a reset this this entire activity btn... figure out best placement. Just need one button for everything? I think? This would need to go in the PracticeSwitchBoard, most likely... -->
+			<!-- <BaseButton :class='$style.resetBtn' isForActivity text='Reset this entire activity to try again?'
+				@btnClick='restartMatching(true, $event)' /> -->
 		</div>
 	</transition>
 	<div class='visuallyHidden' aria-live='polite'>{{ ariaLiveAnnouncement }}</div>
@@ -97,9 +101,18 @@ const isAllMatched = computed(() => btnClickCount.value === shuffleItemsAndAnswe
 
 // to focus on next item to be matched
 const focusNextItemToMatch = async () => {
+	const prevItem = itemEls.value![0]
 	await nextTick()
 	if (!!itemEls.value![0]) {
 		const nextItemToMatch = itemEls.value![0]
+		// If the item has changed, hightlight that change
+		if (nextItemToMatch !== prevItem) {
+			nextItemToMatch.style.backgroundColor = 'var(--yellow2)'
+			setTimeout(() => {
+				nextItemToMatch.style.backgroundColor = ''
+				nextItemToMatch.style.outline = 'none'
+			}, 330)
+		}
 		nextItemToMatch.focus();
 	}
 	if (isAllMatched.value) {
@@ -107,14 +120,21 @@ const focusNextItemToMatch = async () => {
 	}
 }
 // if user wants to try again
-const restartMatching = () => {
+const restartMatching = (isAlsoResetting?: boolean, e?: Event) => {
+	if (isAlsoResetting) {
+		const btn = e!.target as HTMLButtonElement
+		btn.innerText = 'Are you sure?'
+		// emit('readyForNext', false)
+	}
 	setAriaLiveAnnouncement('Matching reset')
 	btnClickCount.value = 0
 	isCorrectChoices.value.fill(false)
 	isIncorrectChoices.value.fill(false)
 	shuffleItemsAndAnswers = shuffleArray(props.itemsAndAnswers)
 	itemsToMatch = shuffleItemsAndAnswers.flatMap((itemAnswerPair) => itemAnswerPair[0])
-	focusNextItemToMatch()
+	if (!isAllMatched) {
+		focusNextItemToMatch()
+	}
 }
 // prep for next matching item
 const setUpNextQuestion = () => {
@@ -194,6 +214,7 @@ const determineTableLength = computed(() => [...matchingChoices].length >= 3 && 
 	padding: var(--s2);
 
 	>p {
+		transition: background-color var(--timeShort) ease-in-out;
 		border-radius: var(--s-10);
 		padding: var(--s-10);
 		font-size: var(--s1);

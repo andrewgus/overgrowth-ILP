@@ -32,6 +32,7 @@
 import katex from 'katex'
 import { ref, watch } from 'vue';
 import BaseButton from '../../base/BaseButton.vue';
+import useIsActivityCompleted from '../../../composables/useIsActivityCompleted';
 import { ariaLiveAnnouncement, setAriaLiveAnnouncement } from '../../../composables/useSetAriaLiveAnnouncement';
 
 const emit = defineEmits<{

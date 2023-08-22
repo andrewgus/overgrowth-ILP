@@ -68,28 +68,3 @@ const {
 		{isInteractive && <ActivitiesOffFooter client:load />}
 	</body>
 </html>
-
-<style define:vars={{ gradientColor }}>
-	body {
-		background-image: linear-gradient(to bottom, white 1%, transparent 1%),
-			linear-gradient(
-				to right,
-				var(--gradientColor),
-				var(--gradientColor) var(--s2),
-				transparent var(--s2)
-			),
-			linear-gradient(
-				to left,
-				var(--gradientColor),
-				var(--gradientColor) var(--s2),
-				transparent var(--s2)
-			),
-			repeating-linear-gradient(
-				to right,
-				var(--gradientColor),
-				var(--gradientColor) var(--s-5),
-				transparent var(--s-5),
-				transparent var(--s5)
-			);
-	}
-</style>

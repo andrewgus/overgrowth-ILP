@@ -16,6 +16,13 @@ export default function generatePDF(currSection: SectionDetails) {
 	})
 
 	const pdfElement: HTMLElement = document.getElementById(currSection.id)!
+	// Get a copy of the PDF HTML
+	const newPdfElement = pdfElement.innerHTML;
+	// Find the class "blue"
+	const classRegex = /(class=["'][^"']*?\b)blue(\b[^"']*?["'])/g;
+	// Remove the class "blue" wherever it exists
+	const modifiedHTML = newPdfElement.replaceAll(classRegex, '$1$2');
+
 	const lessonName: string = window.location
 		.toString()
 		.split('/')
@@ -24,7 +31,19 @@ export default function generatePDF(currSection: SectionDetails) {
 		.at(0)
 		?.replaceAll('-', ' ')!
 
-	newPDF.html(pdfElement, {
+	newPDF.html(modifiedHTML,{
+		autoPaging: true,
+		html2canvas: {
+			ignoreElements: (el) =>
+				el.classList.toString().includes('btn') ||
+				el.classList.toString().includes('pdfSave') ||
+				el.classList.toString().includes('indicator') ||
+				el.classList.toString().includes('alertText'),
+			
+			scale: 0.7,
+			width: 700,
+			windowWidth: 700,		
+		},
 		callback: (newPDF) => {
 			const totalPages = newPDF.getNumberOfPages()
 
@@ -53,20 +72,8 @@ export default function generatePDF(currSection: SectionDetails) {
 							true)
 				)
 		},
-		html2canvas: {
-			ignoreElements: (el) =>
-				el.classList.toString().includes('btn') ||
-				el.classList.toString().includes('pdfSave') ||
-				el.classList.toString().includes('indicator') ||
-				el.classList.toString().includes('alertText'),
-
-			scale: 0.7,
-			width: 700,
-			windowWidth: 700,		
-		},
-		image: { type: 'webp', quality: 100},
 		width: 700,
 		windowWidth: 700,
-		margin: [32, 16, 24, 16],
+		margin: [0, 16, 24, 16],
 	})
 }

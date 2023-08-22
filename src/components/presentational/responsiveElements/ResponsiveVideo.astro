@@ -6,9 +6,8 @@ type Props = {
 	url: string
 	introText?: string
 	transcriptSrc?: string
-	setColor?: 'green' | 'red' | 'yellow' | 'blue' | 'white'
 }
-const { title, url, introText, transcriptSrc, setColor } = Astro.props
+const { title, url, introText, transcriptSrc } = Astro.props
 
 const describedByID = createNanoID(Astro.self.name)
 
@@ -17,7 +16,7 @@ const transcriptFilePath = `https://fscjcel.blob.core.windows.net/ilp-assets/${A
 	.at(3)}`
 ---
 
-<div class:list={[Astro.self.name, setColor]}>
+<div class:list={[Astro.self.name]}>
 	{
 		introText && (
 			<p
@@ -43,6 +42,7 @@ const transcriptFilePath = `https://fscjcel.blob.core.windows.net/ilp-assets/${A
 				aria-describedby={describedByID}
 				href={`${transcriptFilePath}_${transcriptSrc}`}
 				download
+				target='_blank'
 				class={`${Astro.self.name}__transcript`}>
 				Download Transcript
 			</a>

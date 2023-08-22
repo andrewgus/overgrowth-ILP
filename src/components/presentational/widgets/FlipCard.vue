@@ -132,10 +132,6 @@ onMounted(() => (areFlipCardsAvailable.value = !!flipCardsStore[flipID]))
 		overflow-y: scroll;
 		max-width: 50ch;
 
-		&:focus {
-			animation: focusFade 1.25s ease-in-out var(--timeShort) forwards;
-		}
-
 		>astro-slot {
 			>*:not(ul, ol)+* {
 				margin-top: var(--s2);
@@ -167,16 +163,6 @@ onMounted(() => (areFlipCardsAvailable.value = !!flipCardsStore[flipID]))
 		border: 0;
 		align-self: end;
 		width: 100%;
-	}
-}
-
-@keyframes focusFade {
-	from {
-		outline: var(--s-10) solid var(--blue1);
-	}
-
-	to {
-		outline: var(--s-10) solid transparent;
 	}
 }
 </style>
