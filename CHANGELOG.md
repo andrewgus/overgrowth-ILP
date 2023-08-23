@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.6.3] — 2023-08-23
+
+- Removed presentational folder. Moved all child folders up a level to be direct child of components.
+- Reconfigured aria-live to be a global div at the top of the page. Added ariaLiveStore in /store to manage that.
+- Fixed mobile-width issue with math practice equations.
+
 ## [0.6.2] — 2023-08-22
 
 ### Changed

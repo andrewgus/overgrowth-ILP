@@ -4,6 +4,7 @@ import SkipToContent from '../components/navigation/SkipToContent.astro'
 import TheLanding from '../components/landing/TheLanding.astro'
 import TheLessonNav from '../components/navigation/TheLessonNav.vue'
 import ActivitiesOffFooter from '../components/footer/ActivitiesOffFooter.vue'
+import AriaLiveAnnouncements from '../components/a11yElements/AriaLiveAnnouncements.vue'
 import createID from '../composables/useCreateID'
 import '../styles/root.scss'
 import '../styles/specifiedLayouts/articleLayout.scss'
@@ -54,6 +55,7 @@ const {
 		<title>{title}</title>
 	</head>
 	<body id={`${createID(title)}-lesson`}>
+		{isInteractive && <AriaLiveAnnouncements client:load />}
 		{isInteractive && <TheLocalStorageDialog client:load />}
 		<SkipToContent />
 		<TheLessonNav client:load />

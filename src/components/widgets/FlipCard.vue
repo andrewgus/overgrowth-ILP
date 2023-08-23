@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, nextTick, onMounted } from 'vue'
-import { flipCardsStore } from '../../../store/flipCardStore'
+import { flipCardsStore } from '../../store/flipCardStore'
 
 type Props = {
 	id: string,
@@ -80,9 +80,9 @@ onMounted(() => (areFlipCardsAvailable.value = !!flipCardsStore[flipID]))
 </script>
 
 <style module lang="scss">
-@use '../../../styles/mixins/containerStyles.scss';
-@use '../../../styles/mixins/shadows.scss';
-@use '../../../styles/mixins/buttons.scss';
+@use '../../styles/mixins/containerStyles.scss';
+@use '../../styles/mixins/shadows.scss';
+@use '../../styles/mixins/buttons.scss';
 
 .flipCard {
 	@include shadows.smallBoxShadow();

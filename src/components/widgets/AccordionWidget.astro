@@ -16,14 +16,19 @@ const { title } = Astro.props
 </script>
 
 <details class='accordion'>
-	<summary aria-expanded='false' tabindex='0' role='button'>{title}</summary>
+	<summary
+		aria-expanded='false'
+		tabindex='0'
+		role='button'
+		>{title}</summary
+	>
 	<slot />
 </details>
 
 <style lang='scss'>
-	@use '../../../styles/mixins/buttons';
-	@use '../../../styles/mixins/containerStyles';
-	@use '../../../styles/mixins/shadows';
+	@use '../../styles/mixins/buttons';
+	@use '../../styles/mixins/containerStyles';
+	@use '../../styles/mixins/shadows';
 	.accordion {
 		@include shadows.smallBoxShadow();
 		overflow: hidden;

@@ -1,7 +1,4 @@
 <template>
-	<div class="visuallyHidden" aria-live="polite">
-		{{ ariaLiveAnnouncement }}
-	</div>
 	<footer v-show="showFooter" :class="[$style.activitiesOff, { [$style.sendToBottom]: userUnderstands }]">
 		<p id="activitiesOffReminderMessage">
 			<strong>Reminder:</strong>
@@ -25,10 +22,7 @@ import {
 } from '../../store/lessonStore'
 import { useStore } from '@nanostores/vue'
 import BaseButton from '../base/BaseButton.vue'
-import {
-	setAriaLiveAnnouncement,
-	ariaLiveAnnouncement,
-} from '../../composables/useSetAriaLiveAnnouncement'
+import { setAriaLiveAnnouncement } from '../../store/ariaLiveStore'
 
 const $activities = useStore(activitiesMap)
 const $allSections = useStore(allSectionsMap)

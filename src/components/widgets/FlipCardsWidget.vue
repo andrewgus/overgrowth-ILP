@@ -20,9 +20,9 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, nextTick } from 'vue'
 import { onKeyStroke, usePointerSwipe, useSwipe } from '@vueuse/core'
-import { flipCardsStore, initFlipCard } from '../../../store/flipCardStore'
-import BaseButton from '../../base/BaseButton.vue'
-import { useSwapTabIndexAndFocusWithKeys, useSwapTabIndex } from '../../../composables/useSwapTabIndexAndFocusWithKeys'
+import { flipCardsStore, initFlipCard } from '../../store/flipCardStore'
+import BaseButton from '../base/BaseButton.vue'
+import { useSwapTabIndexAndFocusWithKeys, useSwapTabIndex } from '../../composables/useSwapTabIndexAndFocusWithKeys'
 
 const props = defineProps({
 	id: {
@@ -109,8 +109,8 @@ const { lengthX } = useSwipe(displayBoxEl, {
 </script>
 
 <style module lang="scss">
-@use '../../../styles/mixins/containerStyles.scss';
-@use '../../../styles/mixins/shadows.scss';
+@use '../../styles/mixins/containerStyles.scss';
+@use '../../styles/mixins/shadows.scss';
 
 .flipCards {
 	@include containerStyles.darkBorder();

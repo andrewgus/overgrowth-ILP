@@ -55,12 +55,11 @@
 				@btnClick='restartMatching(true, $event)' /> -->
 		</div>
 	</transition>
-	<div class='visuallyHidden' aria-live='polite'>{{ ariaLiveAnnouncement }}</div>
 </template>
 
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref, watch } from 'vue';
-import { ariaLiveAnnouncement, setAriaLiveAnnouncement } from '../../../composables/useSetAriaLiveAnnouncement';
+import { setAriaLiveAnnouncement } from '../../../store/ariaLiveStore';
 import BaseButton from '../../base/BaseButton.vue';
 import shuffleArray from '../../../composables/useShuffleArray'
 import { useSwapTabIndex, useSwapTabIndexAndFocusWithKeys } from '../../../composables/useSwapTabIndexAndFocusWithKeys'

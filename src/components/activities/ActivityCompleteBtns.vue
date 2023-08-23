@@ -33,9 +33,6 @@
 				text="Continue to next section" :isHidden="id !== $currSection.id" :goTo="`#${nextSection}`" />
 		</template>
 	</TransitionGroup>
-	<div class="visuallyHidden" aria-live="assertive">
-		{{ ariaLiveAnnouncement }}
-	</div>
 </template>
 
 <script setup lang="ts">
@@ -53,10 +50,7 @@ import { activityProgressStore } from '../../store/activityOptionsStore'
 import BaseButton from '../base/BaseButton.vue'
 import BaseIndicator from '../base/BaseIndicator.vue'
 import useAreSectionsAvailable from '../../composables/useAreSectionsAvailable'
-import {
-	setAriaLiveAnnouncement,
-	ariaLiveAnnouncement,
-} from '../../composables/useSetAriaLiveAnnouncement'
+import { setAriaLiveAnnouncement } from '../../store/ariaLiveStore'
 
 const props = defineProps({
 	id: {

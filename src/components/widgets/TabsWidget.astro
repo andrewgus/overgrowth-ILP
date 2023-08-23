@@ -3,7 +3,7 @@
  * Creates a tabular widget for presenting content
  * NOTE: Make sure to include 'slot={number order here}' on
  */
-import createNanoID from '../../../composables/useCreateNanoID'
+import createNanoID from '../../composables/useCreateNanoID'
 
 type Props = {
 	tabNames: string[]
@@ -104,8 +104,8 @@ const describedByID = createNanoID(Astro.self.name)
 </div>
 
 <style lang='scss'>
-	@use '../../../styles/mixins/buttons.scss';
-	@use '../../../styles/mixins/shadows.scss';
+	@use '../../styles/mixins/buttons.scss';
+	@use '../../styles/mixins/shadows.scss';
 
 	.tabs {
 		@include shadows.smallBoxShadow();

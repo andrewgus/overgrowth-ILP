@@ -25,15 +25,13 @@
         </ol>
         <BaseButton v-if='isMultisteps' text='Go to next step' isForActivity @click='readyForNext()' />
     </div>
-    <div class='visuallyHidden'>{{ ariaLiveAnnouncement }}</div>
 </template>
 
 <script setup lang="ts">
 import katex from 'katex'
 import { ref, watch } from 'vue';
-import BaseButton from '../../base/BaseButton.vue';
-import useIsActivityCompleted from '../../../composables/useIsActivityCompleted';
-import { ariaLiveAnnouncement, setAriaLiveAnnouncement } from '../../../composables/useSetAriaLiveAnnouncement';
+import BaseButton from '../../base/BaseButton.vue'
+import { setAriaLiveAnnouncement } from '../../../store/ariaLiveStore';
 
 const emit = defineEmits<{
     readyForNext: [payload: boolean]
@@ -110,88 +108,88 @@ const readyForNext = () => {
     ol {
         margin: var(--s5) var(--s2);
     }
-}
 
-.mathQuestion {
-    width: max-content;
-    padding: var(--s-6);
-    border-radius: var(--s-10);
-
-    +.mathQuestion {
-        margin-top: var(--s0);
-    }
-
-    .textFeedback {
-        &[class*="answer"] {
-            max-width: 90%;
-            widows: 100%;
-            padding: var(--s-10);
-            margin-right: var(--s-10);
-            border-radius: var(--s-10);
-            border: 1px solid var(--darkGray);
-        }
-
-        &.answerCorrect {
-            border: 1px solid var(--darkGray);
-            background-color: var(--green5);
-        }
-
-        &.answerIncorrect {
-            background-color: var(--red5);
-        }
-    }
-
-    &__question {
-        display: inline;
-    }
-
-    input {
-        @include containerStyles.darkBorder();
-        @include transitions.short();
-        border-radius: var(--s10);
-        display: inline;
+    .mathQuestion {
         padding: var(--s-6);
-        max-width: var(--s10);
-        background-color: var(--white);
+        border-radius: var(--s-10);
 
-        &.answerIncorrect:empty {
-            background-color: var(--red5);
+        +.mathQuestion {
+            margin-top: var(--s0);
         }
 
-        @media only screen and (max-width: 70ch) {
-            display: block;
-        }
+        .textFeedback {
+            &[class*="answer"] {
+                max-width: 90%;
+                widows: 100%;
+                padding: var(--s-10);
+                margin-right: var(--s-10);
+                border-radius: var(--s-10);
+                border: 1px solid var(--darkGray);
+            }
 
-        &:empty {
-            background-color: var(--blue);
-        }
+            &.answerCorrect {
+                border: 1px solid var(--darkGray);
+                background-color: var(--green5);
+            }
 
-        &:not(:empty) {
-            border-radius: var(--s-10);
-        }
-
-        &:focus {
-            border-radius: var(--s-10);
-            background-color: inherit;
-
-            &::placeholder {
-                color: transparent;
+            &.answerIncorrect {
+                background-color: var(--red5);
             }
         }
 
-        &::placeholder {
-            text-align: center;
-            color: var(--offWhite);
-            opacity: 1;
+        &__question {
+            display: inline;
         }
 
-        &:hover {
-            @include shadows.hoverBoxShadow();
-        }
-    }
+        input {
+            @include containerStyles.darkBorder();
+            @include transitions.short();
+            border-radius: var(--s10);
+            display: inline;
+            padding: var(--s-6);
+            max-width: var(--s10);
+            margin-top: var(--s-8);
+            background-color: var(--white);
 
-    .answerRevealed {
-        display: inline;
+            &.answerIncorrect:empty {
+                background-color: var(--red5);
+            }
+
+            @media only screen and (max-width: 70ch) {
+                display: block;
+            }
+
+            &:empty {
+                background-color: var(--blue);
+            }
+
+            &:not(:empty) {
+                border-radius: var(--s-10);
+            }
+
+            &:focus {
+                border-radius: var(--s-10);
+                background-color: inherit;
+
+                &::placeholder {
+                    color: transparent;
+                }
+            }
+
+            &::placeholder {
+                text-align: center;
+                color: var(--offWhite);
+                opacity: 1;
+            }
+
+            &:hover {
+                @include shadows.hoverBoxShadow();
+            }
+        }
+
+        .answerRevealed {
+            display: inline;
+        }
     }
 }
 </style>
