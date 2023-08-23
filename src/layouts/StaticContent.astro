@@ -1,22 +1,28 @@
 ---
 type Props = {
 	title: string
-	giveMeConic?: boolean
+	isReferences?: boolean
 }
 
-const { title, giveMeConic } = Astro.props
+const { title, isReferences } = Astro.props
 
 // TODO: Play around with the idea of conic gradients to jazz this up a bit. Maybe create a composable of good conic gradient combinations and, if no param is passed, then return a random conic gradient from an array of good combinations. If param is passed, grab that exact gradient from the array.
 ---
 
 <article
-	class:list={['section', 'staticContent', { colorize: giveMeConic }]}
+	class:list={['section', 'staticContent', { references: isReferences }]}
 	tabindex='-1'>
 	<h2>{title}</h2>
 	<slot />
 </article>
 
 <style lang='scss'>
+	.references {
+		> :global(p) {
+			text-indent: calc(-1 * var(--s2));
+			margin-left: var(--s2);
+		}
+	}
 	.colorize {
 		background-image: conic-gradient(
 			from 180deg at 10vmin 90%,
