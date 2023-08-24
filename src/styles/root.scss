@@ -10,11 +10,11 @@
   font-size: var(--s0);
   box-sizing: border-box;
 
-  &:focus:not(article) {
+  &:focus {
     animation: focusPulse var(--timeShort) var(--transitionFlourish) forwards;
 
     &:not(button, a, input, textarea, select, summary) {
-      animation: focusFade 2s ease-in-out forwards;
+      animation: focusPulse var(--timeShort) var(--transitionFlourish) forwards, focusFade var(--timeLong) ease-in-out forwards var(--timeShort);
     }
   }
   &:visited {

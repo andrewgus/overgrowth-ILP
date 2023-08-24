@@ -109,8 +109,7 @@ const focusNextItemToMatch = async () => {
 			nextItemToMatch.style.backgroundColor = 'var(--yellow2)'
 			setTimeout(() => {
 				nextItemToMatch.style.backgroundColor = ''
-				nextItemToMatch.style.outline = 'none'
-			}, 330)
+			}, 750)
 		}
 		nextItemToMatch.focus();
 	}
