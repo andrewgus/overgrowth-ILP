@@ -14,7 +14,7 @@
     animation: focusPulse var(--timeShort) var(--transitionFlourish) forwards;
 
     &:not(button, a, input, textarea, select, summary) {
-      animation: focusFade 2.5s ease-in-out forwards;
+      animation: focusFade 2s ease-in-out forwards;
     }
   }
   &:visited {
