@@ -1,4 +1,4 @@
-import { ComputedRef, useCssModule, computed } from 'vue'
+import { useCssModule, computed, type ComputedRef } from 'vue'
 /**
  * For Vue only: To apply multiple conditional classes with CSS modules
  * @param baseClass class that is always applied

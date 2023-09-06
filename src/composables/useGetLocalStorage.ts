@@ -14,7 +14,7 @@ export default function useGetLocalStorage(
 	id?: string,
 	dataType?: localStorageDataTypes
 ) {
-	if (!!localStorage.getItem(lessonIDAtom.get())) {
+	if (typeof localStorage !== 'undefined' && !!localStorage.getItem(lessonIDAtom.get())) {
 		const localStorageData: localStorageDataObj = JSON.parse(
 			localStorage.getItem(lessonIDAtom.get())!
 		)

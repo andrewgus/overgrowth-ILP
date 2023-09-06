@@ -1,20 +1,17 @@
 <template>
 	<TransitionGroup v-if="areSectionsAvailable" aria-hidden="true" :class="$style.scene" tag="div" name="opacity">
 		<div v-if="useActivityExists('reflection')" key="reflection" v-show="$activities.reflection"
-			:class="{ [$style.reflectionBg]: isBgLoaded }"></div>
-		<div v-if="useActivityExists('practice')" key="practice" v-show="$activities.practice"
-			:class="{ [$style.practiceBg]: isBgLoaded }"></div>
-		<div v-if="useActivityExists('choice')" key="choice" v-show="$activities.choice"
-			:class="{ [$style.choiceBg]: isBgLoaded }"></div>
+			:class="$style.reflectionBg"></div>
+		<div v-if="useActivityExists('practice')" key="practice" v-show="$activities.practice" :class="$style.practiceBg">
+		</div>
+		<div v-if="useActivityExists('choice')" key="choice" v-show="$activities.choice" :class="$style.choiceBg"></div>
 	</TransitionGroup>
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
 import { useStore } from '@nanostores/vue'
 import { activitiesMap, useActivityExists } from '../../store/lessonStore'
 import useAreSectionsAvailable from '../../composables/useAreSectionsAvailable'
-const { areSectionsAvailable } = useAreSectionsAvailable()
 
 const props = defineProps({
 	scene: {
@@ -22,9 +19,6 @@ const props = defineProps({
 		required: true,
 	},
 })
-
-const $activities = useStore(activitiesMap)
-const isBgLoaded = ref(false)
 
 const imgURL = (type?: string) => {
 	return `url('https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene
@@ -37,11 +31,9 @@ const sceneDecor = {
 	practice: imgURL('practice'),
 	choice: imgURL('choice'),
 }
-watchEffect(() => {
-	const img = new Image()
-	img.src = `https://fscjcel.blob.core.windows.net/platform-scenes/${props.scene}.svg`
-	img.onload = () => (isBgLoaded.value = true)
-})
+
+const $activities = useStore(activitiesMap)
+const { areSectionsAvailable } = useAreSectionsAvailable()
 </script>
 
 <style module lang="scss">

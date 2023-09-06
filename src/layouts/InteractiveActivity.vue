@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import { ref, computed, defineAsyncComponent, provide, onMounted } from 'vue'
-import { useDoesActivityExist, type ActivityType, allSectionsMap } from '../store/lessonStore'
+import { useDoesActivityExist, type ActivityType } from '../store/lessonStore'
 import {
 	initActivityProgressStore,
 	activityProgressStore,

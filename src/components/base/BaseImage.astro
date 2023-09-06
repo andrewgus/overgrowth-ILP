@@ -46,6 +46,8 @@ const imageFilePath = `https://fscjcel.blob.core.windows.net/ilp-assets/${Astro.
 						aria-describedby={describedBy}
 						aria-labelledby={labelledby}
 						role={!!altText ? 'img' : 'presentation'}
+						decoding="async"
+						loading="lazy"
 					/>
 				</picture>
 			)

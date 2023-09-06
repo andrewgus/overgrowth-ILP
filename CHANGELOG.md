@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.6.4] — 2023-09-05
+
+### Changed
+
+- Updated Astro to 3.0
+
 ## [0.6.3] — 2023-08-23
 
 - Removed presentational folder. Moved all child folders up a level to be direct child of components.
