@@ -7,11 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## [0.6.4] — 2023-09-05
+## [0.6.4] — 2023-09-06
 
 ### Changed
 
 - Updated Astro to 3.0
+- Moved reusable types to separate folder for easier maintenance
 
 ## [0.6.3] — 2023-08-23
 

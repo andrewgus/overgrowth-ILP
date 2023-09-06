@@ -20,8 +20,8 @@
 import { ref, computed, defineAsyncComponent, watch, nextTick } from 'vue'
 import { activityProgressStore, userPracticeStore, initUserPracticeStore } from '../../store/activityOptionsStore';
 import getLocalStorage from '../../composables/useGetLocalStorage'
+import type { validPracticeActivityOptions } from '../../types/ActivityTypes'
 
-type validPracticeActivityOptions = 'Matching' | 'Math'
 type Props = {
 	id: string
 	prompts: string[]

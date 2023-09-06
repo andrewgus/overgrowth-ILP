@@ -2,7 +2,7 @@ import { lessonIDAtom } from '../store/lessonStore'
 import type {
 	localStorageDataObj,
 	localStorageDataTypes,
-} from '../scripts/updateLocalStorage'
+} from '../types/localStorageTypes'
 
 /**
  * To retrieve data saved to local storage
@@ -14,7 +14,10 @@ export default function useGetLocalStorage(
 	id?: string,
 	dataType?: localStorageDataTypes
 ) {
-	if (typeof localStorage !== 'undefined' && !!localStorage.getItem(lessonIDAtom.get())) {
+	if (
+		typeof localStorage !== 'undefined' &&
+		!!localStorage.getItem(lessonIDAtom.get())
+	) {
 		const localStorageData: localStorageDataObj = JSON.parse(
 			localStorage.getItem(lessonIDAtom.get())!
 		)

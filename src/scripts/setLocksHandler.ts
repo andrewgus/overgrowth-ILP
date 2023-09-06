@@ -1,8 +1,8 @@
 import {
 	filteredLockedSectionsComputed,
 	filteredNavSectionsComputed,
-	type SectionsMap,
 } from '../store/lessonStore'
+import type { SectionsMap } from '../types/SectionTypes'
 
 const toggleSectionDisplay = (
 	sections: Readonly<SectionsMap>,

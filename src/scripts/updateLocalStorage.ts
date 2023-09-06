@@ -1,19 +1,19 @@
 // saving to localStorage
 import { watch } from 'vue'
-import { allSectionsMap, lessonIDAtom, useSetNextIncompleteActivity } from '../store/lessonStore'
-import {userReflectionsStore, userPracticeStore } from '../store/activityOptionsStore'
+import {
+	allSectionsMap,
+	lessonIDAtom,
+	useSetNextIncompleteActivity,
+} from '../store/lessonStore'
+import {
+	userReflectionsStore,
+	userPracticeStore,
+} from '../store/activityOptionsStore'
 import getLocalStorage from '../composables/useGetLocalStorage'
-
-type localStorageDataObjProps = {
-	isActivityComplete?: boolean
-	reflectionAnswer?: string
-	isPracticeOptionStepsComplete: boolean[]
-}
-type localStorageDataTypes = keyof localStorageDataObjProps
-
-type localStorageDataObj = {
-	[id: string]: localStorageDataObjProps
-}
+import type {
+	localStorageDataObjProps,
+	localStorageDataObj,
+} from '../types/localStorageTypes'
 
 let localStorageUserData: localStorageDataObj = !!getLocalStorage()
 	? (getLocalStorage() as localStorageDataObj)
@@ -26,8 +26,8 @@ const useResetLocalStorageUserData = () => {
 		(reflection) => (reflection.answer = '')
 	)
 	// Clearing all practice steps
-	Object.values(userPracticeStore).forEach(
-		(practice) => (practice.isPracticeOptionStepsComplete.fill(false))
+	Object.values(userPracticeStore).forEach((practice) =>
+		practice.isPracticeOptionStepsComplete.fill(false)
 	)
 	// Clearing all activity progress
 	const allSectionsAsArray = Object.entries(allSectionsMap.get())
@@ -75,13 +75,15 @@ watch(
 watch(
 	() => userPracticeStore,
 	(updatedReflections) => {
-		Object.entries(updatedReflections).forEach(([id, { isPracticeOptionStepsComplete }]) => {
-			if (isPracticeOptionStepsComplete.length >= 1) {
-				updateLocalStorageUserData(id, {
-					isPracticeOptionStepsComplete: isPracticeOptionStepsComplete
-				})
+		Object.entries(updatedReflections).forEach(
+			([id, { isPracticeOptionStepsComplete }]) => {
+				if (isPracticeOptionStepsComplete.length >= 1) {
+					updateLocalStorageUserData(id, {
+						isPracticeOptionStepsComplete: isPracticeOptionStepsComplete,
+					})
+				}
 			}
-		})
+		)
 	},
 	{ deep: true }
 )
@@ -97,8 +99,3 @@ allSectionsMap.listen((sections) => {
 })
 
 export { useResetLocalStorageUserData }
-export type {
-	localStorageDataObj,
-	localStorageDataObjProps,
-	localStorageDataTypes,
-}

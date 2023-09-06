@@ -5,11 +5,11 @@ import {
 	useSetNextIncompleteActivity,
 	useSetCurrSection,
 	useUnlockNextSectionsAfterCompletion,
-	type SectionDetails,
-	type ActivityType,
 } from '../store/lessonStore'
 import createID from '../composables/useCreateID'
 import getLocalStorage from '../composables/useGetLocalStorage'
+import type { SectionDetails } from '../types/SectionTypes'
+import type { ActivityType } from '../types/ActivityTypes'
 
 // setting lessonID for localStorage
 lessonIDAtom.set(document.querySelector('body')!.id)

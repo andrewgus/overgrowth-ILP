@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import { ref, computed, defineAsyncComponent, provide, onMounted } from 'vue'
-import { useDoesActivityExist, type ActivityType } from '../store/lessonStore'
+import { useDoesActivityExist } from '../store/lessonStore'
 import {
 	initActivityProgressStore,
 	activityProgressStore,
@@ -40,8 +40,9 @@ import createID from '../composables/useCreateID'
 import ActivityCompleteBtns from '../components/activities/ActivityCompleteBtns.vue'
 import BaseAlertText from '../components/base/BaseAlertText.vue'
 import useIsActivityCompleted from '../composables/useIsActivityCompleted'
+import type { ActivityType } from '../types/ActivityTypes'
+import type { validPracticeActivityOptions } from '../types/ActivityTypes'
 
-type validPracticeActivityOptions = 'Matching' | 'Math'
 type Props = {
 	title: string
 	prompts: string[]

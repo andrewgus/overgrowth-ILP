@@ -1,13 +1,13 @@
 // lessonStore maintains the state of the lesson interface.
 import { atom, map, deepMap, computed, type MapStore } from 'nanostores'
 import { useStore } from '@nanostores/vue'
+import type { ActivityType, ActivitiesMap } from '../types/ActivityTypes'
+import type { SectionDetails, SectionsMap } from '../types/SectionTypes'
 
 // ID for the whole lesson.
 const lessonIDAtom = atom<string>('')
 
 // Activity setup for any given lesson
-type ActivityType = 'reflection' | 'practice' | 'choice'
-type ActivitiesMap = Partial<{ [K in ActivityType]: boolean }>
 const activitiesMap = map<ActivitiesMap>({})
 // if activity layout is used in lesson, activate it
 const useDoesActivityExist = (activity: ActivityType) => {
@@ -18,17 +18,6 @@ const useActivityExists = (activity: ActivityType) =>
 	useStore(activitiesMap).value.hasOwnProperty(activity)
 
 // All sections
-type SectionDetails = {
-	title: string
-	id: string
-	orderNum: number | null
-	activityType: ActivityType | null
-	isLocked: boolean
-	isActivityComplete: boolean | null
-}
-type SectionsMap = {
-	[sectionKey: string]: SectionDetails
-}
 const allSectionsMap = deepMap<SectionsMap>()
 
 // To determine whether user is on content vs header
@@ -42,7 +31,8 @@ const currSectionMap = map<SectionDetails>()
 // nextIncompleteActivityMap contains the details of the next activity that is incomplete
 const nextIncompleteActivityMap = map<SectionDetails | {}>()
 
-const doesNextIncompleteActivityExist = () => Object.keys(nextIncompleteActivityMap.get()).length > 0
+const doesNextIncompleteActivityExist = () =>
+	Object.keys(nextIncompleteActivityMap.get()).length > 0
 
 // To determine current section & nextIncompleteActivity
 const useSetCurrSection = (sectionKey: string) => {
@@ -50,7 +40,10 @@ const useSetCurrSection = (sectionKey: string) => {
 }
 const useSetNextIncompleteActivity = (sectionKey?: string) => {
 	if (sectionKey) {
-		setSectionMap(nextIncompleteActivityMap as MapStore<SectionDetails>, sectionKey)
+		setSectionMap(
+			nextIncompleteActivityMap as MapStore<SectionDetails>,
+			sectionKey
+		)
 	} else {
 		nextIncompleteActivityMap.set({})
 	}
@@ -64,7 +57,7 @@ const setSectionMap = (map: MapStore<SectionDetails>, sectionKey: string) => {
 		map.setKey('orderNum', null)
 		map.setKey('activityType', null)
 		map.setKey('isLocked', false)
-	} 
+	}
 }
 
 // set & find functions for user nav based on user input.
@@ -119,7 +112,6 @@ const useToggleActivity = (activity: ActivityType) => {
 	// find the next available active activity
 	findNextIncompleteActivity(allSectionsAsArray)
 
-
 	if (!doesNextIncompleteActivityExist()) {
 		// all activities are turned off...
 		allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
@@ -136,7 +128,8 @@ const useToggleActivity = (activity: ActivityType) => {
 			}
 		})
 	} else {
-		const nextIncompleteActivity = nextIncompleteActivityMap.get() as SectionDetails
+		const nextIncompleteActivity =
+			nextIncompleteActivityMap.get() as SectionDetails
 		// a nextIncompleteActivity exists...
 		if (!isActivityOn) {
 			// and user deactivates selected activity...
@@ -151,8 +144,7 @@ const useToggleActivity = (activity: ActivityType) => {
 				// and unlock any succeeding static content up until, and including, the nextIncompleteActivity..
 				if (
 					(sectionDetails.activityType === null &&
-						sectionDetails.orderNum! <
-						nextIncompleteActivity.orderNum!) ||
+						sectionDetails.orderNum! < nextIncompleteActivity.orderNum!) ||
 					sectionDetails.orderNum === nextIncompleteActivity.orderNum!
 				) {
 					setSectionToLocked(sectionKey, sectionDetails, false)
@@ -162,15 +154,11 @@ const useToggleActivity = (activity: ActivityType) => {
 			// and user reactivates selected activity...
 			allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
 				// lock all suceeding sections
-				if (
-					sectionDetails.orderNum! > nextIncompleteActivity.orderNum!
-				) {
+				if (sectionDetails.orderNum! > nextIncompleteActivity.orderNum!) {
 					setSectionToLocked(sectionKey, sectionDetails, true)
 				}
 				// unlock the selected activity
-				if (
-					sectionDetails.orderNum === nextIncompleteActivity.orderNum
-				) {
+				if (sectionDetails.orderNum === nextIncompleteActivity.orderNum) {
 					setSectionToLocked(sectionKey, sectionDetails, false)
 				}
 			})
@@ -185,15 +173,13 @@ const useUnlockNextSectionsAfterCompletion = (fromLocalStorage?: boolean) => {
 	const foundNextIncompleteActivity = fromLocalStorage
 		? nextIncompleteActivityMap.get()
 		: findNextIncompleteActivity(allSectionsAsArray)
-	
+
 	// if there is a next active activity
 	if (foundNextIncompleteActivity !== undefined) {
 		const nextIncomplete = nextIncompleteActivityMap.get() as SectionDetails
 		// Unlock all activities up until, and including, the nextIncompleteActivity
 		allSectionsAsArray.forEach(([sectionKey, sectionDetails]) => {
-			if (
-				sectionDetails.orderNum! <= nextIncomplete.orderNum!
-			) {
+			if (sectionDetails.orderNum! <= nextIncomplete.orderNum!) {
 				setSectionToLocked(sectionKey, sectionDetails, false)
 			}
 		})
@@ -207,11 +193,11 @@ const useUnlockNextSectionsAfterCompletion = (fromLocalStorage?: boolean) => {
 
 // To set a activity as complete & unlock next sections up until nextIncompleteActivity
 const useSetActivityComplete = () => {
-		// marking activity as complete
-		currSectionMap.setKey('isActivityComplete', true)
-		allSectionsMap.setKey(currSectionMap.get().id, {
-			...currSectionMap.get(),
-		})
+	// marking activity as complete
+	currSectionMap.setKey('isActivityComplete', true)
+	allSectionsMap.setKey(currSectionMap.get().id, {
+		...currSectionMap.get(),
+	})
 	useUnlockNextSectionsAfterCompletion()
 }
 
@@ -220,11 +206,12 @@ const filteredNavSectionsComputed = computed(
 	[allSectionsMap, activitiesMap],
 	(allSections) => {
 		const allSectionsAsArray = setSectionsToArray(allSections)
-		
+
 		const filterForUnlocked = allSectionsAsArray.filter(
 			([_, sectionDetails]) => {
 				if (doesNextIncompleteActivityExist()) {
-					const nextIncomplete = nextIncompleteActivityMap.get() as SectionDetails
+					const nextIncomplete =
+						nextIncompleteActivityMap.get() as SectionDetails
 					// if there is a nextIncompleteActivity...
 					// (unlocked AND static content) OR (an unlocked, completed activity that comes before nextIncompleteActivity) OR the nextIncompleteActivity
 					return (
@@ -232,10 +219,8 @@ const filteredNavSectionsComputed = computed(
 							!sectionDetails.isLocked) ||
 						(!sectionDetails.isLocked &&
 							sectionDetails.isActivityComplete &&
-							sectionDetails.orderNum! <
-								nextIncomplete.orderNum!) ||
-						sectionDetails.orderNum! ===
-							nextIncomplete.orderNum!
+							sectionDetails.orderNum! < nextIncomplete.orderNum!) ||
+						sectionDetails.orderNum! === nextIncomplete.orderNum!
 					)
 				} else {
 					// else there is NOT a nextIncompleteActivity...
@@ -326,30 +311,33 @@ const nextSectionAfterID = (id: string) => {
 	})
 }
 
-const useIsLastSection = (sectionID: string) => Object.keys(allSectionsMap.get()).at(-1) === sectionID
+const useIsLastSection = (sectionID: string) =>
+	Object.keys(allSectionsMap.get()).at(-1) === sectionID
 
 const useIsLastActivity = (sectionID: string): boolean => {
-	const sectionToCheck = allSectionsMap.get()[sectionID];
-	
-	if (!sectionToCheck) return false;
+	const sectionToCheck = allSectionsMap.get()[sectionID]
+
+	if (!sectionToCheck) return false
 	// only get activities, not static content
-	const sectionsWithActivity = Object.values(allSectionsMap.get())
-	  .filter(section => section.activityType !== null);
-  
-	let highestOrderNum = Number.MIN_SAFE_INTEGER;
-	let lastActivitySection = null;
+	const sectionsWithActivity = Object.values(allSectionsMap.get()).filter(
+		(section) => section.activityType !== null
+	)
+
+	let highestOrderNum = Number.MIN_SAFE_INTEGER
+	let lastActivitySection = null
 	// get the last activity, based on having the highest ordernNum
 	for (const currentSection of sectionsWithActivity) {
-	  if (currentSection.orderNum !== null && currentSection.orderNum > highestOrderNum) {
-		highestOrderNum = currentSection.orderNum;
-		lastActivitySection = currentSection;
-	  }
+		if (
+			currentSection.orderNum !== null &&
+			currentSection.orderNum > highestOrderNum
+		) {
+			highestOrderNum = currentSection.orderNum
+			lastActivitySection = currentSection
+		}
 	}
 	// return true if param section is also the last activity
-	return sectionToCheck === lastActivitySection;
-  };
-  
-
+	return sectionToCheck === lastActivitySection
+}
 
 export {
 	lessonIDAtom,
@@ -376,4 +364,3 @@ export {
 	useSetActivityComplete,
 	useUnlockNextSectionsAfterCompletion,
 }
-export type { SectionsMap, SectionDetails, ActivityType }
