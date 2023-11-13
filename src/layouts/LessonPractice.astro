@@ -1,0 +1,58 @@
+---
+import createID from '../composables/useCreateID'
+import ActivityCompleteBtnsVue from '../components/activities/ActivityCompleteBtnsVue.vue'
+import PracticeSwitchBoardVue from '../components/activities/PracticeSwitchBoardVue.vue'
+import type { ActivitySwitchItem } from '../types/ActivityTypes'
+import ActivityAlertVue from '../components/activities/ActivityAlertVue.vue'
+
+type Props = {
+	title: string
+	activitySteps: ActivitySwitchItem[]
+	isFinalFeedbackIncluded?: boolean
+	isPreviousStepShown?: boolean
+}
+
+const {
+	title,
+	activitySteps,
+	isPreviousStepShown = false,
+	isFinalFeedbackIncluded = false,
+} = Astro.props
+
+const sectionID = createID(Astro.props.title)
+---
+
+<article
+	class:list={['section', 'activity', 'practice']}
+	tabindex='-1'>
+	<ActivityAlertVue
+		client:idle
+		id={sectionID}
+		activityType={'practice'}
+	/>
+	<h2>{title}</h2>
+	<slot />
+	<PracticeSwitchBoardVue
+		client:idle
+		id={sectionID}
+		activitySteps={activitySteps}
+		isPreviousStepShown={isPreviousStepShown}
+		isFinalFeedbackIncluded={isFinalFeedbackIncluded}>
+		{
+			isFinalFeedbackIncluded && (
+				<slot name='finalFeedback'>
+					<p>
+						🛑 ERROR: Missing{' '}
+						<code style='background-color:salmon'>
+							&lt;div slot="finalFeedback"&gt; to add feedback
+						</code>
+					</p>
+				</slot>
+			)
+		}
+	</PracticeSwitchBoardVue>
+	<ActivityCompleteBtnsVue
+		client:idle
+		id={sectionID}
+	/>
+</article>

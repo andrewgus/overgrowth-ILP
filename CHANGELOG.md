@@ -7,6 +7,144 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [1.0.0] — 2023-11-09
+
+Overgrowth reaches v1.0.0 with latest major overhaul of PracticeLesson component. This update also includes updates to provide responsive content to user input to provide a choice-based learning experience.
+
+### Added
+
+- SurveyLink component with start/end dates to send our surveys when desired
+- PickOneOfTwo practice component to gather student's true/false values to respond to their choices
+- WidgetToolTipVue allows for either hover/focus tooltips, or click-dialog tooltips
+- ToolTip box styles
+
+### Removed
+
+- ResponsiveCodeSnippet not needed. Astro includes built-in `<Code>` compoent
+
+### Changed
+
+- Updated LessonPractice component to accept new activityType prop, which accepts an array of objects. Each object is an activity step and it's associated data properties
+- Updated PracticeSwitchBoard component for new prop structure
+- ActivityTypes TS file updated to manage activitySteps object prop used in PracticeLesson --> PracticeSwitchBoard --> given component
+- Updated all practice option components to use new LessonPractice structure
+- Cleaned up various components.
+- Updated PickOneOfTwo practice component to properly reset when lesson is reset
+- Updated BaseSwitch to be responsive to reactive props data.
+- Updated LessonReflection for the option to change the prompt based on previous user choices
+- Updated WidgetShowSavedDataVue to include WidgetToolTipVue for quick jump to incomplete activity, if this is blank
+- Updated stores to use PickOneOfTwo practice component
+- Updated previously created LessonPractice components in pages to use new structure.
+
+## [0.8.1] — 2023-10-25
+
+Fixing issue with activity toggle buttons not properly loading
+
+### Removed
+
+- useActivityExists function from lessonStore removed
+
+### Changed
+
+- ActivitySwitchesVue and SingleActivitySwitchVue components updated to use watchers, rather than getting a single value, to make sure it correctly shows toggle buttons when activities exist.
+
+## [0.8.0] — 2023-10-18
+
+Major visual update to Catalog view.
+
+### Added
+
+- New catalogStore to be used on the topic.astro pages. This is the first step in incorporating descriptions and icons with lesson names for easier discovery.
+- New Icons for catalog view.
+- New prop on TableData to hightlight a `<td>`
+- New prop on StepsList to allow for different increment name in ::before psuedo-element content
+
+### Changed
+
+- Topics Layout now provides information on the lesson or widget: A representative icon, name, and description.
+- SideBySideText component now accepts new property is define if the parent element should be a `<dl>`
+- Changed WidgetShortTextQuestionVue to accept an array of possible answers
+- Updated TheSceneVue component to only hide an image if that activity type is turned off. If it does not exist or is on, the image will still show, so the visual makes sense.
+- StepsList component can now accept any word for the li::before content css prop
+- Added prop to math practice components so that, if desired, rouneded answers can be accepted
+- Updated components to properly use images from /assets folder
+- Updates to TheLesson, TheCatalog, and EmbedWidget layout files to use the new catalogStore
+- Updated how BaseImage & SoloImage components are created for dynamic attributes
+- Fixed WidgetMathQuestionVue component to appropriately provide feedback
+- Fixed ResponsiveTable component to appropriately apply data values for mobile view
+- TheLesson component's isNotInteractive name changed for clearer purpose to areActivitiesExcluded
+- Various minor style updates across components
+
+## [0.7.1] — 2023-10-06
+
+### Added
+
+- Tooltip to landing page items to explain them.
+- WidgetShortTextQuestion for singular short answer questions within LessContent context
+- WidgetMathQuestion for singluar math questions within the LessonContent context
+- TableData now has isMath prop for when we need KaTex within a `<td>`
+- Trash can icon for delete buttons
+
+### Removed
+
+- TableAttribution component. Now just using Astro built-in `<Fragment>` for consistancy with other components that follow a similar pattern with `<slot>`s
+
+### Changed
+
+- CreateList updated to clarify when/where users can delete items from the list.
+- Updated Math PracticeLesson component to only change context on request via enter key or button press. Also updated to allow specified feedback.
+- Refactored ActivitySwitchesVue component for landing for tooltip.
+- Icons moved to /src/assets.
+- Harmonized interaction styles across platform. Updated to containerStyles mixins to reflect this.
+- LessonPractice && PracticeSwitchBoardVue is updated for users to determine if the previous step should be shown or not.
+- Updated purpose of ActivityAlertVue component. Now only shows on completed activities when users have then turned off that activity type, to explain why they are still seeing it.
+- Fixed WidgetTabs focus for keyboard users
+- Minor style adjustments in a few different components
+
+## [0.7.0] — 2023-10-02
+
+### Added
+
+- New Layouts:
+  - LessonContent component replaces StaticContent
+  - LessonPractice component for all practice activities
+  - LessonReflection component for all reflection activities
+- The following base components:
+  - BaseSlider for `<input type="range">`
+  - BaseCheckbox for `<input type="checkbox">`
+- The following widget components:
+  - WidgetShowSavedData for grabbing some completed user info and reusing it in another part of the lesson
+  - WidgetSliderComparison for creating two sliders to compare numbers
+  - WidgetMultiChoice for multiple choice questions
+  - WidgetPickOne for creating a path through content. These can be nested to create a chose-your-own-adventure feature
+- New CreateList and SortingList options for Practice activities
+- usePracticeOptionsEmits composable for all practice options
+- SCSS mixins to standardize feedback styles
+
+### Removed
+
+- Choice activity type removed
+- InteractiveActivity layout component removed
+- StaticContent layout component removed
+- BaseInput component. Will be making various base components for different types
+
+### Changed
+
+- Realigned Practice FinalFeedback to act as an additional, optional, option.
+- Updated naming convention
+  - All Vue component names end with Vue
+  - All widgets for `<LessonContent>` start with `<Widget...>`
+  - Astro components maintain simple TwoWord approach
+- EmbedWidget layout component updated to not show `<h1>` when within `<iframe>`. Comments in component explain why.
+- Fixes to ResponsiveTable component and TabsWidget component styles
+- Type fixes for TextStyle component for better assistance
+- SoloImage component updated for attribution
+- Various style updates including adjustment for responsiveness
+- SubSection component updated to properly align heading when using fullWidth
+- Updated useSwapTabIndexAndFocusWithKeys composable to accept two new parameters: 1. useArray: an array to use if el.parentElement.children would not work as intended; 2. includeUpDownKeys: whether or not to also included up and down arrow keys in addition to left/right keys
+- Updated localStorage store and app store for user created lists from createList composable
+- ResponsiveVideo updated to only load video when container div is intersected
+
 ## [0.6.4] — 2023-09-06
 
 ### Changed
@@ -15,6 +153,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Moved reusable types to separate folder for easier maintenance
 
 ## [0.6.3] — 2023-08-23
+
+### Changed
 
 - Removed presentational folder. Moved all child folders up a level to be direct child of components.
 - Reconfigured aria-live to be a global div at the top of the page. Added ariaLiveStore in /store to manage that.

@@ -1,7 +1,7 @@
 ---
 type Props = {
 	title: string
-	optionalClass?: string
+	optionalClass?: string | string[]
 	isFullWidth?: boolean
 }
 const { title, optionalClass, isFullWidth = false } = Astro.props
@@ -54,8 +54,27 @@ const { title, optionalClass, isFullWidth = false } = Astro.props
 	.subSection {
 		position: relative;
 
-		> :global(* + *) {
+		> :global(* + *:not(.accordion)) {
 			margin-top: var(--s2);
+		}
+		&.fullWidth {
+			> h3,
+			h4,
+			h5,
+			h6 {
+				max-width: 75%;
+				margin-inline: auto;
+			}
+		}
+		@media only screen and (max-width: 80ch) {
+			&.fullWidth {
+				> h3,
+				h4,
+				h5,
+				h6 {
+					max-width: 100%;
+				}
+			}
 		}
 	}
 </style>

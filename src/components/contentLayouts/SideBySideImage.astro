@@ -69,7 +69,6 @@ const describedByID = createNanoID(Astro.self.name, isLongDescForComplexImg)
 <style lang='scss'>
 	.sideBySideImage {
 		display: flex;
-		flex-flow: row wrap;
 		gap: var(--s2);
 
 		> h3 {
@@ -85,7 +84,7 @@ const describedByID = createNanoID(Astro.self.name, isLongDescForComplexImg)
 			:global(img) {
 				width: 100%;
 			}
-			> :global(picture, img) {
+			> :global(picture) {
 				position: sticky;
 				top: var(--s7);
 				max-height: 85vh;
@@ -100,6 +99,10 @@ const describedByID = createNanoID(Astro.self.name, isLongDescForComplexImg)
 				margin-bottom: var(--s2);
 			}
 		}
+		&.alignLeft,
+		&.alignRight {
+			flex-flow: row wrap;
+		}
 		&.alignRight {
 			.stickyImg {
 				order: 2;
@@ -107,7 +110,7 @@ const describedByID = createNanoID(Astro.self.name, isLongDescForComplexImg)
 			.correspondingText {
 				order: 1;
 			}
-			@media only screen and (max-width: 85ch) {
+			@media only screen and (max-width: 80ch) {
 				.stickyImg {
 					order: 1;
 				}
@@ -119,15 +122,13 @@ const describedByID = createNanoID(Astro.self.name, isLongDescForComplexImg)
 		&.alignTop {
 			flex-flow: column nowrap;
 			> .stickyImg {
-				width: 80ch;
-
 				> :global(picture),
 				> :global(img) {
 					max-width: inherit;
 				}
 			}
 			> .correspondingText {
-				width: 60ch;
+				max-width: 60ch;
 				margin: 0 auto;
 			}
 		}

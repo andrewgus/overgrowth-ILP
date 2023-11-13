@@ -1,0 +1,57 @@
+---
+import createID from '../composables/useCreateID'
+import ReflectionInputVue from '../components/activities/reflectionOptions/ReflectionInputVue.vue'
+import FinaleReflectionsRevealVue from '../components/activities/reflectionOptions/FinaleReflectionsRevealVue.vue'
+import ActivityCompleteBtnsVue from '../components/activities/ActivityCompleteBtnsVue.vue'
+import ActivityAlertVue from '../components/activities/ActivityAlertVue.vue'
+
+type Props = {
+	title: string
+	prompt: string
+	previousChoiceBasedPrompts?: [string, [string, string]]
+	isFinaleReveal?: boolean
+}
+const {
+	title,
+	prompt,
+	previousChoiceBasedPrompts,
+	isFinaleReveal = false,
+} = Astro.props
+
+const sectionID = createID(Astro.props.title)
+---
+
+<article
+	class:list={['section', 'activity', 'reflection']}
+	tabindex='-1'>
+	<ActivityAlertVue
+		client:idle
+		id={sectionID}
+		activityType={'reflection'}
+	/>
+	<h2>{title}</h2>
+	<div class='userActions'>
+		<slot />
+		{
+			isFinaleReveal ? (
+				<FinaleReflectionsRevealVue
+					client:load
+					id={sectionID}
+					prompt={prompt}
+				/>
+			) : (
+				<ReflectionInputVue
+					client:load
+					id={sectionID}
+					prompt={prompt}
+					previousChoiceBasedPrompts={previousChoiceBasedPrompts}
+				/>
+			)
+		}
+	</div>
+	<ActivityCompleteBtnsVue
+		client:load
+		id={sectionID}
+		isReflectionFinaleReveal={isFinaleReveal}
+	/>
+</article>

@@ -42,23 +42,24 @@ table {
         }
         &[scope='col'] {
             text-align: center;
-            background-color: var(--yellow2);
+            background-color: var(--yellow4);
         }
     }
     tfoot {
         border-top: var(--s-10) solid var(--darkGray);
         th[scope="row"] {
             font-weight: 700;
-            background-color: var(--yellow2);
+            background-color: var(--yellow4);
         }
     }
 }
 @media only screen and (max-width: 45em) {
-    table {
+    table.bigTable {
         border: none;
         thead {
             @include a11y.visuallyHidden();
-            + tbody > tr td {
+            + tbody > tr td, 
+            ~ tfoot > tr td {
                 text-align: left;
                 &::before {
                     content: attr(data-header-name) ': ';
@@ -67,8 +68,8 @@ table {
                 }
             }
         }
-        tbody.bigTable,
-        tbody.bigTable + tfoot {
+        tbody,
+        tbody + tfoot {
             > tr {
                 display: flex;
                 flex-flow: column nowrap;
@@ -87,6 +88,9 @@ table {
                     }
                 }
             }   
+        }
+        tfoot {
+            border-top: none;
         }
     }
 }

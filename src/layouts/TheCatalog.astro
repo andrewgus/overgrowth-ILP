@@ -1,17 +1,19 @@
 ---
-import SkipToContent from '../components/navigation/SkipToContent.astro'
 import '../styles/root.scss'
 import '../styles/specifiedLayouts/catalogLayout.scss'
+import SkipToContent from '../components/navigation/SkipToContent.astro'
+import overgrowthLogo from '../assets/logo-overgrowth.svg'
 
 type Props = {
 	title: string
+	description: string
 	isTopicsPage?: boolean
 }
 
-const { title, isTopicsPage = false } = Astro.props
+const { title, description, isTopicsPage = false } = Astro.props
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang='en'>
 	<head>
 		<meta charset='UTF-8' />
@@ -32,6 +34,14 @@ const { title, isTopicsPage = false } = Astro.props
 		<meta
 			name='generator'
 			content={Astro.generator}
+		/>
+		<meta
+			name='author'
+			content='Florida State College at Jacksonville'
+		/>
+		<meta
+			name='description'
+			content={description}
 		/>
 		<title>{title}</title>
 	</head>
@@ -60,8 +70,8 @@ const { title, isTopicsPage = false } = Astro.props
 			<a href='https://github.com/andrewgus/overgrowth-ILP'
 				><img
 					role='img'
-					src='/favicon.svg'
-					alt='Overgrowth'
+					src={overgrowthLogo.src}
+					alt='Overgrowth Github Page'
 				/></a
 			>
 		</footer>
@@ -71,28 +81,33 @@ const { title, isTopicsPage = false } = Astro.props
 <style lang='scss'>
 	@use '../styles/mixins/buttons.scss';
 	@use '../styles/mixins/shadows.scss';
-
 	body {
 		padding: 0 var(--s-4);
 		> div {
 			max-width: 80ch;
 			margin: var(--s2) auto var(--s-10);
-			padding: var(--s2);
+			padding: var(--s2) var(--s2) var(--s4);
 			background-color: var(--offWhite);
-			border: 2px dashed var(--darkGray);
+			border: 2px solid var(--darkGray);
 			border-radius: var(--s2);
 		}
 	}
 
 	main {
+		margin: var(--s2) var(--s4);
 		> :global(p) {
 			margin-bottom: var(--s2);
+		}
+	}
+	@media only screen and (max-width: 66ch) {
+		main {
+			margin: 0;
 		}
 	}
 	nav {
 		padding: var(--s0) 0 var(--s2);
 		margin-bottom: var(--s2);
-		border-bottom: 1px dashed var(--darkGray);
+		border-bottom: 1px solid var(--darkGray);
 
 		> a {
 			@include buttons.primary();
@@ -113,7 +128,7 @@ const { title, isTopicsPage = false } = Astro.props
 		> a {
 			float: right;
 			padding-top: var(--s-2);
-			width: 5ch;
+			width: 4ch;
 			display: block;
 		}
 	}

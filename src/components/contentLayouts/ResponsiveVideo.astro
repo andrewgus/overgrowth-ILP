@@ -1,0 +1,113 @@
+---
+import createNanoID from '../../composables/useCreateNanoID'
+
+type Props = {
+	title: string
+	url: string
+	introText?: string
+	transcriptSrc?: string
+}
+const { title, url, introText, transcriptSrc } = Astro.props
+
+const describedByID = createNanoID(Astro.self.name)
+
+const transcriptFilePath = `https://fscjcel.blob.core.windows.net/ilp-assets/${Astro.url.pathname
+	.split('/')
+	.at(3)}`
+---
+
+<script>
+	const responsiveVideos = Array.from(
+		document.querySelectorAll('[class="ResponsiveVideo__container"]')
+	)
+	const observerCallbackVideo = function (
+		entries: Array<IntersectionObserverEntry>
+	) {
+		const [entry] = entries
+		if (!entry.isIntersecting) return
+		const el = entry.target.querySelector('iframe') as HTMLIFrameElement
+		// when container is observed, provide the src to load the video
+		el.src = el.dataset.url ?? ''
+	}
+	const observer = new IntersectionObserver(observerCallbackVideo)
+
+	responsiveVideos.forEach((video) => {
+		observer.observe(video)
+	})
+</script>
+
+<div class:list={[Astro.self.name]}>
+	{
+		introText && (
+			<p
+				class={`${Astro.self.name}__desc`}
+				id={describedByID}>
+				{introText}
+			</p>
+		)
+	}
+	<div
+		class={`${Astro.self.name}__container`}
+		aria-describedby={introText ? describedByID : ''}>
+		<iframe
+			title={title}
+			src=''
+			data-url={url}
+			allowfullscreen
+			referrerpolicy='no-referrer'
+		></iframe>
+	</div>
+	{
+		transcriptSrc && (
+			<a
+				aria-describedby={describedByID}
+				href={`${transcriptFilePath}_${transcriptSrc}`}
+				download
+				target='_blank'
+				class={`${Astro.self.name}__transcript`}>
+				Download Transcript
+			</a>
+		)
+	}
+</div>
+
+<style lang='scss'>
+	@use '../../styles//mixins/containerStyles.scss';
+	@use '../../styles//mixins/buttons.scss';
+	.ResponsiveVideo {
+		@include containerStyles.interaction();
+
+		&__container {
+			overflow: hidden;
+			padding-top: 56.25%;
+			position: relative;
+			border: 1px solid var(--darkGray);
+			> iframe {
+				border: 0;
+				height: 100%;
+				left: 0;
+				position: absolute;
+				top: 0;
+				width: 100%;
+			}
+		}
+		&__transcript {
+			@include buttons.secondary();
+			border-radius: 0;
+			margin: -1px 0;
+			border: 1px solid var(--darkGray);
+			display: block;
+			width: 100%;
+			text-align: right;
+			font-size: var(--s-1);
+			border-radius: 0;
+			&:visited {
+				color: var(--white);
+			}
+			&:hover,
+			&:focus {
+				color: var(--blue);
+			}
+		}
+	}
+</style>

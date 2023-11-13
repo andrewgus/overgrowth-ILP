@@ -1,5 +1,5 @@
 ---
-import ActivitySwitches from './ActivitySwitches.vue'
+import ActivitySwitchesVue from './ActivitySwitchesVue.vue'
 type Props = {
 	title: string
 }
@@ -12,7 +12,7 @@ const { title } = Astro.props
 		tabindex='-1'>
 		{title}
 	</h1>
-	<ActivitySwitches client:load />
+	<ActivitySwitchesVue client:load />
 </div>
 
 <style lang='scss'>
@@ -30,6 +30,7 @@ const { title } = Astro.props
 		@include shadows.dropShadowWhite();
 		padding: var(--s0);
 		margin-top: var(--s2);
+		z-index: 1;
 
 		> h1 {
 			margin: 0;

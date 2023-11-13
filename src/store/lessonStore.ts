@@ -1,6 +1,5 @@
 // lessonStore maintains the state of the lesson interface.
 import { atom, map, deepMap, computed, type MapStore } from 'nanostores'
-import { useStore } from '@nanostores/vue'
 import type { ActivityType, ActivitiesMap } from '../types/ActivityTypes'
 import type { SectionDetails, SectionsMap } from '../types/SectionTypes'
 
@@ -13,9 +12,6 @@ const activitiesMap = map<ActivitiesMap>({})
 const useDoesActivityExist = (activity: ActivityType) => {
 	activitiesMap.setKey(activity, true)
 }
-// Vue only: if a given activity exists
-const useActivityExists = (activity: ActivityType) =>
-	useStore(activitiesMap).value.hasOwnProperty(activity)
 
 // All sections
 const allSectionsMap = deepMap<SectionsMap>()
@@ -343,7 +339,6 @@ export {
 	lessonIDAtom,
 	activitiesMap,
 	useDoesActivityExist,
-	useActivityExists,
 	allSectionsMap,
 	isOnContentAtom,
 	useToggleNavShown,

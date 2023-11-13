@@ -1,17 +1,19 @@
-
-type localStorageDataObjProps = {
+type LocalStorageDataObjProps = {
 	isActivityComplete?: boolean
 	reflectionAnswer?: string
-	isPracticeOptionStepsComplete: boolean[]
+	isPracticeOptionStepsComplete?: boolean[]
+	userCreatedList?: {}[]
+	userPickChoices?: [boolean, boolean]
 }
-type localStorageDataTypes = keyof localStorageDataObjProps
 
-type localStorageDataObj = {
-	[id: string]: localStorageDataObjProps
+type LocalStorageDataTypes = keyof LocalStorageDataObjProps
+
+type LocalStorageDataObj = {
+	[id: string]: LocalStorageDataObjProps
 }
 
 export type {
-    localStorageDataObjProps, 
-    localStorageDataTypes,
-    localStorageDataObj
+	LocalStorageDataObjProps,
+	LocalStorageDataTypes,
+	LocalStorageDataObj,
 }

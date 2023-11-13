@@ -11,28 +11,31 @@ const tableID = createNanoID(Astro.self.name)
 ---
 
 <script>
+	// Grabbing every table
 	const tables = Array.from(
 		document.querySelectorAll('table[id^="ResponsiveTable"]')
 	) as HTMLTableElement[]
-
+	// For each table...
 	tables.forEach((table) => {
+		// create a map of table headers
 		const tableHeaders = Array.from(
 			table.querySelectorAll('thead th')
 		) as HTMLElement[]
 		const headerNames = tableHeaders.map((head) => head.innerHTML)
-
+		// grab all table body and footer rows
 		const thisTableRows = Array.from(
-			table.querySelectorAll('tbody > tr')
+			table.querySelectorAll('tbody > tr, tfoot > tr')
 		) as HTMLElement[]
-
+		// If there are at least three rows, set class for responsive styles
 		thisTableRows.some((row) => {
-			row.childElementCount >= 3 && row.parentElement?.classList.add('bigTable')
+			row.childElementCount >= 3 &&
+				row.closest('table')?.classList.add('bigTable')
 		})
-
+		// grab all th and td within each row
 		const thisTableDataInRows = thisTableRows.map(
-			(row) => Array.from(row.querySelectorAll('*')) as HTMLElement[]
+			(row) => Array.from(row.querySelectorAll('th, td')) as HTMLElement[]
 		)
-
+		// Set data-headerName value on each row item to its corresponding header
 		thisTableDataInRows.forEach((dataInRow, i) => {
 			dataInRow.forEach((data, i) => (data.dataset.headerName = headerNames[i]))
 		})
@@ -46,27 +49,37 @@ const tableID = createNanoID(Astro.self.name)
 	<caption>
 		{tableTitle}
 	</caption>
-	{
-		Astro.slots.has('head') && (
-			<thead>
+	<thead>
+		{
+			Astro.slots.has('head') ? (
 				<slot name='head' />
-			</thead>
-		)
-	}
+			) : (
+				<tr>
+					<th colspan='1000'>
+						🛑 Error: missing{' '}
+						<code style='background-color:salmon'>
+							&lt;TableRow slot="head"&gt; for thead
+						</code>
+					</th>
+				</tr>
+			)
+		}
+	</thead>
 	<tbody>
 		<slot>
 			<tr>
 				<td colspan='1000'>
-					🛑 ERROR: Needs
-					<code style='background-color:salmon'>
-						&lt;TableRow&gt; component</code
-					>. <br />For <code>thead</code> use <code
-						style='background-color:salmon'>
-						&lt;TableRow slot="head"&gt; component</code
-					>. <br />For <code>tfoot</code> use <code
-						style='background-color:salmon'>
-						&lt;TableRow slot="foot"&gt; component</code
-					>.
+					<p>
+						🛑 ERROR: Needs
+						<code style='background-color:salmon'>
+							&lt;TableRow&gt; component</code
+						> for <code>tbody</code>.
+					</p>
+					<p>
+						Use <code style='background-color:salmon'>
+							&lt;TableRow slot="foot"&gt;</code
+						> For <code>tfoot</code>.
+					</p>
 				</td>
 			</tr>
 		</slot>
@@ -91,9 +104,8 @@ const tableID = createNanoID(Astro.self.name)
 			)
 		} else if (isAttributed && !Astro.slots.has('attribution')) {
 			return (
-				<code style='background-color:red'>
-					needs &lt;TableAttribution slot=attribution&gt; text here
-					&lt;/TableAttribution&gt;
+				<code style='background-color:salmon'>
+					needs &lt;Fragment slot=attribution&gt;
 				</code>
 			)
 		}

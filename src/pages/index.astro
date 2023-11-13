@@ -5,24 +5,24 @@ import useFormatTitle from '../composables/useFormatTitle'
 const allLessons = await Astro.glob('./*/*.astro')
 
 const topicURLs = [
-	...new Set(
-		allLessons
-			.map((lesson) => lesson.url!.split('/').at(1))
-			.filter((topic) => topic !== 'test-pages')
-	),
+	...new Set(allLessons.map((lesson) => lesson.url!.split('/').at(1))),
 ]
 
 const topicTitles = topicURLs.map((title) => useFormatTitle(title!))
 ---
 
-<TheCatalog title='Overgrowth Interactive Lessons Catalog'>
+<TheCatalog
+	title='Interactive Lessons Catalog'
+	description="This catalog provides links and descriptions of all available interactive lessons and embeddable widgets—sorted by topic—created by Florida State College at Jacksonville's Center for eLearning with the Overgrowth platform.">
 	<p>Select a topic to view available lessons&hellip;</p>
-	<ul class='cardGrid'>
+	<ul class='catalogList topicsList'>
 		{
-			topicTitles.map((title, i) => (
+			topicTitles.map((title, index) => (
 				<li>
-					<a class='linkCard' href={`/${topicURLs[i]}`}>
-						<span>{title}</span>
+					<a
+						class='linkCard'
+						href={`/${topicURLs[index]}`}>
+						<span class='name'>{title}</span>
 					</a>
 				</li>
 			))

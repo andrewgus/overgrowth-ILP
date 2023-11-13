@@ -44,7 +44,7 @@ h5 {
 }
 label, p, li, dd {
   color: var(--black);
-  line-height: 1.6;
+  line-height: 1.7;
 }
 p {
   margin: 0;
@@ -58,7 +58,7 @@ p {
   > sub {
     font-size: var(--s-1);
   }
-  > mark {
+  mark {
     border-radius: var(--s-10);
     padding: 0 var(--s-10);
 
@@ -99,9 +99,17 @@ a {
 ul,
 ol {
   margin-top: var(--s-2);
+  padding-left: max(var(--s2), 2ch);
 
   li + li {
-    margin-top: var(--s-2);
+    margin-top: var(--s-3);
+  }
+  li > * + * {
+    margin-top: var(--s-6);
+    margin-left: var(--s-3);
+  }
+  & + p {
+    margin-top: var(--s2);
   }
 }
 dl {

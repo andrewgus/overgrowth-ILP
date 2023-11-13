@@ -1,44 +1,79 @@
 ---
 import TheCatalog from '../layouts/TheCatalog.astro'
 import useFormatTitle from '../composables/useFormatTitle'
+import interactiveLessonIcon from '../assets/icon-interactive-lesson.svg'
+import lessonIcon from '../assets/icon-lesson.svg'
+import widgetIcon from '../assets/icon-widget.svg'
+import { catalogStore } from '../store/catalogStore'
 
 export async function getStaticPaths() {
-	const allLessons = await Astro.glob('./*/*.astro')
+	// grab all lessons
+	const allpages = await Astro.glob('./*/*.astro')
 
-	const topicURLs = allLessons.map((lesson) => lesson.url!.split('/').at(1))
+	// grab the name of the topics from the url. Will use this for filtering
+	const topicNames = allpages.map((lesson) => lesson.url!.split('/').at(1)!)
 
-	return topicURLs.map((topic) => {
-		const filteredLessons = allLessons.filter((lesson) =>
-			lesson.url?.includes(topic!)
+	return topicNames.map((topic) => {
+		// only keep the pages that match the current topic
+		const filteredPages = allpages.filter((lesson) =>
+			lesson.url?.includes(topic)
 		)
-
+		// create titles for each lesson
 		const topicTitle = useFormatTitle(topic!)
 
 		return {
+			// with this param, one page will be generated for each topic available
 			params: { topic },
-			props: { filteredLessons, topicTitle },
+			// these props will be available for each page
+			props: { filteredPages, topicTitle },
 		}
 	})
+	return
 }
 
-const { filteredLessons, topicTitle } = Astro.props
+const { filteredPages, topicTitle } = Astro.props
 ---
 
-<TheCatalog title={`${topicTitle!} Interactive Lessons`} isTopicsPage>
+<TheCatalog
+	title={`${topicTitle} Lessons`}
+	description={`A list of ${topicTitle} resources available from Florida State College at Jacksonville's Center for eLearning built with the Overgrowth platform`}
+	isTopicsPage>
 	<p>Select one of the available lessons&hellip;</p>
-	<ul class='cardGrid'>
+	<ul class='catalogList lessonsList '>
 		{
-			filteredLessons.map((fL: { url: string }) => (
+			filteredPages.map((fL: { url: string }) => (
 				<li>
-					<a class='linkCard' href={fL.url}>
-						<span>
-							{fL.url
-								.split('/')
-								.at(-1)!
-								.split('-')
-								.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-								.join(' ')}
-						</span>
+					<a
+						class='linkCard'
+						href={fL.url}>
+							{
+								() => {
+								const url = fL.url.split('/')!.at(-1)!
+								const pageID = Object.keys(catalogStore).find((id) => {
+									// Search to see if every word in the urlWordArray is present in the id
+									return url.includes(id)
+								})
+
+								if (pageID && catalogStore[pageID]) {
+									const {name, description, type} = catalogStore[pageID]
+									// Show the icon, the name, and the description for each item
+									return (<span class="name">
+											<img class="itemTypeIcon" role='img' alt={`${type}.`} title={type} src={type === 'interactive lesson' ? interactiveLessonIcon.src : type === 'lesson' ? lessonIcon.src : widgetIcon.src}/>
+												{name}
+											</span>
+											<span class="desc">
+												{description.charAt(0).toUpperCase() + description.slice(1)} 
+												{type === 'interactive lesson' && '. Includes activities.'}
+											</span>)
+								} else {
+									// If item cannot be found in catalogStore, then fallback to readable version of URL.
+									return (<span class="name">
+												{url.split('-').map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+											</span>)
+								}
+								
+							}
+						}
 					</a>
 				</li>
 			))

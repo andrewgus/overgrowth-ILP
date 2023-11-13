@@ -1,11 +1,11 @@
 ---
-import BaseButton from '../base/BaseButton.vue'
+import BaseButtonVue from '../base/BaseButtonVue.vue'
 ---
 
 <div
 	class='skipBtn'
 	id='skipToContent'>
-	<BaseButton
+	<BaseButtonVue
 		isLink
 		isWarning
 		isDisabled={false}
@@ -24,13 +24,13 @@ import BaseButton from '../base/BaseButton.vue'
 		z-index: 999;
 
 		&:focus-within {
+			color: var(--black);
 			top: 0;
 		}
 		> a {
 			border-radius: 0 0 var(--s0) var(--s0);
 			display: block;
 			padding: var(--s-5);
-			color: var(--white);
 		}
 	}
 </style>

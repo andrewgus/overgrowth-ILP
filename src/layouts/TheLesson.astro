@@ -1,32 +1,45 @@
 ---
-import TheLocalStorageDialog from '../components/modals/TheLocalStorageDialog.vue'
-import SkipToContent from '../components/navigation/SkipToContent.astro'
-import TheLanding from '../components/landing/TheLanding.astro'
-import TheLessonNav from '../components/navigation/TheLessonNav.vue'
-import ActivitiesOffFooter from '../components/footer/ActivitiesOffFooter.vue'
-import AriaLiveAnnouncements from '../components/a11yElements/AriaLiveAnnouncements.vue'
-import createID from '../composables/useCreateID'
 import '../styles/root.scss'
 import '../styles/specifiedLayouts/articleLayout.scss'
+import AriaLiveAnnouncementsVue from '../components/a11yElements/AriaLiveAnnouncementsVue.vue'
+import TheLocalStorageDialogVue from '../components/modals/TheLocalStorageDialogVue.vue'
+import SkipToContent from '../components/navigation/SkipToContent.astro'
+import TheLanding from '../components/landing/TheLanding.astro'
+import TheLessonNavVue from '../components/navigation/TheLessonNavVue.vue'
+import ActivitiesOffFooterVue from '../components/footer/ActivitiesOffFooterVue.vue'
+import createID from '../composables/useCreateID'
+import { addPageToCatalogStore } from '../store/catalogStore'
+import SurveyLink from '../components/landing/SurveyLink.astro'
 
 type Props = {
 	title: string
-	scene: string
+	scene: 'planning-a-budget' | 'setting' | 'choose-path'
 	gradientColor: string
+	description: string
 	language?: string
-	isInteractive?: boolean
+	areActivitiesExcluded?: boolean
+	fileName?: never
 }
 
 const {
 	title,
 	scene,
 	gradientColor,
+	description,
 	language = 'en',
-	isInteractive = true,
+	areActivitiesExcluded = false,
+	fileName = Astro.url.pathname,
 } = Astro.props
+
+addPageToCatalogStore(
+	fileName.split('/').at(-2)!,
+	title,
+	description,
+	areActivitiesExcluded ? 'lesson' : 'interactive lesson'
+)
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang={language}>
 	<head>
 		<meta charset='UTF-8' />
@@ -48,17 +61,30 @@ const {
 			name='generator'
 			content={Astro.generator}
 		/>
+		<meta
+			name='author'
+			content='Florida State College at Jacksonville'
+		/>
+		<meta
+			name='description'
+			content={`This ${
+				areActivitiesExcluded ? '' : 'interactive'
+			} lesson covers ${description}. Presented by Florida State College at Jacksonville`}
+		/>
 		<script>
 			import '../scripts/setSectionsHandler.js'
 			import '../scripts/hashChangeHandler.js'
 		</script>
-		<title>{`${title} ${isInteractive ? 'Interactive' : ''} Lesson`}</title>
+		<title>
+			{`${title} ${areActivitiesExcluded ? '' : 'Interactive'} Lesson`}
+		</title>
 	</head>
 	<body id={`${createID(title)}-lesson`}>
-		{isInteractive && <AriaLiveAnnouncements client:load />}
-		{isInteractive && <TheLocalStorageDialog client:load />}
+		<AriaLiveAnnouncementsVue client:load />
+		{!areActivitiesExcluded && <TheLocalStorageDialogVue client:load />}
 		<SkipToContent />
-		<TheLessonNav client:load />
+		<SurveyLink />
+		<TheLessonNavVue client:load />
 		<main id='theLessonContent'>
 			<TheLanding
 				scene={scene}
@@ -67,6 +93,6 @@ const {
 			/>
 			<slot />
 		</main>
-		{isInteractive && <ActivitiesOffFooter client:load />}
+		{!areActivitiesExcluded && <ActivitiesOffFooterVue client:load />}
 	</body>
 </html>

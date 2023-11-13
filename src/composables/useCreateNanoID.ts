@@ -10,5 +10,5 @@ export default function createNanoID<T extends string | boolean>(
 	componentName: string,
 	isPropTruthy: T = true as T
 ) {
-	return !!isPropTruthy ? `${componentName}-${nanoid(12)}` : ''
+	return !!isPropTruthy ? `${componentName}-${nanoid(15)}` : ''
 }

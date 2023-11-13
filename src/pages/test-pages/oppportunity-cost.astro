@@ -1,0 +1,186 @@
+---
+import SubSection from '../../components/a11yElements/SubSection.astro'
+import TextStyle from '../../components/a11yElements/TextStyle.astro'
+import CallOut from '../../components/contentLayouts/CallOut.astro'
+import StepsList from '../../components/contentLayouts/StepsList.astro'
+import WidgetShowSavedDataVue from '../../components/widgets/WidgetShowSavedDataVue.vue'
+import LessonContent from '../../layouts/LessonContent.astro'
+import LessonPractice from '../../layouts/LessonPractice.astro'
+import LessonReflection from '../../layouts/LessonReflection.astro'
+import TheLesson from '../../layouts/TheLesson.astro'
+---
+
+<TheLesson
+	title='Opportunity Cost'
+	scene={'choose-path'}
+	description='how considering opportunity cost can impact your future career choices'
+	gradientColor='var(--green-5)'>
+	<LessonPractice
+		title='What Are Your Priorities?'
+		activitySteps={[
+			{
+				CreateList: {
+					sectionTitle: 'List all of your choices',
+					prompt:
+						'We’ve provided this initial list of potential choices to get you started. While reviewing this list, you can delete items in the list and add items to it further down.',
+					listItems: [
+						'Attend a 4-year university',
+						'Attend a community college',
+						'Go to trade school',
+						'Join the military',
+						'Travel',
+						'Get a full-time job',
+						'Start my own business',
+					],
+					canAddAdditionalListItems: true,
+				},
+			},
+			{
+				SortingList: {
+					sectionTitle: 'Rank your choices',
+					prompt:
+						'Now, sort the items in this list so that it is arranged with your top choice at the top and your last choice at the bottom.',
+					listItems: [
+						'Attend a 4-year university',
+						'Attend a community college',
+						'Go to trade school',
+						'Join the military',
+						'Travel',
+						'Get a full-time job',
+						'Start my own business',
+					],
+				},
+			},
+			{
+				FinalFeedback: {
+					sectionTitle: 'Your top choice',
+					prompt: 'Based on your rankings, this is your top choice:',
+				},
+			},
+		]}
+		isFinalFeedbackIncluded>
+		<p>
+			Imagine you’re a high school senior thinking about your future career.
+		</p>
+		<p>Let’s use the following steps to determine your top career choice.</p>
+		<StepsList>
+			<li><p>List all of your choices</p></li>
+			<li><p>Rank your choices</p></li>
+			<li><p>Select number one from your ranking</p></li>
+		</StepsList>
+		<p>We’ll complete each step one at a time.</p>
+		<div slot='finalFeedback'>
+			<WidgetShowSavedDataVue
+				client:idle
+				nameOfActivityForData='What Are Your Priorities?'
+				wantSortedListItemNum={1}
+			/>
+		</div>
+	</LessonPractice>
+	<LessonReflection
+		prompt='Reflect on your choices from the practice activity. Why and how did you decide on your top choice? What about your second choice?'
+		title='And Why Did You Make This Choice?'>
+		<p>
+			Your top choice from the practice activity is: <WidgetShowSavedDataVue
+				isInline
+				client:idle
+				nameOfActivityForData='What Are Your Priorities?'
+				wantSortedListItemNum={1}
+			/>
+		</p>
+		<p>
+			Your second choice from the practice activity is: <WidgetShowSavedDataVue
+				isInline
+				client:idle
+				nameOfActivityForData='What Are Your Priorities?'
+				wantSortedListItemNum={2}
+			/>
+		</p>
+	</LessonReflection>
+	<LessonContent title='What Is Opportunity Cost?'>
+		<p>
+			The opportunity cost of a decision is the value of the best alternative
+			you give up, given limited resources. It’s an important component that is
+			nearly always forgotten.
+		</p>
+
+		<CallOut setColor={'yellow'}>
+			<p><TextStyle setType={'emphasis'}>In other words:</TextStyle></p>
+			<p>
+				The opportunity cost of selecting your top choice is the value of your
+				second choice <TextStyle setType={'strong emphasis'}>only</TextStyle>.
+			</p>
+		</CallOut>
+		<SubSection title='How Can I Determine Opportunity Cost?'>
+			<p>
+				If you completed the practice activity in this lesson, you might
+				remember the following three steps to choose and rank your top choices
+				for a future career:
+			</p>
+			<StepsList>
+				<li><p>List all of your choices</p></li>
+				<li><p>Rank your choices</p></li>
+				<li><p>Select number one from your ranking</p></li>
+			</StepsList>
+			<p>Let’s use your choices to determine opportunity cost.</p>
+		</SubSection>
+	</LessonContent>
+	<LessonPractice
+		title='Your Choices, Revisited'
+		activitySteps={[
+			{
+				PickOneOfTwo: {
+					sectionTitle: 'Keep your top choice?',
+					prompt: 'Will you keep your top choice?',
+					buttonNames: ['Yes', 'No'],
+					choiceFeedback: [
+						'That’s a strong first choice you got there. Next up, we’ll reflect on why the opportunity cost of your first choice is worth its value.',
+						'Whoa! Look at that. Knowledge has the power to change your world. Next up, we’ll reflect on why the opportunity cost of the first choice was too much.',
+					],
+				},
+			},
+		]}>
+		<p>
+			Now is your opportunity to decide if you still think your top choice is
+			best.
+		</p>
+		<ol>
+			<li>
+				<p>
+					What is the opportunity cost of selecting <WidgetShowSavedDataVue
+						isInline
+						nameOfActivityForData='What Are Your Priorities?'
+						client:idle
+						wantSortedListItemNum={1}
+					/>?
+				</p>
+			</li>
+			<li>
+				<p>
+					What is the lost value of forgoing your second choice: <WidgetShowSavedDataVue
+						isInline
+						nameOfActivityForData='What Are Your Priorities?'
+						client:idle
+						wantSortedListItemNum={2}
+					/>?
+				</p>
+			</li>
+		</ol>
+	</LessonPractice>
+	<LessonReflection
+		title='What Are You Thinking Now?'
+		prompt='Based on what you’ve learned about opportunity costs, why do you think someone would change their mind about their priorities?'
+		previousChoiceBasedPrompts={[
+			'Your Choices, Revisited',
+			[
+				'You chose to keep your top choice. How did you evaluate this was the right choice for you? Why was the opportunity cost of your top choice worth the lost value of your second choice?',
+				'You chose to change your top choice to your second choice. How did you evaluate that this was the right decision for you? Why was the opportunity cost of your previous top choice too much compared to your new top choice?',
+			],
+		]}
+	/>
+	<LessonReflection
+		title='Your Thoughts on Opportunity Costs'
+		isFinaleReveal
+		prompt="You’ve considered your future career before and after learning about opportunity costs. Here's how your thoughts have changed:"
+	/>
+</TheLesson>

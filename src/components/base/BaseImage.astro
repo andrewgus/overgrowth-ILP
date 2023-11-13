@@ -10,19 +10,22 @@ const { imgName, altText = '', describedBy, labelledby } = Astro.props
 
 const imageFilePath = `https://fscjcel.blob.core.windows.net/ilp-assets/${Astro.url.pathname
 	.split('/')
-	.at(2)}`
+	.at(3)}`
 ---
 
 {
 	() => {
+		const imgAttributes: { [key: string]: any } = {}
+		imgAttributes.alt = altText
+		!!describedBy && (imgAttributes['aria-describedby'] = describedBy)
+		!!labelledby && (imgAttributes['aria-labelledby'] = labelledby)
+		imgAttributes.role = !!altText ? 'img' : 'presentation'
+
 		if (imgName.includes('.svg')) {
 			return (
 				<img
 					src={`${imageFilePath}_${imgName}`}
-					alt={altText}
-					aria-describedby={describedBy}
-					aria-labelledby={labelledby}
-					role={!!altText ? 'img' : 'presentation'}
+					{...imgAttributes}
 				/>
 			)
 		} else {
@@ -42,12 +45,9 @@ const imageFilePath = `https://fscjcel.blob.core.windows.net/ilp-assets/${Astro.
 					/>
 					<img
 						src={`${imageFilePath}_${imgName}`}
-						alt={altText}
-						aria-describedby={describedBy}
-						aria-labelledby={labelledby}
-						role={!!altText ? 'img' : 'presentation'}
-						decoding="async"
-						loading="lazy"
+						{...imgAttributes}
+						decoding='async'
+						loading='lazy'
 					/>
 				</picture>
 			)
@@ -66,7 +66,6 @@ const imageFilePath = `https://fscjcel.blob.core.windows.net/ilp-assets/${Astro.
 		> img {
 			object-fit: contain;
 			width: auto;
-			height: 100%;
 			max-width: inherit;
 			max-height: inherit;
 			display: block;

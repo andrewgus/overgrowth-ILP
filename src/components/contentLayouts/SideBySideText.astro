@@ -1,4 +1,6 @@
 ---
+import SubSection from '../a11yElements/SubSection.astro'
+
 /**
  * Horizontally-aligned layout of two text columns. Creates a side-by-side layout for the two.
  */
@@ -13,33 +15,35 @@ type PropsWithIsNewSection =
 	  }
 
 type Props = PropsWithIsNewSection & {
-	setRatio?: 'r4060' | 'r6040'
+	setRatio?: 'r4060' | 'r6040' | 'r5050'
 	isFullWidth?: boolean
+	isDefinitionList?: boolean
 }
 
 const {
-	setRatio,
+	setRatio = 'r5050',
 	isFullWidth = false,
 	isNewSection = false,
+	isDefinitionList = false,
 	title,
 } = Astro.props
 ---
 
 {
 	() => {
-		const containerStyles = ['sideBySideText', setRatio]
+		const containerStyles: string[] = ['sideBySideText', setRatio]
 		isFullWidth && containerStyles.push('fullWidth')
 		const layout = (
 			<Fragment>
 				<div class='colA'>
-					<slot name='a'>
+					<slot name='1'>
 						<code style='background-color:red'>
 							needs element with slot='a' prop
 						</code>
 					</slot>
 				</div>
 				<div class='colB'>
-					<slot name='b'>
+					<slot name='2'>
 						<code style='background-color:red'>
 							needs element with slot='b' prop
 						</code>
@@ -48,10 +52,13 @@ const {
 			</Fragment>
 		)
 		return isNewSection ? (
-			<section class:list={containerStyles}>
-				<h3>{title}</h3>
+			<SubSection
+				title={title!}
+				optionalClass={containerStyles}>
 				{layout}
-			</section>
+			</SubSection>
+		) : isDefinitionList ? (
+			<dl class:list={containerStyles}>{layout}</dl>
 		) : (
 			<div class:list={containerStyles}>{layout}</div>
 		)
@@ -63,22 +70,21 @@ const {
 		display: flex;
 		flex-flow: row wrap;
 		align-items: stretch;
-		justify-content: space-between;
-		gap: 0 var(--s2);
+		// justify-content: space-between;
+		gap: var(--s2);
 
 		> h3 {
 			width: 100%;
 		}
-		> .colA,
-		.colB {
-			flex: 1;
-			min-width: 25ch;
-			:global(.subSection) {
-				margin-bottom: var(--s2);
+		> * :global(.subSection) {
+			margin-bottom: var(--s2);
+		}
+
+		&.r5050 {
+			.colA,
+			.colB {
+				flex: 1 1 25ch;
 			}
-			// > :global(table) {
-			// 	margin-top: 0;
-			// }
 		}
 
 		&.r6040 {

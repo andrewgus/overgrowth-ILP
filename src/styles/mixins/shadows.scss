@@ -7,10 +7,10 @@
 }
 
 @mixin largeBoxShadow {
-  box-shadow: var(--s-4) var(--s-4) var(--s-8) var(--lightGray);
+  box-shadow: var(--s-4) var(--s-4) var(--s-8) var(--darkGray);
 }
 @mixin smallBoxShadow {
-  box-shadow: var(--s-10) var(--s-10) var(--s-10) var(--lightGray);
+  box-shadow: var(--s-10) var(--s-10) var(--s-10) var(--darkGray);
 }
 
 // box-shadow for hoving elements

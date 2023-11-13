@@ -1,7 +1,7 @@
 ---
-import TheScene from './TheScene.vue'
+import TheSceneVue from './TheSceneVue.vue'
 import TheTitleCard from './TheTitleCard.astro'
-import BaseIndicator from '../base/BaseIndicator.vue'
+import BaseIndicatorVue from '../base/BaseIndicatorVue.vue'
 
 type Props = {
 	title: string
@@ -14,12 +14,12 @@ const bgGradient = `linear-gradient(to bottom, white 0%, ${Astro.props.color} 40
 ---
 
 <header class='landing'>
-	<TheScene
+	<TheSceneVue
 		client:load
 		scene={scene}
 	/>
 	<TheTitleCard title={title} />
-	<BaseIndicator
+	<BaseIndicatorVue
 		class:list='onLandingIndicator'
 		isHidden
 		text='Scroll to start'

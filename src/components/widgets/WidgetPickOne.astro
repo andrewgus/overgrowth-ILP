@@ -1,0 +1,196 @@
+---
+import createNanoID from '../../composables/useCreateNanoID'
+import BaseImage from '../../components/base/BaseImage.astro'
+import TextStyle from '../a11yElements/TextStyle.astro'
+type Props = {
+	prompt: string
+	btnTexts: string[]
+	bgImgs?: string[]
+}
+const { prompt, btnTexts, bgImgs } = Astro.props
+const uniqueID = createNanoID(Astro.self.name)
+---
+
+<script>
+	const pickOneWidgets: NodeListOf<HTMLDivElement> =
+		document.querySelectorAll('.pickOneWidget')
+
+	const updateTabAttributes = (btnSelected: HTMLButtonElement) => {
+		const btns = [...btnSelected.parentElement!.children] as HTMLButtonElement[]
+		btns.forEach((btn) => (btn.tabIndex = btnSelected === btn ? 0 : -1))
+	}
+
+	const togglePickOneAnswer = (btnSelected: HTMLButtonElement) => {
+		const btns = [...btnSelected.parentElement!.children] as HTMLButtonElement[]
+		const answers = btnSelected
+			.closest('.pickOneWidget')!
+			.querySelectorAll('.pickOneAnswer')
+		answers.forEach((answer, i) => {
+			if (i === btns.indexOf(btnSelected)) {
+				answer.classList.remove('isHidden')
+				btnSelected.setAttribute('aria-selected', 'true')
+				btnSelected.setAttribute('aria-expanded', 'true')
+			} else {
+				answer.classList.add('isHidden')
+			}
+		})
+		btns.forEach(
+			(btn) =>
+				btn !== btnSelected &&
+				(btn.setAttribute('aria-selected', 'false'), (btn.disabled = true))
+		)
+	}
+
+	const handleClick = ({ target }: MouseEvent | FocusEvent) => {
+		const btnClicked =
+			target instanceof HTMLButtonElement &&
+			target.classList.contains('pickOneBtn') &&
+			target
+		if (!btnClicked) return
+		togglePickOneAnswer(btnClicked)
+	}
+	const handleKeyDown = (e: KeyboardEvent) => {
+		const btnKeyed =
+			e.target instanceof HTMLButtonElement &&
+			e.target.classList.contains('pickOneBtn') &&
+			e.target
+		if (!btnKeyed) return
+		const prevBtn = btnKeyed?.previousElementSibling as HTMLButtonElement
+		const nextBtn = btnKeyed?.nextElementSibling as HTMLButtonElement
+		if (e.key === 'ArrowLeft' && prevBtn) {
+			prevBtn.focus()
+			updateTabAttributes(prevBtn)
+		}
+		if (e.key === 'ArrowRight' && nextBtn) {
+			nextBtn.focus()
+			updateTabAttributes(nextBtn)
+		}
+	}
+
+	pickOneWidgets.forEach((widget) => {
+		widget.addEventListener('click', handleClick)
+		widget.addEventListener('keydown', handleKeyDown)
+	})
+</script>
+
+<div
+	id={uniqueID}
+	class='pickOneWidget'>
+	<p id={`${uniqueID}-prompt`}>
+		{prompt}&ensp;
+		<TextStyle
+			setType={'strong emphasis'}
+			sayAloud>
+			Note:
+		</TextStyle> You can only make this choice once.
+	</p>
+	<div class='pickOne'>
+		{
+			btnTexts.map((btn, i) => (
+				<button
+					class='pickOneBtn'
+					tabindex={i === 0 ? 0 : -1}
+					aria-describedby={`${uniqueID}-prompt`}
+					aria-controls={`${uniqueID}-answer-${i}`}
+					aria-expanded='false'>
+					{btn}
+					{!!bgImgs && <BaseImage imgName={bgImgs[i]} />}
+				</button>
+			))
+		}
+	</div>
+	{
+		btnTexts.map((_, i) => (
+			<div
+				class:list={['pickOneAnswer', 'isHidden']}
+				id={`${uniqueID}-answer-${i}`}>
+				{async () => {
+					let html = ''
+					if (Astro.slots.has((i + 1).toString())) {
+						html = await Astro.slots.render((i + 1).toString())
+					} else {
+						console.error(
+							`🛑 ERROR: A PickOneWidget is missing <Fragment slot='${
+								i + 1
+							}'> 🛑`
+						)
+					}
+					return <Fragment set:html={html} />
+				}}
+			</div>
+		))
+	}
+</div>
+
+<style lang='scss'>
+	@use '../../styles/mixins/buttons.scss';
+	@use '../../styles/mixins/containerStyles.scss';
+	.pickOneWidget {
+		@include containerStyles.interaction();
+		background-color: var(--offWhite);
+
+		> p {
+			background-color: var(--blue-2);
+			color: var(--white);
+			padding: var(--s0);
+			border-bottom: 1px dashed var(--white);
+		}
+	}
+	.pickOne {
+		@include containerStyles.flexCenter();
+		margin-top: var(--s2);
+		flex-flow: row nowrap;
+		padding: 0 var(--s0) var(--s2);
+
+		.pickOneBtn {
+			@include buttons.secondary();
+			@include containerStyles.flexCenter();
+			gap: var(--s-4);
+			flex: 1 1 auto;
+
+			&:first-of-type {
+				border-radius: var(--s2) 0 0 var(--s2);
+			}
+			&:last-of-type {
+				border-radius: 0 var(--s2) var(--s2) 0;
+			}
+			:global(picture) {
+				max-width: 60px;
+				max-height: 60px;
+			}
+			&:disabled {
+				background-color: var(--lightGray);
+				border: 1px solid var(--darkGray);
+				color: var(--darkGray);
+				font-style: italic;
+				&:hover {
+					box-shadow: none;
+				}
+				:global(picture) {
+					filter: grayscale(80%);
+				}
+			}
+		}
+	}
+	.pickOneAnswer {
+		padding: 0 var(--s2) var(--s2);
+		> .pickOneWidget {
+			margin-top: var(--s6);
+			border: none;
+			border-top: var(--s-8) dashed var(--blue-2);
+			border-radius: 0;
+			padding: 0 0 var(--s2);
+			> p {
+				background-color: inherit;
+				color: inherit;
+				padding: var(--s2) 0 0;
+			}
+			> .pickOne {
+				padding: 0;
+			}
+			> .pickOneAnswer {
+				padding: var(--s2) 0 0;
+			}
+		}
+	}
+</style>

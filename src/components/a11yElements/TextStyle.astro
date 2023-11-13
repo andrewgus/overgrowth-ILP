@@ -1,5 +1,6 @@
 ---
 // NOTE: sayAloud prop to be used when descriptor is CRITICAL to the content. For example, the sentence: "To quote George Washington: 'Four Score and <strong>Seven Years</strong> ago,'[Emphasis added]" would need the SayAloud prop so screens readers understand where emphasis was added. The strong emphasis, itself, is critical to the content. If descriptor is not critical, then sayAloud is not necessary.
+
 type Props = {
 	setType:
 		| 'strong emphasis'
@@ -12,35 +13,26 @@ type Props = {
 	sayAloud?: boolean
 	setHighlightColor?: 'green' | 'red' | 'yellow' | 'blue'
 }
-const { setType, sayAloud = false, setHighlightColor = 'yellow' } = Astro.props
+const {
+	setType,
+	sayAloud = false,
+	setHighlightColor = setType === 'highlight' ? 'yellow' : undefined,
+} = Astro.props
 ---
 
 {
 	async () => {
-		const convertedType = {
-			'strong emphasis': 'strong',
-			emphasis: 'em',
-			highlight: 'mark',
-			'inline quote': 'q',
-			blockquote: 'blockquote',
-			'strikethrough text': 'del',
-			'insert text': 'ins',
-		}[setType]
-
 		const createVisuallyHiddenText = (a11yText: string, isBefore: boolean) => {
+			// Always added before, but only added after if not strong or em
 			return isBefore
 				? `<span class="visuallyHidden">${a11yText}:&nbsp;</span>`
 				: `<span class="visuallyHidden">;&nbsp;end ${a11yText}</span>`
 		}
+
 		const visuallyHiddenText = {
-			'strong emphasis': [
-				createVisuallyHiddenText('important', true),
-				createVisuallyHiddenText('important', false),
-			],
-			emphasis: [
-				createVisuallyHiddenText('note', true),
-				createVisuallyHiddenText('note', false),
-			],
+			// determine what the hidden text will be
+			'strong emphasis': createVisuallyHiddenText('important', true),
+			emphasis: createVisuallyHiddenText('note', true),
 			highlight: [
 				createVisuallyHiddenText('highlight begin', true),
 				createVisuallyHiddenText('highlight', false),
@@ -54,7 +46,19 @@ const { setType, sayAloud = false, setHighlightColor = 'yellow' } = Astro.props
 			'insert text': createVisuallyHiddenText('now', true),
 		}[setType]
 
+		const convertedType = {
+			// key/value pair between the prop type and element
+			'strong emphasis': 'strong',
+			emphasis: 'em',
+			highlight: 'mark',
+			'inline quote': 'q',
+			blockquote: 'blockquote',
+			'strikethrough text': 'del',
+			'insert text': 'ins',
+		}[setType]
+
 		const determineSayAloud = {
+			// if sayAloud, this requires the prop to be true. If true, will always say aloud.
 			'strong emphasis': sayAloud,
 			emphasis: sayAloud,
 			highlight: sayAloud,
@@ -65,8 +69,11 @@ const { setType, sayAloud = false, setHighlightColor = 'yellow' } = Astro.props
 		}[setType]
 
 		const [wrapperStart, wrapperEnd] = [
+			// converting each convertedType into opening/closing elements
 			`<${convertedType} ${
-				setHighlightColor ? `class="highlight${setHighlightColor}"` : ''
+				setHighlightColor !== undefined
+					? `class="highlight${setHighlightColor}"`
+					: ''
 			}>`,
 			`</${convertedType}>`,
 		]
@@ -75,7 +82,7 @@ const { setType, sayAloud = false, setHighlightColor = 'yellow' } = Astro.props
 		if (Astro.slots.has('default')) {
 			slotContent = await Astro.slots.render('default')
 		}
-
+		// html structure based above components
 		const html = `${wrapperStart}${
 			determineSayAloud
 				? Array.isArray(visuallyHiddenText)

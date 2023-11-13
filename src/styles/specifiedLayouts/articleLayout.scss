@@ -10,7 +10,7 @@ article.section {
     [innerContent-end] minmax(auto, 10ch) [content-end] auto;
   align-content: start;
   background-color: var(--white);
-  padding: var(--s8) var(--s-2);
+  padding: max(var(--s8), 3ch) max(var(--s-2), 1ch);
   @supports (min-height: 1svh) {
       min-height: 90svh
   }
@@ -26,7 +26,8 @@ article.section {
   }
 
   &.staticContent {
-    > * + *:not(section):not(details + details):not(:nth-child(2)) {
+    // Not section because heading handles that, not details + details because those should be stacked, not .callOutBox because that needs extra margin-top due to large border
+     > * + *:not(section):not(details + details):not(.callOutBox) {
       margin-top: var(--s2);
     }
 
@@ -45,6 +46,25 @@ article.section {
       grid-row: completeBtn-start/completeBtn-end;
       align-self: end;
     }
+
+    >.userActions {
+        display: flex;
+        flex-flow: column nowrap;
+    
+        & > label {
+          margin-bottom: var(--s0);
+        }
+    
+        > div:not(.visuallyHidden) + div:not(.visuallyHidden) {
+          margin-top: var(--s6);
+        }
+    }
+  }
+  hr {
+    max-width: 100%;
+    width: 100%;
+    margin: var(--s2) 0;
+    border-color: var(--darkGray);
   }
 
   > *:not(.fullWidth),
@@ -55,7 +75,7 @@ article.section {
   > astro-island > *.fullWidth {
     grid-column: content-start / content-end;
   }
-  @media only screen and (max-width: 85ch) {
+  @media only screen and (max-width: 80ch) {
     > *:not(.fullWidth),
     > astro-island > *:not(.fullWidth) {
       grid-column: content-start / content-end;

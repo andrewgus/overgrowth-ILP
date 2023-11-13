@@ -4,29 +4,81 @@
  */
 import BaseImage from '../base/BaseImage.astro'
 import createNanoID from '../../composables/useCreateNanoID'
+import ExternalLink from '../a11yElements/ExternalLink.astro'
 
-type Props = {
+type imgWithAttribution =
+	| {
+			isAttributed?: false | undefined
+			attribution_SourceLink?: undefined
+			attribution_SourceName?: undefined
+			attribution_Text?: undefined
+			attribution_copyrightURL?: undefined
+			attribution_copyrightName?: undefined
+	  }
+	| {
+			isAttributed?: true
+			attribution_SourceLink: string
+			attribution_SourceName: string
+			attribution_Text: string
+			attribution_copyrightURL: string
+			attribution_copyrightName: string
+	  }
+
+type Props = imgWithAttribution & {
 	imgName: string
 	isFullWidth?: boolean
 	altText?: string
 	caption?: string
 }
-const { imgName, isFullWidth = false, altText = '', caption } = Astro.props
+const {
+	imgName,
+	isFullWidth = false,
+	altText = '',
+	caption,
+	isAttributed,
+	attribution_SourceLink,
+	attribution_SourceName,
+	attribution_Text,
+	attribution_copyrightURL,
+	attribution_copyrightName,
+} = Astro.props
 
 const labelledbyID = createNanoID(Astro.self.name, caption)
 ---
 
 <div class:list={[{ fullWidth: isFullWidth }, 'soloImg']}>
-	<BaseImage
-		labelledby={labelledbyID}
-		imgName={imgName}
-		altText={altText}
-	/>
+	{
+		() => {
+			const isLabelNeeded = !!caption ? { labelledby: labelledbyID } : {}
+			return (
+				<BaseImage
+					{...isLabelNeeded}
+					imgName={imgName}
+					altText={altText}
+				/>
+			)
+		}
+	}
+
 	{
 		!!caption && (
 			<p class='imgCaption'>
+				<small id={labelledbyID}>{caption}</small>
+			</p>
+		)
+	}
+	{
+		isAttributed && (
+			<p class='imgCaption'>
 				<small>
-					Caption: <span id={labelledbyID}>{caption}</span>
+					Source:{' '}
+					<ExternalLink url={attribution_SourceLink}>
+						{attribution_SourceName}
+					</ExternalLink>{' '}
+					{attribution_Text}{' '}
+					<ExternalLink url={attribution_copyrightURL}>
+						{attribution_copyrightName}
+					</ExternalLink>
 				</small>
 			</p>
 		)
@@ -37,7 +89,8 @@ const labelledbyID = createNanoID(Astro.self.name, caption)
 	.soloImg {
 		max-width: 100%;
 
-		> :global(picture, img) {
+		> :global(picture),
+		> :global(img) {
 			width: 100%;
 			display: block;
 			margin: 0 auto;

@@ -17,11 +17,11 @@ export default function generatePDF(currSection: SectionDetails) {
 
 	const pdfElement: HTMLElement = document.getElementById(currSection.id)!
 	// Get a copy of the PDF HTML
-	const newPdfElement = pdfElement.innerHTML
+	const newPdfElement = pdfElement.innerHTML;
 	// Find the class "blue"
-	const classRegex = /(class=["'][^"']*?\b)blue(\b[^"']*?["'])/g
+	const classRegex = /(class=["'][^"']*?\b)blue(\b[^"']*?["'])/g;
 	// Remove the class "blue" wherever it exists
-	const modifiedHTML = newPdfElement.replaceAll(classRegex, '$1$2')
+	const modifiedHTML = newPdfElement.replaceAll(classRegex, '$1$2');
 
 	const lessonName: string = window.location
 		.toString()
@@ -31,7 +31,7 @@ export default function generatePDF(currSection: SectionDetails) {
 		.at(0)
 		?.replaceAll('-', ' ')!
 
-	newPDF.html(modifiedHTML, {
+	newPDF.html(modifiedHTML,{
 		autoPaging: true,
 		html2canvas: {
 			ignoreElements: (el) =>
@@ -39,10 +39,10 @@ export default function generatePDF(currSection: SectionDetails) {
 				el.classList.toString().includes('pdfSave') ||
 				el.classList.toString().includes('indicator') ||
 				el.classList.toString().includes('alertText'),
-
+			
 			scale: 0.7,
 			width: 700,
-			windowWidth: 700,
+			windowWidth: 700,		
 		},
 		callback: (newPDF) => {
 			const totalPages = newPDF.getNumberOfPages()

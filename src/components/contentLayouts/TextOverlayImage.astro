@@ -22,12 +22,15 @@ const describedByID = createNanoID(Astro.self.name, isLongDescForComplexImg)
 
 <script>
 	window.addEventListener('load', () => {
+		// On load, grab an containerDivs of this component
 		const containerDivs = document.querySelectorAll(
 			'.textOverlayImage'
 		) as NodeListOf<HTMLDivElement>
+		// Grab the image of each component used
 		const imgs = [...containerDivs].map(
 			(div) => div.querySelector('.overlaidImg img') as HTMLImageElement
 		)
+		// set the --imgHeight CSS var to the offsetHeight of the img
 		imgs.forEach((img, i) =>
 			containerDivs[i].style.setProperty(
 				'--imgHeight',
@@ -76,7 +79,7 @@ const describedByID = createNanoID(Astro.self.name, isLongDescForComplexImg)
 		> .overlayText {
 			z-index: 1;
 			margin-top: var(--s2);
-			max-width: 45ch;
+			max-width: 60ch;
 			background-color: var(--transparentWhite);
 			padding: var(--s-2);
 			:global(*:not(table *)) {
@@ -89,7 +92,6 @@ const describedByID = createNanoID(Astro.self.name, isLongDescForComplexImg)
 		&.alignCenter {
 			> .overlayText {
 				border-radius: var(--s-10) var(--s-10);
-				max-width: 50ch;
 				align-self: center;
 			}
 		}

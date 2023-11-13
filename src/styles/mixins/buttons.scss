@@ -7,6 +7,7 @@
   &:focus {
     background-color: var(--peach);
     color: var(--blue);
+    transform: translateY(2px);
     filter: none;
   }
 
@@ -37,6 +38,28 @@
   background-color: var(--blue);
   padding: var(--s-4) var(--s-2);
 }
+@mixin toolTip {
+  @include transitions.short();
+  background-color: var(--yellow5);
+  border: 1px solid var(--darkGray);
+  filter: drop-shadow(0px 3px 0 var(--yellow-5));
+  padding: max(var(--s-3), .9ch);
+  margin-bottom: max(var(--s-8), .4ch);
+  display: inline-block;
+  border-radius: var(--s-8);
+  vertical-align: middle;
+  aspect-ratio: 1/1;
+  background-image: url('../../assets/icon-info.svg');
+  background-position: center center;
+  background-size: 55% 55%;
+  background-repeat: no-repeat;
+
+  &:hover, &:focus {
+    filter: none;
+    transform: translateY(2px);
+  }
+}
+
 
 @mixin warning {
   background-color: var(--red);

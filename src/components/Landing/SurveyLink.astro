@@ -1,0 +1,40 @@
+---
+import ExternalLink from '../a11yElements/ExternalLink.astro'
+---
+
+<script>
+	const surveyEl = document.getElementById('survey-link') as HTMLElement
+	// Setting the dates when the survey is visible
+	const currentDate = new Date()
+	const surveyStartDate = new Date(2023, 10, 13) // Nov. 13
+	const surveyEndDate = new Date(2023, 10, 20) // Nov. 20
+	const isWithinSurveyDateRange =
+		currentDate >= surveyStartDate && currentDate <= surveyEndDate
+
+	if (isWithinSurveyDateRange) surveyEl.style.display = 'block'
+</script>
+
+<div id='survey-link'>
+	<p>
+		👋 Hi! How are these lessons so far? Let us know by
+		<ExternalLink url='https://forms.office.com/r/8unGxuqBYa'>
+			taking a quick, anonymous survey
+		</ExternalLink>
+		 .
+	</p>
+</div>
+
+<style lang='scss'>
+	#survey-link {
+		display: none;
+		background-color: var(--red5);
+		border-bottom: 1px solid var(--black);
+		padding: 0 var(--s-2);
+		> p {
+			padding: var(--s-2) 0;
+			display: block;
+			margin: 0 auto;
+			max-width: 66ch;
+		}
+	}
+</style>

@@ -2,55 +2,32 @@
 type Props = {
 	setColor: 'white' | 'green' | 'yellow' | 'red' | 'blue'
 	isCentered?: boolean
-	isActivityFinalFeedback?: boolean
 }
-const { isCentered, setColor, isActivityFinalFeedback = false } = Astro.props
+const { isCentered, setColor } = Astro.props
 ---
 
-{
-	isActivityFinalFeedback ? (
-		<div
-			class:list={[
-				'callOutBox',
-				{ centered: isCentered },
-				setColor,
-				{ finalFeedback: isActivityFinalFeedback },
-			]}
-			tabindex='-1'>
-			<slot />
-		</div>
-	) : (
-		<div class:list={['callOutBox', { centered: isCentered }, setColor]}>
-			<slot />
-		</div>
-	)
-}
+<div class:list={['callOutBox', { centered: isCentered }, setColor]}>
+	<slot />
+</div>
 
 <style lang='scss'>
 	.callOutBox {
 		display: flex;
-		justify-content: start;
+		justify-content: center;
 		flex-flow: column nowrap;
-		margin: var(--s4) 0;
 		border-radius: var(--s-4);
-		padding: var(--s0);
+		padding: max(var(--s1), 1ch) !important;
 		min-height: 10vh;
 
 		@supports (min-height: 1svh) {
 			min-height: 12svh;
 		}
-		> :global(*) {
+		> :global(*, astro-island *) {
 			z-index: 1;
 		}
 
-		&.centered {
-			justify-content: center;
-			> :global(*) {
-				text-align: center;
-			}
-		}
-		&.finalFeedback {
-			margin-top: var(--s6);
+		&.centered > :global(*) {
+			text-align: center;
 		}
 	}
 </style>

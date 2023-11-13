@@ -3,30 +3,57 @@ import katex from 'katex'
 
 type Props = {
 	formula: string
-	isDisplayMode?: boolean
+	isInline?: boolean
 }
 
-const { formula, isDisplayMode = false } = Astro.props
-const html = katex.renderToString(formula, {
-	throwOnError: false,
-	displayMode: isDisplayMode,
-})
+const { formula, isInline = false } = Astro.props
+const html = isInline
+	? katex
+			.renderToString(formula, {
+				throwOnError: false,
+				displayMode: true,
+			})
+			.replace(
+				'<span class="katex-display">',
+				'<span class="katex-display inlineMathEq">'
+			)
+	: katex.renderToString(formula, {
+			throwOnError: false,
+			displayMode: true,
+	  })
 ---
 
 <Fragment set:html={html} />
 
 <style is:global lang='scss'>
 	@import url('https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.css');
-
+	.katex-display {
+		&.inlineMathEq {
+			display: inline-block;
+		}
+		.katex * * {
+			font-size: var(--s0);
+		}
+	}
 	.katex {
 		text-align: center;
-		display: block;
+
+		> .katex-html {
+			display: none;
+		}
+
 		margin: 0 auto;
 		* * {
 			font-size: var(--s0);
 		}
 		.base + .base {
 			margin-top: var(--s-4);
+		}
+	}
+	@media only screen and (max-width: 450px) {
+		.katex-display .katex * *,
+		.katex * * {
+			font-size: var(--s-1);
 		}
 	}
 </style>

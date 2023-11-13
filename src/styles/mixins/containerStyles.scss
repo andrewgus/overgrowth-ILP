@@ -10,10 +10,7 @@
 @mixin lightBorder {
   border: 1px solid var(--lightGray);
 }
-@mixin practiceBorder {
-  border-radius: var(--s-2);
-  border: var(--s-8) solid var(--blue-2);
-}
+
 
 @mixin alert {
   background-color: var(--yellow5);
@@ -26,4 +23,75 @@
   border: 1px solid var(--darkGray);
   border-radius: var(--s10) var(--s0) var(--s10) var(--s0) / var(--s10) var(--s0) var(--s10) var(--s0);
   filter: drop-shadow(0px 3px 0 var(--red-3));
+}
+
+@mixin interaction {
+  border-radius: var(--s-2);
+  border: var(--s-8) solid var(--blue-2);
+  overflow: hidden;
+
+  > *:first-child {
+    background-color: var(--blue-2);
+    color: var(--white);
+    padding: var(--s2);
+    border-bottom: 1px dashed var(--white);
+  }
+}
+@mixin interactionMenuBar {
+  @include flexCenter();
+  border-top: 1px dashed var(--blue-2);
+  background-color: var(--offWhite);
+  padding: var(--s-2);
+  margin-top: var(--s2);
+}
+
+
+@mixin feedback {
+  padding: 0 var(--s-10);
+  margin-right: var(--s-10);
+  border-radius: var(--s-10);
+  border-width: 2px;
+  border-style: solid;
+}
+@mixin feedbackCorrect {
+  background-color: var(--green5);
+  border-color: var(--green);
+}
+@mixin feedbackIncorrect {
+  background-color: var(--red5);
+  border-color: var(--red);
+}
+
+
+@mixin toolTipBox {
+    position: absolute;
+    background-color: var(--offWhite);
+    border: 6px solid var(--yellow-1);
+    border-radius: var(--s-2);
+    padding: max(var(--s-6), .5ch);
+    font-size: var(--s-2);
+    max-width: 50ch;
+    min-width: 15ch;
+    width: 100%;
+    top: 33%;
+    left: 50%;
+    transform: translate(-50%, 20%);
+
+    &::after {
+        content: "";
+        border-left: max(var(--s-2), .75ch) solid transparent;
+        border-right: max(var(--s-2), .75ch) solid transparent;
+        border-bottom: max(var(--s-2), .75ch) solid var(--yellow-1);
+        position: absolute;
+        margin-bottom: -.3ch;
+        height: 0;
+        width: 0;
+        bottom: 100%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    > * {
+      background-color: var(--offWhite);
+      font-size: var(--s-1);
+    }
 }

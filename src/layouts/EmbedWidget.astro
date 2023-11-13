@@ -1,0 +1,100 @@
+---
+import AriaLiveAnnouncementsVue from '../components/a11yElements/AriaLiveAnnouncementsVue.vue'
+import overgrowthLogo from '../assets/logo-overgrowth.svg'
+import { addPageToCatalogStore } from '../store/catalogStore'
+
+import '../styles/root.scss'
+
+type Props = {
+	title: string
+	description: string
+	language?: string
+	fileName?: string
+}
+const {
+	title,
+	description,
+	language = 'en',
+	fileName = Astro.url.pathname,
+} = Astro.props
+
+addPageToCatalogStore(fileName.split('/').at(-2)!, title, description, 'widget')
+---
+
+<!doctype html>
+<html lang={language}>
+	<head>
+		<meta charset='UTF-8' />
+		<meta
+			name='viewport'
+			content='width=device-width, initial-scale=1, user-scalable=YES'
+		/>
+		<link
+			rel='icon'
+			href='/favicon.png'
+			sizes='any'
+		/>
+		<link
+			rel='icon'
+			type='image/svg+xml'
+			href='/favicon.svg'
+		/>
+		<meta
+			name='generator'
+			content={Astro.generator}
+		/>
+		<meta
+			name='author'
+			content='Florida State College at Jacksonville'
+		/>
+		<meta
+			name='description'
+			content={`${description}. Created by Florida State College at Jacksonville`}
+		/>
+		<title>{title}</title>
+	</head>
+	<body>
+		<AriaLiveAnnouncementsVue client:load />
+		<main>
+			<h1>{title}</h1>
+			<slot />
+		</main>
+		<footer>
+			<a href='https://github.com/andrewgus/overgrowth-ILP'
+				><img
+					role='img'
+					src={overgrowthLogo.src}
+					alt='Overgrowth Github Page'
+				/></a
+			>
+		</footer>
+	</body>
+</html>
+
+<script>
+	// Checks if this page is within an iframe or not. If within an iframe, do not show <h1>. This is for accessibility. Only one <h1> should ever appear on a page, this includes iframed content.
+	if (window.self !== window.top)
+		document.querySelector('h1')!.style.display = 'none'
+</script>
+
+<style lang='scss'>
+	main {
+		max-width: 100ch;
+		margin: 0 auto;
+		padding: var(--s-2);
+		> h1 {
+			font-size: var(--s3);
+		}
+	}
+	footer {
+		max-width: 80ch;
+		margin: 0 auto;
+
+		> a {
+			float: right;
+			padding-top: var(--s-2);
+			width: 20ch;
+			display: block;
+		}
+	}
+</style>

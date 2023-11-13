@@ -5,11 +5,13 @@ import {
 	useSetNextIncompleteActivity,
 	useSetCurrSection,
 	useUnlockNextSectionsAfterCompletion,
+	useDoesActivityExist,
 } from '../store/lessonStore'
-import createID from '../composables/useCreateID'
-import getLocalStorage from '../composables/useGetLocalStorage'
 import type { SectionDetails } from '../types/SectionTypes'
 import type { ActivityType } from '../types/ActivityTypes'
+import createID from '../composables/useCreateID'
+import getLocalStorage from '../composables/useGetLocalStorage'
+import { initActivityProgressStore } from '../store/activityOptionsStore'
 
 // setting lessonID for localStorage
 lessonIDAtom.set(document.querySelector('body')!.id)
@@ -34,7 +36,6 @@ const getActivityType = (
 ): ActivityType | null => {
 	if (activityClasses.contains('reflection')) return 'reflection'
 	if (activityClasses.contains('practice')) return 'practice'
-	if (activityClasses.contains('choice')) return 'choice'
 	return null
 }
 // To set isLocked property
@@ -81,6 +82,19 @@ sections.forEach((section: HTMLElement, index: number) => {
 		// isLocked is whether to show it or not
 		isActivityComplete: isPreviouslyComplete(sectionIDs[index], section),
 		// isActivityComplete is used to determine the NEXT activity and unlock everything up until, and including, that next activity
+	}
+	// Checking if activities exist for some special imports...
+	if (section.classList.contains('activity')) {
+		// import these necessary scripts
+		import('./setLocksHandler.js')
+		import('./updateLocalStorage.js')
+		// If there is a reflection activity, tell store this type exists
+		if (section.classList.contains('reflection'))
+			useDoesActivityExist('reflection')
+		// If there is a practice activity, tell store this type exists
+		if (section.classList.contains('practice')) useDoesActivityExist('practice')
+		// initalize activity progress store for every activity that exists
+		initActivityProgressStore(sectionIDs[index])
 	}
 
 	allSectionsMap.setKey(sectionIDs[index], sectionDetails)

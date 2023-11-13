@@ -1,8 +1,26 @@
 ---
+type Props = {
+	differentIncrementName?: string
+}
+
+const { differentIncrementName = 'Step' } = Astro.props
 ---
 
 <ol class='stepList'>
-	<slot />
+	{
+		async () => {
+			let html = ''
+			if (Astro.slots.has('default').toString()) {
+				html = await Astro.slots.render('default')
+				// After getting the slotted content, add in the data prop for incrementname on all list items
+				html = html.replaceAll(
+					'<li',
+					`<li data-incrementname=${differentIncrementName}`
+				)
+			}
+			return <Fragment set:html={html} />
+		}
+	}
 </ol>
 
 <style lang='scss'>
@@ -10,11 +28,12 @@
 		counter-reset: stepListCounter;
 		list-style-type: none;
 		padding-left: 0;
+		margin-bottom: 0;
 		> :global(li) {
 			counter-increment: stepListCounter;
 			padding: var(--s0);
 			&::before {
-				content: 'Step ' counter(stepListCounter);
+				content: attr(data-incrementname) ' ' counter(stepListCounter);
 				font-weight: 700;
 				font-size: var(--s1);
 				display: block;

@@ -1,0 +1,83 @@
+---
+type Props = {
+	title: string
+}
+const { title } = Astro.props
+---
+
+<script>
+	const details = document.querySelectorAll<HTMLDetailsElement>('.accordion')
+	details.forEach((detail) => {
+		const summaryBtn = detail.firstElementChild as HTMLButtonElement
+		summaryBtn.addEventListener('click', () => {
+			summaryBtn.setAttribute('aria-expanded', detail.open ? 'false' : 'true')
+		})
+	})
+</script>
+
+<details class='accordion'>
+	<summary
+		aria-expanded='false'
+		tabindex='0'
+		role='button'
+		>{title}</summary
+	>
+	<slot />
+</details>
+
+<style lang='scss'>
+	@use '../../styles/mixins/buttons';
+	@use '../../styles/mixins/containerStyles';
+	@use '../../styles/mixins/shadows';
+	.accordion {
+		@include shadows.smallBoxShadow();
+		overflow: hidden;
+
+		&:first-of-type,
+		&:first-of-type > summary {
+			border-radius: var(--s-5) var(--s-5) 0 0;
+		}
+		&:last-of-type {
+			border-radius: 0 0 var(--s-5) var(--s-5);
+			margin-bottom: var(--s2);
+		}
+		&:only-of-type,
+		&:only-of-type:not([open]) > summary {
+			border-radius: var(--s-5);
+		}
+
+		> summary {
+			@include buttons.secondary();
+		}
+
+		&[open] {
+			@include containerStyles.lightBorder();
+
+			summary {
+				background-color: var(--blue-5);
+				color: var(--white);
+				&:hover,
+				&:focus {
+					background-color: var(--peach);
+					color: var(--blue);
+				}
+			}
+		}
+		> :global(*:not(summary)) {
+			margin-inline: max(var(--s-2), 1ch);
+			+ :global(*) {
+				margin-top: var(--s2);
+			}
+
+			&:nth-child(2) {
+				margin-top: var(--s0);
+			}
+			&:last-child {
+				margin-bottom: var(--s0);
+			}
+		}
+		> :global(table) {
+			max-width: 92%;
+		}
+	}
+</style>

@@ -1,11 +1,33 @@
 ---
+import MathEq from '../math/MathEq.astro'
+
 type Props = {
-	data: string
+	data?: string
+	isMath?: boolean
+	isHighlighted?: boolean
 }
-const { data } = Astro.props
+const { data, isMath = false, isHighlighted = false } = Astro.props
 ---
 
-<td>
-	{data}
+<td class:list={[{ highlight: isHighlighted }]}>
+	{
+		() => {
+			if (isMath) {
+				return <MathEq formula={data!} />
+			} else {
+				return <p>{data}</p>
+			}
+		}
+	}
 	{data === '' && <span class='visuallyHidden'>empty cell</span>}
+	{data === undefined && <slot />}
 </td>
+
+<style>
+	td {
+		vertical-align: top;
+	}
+	td.highlight {
+		background-color: var(--green5);
+	}
+</style>
